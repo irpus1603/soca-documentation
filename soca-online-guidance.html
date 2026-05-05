@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SOCA Platform Handbook</title>
+  <style>
+    :root {
+      --bg: #f5f1e8;
+      --paper: #fffdf9;
+      --paper-2: #f3eadb;
+      --ink: #1f1d17;
+      --muted: #625d50;
+      --line: #d8ccb6;
+      --brand: #0d5c63;
+      --brand-2: #9a4d1b;
+      --good: #245c3d;
+      --warn: #8b3a14;
+      --shadow: 0 16px 48px rgba(31, 29, 23, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.65;
+      background:
+        radial-gradient(circle at top right, rgba(13, 92, 99, 0.08), transparent 22rem),
+        radial-gradient(circle at bottom left, rgba(154, 77, 27, 0.08), transparent 26rem),
+        var(--bg);
+    }
+
+    a {
+      color: var(--brand);
+    }
+
+    code, pre {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    }
+
+    .hero {
+      padding: 3.5rem 1.4rem 2.2rem;
+      background:
+        linear-gradient(135deg, rgba(13, 92, 99, 0.07), rgba(154, 77, 27, 0.09)),
+        var(--paper);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-inner,
+    .layout,
+    footer {
+      max-width: 1220px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 1rem;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper-2);
+      color: var(--muted);
+      font: 700 0.8rem/1 Arial, Helvetica, sans-serif;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, h4 {
+      line-height: 1.15;
+      margin: 0 0 0.75rem;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 5vw, 4.8rem);
+      max-width: 12ch;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      margin-top: 0;
+    }
+
+    h3 {
+      font-size: 1.28rem;
+      margin-top: 1.5rem;
+    }
+
+    h4 {
+      font-size: 1.02rem;
+      margin-top: 1.2rem;
+      font-family: Arial, Helvetica, sans-serif;
+      letter-spacing: 0.02em;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    .lead {
+      max-width: 65ch;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 0.9fr;
+      gap: 1.2rem;
+      align-items: start;
+    }
+
+    .hero-panel,
+    .section,
+    .metric,
+    .card,
+    .path,
+    .reference,
+    .callout {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-panel {
+      padding: 1.15rem 1.2rem;
+    }
+
+    .hero-panel strong {
+      display: block;
+      margin-bottom: 0.4rem;
+      font: 700 0.82rem/1 Arial, Helvetica, sans-serif;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--brand);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 1.5rem;
+      padding: 1.5rem 1.4rem 3rem;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 1rem;
+      align-self: start;
+      padding: 1rem;
+      background: rgba(255, 253, 249, 0.88);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
+    }
+
+    .sidebar h3 {
+      margin-top: 0;
+      font-size: 1rem;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 0.42rem 0.2rem;
+      text-decoration: none;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.95rem;
+    }
+
+    .sidebar a:hover {
+      color: var(--brand);
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .section {
+      padding: 1.5rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .section > :first-child {
+      margin-top: 0;
+    }
+
+    .metrics,
+    .grid-2,
+    .grid-3,
+    .paths,
+    .references {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .metrics {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 1rem;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3,
+    .paths {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .references {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .metric,
+    .card,
+    .path,
+    .reference {
+      padding: 1rem;
+    }
+
+    .metric strong,
+    .path .label {
+      display: block;
+      margin-bottom: 0.35rem;
+      font: 700 0.8rem/1 Arial, Helvetica, sans-serif;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .metric strong {
+      color: var(--brand);
+    }
+
+    .metric span {
+      font-size: 1.04rem;
+      font-weight: 700;
+    }
+
+    .path .label {
+      color: var(--brand-2);
+    }
+
+    .kicker {
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .callout {
+      padding: 1rem 1.1rem;
+      margin-top: 1rem;
+      background: linear-gradient(180deg, #fffdf9, #f6efe2);
+    }
+
+    .callout strong {
+      color: var(--warn);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    ul, ol {
+      margin: 0 0 1rem 1.2rem;
+      padding: 0;
+    }
+
+    li {
+      margin: 0.35rem 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.96rem;
+      background: rgba(255, 253, 249, 0.8);
+    }
+
+    th, td {
+      padding: 0.75rem 0.7rem;
+      border: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f1e9dc;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+    }
+
+    pre {
+      overflow-x: auto;
+      margin: 1rem 0;
+      padding: 0.95rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #f4eee3;
+      font-size: 0.9rem;
+    }
+
+    .tag {
+      display: inline-block;
+      margin: 0.15rem 0.3rem 0.15rem 0;
+      padding: 0.2rem 0.55rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper-2);
+      font: 600 0.82rem/1.2 Arial, Helvetica, sans-serif;
+      color: var(--muted);
+    }
+
+    .good {
+      color: var(--good);
+      font-weight: 700;
+    }
+
+    .warn {
+      color: var(--warn);
+      font-weight: 700;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    footer {
+      padding: 0 1.4rem 3rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .layout,
+      .metrics,
+      .grid-2,
+      .grid-3,
+      .paths,
+      .references {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Single Page Standalone Document</div>
+      <div class="hero-grid">
+        <div>
+          <h1>SOCA Platform Handbook</h1>
+          <p class="lead">
+            This file combines the main information from the SOCA documentation repository into one shareable HTML document:
+            platform overview, service roles, deployment models, step-by-step setup, operations guidance, API examples,
+            validation status, and source references.
+          </p>
+          <div>
+            <span class="tag">Edge AI</span>
+            <span class="tag">Fleet Control</span>
+            <span class="tag">Redis or Pub/Sub</span>
+            <span class="tag">Local or GCS Snapshots</span>
+            <span class="tag">Single File HTML</span>
+          </div>
+        </div>
+        <aside class="hero-panel">
+          <strong>Use this when</strong>
+          <p>You need a document you can open directly in a browser, send as a file, or host as a static page without a docs build system.</p>
+          <p class="small">Prepared from the current repository content as of 2026-05-05.</p>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <h3>Contents</h3>
+      <a href="#executive-summary">Executive Summary</a>
+      <a href="#platform-architecture">Platform Architecture</a>
+      <a href="#service-roles">Service Roles</a>
+      <a href="#deployment-models">Deployment Models</a>
+      <a href="#full-setup">Full Setup Flow</a>
+      <a href="#operations-guidance">Operations Guidance</a>
+      <a href="#dashboard-control">Dashboard and Control Plane</a>
+      <a href="#engine-api">Engine API and Rules</a>
+      <a href="#validation">Validation and Known Issues</a>
+      <a href="#references">Repository References</a>
+    </aside>
+
+    <main class="main">
+      <section class="section" id="executive-summary">
+        <h2>Executive Summary</h2>
+        <p>
+          SOCA, short for Security Operations and Camera Analytics, is an enterprise video analytics platform that uses YOLO-based
+          inference on edge devices while keeping management, reporting, and multi-site visibility centralized.
+        </p>
+        <p>
+          The platform is built from four main services. At the edge, <strong>soca-engine</strong> handles RTSP ingestion,
+          inference, rule evaluation, and alert publishing, while <strong>soca-dashboard</strong> provides the local web UI for
+          cameras, schedules, rules, edge settings, and model management. In the server or cloud layer, <strong>soca-control</strong>
+          acts as the fleet dashboard for alerts, reporting, edge visibility, and user management. <strong>soca-service</strong> is an
+          optional consumer microservice used when the chosen transport pattern needs a separate bridge from Redis or Pub/Sub into the
+          control plane.
+        </p>
+        <div class="metrics">
+          <div class="metric">
+            <strong>Edge Processor</strong>
+            <span>soca-engine :8001</span>
+          </div>
+          <div class="metric">
+            <strong>Edge UI</strong>
+            <span>soca-dashboard :8080</span>
+          </div>
+          <div class="metric">
+            <strong>Control Plane</strong>
+            <span>soca-control :8000</span>
+          </div>
+          <div class="metric">
+            <strong>Ingest Bridge</strong>
+            <span>soca-service :8010</span>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Current implementation direction:</strong>
+          the repository supports both on-premise and cloud-oriented deployments, with Redis Stream favored for local LAN setups and
+          Google Pub/Sub plus GCS favored for multi-edge or managed cloud environments.
+        </div>
+      </section>
+
+      <section class="section" id="platform-architecture">
+        <h2>Platform Architecture</h2>
+        <p class="kicker">
+          The architecture separates inference from fleet management, and separates edge-local operations from central reporting.
+        </p>
+        <pre>EDGE DEVICE
+  soca-dashboard (Django, 8080)
+    - camera management
+    - schedules and rules
+    - edge configuration
+    - model and credential management
+            |
+            | writes runtime settings
+            v
+  soca-engine (FastAPI, 8001)
+    - RTSP ingestion
+    - YOLO inference
+    - ROI and rule evaluation
+    - snapshot capture
+    - alert publish
+    - optional GCS sync
+
+TRANSPORT
+  Option A: Redis Stream
+  Option B: Google Pub/Sub
+
+SERVER OR CLOUD
+  soca-service (FastAPI, 8010)
+    - optional consumer bridge
+    - receives from Redis or Pub/Sub
+    - POSTs alerts to control plane
+
+  soca-control (Django, 8000)
+    - edge registry
+    - alert persistence
+    - reporting and exports
+    - monitor and asset views
+    - user management</pre>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Transport options</h3>
+            <table>
+              <thead>
+                <tr><th>Transport</th><th>Best for</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Redis Stream</td>
+                  <td>On-premise or LAN deployments</td>
+                  <td>Simple local infrastructure, consumer groups, per-edge stream naming.</td>
+                </tr>
+                <tr>
+                  <td>Google Pub/Sub</td>
+                  <td>Cloud or distributed multi-edge deployments</td>
+                  <td>Managed transport, direct subscription from soca-control is supported.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h3>Snapshot storage options</h3>
+            <table>
+              <thead>
+                <tr><th>Storage</th><th>Best for</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Local edge storage</td>
+                  <td>Isolated or on-premise sites</td>
+                  <td>soca-control builds a proxy URL through the edge dashboard.</td>
+                </tr>
+                <tr>
+                  <td>Google Cloud Storage</td>
+                  <td>Cloud and multi-edge installations</td>
+                  <td>Per-edge path prefixes avoid collisions and centralize access.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h3>Key platform capabilities</h3>
+        <ul>
+          <li>YOLO model support for both PyTorch `.pt` and ONNX `.onnx` models.</li>
+          <li>Configurable inference performance through device selection, image size, and FP16.</li>
+          <li>Dedicated RTSP reader threading to decouple network I/O from inference.</li>
+          <li>Conditional LPR processing to avoid unnecessary OCR work when no relevant vehicles are present.</li>
+          <li>Alert category routing for intrusion, PPE, object detection, people counting, crowd, and LPR reports.</li>
+          <li>Live operator workflows through dashboard views, monitor pages, and centralized reporting.</li>
+          <li>Optional MediaMTX relay to avoid exposing raw camera credentials and to reduce direct camera connection load.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="service-roles">
+        <h2>Service Roles</h2>
+        <table>
+          <thead>
+            <tr><th>Service</th><th>Tech</th><th>Port</th><th>Main role</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>soca-engine</td>
+              <td>FastAPI</td>
+              <td>8001</td>
+              <td>YOLO inference, job management, alert publishing, GCS snapshot sync.</td>
+            </tr>
+            <tr>
+              <td>soca-dashboard</td>
+              <td>Django</td>
+              <td>8080</td>
+              <td>Per-edge UI for cameras, schedules, rules, settings, credentials, and local operations.</td>
+            </tr>
+            <tr>
+              <td>soca-service</td>
+              <td>FastAPI</td>
+              <td>8010</td>
+              <td>Optional bridge that consumes transport messages and posts them into soca-control.</td>
+            </tr>
+            <tr>
+              <td>soca-control</td>
+              <td>Django</td>
+              <td>8000</td>
+              <td>Fleet dashboard for all edges, alert persistence, reports, settings, and user management.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>How the services interact</h3>
+        <ol>
+          <li>soca-dashboard stores edge settings and can write them into the `soca-engine` environment file.</li>
+          <li>soca-engine runs jobs against RTSP feeds, evaluates ROI logic and rules, and emits alerts.</li>
+          <li>Those alerts move over Redis Stream or Google Pub/Sub.</li>
+          <li>soca-control either consumes directly or receives alerts through soca-service.</li>
+          <li>soca-control stores the resulting Alert records and exposes them through reports and dashboards.</li>
+        </ol>
+
+        <h3>Security model in the current docs</h3>
+        <ul>
+          <li>soca-control protects ingest with `SOCA_CONTROL_INGEST_KEY` for service-to-control API calls.</li>
+          <li>soca-engine is documented as running without authentication on a private network.</li>
+          <li>Cloud credentials for Pub/Sub and GCS can be uploaded through dashboard settings.</li>
+          <li>Licensing is handled through `soca-entitlement`, which issues UUID-based license keys and enforces camera and model limits.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="deployment-models">
+        <h2>Deployment Models</h2>
+        <p>
+          The docs support three practical deployment choices. The right choice depends on whether the target is a pilot, a managed
+          enterprise host, or a cloud-first rollout.
+        </p>
+
+        <div class="paths">
+          <article class="path">
+            <div class="label">Recommended default</div>
+            <h3>Docker deployment</h3>
+            <p>
+              The Docker deployment guide is the fastest route to a repeatable environment. It also matches the repository split into
+              `soca-edge`, `soca-control`, `soca-service`, and `soca-deploy`.
+            </p>
+            <ul>
+              <li>Good for demos, pilots, and standard server installs.</li>
+              <li>Central orchestration through `soca-deploy`.</li>
+              <li>Keeps edge and backend dependencies isolated.</li>
+            </ul>
+          </article>
+
+          <article class="path">
+            <div class="label">Enterprise on-premise</div>
+            <h3>Bare metal on RHEL or Rocky Linux</h3>
+            <p>
+              Use this path when hosts are managed under stricter enterprise controls or when the environment prefers direct service
+              operations over containers.
+            </p>
+            <ul>
+              <li>Good for factory and facility infrastructure.</li>
+              <li>Fits traditional Linux administration patterns.</li>
+              <li>Pairs naturally with Redis Stream and local snapshots.</li>
+            </ul>
+          </article>
+
+          <article class="path">
+            <div class="label">Cloud-first</div>
+            <h3>GCP and Cloud Run</h3>
+            <p>
+              Use this path when centralized services belong in Google Cloud and the deployment already relies on managed infrastructure.
+            </p>
+            <ul>
+              <li>Good for distributed edges and managed services.</li>
+              <li>Usually paired with Pub/Sub and GCS.</li>
+              <li>Reduces local infrastructure for the control plane.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3>Docker deployment structure</h3>
+        <pre>~/projects/
+  soca-edge/      # edge repo: soca-engine + soca-dashboard
+  soca-control/   # fleet dashboard repo
+  soca-service/   # ingestion bridge repo
+  soca-deploy/    # orchestration repo</pre>
+
+        <h3>Core Docker prerequisites</h3>
+        <ul>
+          <li>Docker 24+ and Docker Compose v2.</li>
+          <li>Roughly 4 GB RAM available for the edge image because of YOLO and related dependencies.</li>
+          <li>Git access to all repos involved in the final topology.</li>
+        </ul>
+
+        <h3>Environment variables that matter most</h3>
+        <table>
+          <thead>
+            <tr><th>Variable</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>EDGE_NAME</td><td>Unique identifier for the edge site.</td></tr>
+            <tr><td>ENGINE_API_KEY</td><td>Engine API key when required by the chosen deployment wrapper.</td></tr>
+            <tr><td>DASHBOARD_SECRET_KEY</td><td>Django secret for the edge dashboard.</td></tr>
+            <tr><td>CONTROL_SECRET_KEY</td><td>Django secret for soca-control.</td></tr>
+            <tr><td>SOCA_CONTROL_INGEST_KEY</td><td>Shared secret between ingest bridge and control plane.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="full-setup">
+        <h2>Full Setup Flow</h2>
+        <p class="kicker">
+          This section condenses the current `SETUP.md` into a single narrative. The platform is typically set up in this order:
+          engine, dashboard, control plane, then optional service bridge.
+        </p>
+
+        <h3>Prerequisites</h3>
+        <ul>
+          <li>Python 3.11+</li>
+          <li>Git</li>
+          <li>Redis 7+ when using Redis transport</li>
+          <li>MediaMTX when using relay-based RTSP access</li>
+          <li>Google Cloud credentials when using Pub/Sub or GCS</li>
+        </ul>
+
+        <h3>Step 1: Set up soca-engine on the edge</h3>
+        <pre>git clone &lt;repo&gt; soca-engine
+cd soca-engine
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt</pre>
+
+        <p>Main engine environment settings:</p>
+        <pre>EDGE_NAME=edge-jakarta-01
+PUBLISHER_TYPE=redis
+REDIS_URL=redis://localhost:6379
+REDIS_STREAM_NAME=soca:detections
+
+# Optional cloud transport
+# PUBLISHER_TYPE=pubsub
+# PUBSUB_PROJECT_ID=my-gcp-project
+# PUBSUB_TOPIC=soca-detections
+# PUBSUB_KEY_PATH=credentials/pubsub.json
+
+# Optional snapshot storage
+# GCS_BUCKET=your-bucket-name
+# GCS_KEY_PATH=credentials/gcs.json
+# GCS_PATH_PREFIX defaults to EDGE_NAME
+
+# Performance
+# INFER_DEVICE=auto
+# INFER_IMGSZ=640
+# INFER_HALF=false
+# MAX_CONCURRENT_JOBS=4</pre>
+
+        <pre>./start.sh
+# or
+uvicorn main:app --host 0.0.0.0 --port 8001</pre>
+
+        <pre>curl http://localhost:8001/health
+curl http://localhost:8001/models</pre>
+
+        <h3>Step 2: Set up soca-dashboard on the edge</h3>
+        <pre>git clone &lt;repo&gt; soca-dashboard
+cd soca-dashboard
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver 0.0.0.0:8080</pre>
+
+        <p>Main dashboard environment settings:</p>
+        <pre>SECRET_KEY=your-secret-key-here
+DEBUG=true
+ENGINE_URL=http://localhost:8001
+ENGINE_ENV_PATH=../soca-engine/.env
+MEDIAMTX_URL=http://localhost:8888
+MEDIAMTX_YML_PATH=../soca-engine/MediaMTX/mediamtx.yml
+PORT=8080</pre>
+
+        <p>Core dashboard actions after login:</p>
+        <ol>
+          <li>Open Settings and configure the edge connection, transport, and cloud storage details.</li>
+          <li>Push the edge configuration so non-credential settings are written into `soca-engine` immediately.</li>
+          <li>Push cloud credentials to the engine when using GCS or Pub/Sub.</li>
+          <li>Add cameras with RTSP details.</li>
+          <li>Create schedules with ROI configuration.</li>
+          <li>Add rules with actions such as snapshot capture, queue publish, or Telegram notification.</li>
+        </ol>
+
+        <h3>Step 3: Set up soca-control on the server or cloud host</h3>
+        <pre>git clone &lt;repo&gt; soca-control
+cd soca-control
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py createsuperuser
+./start.sh</pre>
+
+        <p>Main control environment settings:</p>
+        <pre>SECRET_KEY=your-secret-key-here
+DEBUG=true
+ALLOWED_HOSTS=localhost,127.0.0.1
+# DATABASE_URL=postgresql://user:pass@localhost/soca_control
+# SOCA_CONTROL_INGEST_KEY=&lt;hex-string&gt;
+# GCS_BUCKET=soca-control-media-my-project
+PORT=8000</pre>
+
+        <p>Core control actions after login:</p>
+        <ol>
+          <li>Generate the ingest key in Settings if you are using soca-service as the bridge.</li>
+          <li>Register each edge with its dashboard URL, engine URL, transport type, and GCS path prefix.</li>
+          <li>Set the correct snapshot storage mode so alert images resolve correctly.</li>
+          <li>Start the Redis consumer or Pub/Sub subscriber depending on the configured transport.</li>
+        </ol>
+
+        <h3>Step 4: Set up soca-service only when needed</h3>
+        <p>
+          In current docs, soca-service is the consumer bridge when alerts are not being consumed directly by soca-control. In cloud
+          deployments using direct Pub/Sub subscription, soca-control can consume alerts itself and soca-service may be unnecessary.
+        </p>
+
+        <div class="callout">
+          <strong>Practical sequencing rule:</strong>
+          do not start by documenting every optional integration. First get a single edge running with a camera, a schedule, a rule,
+          and a visible alert in soca-control. Then add Pub/Sub, GCS, and reporting integrations.
+        </div>
+      </section>
+
+      <section class="section" id="operations-guidance">
+        <h2>Operations Guidance</h2>
+        <p>
+          The repository content implies three main user roles: deployment engineer, edge operator, and centralized control operator.
+          The most effective way to use the platform is to keep each workflow narrow and explicit.
+        </p>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Deployment engineer</h3>
+            <ul>
+              <li>Installs services and runtime dependencies.</li>
+              <li>Chooses transport and snapshot storage model.</li>
+              <li>Configures environment variables and secrets.</li>
+              <li>Verifies health endpoints and end-to-end alert flow.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Edge operator</h3>
+            <ul>
+              <li>Adds cameras and confirms stream availability.</li>
+              <li>Creates schedules and ROI definitions.</li>
+              <li>Creates rules and local operational settings.</li>
+              <li>Starts, stops, and monitors jobs.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Central operator</h3>
+            <ul>
+              <li>Registers edges in soca-control.</li>
+              <li>Reviews alerts, snapshots, and reports.</li>
+              <li>Monitors fleet health across sites.</li>
+              <li>Manages users and branding.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>MediaMTX relay model</h3>
+        <p>
+          MediaMTX is documented as the preferred RTSP relay strategy. Instead of giving every consumer a direct connection to the
+          physical camera, the edge hosts a relay and consumers pull from `rtsp://localhost:8554/&lt;camera_name&gt;`.
+        </p>
+        <ul>
+          <li>Reduces the number of direct connections against the physical camera.</li>
+          <li>Keeps camera credentials on the edge instead of distributing them through job payloads.</li>
+          <li>Supports browser-facing HLS playback on port 8888.</li>
+          <li>Falls back to direct camera RTSP when relay is not configured.</li>
+        </ul>
+
+        <h3>Alert and report categories</h3>
+        <table>
+          <thead>
+            <tr><th>Category value</th><th>Intended report area</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Intrusion</td><td>Intrusion Detection report</td></tr>
+            <tr><td>PPE</td><td>PPE Violations report</td></tr>
+            <tr><td>Detection</td><td>Object Detection report</td></tr>
+            <tr><td>Counting</td><td>People Counting report</td></tr>
+            <tr><td>Crowd</td><td>Crowd Detection report</td></tr>
+            <tr><td>LPR</td><td>License Plate Recognition report</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="dashboard-control">
+        <h2>Dashboard and Control Plane</h2>
+
+        <h3>soca-dashboard capabilities</h3>
+        <p>
+          The dashboard design documents show that the edge UI has grown beyond basic job start and stop into a broader operational
+          console for cameras, rules, edge settings, snapshots, branding, models, and restart operations.
+        </p>
+        <ul>
+          <li>Authentication and role-based access model.</li>
+          <li>Camera management with stored RTSP credentials handled separately from the displayed URL.</li>
+          <li>Schedule management with Polygon, Rectangle, and Crossing Line ROI types.</li>
+          <li>Rule management for thresholds, event actions, and category-based reporting.</li>
+          <li>Settings for branding, edge configuration, user management, models, and operations.</li>
+          <li>Monitor page for live stream visibility and job state awareness.</li>
+          <li>Public edge info API and system resource display in the dashboard.</li>
+        </ul>
+
+        <h3>soca-control capabilities</h3>
+        <p>
+          soca-control is the fleet-level control plane. It stores alerts locally and provides reporting, filters, exports, and
+          operator views across all registered edges.
+        </p>
+        <ul>
+          <li>Manual edge registration with dashboard URL, engine URL, transport type, and media relay settings.</li>
+          <li>Alert persistence into its own database for faster reporting queries.</li>
+          <li>Monitor page with direct links to edge media.</li>
+          <li>Report pages with statistics and detail tabs.</li>
+          <li>CSV and PDF export support.</li>
+          <li>User management and application branding.</li>
+          <li>Parallel polling of edge health and system endpoints to avoid UI hangs when sites are offline.</li>
+        </ul>
+
+        <h3>Control data model highlights</h3>
+        <table>
+          <thead>
+            <tr><th>Model</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SiteConfig</td>
+              <td>Singleton configuration for branding, snapshot storage type, and GCS bucket defaults.</td>
+            </tr>
+            <tr>
+              <td>Edge</td>
+              <td>Registry of each site with URLs, transport settings, GCS prefix, media relay URL, and operational metadata.</td>
+            </tr>
+            <tr>
+              <td>Alert</td>
+              <td>Normalized event record storing edge identity, camera details, rule info, snapshot path, ROI counts, and raw payload.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="engine-api">
+        <h2>Engine API and Rules</h2>
+        <p>
+          The engine API guide provides repeatable examples for health checks, model listing, job startup, monitoring, ROI definitions,
+          rule actions, and job teardown. These examples are the fastest way to validate the inference layer before relying on UI flows.
+        </p>
+
+        <h3>Common engine endpoints</h3>
+        <table>
+          <thead>
+            <tr><th>Endpoint</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>`GET /health`</td><td>Service health, Redis status, active jobs, uptime.</td></tr>
+            <tr><td>`GET /models`</td><td>Available model files.</td></tr>
+            <tr><td>`POST /jobs/start`</td><td>Start an inference job.</td></tr>
+            <tr><td>`GET /jobs/{job_id}/monitor`</td><td>Live annotated monitor stream.</td></tr>
+            <tr><td>`GET /jobs/`</td><td>List all jobs.</td></tr>
+            <tr><td>`GET /jobs/{job_id}`</td><td>Job status details.</td></tr>
+            <tr><td>`POST /jobs/{job_id}/stop` or stop action via UI</td><td>Stop a running job.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Minimal job start example</h3>
+        <pre>curl -X POST http://localhost:8001/jobs/start \
+  -H "Content-Type: application/json" \
+  -d '{
+    "camera_id": "bardi-stairs-front",
+    "rtsp_url": "rtsp://localhost:8554/Bardi-Stairs-Front",
+    "model_path": "yolo/yolo11n.pt",
+    "cls_ids": [0],
+    "frame_interval_ms": 1000
+  }'</pre>
+
+        <h3>Rule-capable example</h3>
+        <pre>curl -X POST http://localhost:8001/jobs/start \
+  -H "Content-Type: application/json" \
+  -d '{
+    "job_id": "job-stairs-rules",
+    "camera_id": "bardi-stairs-front",
+    "rtsp_url": "rtsp://localhost:8554/Bardi-Stairs-Front",
+    "model_path": "yolo/yolo11n.pt",
+    "cls_ids": [0],
+    "frame_interval_ms": 1000,
+    "roi": {
+      "type": "POLYGON",
+      "points": [[100, 200], [600, 200], [600, 500], [100, 500]]
+    },
+    "rules": [
+      {
+        "name": "too_many_people",
+        "priority": 10,
+        "when_all": [
+          {"path": "detections.in_roi_count", "op": "gte", "value": 3}
+        ],
+        "actions": [
+          {"type": "save_snapshot"},
+          {"type": "publish_queue"},
+          {"type": "log", "level": "warning"}
+        ]
+      }
+    ],
+    "monitor": true
+  }'</pre>
+
+        <h3>Detection modes and rule context</h3>
+        <ul>
+          <li><strong>detection</strong>: fires when objects are detected in or out of ROI.</li>
+          <li><strong>people_count</strong>: counts directional line crossings.</li>
+          <li><strong>crowd</strong>: fires when the in-ROI person count exceeds a threshold.</li>
+        </ul>
+
+        <h3>Inference and performance notes</h3>
+        <ul>
+          <li>`.pt` models use `track()` and populate tracking identifiers.</li>
+          <li>`.onnx` models use `predict()` and do not provide tracking IDs in the same way.</li>
+          <li>Current documented device strategy is explicit CPU or CUDA selection through `INFER_DEVICE`.</li>
+          <li>`INFER_IMGSZ` and `INFER_HALF` are the first tuning knobs to use when optimizing latency.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="validation">
+        <h2>Validation and Known Issues</h2>
+        <p>
+          The repository includes formal dashboard functional test results. The latest recorded dashboard test run shows a mostly
+          working system with a number of UX and validation gaps that should be treated as release blockers for broader deployments.
+        </p>
+
+        <table>
+          <thead>
+            <tr><th>Status</th><th>Count</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="good">PASS</td><td>44</td></tr>
+            <tr><td class="warn">FAIL</td><td>7</td></tr>
+            <tr><td>PARTIAL</td><td>3</td></tr>
+            <tr><td>SKIP / N/A</td><td>5</td></tr>
+            <tr><td><strong>Total</strong></td><td><strong>59</strong></td></tr>
+          </tbody>
+        </table>
+
+        <h3>Most important documented bugs</h3>
+        <ul>
+          <li>Duplicate camera name can trigger an unhandled `IntegrityError` instead of a user-facing validation message.</li>
+          <li>Invalid or empty engine URL is accepted in edge settings without proper URL validation.</li>
+          <li>User creation can accept a blank password, which is a security issue.</li>
+          <li>A model that is still referenced by an active schedule can be deleted without warning.</li>
+        </ul>
+
+        <h3>Additional observations from testing</h3>
+        <ul>
+          <li>Some model files display `NaN KB` instead of actual file size.</li>
+          <li>Several flows surface raw HTTP errors to end users instead of clean UX messages.</li>
+          <li>Restart operations can time out from the browser perspective without first showing a clear “restart triggered” message.</li>
+          <li>Stopping an already-ended engine job can expose a raw `404` style message instead of a graceful status response.</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Operational implication:</strong>
+          this platform is already documentable and demoable, but the current test results indicate that form validation, destructive
+          guardrails, and user-facing error handling still need another pass before relying on the dashboard as the only operator surface.
+        </div>
+      </section>
+
+      <section class="section" id="references">
+        <h2>Repository References</h2>
+        <p>
+          This single-page handbook condenses the following repository materials. Use these source documents when a reader needs lower-level
+          implementation detail, exact commands, or design rationale.
+        </p>
+
+        <div class="references">
+          <article class="reference">
+            <h3>Top-level docs</h3>
+            <ul>
+              <li>`README.md`</li>
+              <li>`SETUP.md`</li>
+            </ul>
+          </article>
+
+          <article class="reference">
+            <h3>Architecture</h3>
+            <ul>
+              <li>`architecture/system-overview.md`</li>
+              <li>`architecture/licensing-model.md`</li>
+              <li>`architecture/2026-04-16-nxvms-integration.md`</li>
+              <li>`architecture/sow-vs-soca-gap-analysis.md`</li>
+            </ul>
+          </article>
+
+          <article class="reference">
+            <h3>Deployment</h3>
+            <ul>
+              <li>`deployment/docker-deployment.md`</li>
+              <li>`deployment/bare-metal-rhel-guide.md`</li>
+              <li>`deployment/gcp-cloud-run-guide.md`</li>
+              <li>`deployment/pubsub-setup-guide.md`</li>
+              <li>`deployment/gcs-snapshot-storage.md`</li>
+              <li>`deployment/metabase-reporting-guide.md`</li>
+              <li>`deployment/grafana-reporting-guide.md`</li>
+            </ul>
+          </article>
+
+          <article class="reference">
+            <h3>Service-specific guides</h3>
+            <ul>
+              <li>`soca-dashboard/design-spec.md`</li>
+              <li>`soca-dashboard/edge-operations-design.md`</li>
+              <li>`soca-dashboard/advanced-rule-management-design.md`</li>
+              <li>`soca-control/design-spec.md`</li>
+              <li>`soca-control/pubsub-transport-plan.md`</li>
+              <li>`soca-engine/api-testing.md`</li>
+              <li>`soca-engine/object-detection-processor.md`</li>
+              <li>`soca-service/overview.md`</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    This file is intentionally standalone. It does not require MkDocs, a web server, or external assets. Open it directly or host it as a static HTML document.
+  </footer>
+</body>
+</html>

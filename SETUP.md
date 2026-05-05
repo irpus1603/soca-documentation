@@ -39,7 +39,7 @@ pip install -r requirements.txt
 
 ### 1.2 Configure environment
 
-Create `.env` in `soca-engine/`:
+Create `.env` in `soca-engine/` (copy from `.env-example`):
 
 ```env
 # Edge identity
@@ -49,19 +49,27 @@ EDGE_NAME=edge-jakarta-01
 # Option A: Redis Stream (default)
 PUBLISHER_TYPE=redis
 REDIS_URL=redis://localhost:6379
-REDIS_STREAM_NAME=edge-jakarta-01:soca:detections
+REDIS_STREAM_NAME=soca:detections
 
 # Option B: Google Pub/Sub
 # PUBLISHER_TYPE=pubsub
 # PUBSUB_PROJECT_ID=my-gcp-project
 # PUBSUB_TOPIC=soca-detections
-# GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json
+# PUBSUB_KEY_PATH=credentials/pubsub.json
 
-# Snapshot storage
-SNAPSHOT_DIR=snapshots/
+# Snapshot storage (GCS — optional)
+# GCS_BUCKET=your-bucket-name
+# GCS_KEY_PATH=credentials/gcs.json
+# GCS_PATH_PREFIX defaults to EDGE_NAME when not set
+
+# Inference tuning (optional — defaults shown)
+# LOG_LEVEL=INFO
+# INFER_DEVICE=auto
+# INFER_IMGSZ=640
+# MAX_CONCURRENT_JOBS=4
 ```
 
-> The `.env` file is also written automatically by soca-dashboard → Settings → Edge Config when you save transport settings.
+> Most of these settings can also be managed via **soca-dashboard → Settings → Edge Config** and are written to this file automatically on save. Manual edits require a restart to take effect.
 
 ### 1.3 Start
 
@@ -140,16 +148,20 @@ Open `http://localhost:8080` in a browser. Log in with the superuser credentials
 ### 2.6 Configure edge settings
 
 1. Go to **Settings → Edge Config**
-2. Set **Engine URL**: `http://localhost:8001`
-3. Set **Publisher Transport**: choose Redis or Google Pub/Sub
-   - **Redis**: set Redis URL and stream name
-   - **Pub/Sub**: set GCP Project ID, topic, and credentials path
-4. Set **MediaMTX URL**: `http://localhost:8888` (HLS viewer, used to register cameras into mediamtx.yml)
-5. Set **MediaMTX RTSP URL**: `rtsp://localhost:8554` (relay base URL used by soca-engine for detection jobs)
-   - When set, `Schedule.to_job_config()` produces `rtsp://localhost:8554/<camera_name>` instead of the raw camera URL
-   - Reduces physical camera connection slots and keeps camera credentials off the job config
-   - Leave blank to fall back to direct camera RTSP (no relay)
-6. Click **Save** — this writes the transport config to `soca-engine/.env`
+2. **Connection** section:
+   - Set **Edge Name** — used as the GCS path prefix by default
+   - Set **Redis Stream Name** if different from the default `soca:detections`
+   - Set **Publisher Transport**: Redis Stream or Google Pub/Sub
+     - Pub/Sub: fill in GCP Project ID, Topic, and upload the service account key
+3. **Cloud Storage (GCS)** section:
+   - Upload GCS service account key and fill in bucket name
+   - Leave **GCS Path Prefix** blank to default to Edge Name
+4. **soca-engine Settings** section — controls runtime behaviour, synced to soca-engine `.env` on save:
+   - Redis URL, Log Level, Snapshot quality/size, Inference device/size/precision, Job limits
+5. Click **Save Edge Config** — writes all non-credential settings to soca-engine `.env` immediately
+6. Click **Push Cloud Credentials to soca-engine** — sends GCS and Pub/Sub key files to the engine (applies live, no restart needed)
+
+MediaMTX URLs and file paths are auto-configured from the shared `soca-edge/` folder — no manual entry needed.
 
 ### 2.7 Add cameras and schedules
 
@@ -285,12 +297,11 @@ SOCA_CONTROL_INGEST_KEY=<key from soca-control Settings → Service Ingest Key>
 
 # Optional
 PORT=8010
-
-# Required if any edge uses Pub/Sub transport
-GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json
 ```
 
-> The `SOCA_CONTROL_INGEST_KEY` must exactly match the key shown in soca-control Settings → Service Ingest Key.
+> `SOCA_CONTROL_INGEST_KEY` can also be pushed automatically from soca-control Settings → Ingest Key → Push to soca-service.
+
+> Pub/Sub credentials are **not** set here. They are pushed from soca-control via **Settings → Push Cloud Credentials** and stored in soca-service's `config.json` as `pubsub_key_path`. soca-service does not use `GOOGLE_APPLICATION_CREDENTIALS`.
 
 ### 4.3 Start
 

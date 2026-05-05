@@ -1,7 +1,7 @@
 # Google Cloud Pub/Sub Setup Guide
 
 Complete guide to configure Google Cloud Pub/Sub as the message transport between
-**soca-engine** (publisher) and **soca-control** (subscriber).
+**soca-engine** (publisher) and **soca-service / soca-control** (subscriber).
 
 ---
 
@@ -19,10 +19,10 @@ Google Cloud Pub/Sub
     Subscription: projects/<PROJECT>/subscriptions/<SUBSCRIPTION>
     │
     ▼
-soca-control (central server)
-    │  consume_pubsub management command
+soca-service (PubSubConsumer thread — REST polling, every 5s)
+    │  POST /api/v1/ingest/
     ▼
-    Alert saved to database
+soca-control → Alert saved to database
 ```
 
 ---
@@ -30,8 +30,8 @@ soca-control (central server)
 ## Prerequisites
 
 - Google Cloud project with Pub/Sub API enabled
-- A service account key file (JSON) with Pub/Sub permissions
-- `google-cloud-pubsub>=2.21` installed in both soca-engine and soca-control
+- A service account key file (JSON) with Pub/Sub Publisher role (for soca-engine)
+- A separate service account key (or the same) with Pub/Sub Subscriber role (for soca-service)
 
 ---
 
@@ -43,10 +43,7 @@ soca-control (central server)
    - ID: `soca-pubsub@<PROJECT>.iam.gserviceaccount.com`
 3. Click **Done**
 4. Open the service account → **Keys tab → Add Key → Create new key → JSON**
-5. Save the downloaded JSON file to a secure location, e.g.:
-   ```
-   /etc/soca/credentials/soca-pubsub.json
-   ```
+5. Save the downloaded JSON file
 
 ---
 
@@ -57,19 +54,17 @@ Go to **GCP Console → IAM & Admin → IAM → + Grant Access**:
 | Principal | Role | Purpose |
 |-----------|------|---------|
 | `soca-pubsub@<PROJECT>.iam.gserviceaccount.com` | Pub/Sub Publisher | soca-engine publishes to topic |
-| `soca-pubsub@<PROJECT>.iam.gserviceaccount.com` | Pub/Sub Subscriber | soca-control pulls from subscription |
+| `soca-pubsub@<PROJECT>.iam.gserviceaccount.com` | Pub/Sub Subscriber | soca-service pulls from subscription |
 
 Or grant **Pub/Sub Editor** to cover both in a single binding.
 
 **Via gcloud CLI:**
 ```bash
-# Publisher permission (topic level)
 gcloud pubsub topics add-iam-policy-binding <TOPIC> \
   --project=<PROJECT> \
   --member="serviceAccount:soca-pubsub@<PROJECT>.iam.gserviceaccount.com" \
   --role="roles/pubsub.publisher"
 
-# Subscriber permission (subscription level)
 gcloud pubsub subscriptions add-iam-policy-binding <SUBSCRIPTION> \
   --project=<PROJECT> \
   --member="serviceAccount:soca-pubsub@<PROJECT>.iam.gserviceaccount.com" \
@@ -96,127 +91,96 @@ gcloud pubsub subscriptions add-iam-policy-binding <SUBSCRIPTION> \
 
 **Via gcloud CLI:**
 ```bash
-# Create topic
 gcloud pubsub topics create soca-jakarta-01 --project=<PROJECT>
-
-# Create subscription
 gcloud pubsub subscriptions create soca-jakarta-01 \
   --topic=soca-jakarta-01 \
   --project=<PROJECT>
-```
-
-**Verify:**
-```bash
-gcloud pubsub topics list --project=<PROJECT>
-gcloud pubsub subscriptions list --project=<PROJECT>
-gcloud pubsub topics describe soca-jakarta-01 --project=<PROJECT>
-gcloud pubsub subscriptions describe soca-jakarta-01 --project=<PROJECT>
 ```
 
 ---
 
 ## Step 4 — Configure soca-engine
 
-Edit `soca-engine/.env`:
+### Via soca-dashboard UI (recommended)
+
+1. Go to **soca-dashboard → Settings → Edge Config**
+2. Set **Publisher Transport** to `Google Pub/Sub`
+3. Fill in **GCP Project ID** and **Pub/Sub Topic**
+4. Upload the service account JSON under **Pub/Sub Service Account Key**
+5. Click **Save Edge Config** — writes `PUBLISHER_TYPE`, `PUBSUB_PROJECT_ID`, `PUBSUB_TOPIC` to engine `.env`
+6. Click **Push Cloud Credentials to soca-engine** — sends the key file to the engine and switches the publisher immediately (no restart needed)
+
+The engine switches from Redis to Pub/Sub live when credentials are pushed. The running process updates in memory — a restart is only needed if you edited `.env` manually.
+
+### Manual (`.env` edit)
 
 ```env
 PUBLISHER_TYPE=pubsub
 PUBSUB_PROJECT_ID=<PROJECT>
 PUBSUB_TOPIC=soca-jakarta-01
-GOOGLE_APPLICATION_CREDENTIALS=/path/to/soca-pubsub.json
+PUBSUB_KEY_PATH=credentials/pubsub.json    # path to service account JSON
 ```
 
-> Restart soca-engine after editing `.env` — config values are loaded at startup.
+> Restart soca-engine after editing `.env` manually.
 
 ---
 
-## Step 5 — Configure soca-dashboard Edge Settings
-
-1. Go to **soca-dashboard → Settings → Edge**
-2. Set **Publisher Transport** to `Google Pub/Sub`
-3. Fill in **GCP Project ID** and **Pub/Sub Topic**
-4. Upload credentials: **Google Application Credentials → Browse → select .json key file → Save**
-   (file is saved to `credentials/` folder on the server and path written to engine `.env`)
-5. Click **Save** — this writes `PUBLISHER_TYPE`, `PUBSUB_PROJECT_ID`, `PUBSUB_TOPIC`,
-   and `GOOGLE_APPLICATION_CREDENTIALS` to the engine's `.env` file automatically
-
-For each rule that should publish alerts:
-
-1. Go to **Schedules → [schedule] → Rules**
-2. Enable the **Publish to Queue** checkbox
-   (this adds the `publish_queue` action to the engine job config)
-
----
-
-## Step 6 — Configure soca-control Edge
+## Step 5 — Configure soca-control Edge
 
 1. Go to **soca-control → Settings → Edges → Edit**
 2. Set **Subscriber Type** to `Google Pub/Sub`
 3. Fill in:
    - **GCP Project ID**: `<PROJECT>`
    - **Pub/Sub Subscription**: `soca-jakarta-01`
-   - **GCS Path Prefix**: matching `GCS_PATH_PREFIX` in soca-engine (e.g. `edge-jakarta-01`)
-4. Upload credentials: **Settings → Google Cloud Credentials → Browse → select .json key file → Upload & Save**
-   (or set manually in soca-control `.env`):
-   ```env
-   GOOGLE_APPLICATION_CREDENTIALS=/path/to/soca-pubsub.json
-   ```
+4. **Save**
+
+For each rule that should publish alerts:
+
+1. Go to **soca-dashboard → Schedules → [schedule] → Rules**
+2. Enable the **Publish to Queue** action
 
 ---
 
-## Step 7 — Start the Consumer
+## Step 6 — Configure soca-service
 
-```bash
-python manage.py consume_pubsub
-```
+soca-service handles Pub/Sub consumption automatically — no dedicated configuration needed beyond its standard setup.
 
-Expected output:
-```
-Starting consume_pubsub...
-Subscribed to projects/<PROJECT>/subscriptions/soca-jakarta-01 for edge <edge-name>
-```
+Upload the Pub/Sub service account key via **soca-control → Settings → soca-service** (or push it via the Push Cloud Credentials button in soca-dashboard). soca-service reads the key path from `config.json` (`pubsub_key_path`).
+
+> **Note:** soca-service does **not** use `GOOGLE_APPLICATION_CREDENTIALS`. It reads the key path from `config.json` which is written when soca-control pushes Pub/Sub credentials.
+
+Both consumers (Redis and Pub/Sub) run simultaneously inside soca-service. Each consumer queries soca-control for its edge list every 30 seconds and self-selects based on `subscriber_type`:
+- Edges with `subscriber_type=redis` → `StreamsConsumer`
+- Edges with `subscriber_type=pubsub` → `PubSubConsumer`
+
+Switching an edge from Redis to Pub/Sub in soca-control takes effect within 30 seconds — no restart of soca-service required.
 
 ---
 
-## Step 8 — Verify End-to-End
+## Step 7 — Verify End-to-End
 
-Test publish and subscribe with the service account key:
-
+**Test manually:**
 ```bash
 python3 -c "
-import os, time
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/path/to/soca-pubsub.json'
 from google.cloud import pubsub_v1
+from google.oauth2 import service_account
+import time, base64
 
-# Publish
-pub = pubsub_v1.PublisherClient()
+creds = service_account.Credentials.from_service_account_file(
+    '/path/to/pubsub.json',
+    scopes=['https://www.googleapis.com/auth/pubsub'])
+
+pub = pubsub_v1.PublisherClient(credentials=creds)
 future = pub.publish('projects/<PROJECT>/topics/soca-jakarta-01', b'hello-soca')
 print('Published msg id:', future.result())
-
-# Pull
-time.sleep(2)
-sub = pubsub_v1.SubscriberClient()
-resp = sub.pull(request={
-    'subscription': 'projects/<PROJECT>/subscriptions/soca-jakarta-01',
-    'max_messages': 1
-})
-for m in resp.received_messages:
-    print('Received:', m.message.data)
-    sub.acknowledge(request={
-        'subscription': 'projects/<PROJECT>/subscriptions/soca-jakarta-01',
-        'ack_ids': [m.ack_id]
-    })
-sub.close()
-print('Pipeline OK')
 "
 ```
 
-Expected output:
+**Check soca-service is consuming** — look at the `/health` endpoint:
 ```
-Published msg id: 18200597404376262
-Received: b'hello-soca'
-Pipeline OK
+GET http://localhost:8010/health
 ```
+`pubsub.active_edges` should be > 0 and `messages_processed` should increment after a detection.
 
 ---
 
@@ -224,90 +188,45 @@ Pipeline OK
 
 ### `403 PERMISSION_DENIED: pubsub.topics.publish`
 
-The service account is missing Publisher role on the topic.
-
-```bash
-gcloud pubsub topics add-iam-policy-binding <TOPIC> \
-  --project=<PROJECT> \
-  --member="serviceAccount:<SA_EMAIL>" \
-  --role="roles/pubsub.publisher"
-```
+Missing Publisher role on the topic. See Step 2.
 
 ### `403 PERMISSION_DENIED: pubsub.subscriptions.consume`
 
-The service account is missing Subscriber role on the subscription.
+Missing Subscriber role on the subscription. See Step 2.
 
-```bash
-gcloud pubsub subscriptions add-iam-policy-binding <SUBSCRIPTION> \
-  --project=<PROJECT> \
-  --member="serviceAccount:<SA_EMAIL>" \
-  --role="roles/pubsub.subscriber"
-```
+### `404 Resource not found`
 
-### `404 Resource not found (resource=<SUBSCRIPTION>)`
-
-The subscription does not exist. Create it:
-
-```bash
-gcloud pubsub subscriptions create <SUBSCRIPTION> \
-  --topic=<TOPIC> \
-  --project=<PROJECT>
-```
+The subscription does not exist. Create it (Step 3).
 
 ### Messages going to DLQ (`soca-engine/dlq/`)
 
-Pub/Sub publish is failing. Check soca-engine logs for the error message.
-Common causes:
-- Missing publisher IAM role (see above)
-- Wrong `PUBSUB_PROJECT_ID` or `PUBSUB_TOPIC` in `.env`
-- `GOOGLE_APPLICATION_CREDENTIALS` not set or pointing to wrong file
-- Engine not restarted after `.env` changes
+Pub/Sub publish is failing. Check soca-engine logs. Common causes:
+- Missing publisher IAM role
+- Wrong `PUBSUB_PROJECT_ID` or `PUBSUB_TOPIC`
+- `PUBSUB_KEY_PATH` not set or file missing
+- Engine not restarted after manual `.env` edit (or Push Cloud Credentials not clicked)
 
-### soca-service subscribed but no messages processed (HTTP proxy environment)
+### soca-service not picking up messages (HTTP proxy environment)
 
-**Symptoms:**
-- soca-service logs show `Subscribed to ...` but `messages_processed` stays 0
-- GCP console shows "Deadline exceeded" on the subscription
-- Pull works when `HTTPS_PROXY` is set manually but not from systemd
-
-**Cause:** gRPC (used by `pubsub_v1.SubscriberClient` streaming pull) ignores
-`HTTPS_PROXY`, `HTTP_PROXY`, and even `GRPC_PROXY_EXP` environment variables in
-some environments. The streaming pull connection silently fails behind an HTTP proxy.
-
-**Fix:** soca-service uses REST polling mode by default (`consumers/pubsub.py`).
-Ensure the following environment variables are set in the systemd service or `.env`:
+soca-service uses REST polling mode (not gRPC streaming) which works correctly through HTTP proxies. Set in soca-service `.env`:
 
 ```env
 HTTPS_PROXY=http://your-proxy:8080
 HTTP_PROXY=http://your-proxy:8080
-NO_PROXY=localhost,127.0.0.1,<server-ip>
+NO_PROXY=localhost,127.0.0.1
 ```
 
-Verify REST polling is active in logs:
+Verify REST mode is active in logs:
 ```
 PubSubConsumer starting (REST poll mode)
 Pub/Sub REST session created (proxy-friendly)
 ```
 
-**Test pull manually** (confirms credentials + proxy work):
-```bash
-source /path/to/venv/bin/activate
-HTTPS_PROXY=http://your-proxy:8080 python3 -c "
-from google.cloud import pubsub_v1
-from google.oauth2 import service_account
-c = service_account.Credentials.from_service_account_file(
-    '/path/to/pubsub.json', scopes=['https://www.googleapis.com/auth/pubsub'])
-s = pubsub_v1.SubscriberClient(credentials=c)
-r = s.pull(request={'subscription': 'projects/<PROJECT>/subscriptions/<SUB>', 'max_messages': 1})
-print(len(r.received_messages), 'messages')
-"
-```
+### Engine still sending to Redis after switching to Pub/Sub
 
-### Only 1 message published, rest go to DLQ
-
-The service account had publish permission initially (or a test message was sent
-via gcloud) but the IAM binding was not properly saved. Re-apply the IAM binding
-and wait for propagation.
+If you changed `PUBLISHER_TYPE` in soca-dashboard and saved Edge Config but did **not** click **Push Cloud Credentials to soca-engine**, the change was written to `.env` on disk but the running process still uses Redis. Either:
+- Click **Push Cloud Credentials to soca-engine** (switches live immediately), or
+- Restart soca-engine (re-reads `.env`)
 
 ---
 
@@ -318,11 +237,9 @@ and wait for propagation.
 | GCP Project | `soca-video-analytics-dev` |
 | Topic | `soca-snapshot-notification` |
 | Subscription | configured per soca-control edge |
-| Service Account | `soca-snapshot-bucket@soca-video-analytics-dev.iam.gserviceaccount.com` |
-| Key file | `key/soca-video-analytics-dev-bucket.json` |
+| Key file | `credentials/pubsub.json` (written by Push Cloud Credentials) |
 | GCS Bucket | `soca-snapshot-bucket` |
 | GCS Path Prefix | `edge-mac-mini-bekasi` |
-| Edge name in soca-control | `edge-mac-mini-bekasi` |
 
 ---
 
