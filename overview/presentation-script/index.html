@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/overview/presentation-script/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/overview/presentation-script/">
       
       
       
@@ -941,7 +941,7 @@ SOCA is designed edge-first by philosophy. Processing happens where the cameras 
                                                   stores + displays
 </code></pre></div>
 <p><strong>Steps list:</strong>
-1. <strong>RTSP Capture</strong> — Camera streams to MediaMTX relay; soca-engine reads at <code>rtsp://localhost:8554/&lt;camera&gt;</code>
+1. <strong>RTSP Capture</strong> — Camera streams to MediaMTX relay; soca-engine reads at <code>rtsp://&lt;edge-ip&gt;:8554/&lt;camera&gt;</code>
 2. <strong>YOLO Inference</strong> — Frame analyzed: object detection + ROI filtering + tracking
 3. <strong>Rule Evaluation</strong> — Detection matched against configured rules (zone, threshold, schedule)
 4. <strong>Snapshot</strong> — Incident frame saved locally and synced to Google Cloud Storage (10-second async)

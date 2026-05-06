@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/testing/soca-dashboard-test-results/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/testing/soca-dashboard-test-results/">
       
       
       
@@ -782,7 +782,7 @@
 <h1 id="soca-dashboard-functional-test-results">SOCA Dashboard — Functional Test Results<a class="headerlink" href="#soca-dashboard-functional-test-results" title="Permanent link">&para;</a></h1>
 <p><strong>Application:</strong> soca-dashboard<br />
 <strong>Version:</strong> Django 6.0.3 / Python 3.12.13<br />
-<strong>Base URL:</strong> <code>http://localhost:8080</code><br />
+<strong>Base URL:</strong> <code>http://&lt;edge-ip&gt;:8080</code><br />
 <strong>Test Date:</strong> 2026-04-12<br />
 <strong>Executed by:</strong> Claude (automated via Chrome extension)<br />
 <strong>Tester account:</strong> irpus (Admin role)</p>
@@ -1323,7 +1323,7 @@
 <tr>
 <td>TC-EDGE-001</td>
 <td>Save valid engine URL</td>
-<td>Set Engine URL to <code>http://localhost:8001</code>, save</td>
+<td>Set Engine URL to <code>http://&lt;edge-ip&gt;:8001</code>, save</td>
 <td>"Edge settings saved." shown</td>
 <td>"Edge settings saved." shown; URL persisted</td>
 <td>✅ PASS</td>
@@ -1467,7 +1467,7 @@
 <td>Upload non-model file</td>
 <td>Upload <code>test_invalid.txt</code></td>
 <td>Error: Invalid file type</td>
-<td><code>"Upload failed: 422 Client Error: Unprocessable Entity for url: http://localhost:8001/models/upload"</code> — file rejected but error is raw HTTP message</td>
+<td><code>"Upload failed: 422 Client Error: Unprocessable Entity for url: http://&lt;edge-ip&gt;:8001/models/upload"</code> — file rejected but error is raw HTTP message</td>
 <td>⚠️ PARTIAL</td>
 <td>File correctly blocked; UX could be improved with user-friendly error</td>
 </tr>
@@ -1604,7 +1604,7 @@
 <p><strong>File sizes "NaN KB"</strong> — All models in the AI Models list show "NaN KB" for size. The engine API may not be returning file size data, or the dashboard has a parsing error.</p>
 </li>
 <li>
-<p><strong>Raw HTTP errors surfaced</strong> — Several error messages expose internal HTTP error details to end users (e.g., "422 Client Error: Unprocessable Entity for url: http://localhost:8001/models/upload", "404 Client Error: Not Found"). These should be replaced with user-friendly messages.</p>
+<p><strong>Raw HTTP errors surfaced</strong> — Several error messages expose internal HTTP error details to end users (e.g., "422 Client Error: Unprocessable Entity for url: http://<edge-ip>:8001/models/upload", "404 Client Error: Not Found"). These should be replaced with user-friendly messages.</p>
 </li>
 <li>
 <p><strong>Restart behavior</strong> — Both Restart buttons (soca-dashboard and soca-engine) cause the browser DevTools connection to timeout. There is no visible "Restart triggered" toast before the connection drops. Consider displaying the message before initiating the restart.</p>
@@ -1617,7 +1617,7 @@
 </li>
 </ol>
 <hr />
-<p><em>Report generated: 2026-04-12 | Test environment: macOS, Chrome, soca-dashboard @ localhost:8080, soca-engine @ localhost:8001</em></p>
+<p><em>Report generated: 2026-04-12 | Test environment: macOS, Chrome, soca-dashboard @ <edge-ip>:8080, soca-engine @ <edge-ip>:8001</em></p>
 
 
 

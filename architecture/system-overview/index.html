@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/architecture/system-overview/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/architecture/system-overview/">
       
       
         <link rel="prev" href="../../overview/product-offering-usecases/">
@@ -1165,7 +1165,7 @@ graph TB
         ENG["soca-engine\nFastAPI · :8001\nYOLO Inference\nJob Management"]
 
         CAM --&gt;|RTSP stream| MTX
-        MTX --&gt;|rtsp://localhost:8554| ENG
+        MTX --&gt;|rtsp://&lt;edge-ip&gt;:8554| ENG
         DASH --&gt;|push config / API key| ENG
     end
 
@@ -1496,7 +1496,7 @@ INFER_HALF=false          # FP16 half-precision — opt-in, test before enabling
 <pre class="mermaid"><code>%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#ffffff', 'edgeLabelBackground': '#f8fafc'}}}%%
 flowchart LR
     CAM["📷 CCTV Camera"]:::cam --&gt;|"RTSP (on-demand)"| MTX["MediaMTX Relay\nsourceOnDemand: yes"]:::relay
-    MTX --&gt;|"rtsp://localhost:8554/camera_name\n(detection)"| ENG["soca-engine"]:::edge
+    MTX --&gt;|"rtsp://&lt;edge-ip&gt;:8554/camera_name\n(detection)"| ENG["soca-engine"]:::edge
     MTX --&gt;|"http://edge-host:8888/camera_name\n(HLS live view)"| BRW["🌐 Browser"]:::viewer
 
     classDef cam fill:#0369a1,color:#ffffff,stroke:#075985,font-color:#ffffff
@@ -1505,7 +1505,7 @@ flowchart LR
     classDef viewer fill:#7c3aed,color:#ffffff,stroke:#6d28d9,font-color:#ffffff</code></pre>
 <p><strong>Why relay instead of direct camera RTSP:</strong>
 - Physical cameras have limited connection slots — relay means only one outbound connection per camera
-- Camera credentials stay on the edge; job configs carry <code>rtsp://localhost:8554/&lt;name&gt;</code> instead of <code>rtsp://user:pass@camera-ip/...</code>
+- Camera credentials stay on the edge; job configs carry <code>rtsp://&lt;edge-ip&gt;:8554/&lt;name&gt;</code> instead of <code>rtsp://user:pass@camera-ip/...</code>
 - <code>sourceOnDemand: yes</code> on every path means MediaMTX connects to the camera only when a consumer (soca-engine or a browser) is actively reading — no idle connections</p>
 <p><strong>MediaMTX ports:</strong></p>
 <table>
@@ -1547,12 +1547,12 @@ flowchart LR
 <tr>
 <td><code>EdgeConfig.mediamtx_rtsp_url</code></td>
 <td>soca-dashboard Settings → Connection</td>
-<td>Base RTSP URL used by soca-engine, default <code>rtsp://localhost:8554</code></td>
+<td>Base RTSP URL used by soca-engine, default <code>rtsp://&lt;edge-ip&gt;:8554</code></td>
 </tr>
 <tr>
 <td><code>Edge.mediamtx_url</code></td>
 <td>soca-control Settings → Edit Edge</td>
-<td>Public HLS URL reachable from operator's browser, e.g. <code>http://192.168.1.100:8888</code></td>
+<td>Public HLS URL reachable from operator's browser, e.g. <code>http://&lt;edge-ip&gt;:8888</code></td>
 </tr>
 </tbody>
 </table>

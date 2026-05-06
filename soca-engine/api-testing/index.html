@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/soca-engine/api-testing/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/soca-engine/api-testing/">
       
       
         <link rel="prev" href="../../soca-control/pubsub-transport-plan/">
@@ -1261,11 +1261,11 @@
 
 
 <h1 id="api-testing-guide">API Testing Guide<a class="headerlink" href="#api-testing-guide" title="Permanent link">&para;</a></h1>
-<p>Base URL: <code>http://localhost:8001</code></p>
-<p><strong>Test Camera:</strong> Bardi-Stairs-Front — <code>rtsp://localhost:8554/Bardi-Stairs-Front</code></p>
+<p>Base URL: <code>http://&lt;edge-ip&gt;:8001</code></p>
+<p><strong>Test Camera:</strong> Bardi-Stairs-Front — <code>rtsp://&lt;edge-ip&gt;:8554/Bardi-Stairs-Front</code></p>
 <hr />
 <h2 id="1-health-check">1. Health Check<a class="headerlink" href="#1-health-check" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8001/health
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://&lt;edge-ip&gt;:8001/health
 </code></pre></div>
 <p>Expected:
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
@@ -1277,7 +1277,7 @@
 </code></pre></div></p>
 <hr />
 <h2 id="2-list-available-models">2. List Available Models<a class="headerlink" href="#2-list-available-models" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8001/models
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://&lt;edge-ip&gt;:8001/models
 </code></pre></div>
 <p>Expected:
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
@@ -1288,11 +1288,11 @@
 </code></pre></div></p>
 <hr />
 <h2 id="3-start-a-job-basic-no-roi-no-rules">3. Start a Job — Basic (no ROI, no rules)<a class="headerlink" href="#3-start-a-job-basic-no-roi-no-rules" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://&lt;edge-ip&gt;:8001/jobs/start<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
 <span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
-<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://&lt;edge-ip&gt;:8554/Bardi-Stairs-Front&quot;,</span>
 <span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
 <span class="s1">    &quot;cls_ids&quot;: [0],</span>
 <span class="s1">    &quot;frame_interval_ms&quot;: 1000</span>
@@ -1307,12 +1307,12 @@
 </code></pre></div></p>
 <hr />
 <h2 id="4-start-a-job-with-monitor-live-stream-analytics">4. Start a Job — With Monitor (live stream analytics)<a class="headerlink" href="#4-start-a-job-with-monitor-live-stream-analytics" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://&lt;edge-ip&gt;:8001/jobs/start<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
 <span class="s1">    &quot;job_id&quot;: &quot;job-stairs-monitor&quot;,</span>
 <span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
-<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://&lt;edge-ip&gt;:8554/Bardi-Stairs-Front&quot;,</span>
 <span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
 <span class="s1">    &quot;cls_ids&quot;: [0],</span>
 <span class="s1">    &quot;frame_interval_ms&quot;: 1000,</span>
@@ -1320,7 +1320,7 @@
 <span class="s1">  }&#39;</span>
 </code></pre></div>
 <p>Then open in browser:
-<div class="highlight"><pre><span></span><code>http://localhost:8001/jobs/job-stairs-monitor/monitor
+<div class="highlight"><pre><span></span><code>http://&lt;edge-ip&gt;:8001/jobs/job-stairs-monitor/monitor
 </code></pre></div></p>
 <p>Stream shows:
 - Bounding boxes — green (inside ROI) / gray (outside ROI)
@@ -1328,12 +1328,12 @@
 - Bottom bar: aging duration per detected class</p>
 <hr />
 <h2 id="5-start-a-job-with-roi-polygon-monitor">5. Start a Job — With ROI Polygon + Monitor<a class="headerlink" href="#5-start-a-job-with-roi-polygon-monitor" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://&lt;edge-ip&gt;:8001/jobs/start<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
 <span class="s1">    &quot;job_id&quot;: &quot;job-stairs-roi&quot;,</span>
 <span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
-<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://&lt;edge-ip&gt;:8554/Bardi-Stairs-Front&quot;,</span>
 <span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
 <span class="s1">    &quot;cls_ids&quot;: [0, 1, 2],</span>
 <span class="s1">    &quot;frame_interval_ms&quot;: 2000,</span>
@@ -1345,15 +1345,15 @@
 <span class="s1">  }&#39;</span>
 </code></pre></div>
 <p>Monitor URL:
-<div class="highlight"><pre><span></span><code>http://localhost:8001/jobs/job-stairs-roi/monitor
+<div class="highlight"><pre><span></span><code>http://&lt;edge-ip&gt;:8001/jobs/job-stairs-roi/monitor
 </code></pre></div></p>
 <hr />
 <h2 id="6-start-a-job-with-roi-rectangle">6. Start a Job — With ROI Rectangle<a class="headerlink" href="#6-start-a-job-with-roi-rectangle" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://&lt;edge-ip&gt;:8001/jobs/start<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
 <span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
-<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://&lt;edge-ip&gt;:8554/Bardi-Stairs-Front&quot;,</span>
 <span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
 <span class="s1">    &quot;cls_ids&quot;: [0],</span>
 <span class="s1">    &quot;frame_interval_ms&quot;: 1000,</span>
@@ -1366,12 +1366,12 @@
 </code></pre></div>
 <hr />
 <h2 id="7-start-a-job-with-rules-person-count-threshold">7. Start a Job — With Rules (person count threshold)<a class="headerlink" href="#7-start-a-job-with-rules-person-count-threshold" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://&lt;edge-ip&gt;:8001/jobs/start<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
 <span class="s1">    &quot;job_id&quot;: &quot;job-stairs-rules&quot;,</span>
 <span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
-<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://&lt;edge-ip&gt;:8554/Bardi-Stairs-Front&quot;,</span>
 <span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
 <span class="s1">    &quot;cls_ids&quot;: [0],</span>
 <span class="s1">    &quot;frame_interval_ms&quot;: 1000,</span>
@@ -1398,12 +1398,12 @@
 </code></pre></div>
 <hr />
 <h2 id="8-start-a-job-with-aging-rule-person-present-30-seconds">8. Start a Job — With Aging Rule (person present &gt; 30 seconds)<a class="headerlink" href="#8-start-a-job-with-aging-rule-person-present-30-seconds" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://&lt;edge-ip&gt;:8001/jobs/start<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
 <span class="s1">    &quot;job_id&quot;: &quot;job-stairs-aging&quot;,</span>
 <span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
-<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://&lt;edge-ip&gt;:8554/Bardi-Stairs-Front&quot;,</span>
 <span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
 <span class="s1">    &quot;cls_ids&quot;: [0],</span>
 <span class="s1">    &quot;frame_interval_ms&quot;: 1000,</span>
@@ -1432,11 +1432,11 @@
 </code></pre></div>
 <hr />
 <h2 id="9-start-a-job-with-webhook-action">9. Start a Job — With Webhook Action<a class="headerlink" href="#9-start-a-job-with-webhook-action" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://&lt;edge-ip&gt;:8001/jobs/start<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
 <span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
-<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://&lt;edge-ip&gt;:8554/Bardi-Stairs-Front&quot;,</span>
 <span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
 <span class="s1">    &quot;cls_ids&quot;: [0, 2, 3],</span>
 <span class="s1">    &quot;frame_interval_ms&quot;: 2000,</span>
@@ -1449,13 +1449,13 @@
 <span class="s1">        ],</span>
 <span class="s1">        &quot;actions&quot;: [</span>
 <span class="s1">          {&quot;type&quot;: &quot;save_snapshot&quot;},</span>
-<span class="s1">          {&quot;type&quot;: &quot;webhook&quot;, &quot;url&quot;: &quot;http://localhost:8000/api/alerts/receive/&quot;},</span>
+<span class="s1">          {&quot;type&quot;: &quot;webhook&quot;, &quot;url&quot;: &quot;http://&lt;soca-control-ip&gt;:8000/api/alerts/receive/&quot;},</span>
 <span class="s1">          {&quot;type&quot;: &quot;log&quot;, &quot;level&quot;: &quot;error&quot;}</span>
 <span class="s1">        ]</span>
 <span class="s1">      }</span>
 <span class="s1">    ],</span>
 <span class="s1">    &quot;output&quot;: {</span>
-<span class="s1">      &quot;redis_url&quot;: &quot;redis://localhost:6379&quot;,</span>
+<span class="s1">      &quot;redis_url&quot;: &quot;redis://&lt;soca-control-ip&gt;:6379&quot;,</span>
 <span class="s1">      &quot;stream_name&quot;: &quot;soca:detections&quot;,</span>
 <span class="s1">      &quot;max_snapshot_per_minute&quot;: 10,</span>
 <span class="s1">      &quot;snapshot_dir&quot;: &quot;snapshots/&quot;</span>
@@ -1465,12 +1465,12 @@
 </code></pre></div>
 <hr />
 <h2 id="10-start-a-job-full-example-all-options">10. Start a Job — Full Example (all options)<a class="headerlink" href="#10-start-a-job-full-example-all-options" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://&lt;edge-ip&gt;:8001/jobs/start<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
 <span class="s1">    &quot;job_id&quot;: &quot;job-stairs-01&quot;,</span>
 <span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
-<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://&lt;edge-ip&gt;:8554/Bardi-Stairs-Front&quot;,</span>
 <span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
 <span class="s1">    &quot;cls_ids&quot;: [0, 1, 2],</span>
 <span class="s1">    &quot;frame_interval_ms&quot;: 1500,</span>
@@ -1503,13 +1503,13 @@
 <span class="s1">        &quot;actions&quot;: [</span>
 <span class="s1">          {&quot;type&quot;: &quot;save_snapshot&quot;},</span>
 <span class="s1">          {&quot;type&quot;: &quot;publish_queue&quot;},</span>
-<span class="s1">          {&quot;type&quot;: &quot;webhook&quot;, &quot;url&quot;: &quot;http://localhost:8000/api/alerts/receive/&quot;},</span>
+<span class="s1">          {&quot;type&quot;: &quot;webhook&quot;, &quot;url&quot;: &quot;http://&lt;soca-control-ip&gt;:8000/api/alerts/receive/&quot;},</span>
 <span class="s1">          {&quot;type&quot;: &quot;log&quot;, &quot;level&quot;: &quot;error&quot;}</span>
 <span class="s1">        ]</span>
 <span class="s1">      }</span>
 <span class="s1">    ],</span>
 <span class="s1">    &quot;output&quot;: {</span>
-<span class="s1">      &quot;redis_url&quot;: &quot;redis://localhost:6379&quot;,</span>
+<span class="s1">      &quot;redis_url&quot;: &quot;redis://&lt;soca-control-ip&gt;:6379&quot;,</span>
 <span class="s1">      &quot;stream_name&quot;: &quot;soca:detections&quot;,</span>
 <span class="s1">      &quot;max_snapshot_per_minute&quot;: 5,</span>
 <span class="s1">      &quot;snapshot_dir&quot;: &quot;snapshots/&quot;</span>
@@ -1518,18 +1518,18 @@
 <span class="s1">  }&#39;</span>
 </code></pre></div>
 <p>Monitor URL:
-<div class="highlight"><pre><span></span><code>http://localhost:8001/jobs/job-stairs-01/monitor
+<div class="highlight"><pre><span></span><code>http://&lt;edge-ip&gt;:8001/jobs/job-stairs-01/monitor
 </code></pre></div></p>
 <hr />
 <h2 id="11-view-live-monitor-stream">11. View Live Monitor Stream<a class="headerlink" href="#11-view-live-monitor-stream" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># Open in browser — shows annotated video with detection overlays</span>
-http://localhost:8001/jobs/JOB_ID/monitor
+http://&lt;edge-ip&gt;:8001/jobs/JOB_ID/monitor
 </code></pre></div>
 <p>Returns <code>400</code> if job was started without <code>monitor: true</code>.
 Returns <code>404</code> if job is not running.</p>
 <hr />
 <h2 id="12-get-job-status">12. Get Job Status<a class="headerlink" href="#12-get-job-status" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8001/jobs/JOB_ID
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://&lt;edge-ip&gt;:8001/jobs/JOB_ID
 </code></pre></div>
 <p>Expected:
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
@@ -1544,11 +1544,11 @@ Returns <code>404</code> if job is not running.</p>
 </code></pre></div></p>
 <hr />
 <h2 id="13-list-all-jobs">13. List All Jobs<a class="headerlink" href="#13-list-all-jobs" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8001/jobs/
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://&lt;edge-ip&gt;:8001/jobs/
 </code></pre></div>
 <hr />
 <h2 id="14-stop-a-job">14. Stop a Job<a class="headerlink" href="#14-stop-a-job" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/JOB_ID/stop
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://&lt;edge-ip&gt;:8001/jobs/JOB_ID/stop
 </code></pre></div>
 <p>Expected:
 <div class="highlight"><pre><span></span><code><span class="p">{</span>

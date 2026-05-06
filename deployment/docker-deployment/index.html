@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/deployment/docker-deployment/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/deployment/docker-deployment/">
       
       
         <link rel="prev" href="../../architecture/system-overview/">
@@ -1949,10 +1949,10 @@ docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </spa
 docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>soca-control<span class="w"> </span>python<span class="w"> </span>manage.py<span class="w"> </span>createsuperuser
 </code></pre></div>
 <h3 id="5-verify-health">5. Verify health<a class="headerlink" href="#5-verify-health" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8001/health<span class="w">    </span><span class="c1"># soca-engine</span>
-curl<span class="w"> </span>http://localhost:8010/health<span class="w">    </span><span class="c1"># soca-service</span>
-curl<span class="w"> </span>-I<span class="w"> </span>http://localhost:8080/<span class="w">       </span><span class="c1"># soca-dashboard</span>
-curl<span class="w"> </span>-I<span class="w"> </span>http://localhost:8000/<span class="w">       </span><span class="c1"># soca-control</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://&lt;edge-ip&gt;:8001/health<span class="w">    </span><span class="c1"># soca-engine</span>
+curl<span class="w"> </span>http://&lt;soca-control-ip&gt;:8010/health<span class="w">    </span><span class="c1"># soca-service</span>
+curl<span class="w"> </span>-I<span class="w"> </span>http://&lt;edge-ip&gt;:8080/<span class="w">       </span><span class="c1"># soca-dashboard</span>
+curl<span class="w"> </span>-I<span class="w"> </span>http://&lt;soca-control-ip&gt;:8000/<span class="w">       </span><span class="c1"># soca-control</span>
 </code></pre></div>
 <hr />
 <h2 id="standalone-deployment-per-repo">Standalone Deployment (per-repo)<a class="headerlink" href="#standalone-deployment-per-repo" title="Permanent link">&para;</a></h2>
@@ -2007,7 +2007,7 @@ docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> 
 <tbody>
 <tr>
 <td>Engine URL</td>
-<td><code>http://localhost:8001</code></td>
+<td><code>http://&lt;edge-ip&gt;:8001</code></td>
 </tr>
 <tr>
 <td>Engine API Key</td>
@@ -2172,7 +2172,7 @@ docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> 
 </tr>
 <tr>
 <td><code>CSRF_TRUSTED_ORIGINS</code></td>
-<td><code>http://localhost:8000</code></td>
+<td><code>http://&lt;soca-control-ip&gt;:8000</code></td>
 <td>CSRF trusted origins</td>
 </tr>
 </tbody>
@@ -2282,7 +2282,7 @@ docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> 
 </tbody>
 </table>
 <p>Cross-container calls:
-- soca-dashboard → soca-engine: <code>http://localhost:8001</code> (same container)
+- soca-dashboard → soca-engine: <code>http://&lt;edge-ip&gt;:8001</code> (same container)
 - soca-control → soca-engine: <code>http://soca-edge:8001</code>
 - soca-service → soca-control: <code>http://soca-control:8000</code></p>
 <h3 id="firewall-recommendations">Firewall Recommendations<a class="headerlink" href="#firewall-recommendations" title="Permanent link">&para;</a></h3>
@@ -2396,13 +2396,13 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
 - <code>DASHBOARD_SECRET_KEY</code> or <code>CONTROL_SECRET_KEY</code> not set → Django refuses to start</p>
 <h3 id="soca-control-csrf-403-errors">soca-control CSRF / 403 errors<a class="headerlink" href="#soca-control-csrf-403-errors" title="Permanent link">&para;</a></h3>
 <p>Add your domain to <code>.env</code>:
-<div class="highlight"><pre><span></span><code>CSRF_TRUSTED_ORIGINS=https://yourdomain.com,http://localhost:8000
+<div class="highlight"><pre><span></span><code>CSRF_TRUSTED_ORIGINS=https://yourdomain.com,http://&lt;soca-control-ip&gt;:8000
 </code></pre></div>
 Then <code>docker compose up -d</code> to apply.</p>
 <h3 id="models-not-showing-in-ai-models-tab">Models not showing in AI Models tab<a class="headerlink" href="#models-not-showing-in-ai-models-tab" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Verify <code>ENGINE_API_KEY</code> matches between soca-dashboard settings and <code>.env</code></li>
-<li>Test directly: <code>curl -H "Authorization: Bearer &lt;key&gt;" http://localhost:8001/models</code></li>
+<li>Test directly: <code>curl -H "Authorization: Bearer &lt;key&gt;" http://&lt;edge-ip&gt;:8001/models</code></li>
 <li>Restart soca-edge after any engine code change: <code>docker compose restart soca-edge</code></li>
 </ol>
 <h3 id="soca-service-not-consuming-alerts">soca-service not consuming alerts<a class="headerlink" href="#soca-service-not-consuming-alerts" title="Permanent link">&para;</a></h3>

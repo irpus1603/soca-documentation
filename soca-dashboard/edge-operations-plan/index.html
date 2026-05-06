@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/soca-dashboard/edge-operations-plan/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/soca-dashboard/edge-operations-plan/">
       
       
         <link rel="prev" href="../design-spec/">
@@ -2034,7 +2034,7 @@ Insert these after the existing hidden field for <code>engine_env_path</code> (l
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;/Users/mac-mini-home/Supriyadi/Projects/soca client-server/soca-dashboard&quot;</span>
 python<span class="w"> </span>manage.py<span class="w"> </span>runserver<span class="w"> </span><span class="m">8000</span><span class="w"> </span><span class="p">&amp;</span>
 sleep<span class="w"> </span><span class="m">2</span>
-curl<span class="w"> </span>-s<span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>-w<span class="w"> </span><span class="s2">&quot;%{http_code}&quot;</span><span class="w"> </span>http://localhost:8000/settings/<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Cookie: sessionid=...&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;manual check needed&quot;</span>
+curl<span class="w"> </span>-s<span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>-w<span class="w"> </span><span class="s2">&quot;%{http_code}&quot;</span><span class="w"> </span>http://&lt;soca-control-ip&gt;:8000/settings/<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Cookie: sessionid=...&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;manual check needed&quot;</span>
 </code></pre></div>
 <ul>
 <li>[ ] <strong>Step 7: Commit</strong></li>
@@ -2045,7 +2045,7 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
 <hr />
 <h2 id="task-7-manual-end-to-end-verification">Task 7: Manual End-to-End Verification<a class="headerlink" href="#task-7-manual-end-to-end-verification" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[ ] Log in to soca-dashboard at <code>http://localhost:8000</code></li>
+<li>[ ] Log in to soca-dashboard at <code>http://&lt;soca-control-ip&gt;:8000</code></li>
 <li>[ ] Go to <strong>Settings &gt; Edge Config</strong>: fill in <code>Engine DB Path</code> and <code>Snapshots Root</code>, save</li>
 <li>[ ] Go to <strong>Settings &gt; Operations</strong>: click <strong>Generate Key</strong> → key appears masked</li>
 <li>[ ] Click <strong>Reveal</strong> → key shows in plain text; <strong>Copy</strong> copies to clipboard</li>
@@ -2053,8 +2053,8 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
 <li>[ ] Verify <strong>Purge Now</strong> button enables after preview</li>
 <li>[ ] Click <strong>Purge Now</strong> → confirmation modal appears → cancel → nothing deleted</li>
 <li>[ ] Schedule Control table loads and refreshes every 10s</li>
-<li>[ ] Test API: <code>curl -H "Authorization: Api-Key &lt;key&gt;" http://localhost:8000/api/v1/schedules/</code> → JSON list</li>
-<li>[ ] Test bad key: <code>curl -H "Authorization: Api-Key wrong" http://localhost:8000/api/v1/schedules/</code> → <code>{"error": "Invalid or missing API key"}</code></li>
+<li>[ ] Test API: <code>curl -H "Authorization: Api-Key &lt;key&gt;" http://&lt;soca-control-ip&gt;:8000/api/v1/schedules/</code> → JSON list</li>
+<li>[ ] Test bad key: <code>curl -H "Authorization: Api-Key wrong" http://&lt;soca-control-ip&gt;:8000/api/v1/schedules/</code> → <code>{"error": "Invalid or missing API key"}</code></li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="nb">kill</span><span class="w"> </span>%1<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w">  </span><span class="c1"># stop dev server</span>
 </code></pre></div>

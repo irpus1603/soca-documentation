@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/soca-engine/object-detection-processor/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/soca-engine/object-detection-processor/">
       
       
         <link rel="prev" href="../api-testing/">
@@ -1809,7 +1809,7 @@
 <ul>
 <li>soca-engine <strong>does not start or manage</strong> MediaMTX</li>
 <li>soca-engine consumes RTSP URLs that MediaMTX proxies/re-streams</li>
-<li>The <code>rtsp_url</code> in <code>JobConfig</code> must point to a MediaMTX path (e.g. <code>rtsp://localhost:8554/Bardi-Stairs-Front</code>)</li>
+<li>The <code>rtsp_url</code> in <code>JobConfig</code> must point to a MediaMTX path (e.g. <code>rtsp://&lt;edge-ip&gt;:8554/Bardi-Stairs-Front</code>)</li>
 <li>TCP transport is <strong>forced globally</strong> via <code>os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;tcp"</code></li>
 <li>MediaMTX config (path rules, auth, source cameras) is managed separately via <code>mediamtx.yml</code></li>
 <li>Camera source URLs live inside <code>mediamtx.yml</code> — soca-engine only talks to MediaMTX output paths</li>
@@ -1818,12 +1818,12 @@
 <p><strong>Example MediaMTX path config (<code>mediamtx.yml</code>):</strong>
 <div class="highlight"><pre><span></span><code><span class="nt">paths</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">Bardi-Stairs-Front</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rtsp://admin:abim@192.168.18.71:8554/Streaming/Channels/101</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rtsp://admin:abim@&lt;camera-ip&gt;:8554/Streaming/Channels/101</span>
 <span class="w">    </span><span class="nt">rtspTransport</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tcp</span>
 <span class="w">    </span><span class="nt">sourceOnDemand</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">no</span>
 </code></pre></div></p>
 <p><strong>soca-engine consumes:</strong>
-<div class="highlight"><pre><span></span><code>rtsp://localhost:8554/Bardi-Stairs-Front
+<div class="highlight"><pre><span></span><code>rtsp://&lt;edge-ip&gt;:8554/Bardi-Stairs-Front
 </code></pre></div></p>
 <hr />
 <h2 id="api-contract">API Contract<a class="headerlink" href="#api-contract" title="Permanent link">&para;</a></h2>
@@ -1832,7 +1832,7 @@
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;job_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;optional-custom-id&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;camera_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bardi-stairs-front&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;rtsp_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;rtsp_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rtsp://&lt;edge-ip&gt;:8554/Bardi-Stairs-Front&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;model_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;yolo/yolo11n.pt&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;cls_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">],</span>
 <span class="w">  </span><span class="nt">&quot;roi&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1866,7 +1866,7 @@
 <span class="w">        </span><span class="p">},</span>
 <span class="w">        </span><span class="p">{</span>
 <span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;webhook&quot;</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:8000/api/alerts/receive/&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://&lt;soca-control-ip&gt;:8000/api/alerts/receive/&quot;</span><span class="p">,</span>
 <span class="w">          </span><span class="nt">&quot;message_template&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{in_roi_count} person(s) in zone at {time}&quot;</span>
 <span class="w">        </span><span class="p">},</span>
 <span class="w">        </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;log&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;warning&quot;</span><span class="p">}</span>
@@ -1874,7 +1874,7 @@
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">],</span>
 <span class="w">  </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;redis_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;redis://localhost:6379&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;redis_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;redis://&lt;soca-control-ip&gt;:6379&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;stream_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;soca:detections&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;max_snapshot_per_minute&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;snapshot_dir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;snapshots/&quot;</span>
@@ -2403,7 +2403,7 @@ psutil==6.1.1
 <hr />
 <h2 id="environment-variables-configpy">Environment Variables (<code>config.py</code>)<a class="headerlink" href="#environment-variables-configpy" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>EDGE_NAME               (required — no default; unique name for this edge device)
-REDIS_URL               redis://localhost:6379
+REDIS_URL               redis://&lt;soca-control-ip&gt;:6379
 REDIS_STREAM_NAME       soca:detections
 REDIS_STREAM_MAXLEN     10000
 DB_PATH                 soca_engine.db

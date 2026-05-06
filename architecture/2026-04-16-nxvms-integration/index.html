@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/architecture/2026-04-16-nxvms-integration/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/architecture/2026-04-16-nxvms-integration/">
       
       
       
@@ -876,11 +876,11 @@
         <span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;RTSP relay: MediaMTX (file-based) or NX VMS (REST API)&#39;</span>
     <span class="p">)</span>
     <span class="n">nxvms_url</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;NX VMS server URL, e.g. http://192.168.1.100:7001&#39;</span><span class="p">)</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;NX VMS server URL, e.g. http://&lt;camera-ip&gt;:7001&#39;</span><span class="p">)</span>
     <span class="n">nxvms_username</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
     <span class="n">nxvms_password</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
     <span class="n">nxvms_rtsp_url</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;NX VMS RTSP base URL, e.g. rtsp://192.168.1.100:7554&#39;</span><span class="p">)</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;NX VMS RTSP base URL, e.g. rtsp://&lt;camera-ip&gt;:7554&#39;</span><span class="p">)</span>
 </code></pre></div>
 <ul>
 <li>[ ] <strong>Step 2: Add <code>nxvms_device_id</code> to <code>Camera</code></strong></li>
@@ -1215,7 +1215,7 @@ python<span class="w"> </span>manage.py<span class="w"> </span>migrate
             <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;form-control md:col-span-2&quot;</span><span class="p">&gt;</span>
               <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label&quot;</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label-text font-medium&quot;</span><span class="p">&gt;</span>NX VMS Server URL<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
               <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;nxvms_url&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;{{ edge.nxvms_url|default:&#39;&#39; }}&quot;</span>
-                     <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;http://192.168.1.100:7001&quot;</span>
+                     <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;http://&lt;camera-ip&gt;:7001&quot;</span>
                      <span class="na">class</span><span class="o">=</span><span class="s">&quot;input input-bordered font-mono text-sm&quot;</span> <span class="p">/&gt;</span>
               <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label&quot;</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label-text-alt opacity-60&quot;</span><span class="p">&gt;</span>Base URL of NX VMS server (REST API endpoint)<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
             <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
@@ -1234,7 +1234,7 @@ python<span class="w"> </span>manage.py<span class="w"> </span>migrate
             <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;form-control md:col-span-2&quot;</span><span class="p">&gt;</span>
               <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label&quot;</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label-text font-medium&quot;</span><span class="p">&gt;</span>NX VMS RTSP Base URL<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
               <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;nxvms_rtsp_url&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;{{ edge.nxvms_rtsp_url|default:&#39;&#39; }}&quot;</span>
-                     <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;rtsp://192.168.1.100:7554&quot;</span>
+                     <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;rtsp://&lt;camera-ip&gt;:7554&quot;</span>
                      <span class="na">class</span><span class="o">=</span><span class="s">&quot;input input-bordered font-mono text-sm&quot;</span> <span class="p">/&gt;</span>
               <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label&quot;</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label-text-alt opacity-60&quot;</span><span class="p">&gt;</span>RTSP relay URL soca-engine connects to. Streams served as {base_url}/{physicalId}<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
             <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
@@ -1642,7 +1642,7 @@ python<span class="w"> </span>manage.py<span class="w"> </span>register_cameras_
 </code></pre></div>
 <p>Confirm all cameras get <code>nxvms_device_id</code> after the second run.</p>
 <ul>
-<li>[ ] <strong>V8: MediaMTX fallback</strong> — Switch EdgeConfig back to <code>relay_type=mediamtx</code>. Start a schedule. Confirm rtsp_url is <code>rtsp://localhost:8554/{camera_name}</code>.</li>
+<li>[ ] <strong>V8: MediaMTX fallback</strong> — Switch EdgeConfig back to <code>relay_type=mediamtx</code>. Start a schedule. Confirm rtsp_url is <code>rtsp://&lt;edge-ip&gt;:8554/{camera_name}</code>.</li>
 </ul>
 
 

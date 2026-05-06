@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/repository-overview/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/repository-overview/">
       
       
         <link rel="prev" href="..">
@@ -1175,7 +1175,7 @@
 <li><strong>Report categories</strong> — Intrusion, PPE, Object Detection, People Counting, Crowd, LPR</li>
 <li><strong>PPE violations breakdown</strong> — per-class detection summary in PPE report</li>
 <li><strong>GCS credentials upload</strong> — file picker UI in soca-dashboard and soca-control Settings</li>
-<li><strong>MediaMTX relay for detection jobs</strong> — soca-engine connects via <code>rtsp://localhost:8554/&lt;camera&gt;</code> instead of direct camera RTSP; reduces physical camera connection slots and keeps credentials off the wire</li>
+<li><strong>MediaMTX relay for detection jobs</strong> — soca-engine connects via <code>rtsp://&lt;edge-ip&gt;:8554/&lt;camera&gt;</code> instead of direct camera RTSP; reduces physical camera connection slots and keeps credentials off the wire</li>
 <li><strong>Stream mode badge</strong> — Assets page shows <code>Relay</code> (green) or <code>Direct</code> (yellow) badge per camera reflecting the active connection mode</li>
 <li><strong>Live stream viewer</strong> — Assets page play button opens MediaMTX's built-in HLS web player in a resizable popup window per camera (requires <code>mediamtx_url</code> set on the edge)</li>
 <li><strong>Popup windows for live monitor</strong> — monitor stream thumbnails and maximize button open in a controlled 854×480 resizable popup instead of a new browser tab</li>

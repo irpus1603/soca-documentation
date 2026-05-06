@@ -1,163 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://example.com/soca-documentation/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/SETUP/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/SETUP/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/SOCA-Platform-Documentation-Complete/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/SOCA-Platform-Documentation-Complete/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/repository-overview/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/repository-overview/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/architecture/2026-04-16-nxvms-integration/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/architecture/2026-04-16-nxvms-integration/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/architecture/licensing-model/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/architecture/licensing-model/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/architecture/sow-vs-soca-gap-analysis/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/architecture/sow-vs-soca-gap-analysis/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/architecture/system-overview/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/architecture/system-overview/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/deployment/bare-metal-rhel-guide/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/deployment/bare-metal-rhel-guide/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/deployment/cython-protection-guide/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/deployment/cython-protection-guide/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/deployment/docker-deployment/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/deployment/docker-deployment/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/deployment/gcp-cloud-run-guide/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/deployment/gcp-cloud-run-guide/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/deployment/gcs-snapshot-storage/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/deployment/gcs-snapshot-storage/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/deployment/grafana-reporting-guide/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/deployment/grafana-reporting-guide/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/deployment/metabase-reporting-guide/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/deployment/metabase-reporting-guide/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/deployment/pubsub-setup-guide/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/deployment/pubsub-setup-guide/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/guides/deployment-paths/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/guides/deployment-paths/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/guides/docs-deployment/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/guides/docs-deployment/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/guides/soca-control-user-guide/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/guides/soca-control-user-guide/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/guides/testing/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/guides/testing/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/guides/user-guides/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/guides/user-guides/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/overview/presentation-script/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/overview/presentation-script/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/overview/product-offering-usecases/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/overview/product-offering-usecases/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/soca-control/design-spec/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/soca-control/design-spec/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/soca-control/edge-operations-plan/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/soca-control/edge-operations-plan/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/soca-control/implementation-plan/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/soca-control/implementation-plan/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/soca-control/pubsub-transport-plan/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/soca-control/pubsub-transport-plan/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/soca-dashboard/2026-03-27-crossing-line-violations-design/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/soca-dashboard/2026-03-27-crossing-line-violations-design/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/soca-dashboard/2026-03-27-crossing-line-violations-plan/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/soca-dashboard/2026-03-27-crossing-line-violations-plan/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/soca-dashboard/advanced-rule-management-design/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/soca-dashboard/advanced-rule-management-design/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/soca-dashboard/design-spec/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/soca-dashboard/design-spec/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/soca-dashboard/edge-operations-design/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/soca-dashboard/edge-operations-design/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/soca-dashboard/edge-operations-plan/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/soca-dashboard/edge-operations-plan/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/soca-dashboard/rule-management-plan/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/soca-dashboard/rule-management-plan/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/soca-engine/api-testing/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/soca-engine/api-testing/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/soca-engine/object-detection-processor/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/soca-engine/object-detection-processor/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/soca-engine/rule-management-plan/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/soca-engine/rule-management-plan/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/soca-service/overview/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/soca-service/overview/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/testing/soca-dashboard-test-results/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/testing/soca-dashboard-test-results/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
-         <loc>https://example.com/soca-documentation/testing/soca-dashboard-test-scenarios/</loc>
+         <loc>https://irpus1603.github.io/soca-documentation/testing/soca-dashboard-test-scenarios/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
 </urlset>

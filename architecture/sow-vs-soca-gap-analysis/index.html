@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/architecture/sow-vs-soca-gap-analysis/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/architecture/sow-vs-soca-gap-analysis/">
       
       
       
@@ -1031,7 +1031,7 @@
 <tr>
 <td>NX VMS architecture understanding</td>
 <td>✅ Done</td>
-<td>Tested against NX Meta 6.1.1 at <code>192.168.18.42:7001</code>; auth, device, and bookmark APIs fully explored</td>
+<td>Tested against NX Meta 6.1.1 at <code>&lt;nx-vms-ip&gt;:7001</code>; auth, device, and bookmark APIs fully explored</td>
 </tr>
 <tr>
 <td>NX VMS as RTSP stream source</td>
@@ -1081,7 +1081,7 @@
 <tr>
 <td>NX VMS installed and running (server infra)</td>
 <td>✅ Done</td>
-<td>NX Meta 6.1.1 confirmed running at <code>192.168.18.42:7001</code> (tested in code comments)</td>
+<td>NX Meta 6.1.1 confirmed running at <code>&lt;nx-vms-ip&gt;:7001</code> (tested in code comments)</td>
 </tr>
 <tr>
 <td>Historical event extraction from NX</td>
@@ -1101,7 +1101,7 @@
 </tbody>
 </table>
 <h3 id="nx-vms-integration-architecture-actual-in-soca-edge-nx">NX VMS Integration Architecture (actual, in <code>soca-edge-nx/</code>)<a class="headerlink" href="#nx-vms-integration-architecture-actual-in-soca-edge-nx" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>CCTV camera ──► NX VMS Server (192.168.18.42:7001)
+<div class="highlight"><pre><span></span><code>CCTV camera ──► NX VMS Server (&lt;nx-vms-ip&gt;:7001)
                     │
                     ├──► soca-engine  rtsp://&lt;nx-host&gt;:7001/&lt;camera-guid&gt;?stream=secondary
                     │    (stream_source = nx_vms)
@@ -1464,7 +1464,7 @@
 <tr>
 <td><strong>Working PoC with NX</strong></td>
 <td>✅ Available</td>
-<td>Bookmark push confirmed working on NX Meta 6.1.1 at <code>192.168.18.42:7001</code></td>
+<td>Bookmark push confirmed working on NX Meta 6.1.1 at <code>&lt;nx-vms-ip&gt;:7001</code></td>
 </tr>
 </tbody>
 </table>

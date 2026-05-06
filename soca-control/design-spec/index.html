@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/soca-control/design-spec/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/soca-control/design-spec/">
       
       
         <link rel="prev" href="../../guides/soca-control-user-guide/">
@@ -1642,7 +1642,7 @@
     <span class="n">notes</span>               <span class="n">TextField</span>    <span class="c1"># optional</span>
     <span class="n">active</span>              <span class="n">BooleanField</span> <span class="c1"># enabled/disabled for polling</span>
     <span class="n">api_key</span>             <span class="n">CharField</span>    <span class="c1"># API key from soca-dashboard Settings &gt; Operations</span>
-    <span class="n">mediamtx_url</span>        <span class="n">URLField</span>     <span class="c1"># public HLS URL reachable from browser, e.g. &quot;http://192.168.1.100:8888&quot;; blank = hide stream viewer buttons</span>
+    <span class="n">mediamtx_url</span>        <span class="n">URLField</span>     <span class="c1"># public HLS URL reachable from browser, e.g. &quot;http://&lt;camera-ip&gt;:8888&quot;; blank = hide stream viewer buttons</span>
     <span class="n">last_seen</span>           <span class="n">DateTimeField</span>
     <span class="n">created_at</span>          <span class="n">DateTimeField</span>
 </code></pre></div>
@@ -1769,7 +1769,7 @@
 <h3 id="apiedge-info-response-shape"><code>/api/edge-info/</code> Response Shape<a class="headerlink" href="#apiedge-info-response-shape" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;edge_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;edge-bardi-home&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;engine_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:8001&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;engine_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://&lt;edge-ip&gt;:8001&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Jl. Sudirman No. 1&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;building&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Gedung A&quot;</span><span class="p">,</span>
@@ -2014,7 +2014,7 @@ Average in-ROI count</p>
 <li><strong><code>snapshot_image</code> view</strong> — must NOT require login (browser <code>&lt;img&gt;</code> tags from soca-control can't authenticate)</li>
 <li><strong><code>alert_category</code> in schedule form</strong> — dropdown with fixed values: Intrusion / Detection / PPE (not free text)</li>
 <li><strong><code>to_job_config()</code></strong> — includes <code>camera_name</code> and <code>message_template</code> in <code>publish_queue</code> action so soca-engine can populate <code>snapshot_message</code> and <code>camera_name</code> in Redis payloads</li>
-<li><strong><code>EdgeConfig.mediamtx_rtsp_url</code></strong> — when set, <code>Schedule.to_job_config()</code> produces <code>rtsp://localhost:8554/&lt;camera_name&gt;</code> instead of the direct camera URL; <code>mediamtx_relay_enabled: true</code> returned in <code>api_v1_cameras</code> response</li>
+<li><strong><code>EdgeConfig.mediamtx_rtsp_url</code></strong> — when set, <code>Schedule.to_job_config()</code> produces <code>rtsp://&lt;edge-ip&gt;:8554/&lt;camera_name&gt;</code> instead of the direct camera URL; <code>mediamtx_relay_enabled: true</code> returned in <code>api_v1_cameras</code> response</li>
 </ol>
 <hr />
 <h2 id="soca-engine-changes-required">soca-engine Changes Required<a class="headerlink" href="#soca-engine-changes-required" title="Permanent link">&para;</a></h2>

@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/soca-dashboard/rule-management-plan/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/soca-dashboard/rule-management-plan/">
       
       
         <link rel="prev" href="../edge-operations-design/">
@@ -2402,7 +2402,7 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>manage.py<span class="w"> </span>runserver
 </code></pre></div>
 <ol>
-<li>Open <code>http://localhost:8000/schedules/new/</code></li>
+<li>Open <code>http://&lt;soca-control-ip&gt;:8000/schedules/new/</code></li>
 <li>Verify: Basic, Inference, ROI, Rules, Output sections render</li>
 <li>Click "+ Add Rule" → new rule card appears</li>
 <li>Enter model path → cls_id checkboxes populate (requires running engine)</li>
@@ -2453,7 +2453,7 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
         <span class="n">cfg</span> <span class="o">=</span> <span class="n">EdgeConfig</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;/settings/edge/&#39;</span><span class="p">,</span> <span class="p">{</span>
             <span class="s1">&#39;edge_name&#39;</span><span class="p">:</span> <span class="s1">&#39;edge-1&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;engine_url&#39;</span><span class="p">:</span> <span class="s1">&#39;http://localhost:8001&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;engine_url&#39;</span><span class="p">:</span> <span class="s1">&#39;http://&lt;edge-ip&gt;:8001&#39;</span><span class="p">,</span>
             <span class="s1">&#39;redis_stream&#39;</span><span class="p">:</span> <span class="s1">&#39;custom:stream&#39;</span><span class="p">,</span>
         <span class="p">})</span>
         <span class="n">cfg</span><span class="o">.</span><span class="n">refresh_from_db</span><span class="p">()</span>

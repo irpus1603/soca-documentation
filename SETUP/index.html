@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/SETUP/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/SETUP/">
       
       
         <link rel="prev" href="../repository-overview/">
@@ -1516,7 +1516,7 @@ EDGE_NAME=edge-jakarta-01
 # Alert transport — choose one:
 # Option A: Redis Stream (default)
 PUBLISHER_TYPE=redis
-REDIS_URL=redis://localhost:6379
+REDIS_URL=redis://&lt;soca-control-ip&gt;:6379
 REDIS_STREAM_NAME=soca:detections
 
 # Option B: Google Pub/Sub
@@ -1545,10 +1545,10 @@ REDIS_STREAM_NAME=soca:detections
 uvicorn<span class="w"> </span>main:app<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8001</span>
 </code></pre></div>
 <h3 id="14-verify">1.4 Verify<a class="headerlink" href="#14-verify" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8001/health
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://&lt;edge-ip&gt;:8001/health
 <span class="c1"># Expected: {&quot;status&quot;: &quot;ok&quot;, &quot;redis&quot;: &quot;connected&quot;, &quot;active_jobs&quot;: 0, &quot;uptime_seconds&quot;: ...}</span>
 
-curl<span class="w"> </span>http://localhost:8001/models
+curl<span class="w"> </span>http://&lt;edge-ip&gt;:8001/models
 <span class="c1"># Expected: {&quot;models&quot;: [...]}</span>
 </code></pre></div>
 <hr />
@@ -1568,11 +1568,11 @@ SECRET_KEY=your-secret-key-here
 DEBUG=true
 
 # Engine integration
-ENGINE_URL=http://localhost:8001
+ENGINE_URL=http://&lt;edge-ip&gt;:8001
 ENGINE_ENV_PATH=../soca-engine/.env
 
 # MediaMTX (optional, for live preview)
-MEDIAMTX_URL=http://localhost:8888
+MEDIAMTX_URL=http://&lt;edge-ip&gt;:8888
 MEDIAMTX_YML_PATH=../soca-engine/MediaMTX/mediamtx.yml
 
 # Port
@@ -1588,7 +1588,7 @@ python<span class="w"> </span>manage.py<span class="w"> </span>createsuperuser
 python<span class="w"> </span>manage.py<span class="w"> </span>runserver<span class="w"> </span><span class="m">0</span>.0.0.0:8080
 </code></pre></div>
 <h3 id="25-verify">2.5 Verify<a class="headerlink" href="#25-verify" title="Permanent link">&para;</a></h3>
-<p>Open <code>http://localhost:8080</code> in a browser. Log in with the superuser credentials.</p>
+<p>Open <code>http://&lt;edge-ip&gt;:8080</code> in a browser. Log in with the superuser credentials.</p>
 <h3 id="26-configure-edge-settings">2.6 Configure edge settings<a class="headerlink" href="#26-configure-edge-settings" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Go to <strong>Settings → Edge Config</strong></li>
@@ -1622,7 +1622,7 @@ python<span class="w"> </span>manage.py<span class="w"> </span>runserver<span cl
 <p>From <strong>Operations</strong> (or via soca-control → edge operations):</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Via soca-dashboard UI: Operations → Start</span>
 <span class="c1"># Or via soca-engine API:</span>
-curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://&lt;edge-ip&gt;:8001/jobs/start<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;camera_id&quot;: &quot;1&quot;, &quot;rtsp_url&quot;: &quot;rtsp://...&quot;, &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;, &quot;cls_ids&quot;: [0]}&#39;</span>
 </code></pre></div>
@@ -1644,7 +1644,7 @@ DEBUG=true
 ALLOWED_HOSTS=localhost,127.0.0.1
 
 # Database (optional — defaults to SQLite)
-# DATABASE_URL=postgresql://user:pass@localhost/soca_control
+# DATABASE_URL=postgresql://user:pass@&lt;soca-control-ip&gt;/soca_control
 
 # Ingest key (set via Settings UI → generate, or manually)
 # SOCA_CONTROL_INGEST_KEY=&lt;hex-string&gt;
@@ -1665,7 +1665,7 @@ python<span class="w"> </span>manage.py<span class="w"> </span>createsuperuser
 <span class="c1"># macOS/dev: starts runserver on PORT</span>
 </code></pre></div>
 <h3 id="35-verify">3.5 Verify<a class="headerlink" href="#35-verify" title="Permanent link">&para;</a></h3>
-<p>Open <code>http://localhost:8000</code> in a browser. Log in with the superuser credentials.</p>
+<p>Open <code>http://&lt;soca-control-ip&gt;:8000</code> in a browser. Log in with the superuser credentials.</p>
 <h3 id="36-generate-ingest-key">3.6 Generate ingest key<a class="headerlink" href="#36-generate-ingest-key" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Go to <strong>Settings → Service Ingest Key</strong></li>
@@ -1703,7 +1703,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </s
 </code></pre></div>
 <p>Edit <code>.env</code>:</p>
 <div class="highlight"><pre><span></span><code># Required
-SOCA_CONTROL_URL=http://localhost:8000
+SOCA_CONTROL_URL=http://&lt;soca-control-ip&gt;:8000
 SOCA_CONTROL_INGEST_KEY=&lt;key from soca-control Settings → Service Ingest Key&gt;
 
 # Optional
@@ -1719,7 +1719,7 @@ PORT=8010
 uvicorn<span class="w"> </span>main:app<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8010</span>
 </code></pre></div>
 <h3 id="44-verify-health">4.4 Verify health<a class="headerlink" href="#44-verify-health" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8010/health
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://&lt;soca-control-ip&gt;:8010/health
 </code></pre></div>
 <p>Expected response:
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
@@ -1745,7 +1745,7 @@ uvicorn<span class="w"> </span>main:app<span class="w"> </span>--host<span class
 <h3 id="45-monitor-from-soca-control">4.5 Monitor from soca-control<a class="headerlink" href="#45-monitor-from-soca-control" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Go to <strong>soca-control → Settings → soca-service</strong></li>
-<li>Enter the soca-service URL: <code>http://localhost:8010</code></li>
+<li>Enter the soca-service URL: <code>http://&lt;soca-control-ip&gt;:8010</code></li>
 <li>Click <strong>Save</strong></li>
 <li>The health panel loads and auto-refreshes every 15 seconds</li>
 </ol>
@@ -1762,7 +1762,7 @@ uvicorn<span class="w"> </span>main:app<span class="w"> </span>--host<span class
 <h2 id="verification-end-to-end-test">Verification — End-to-End Test<a class="headerlink" href="#verification-end-to-end-test" title="Permanent link">&para;</a></h2>
 <p>After all four services are running:</p>
 <h3 id="1-test-the-ingest-api-directly">1. Test the ingest API directly<a class="headerlink" href="#1-test-the-ingest-api-directly" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/ingest/<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://&lt;soca-control-ip&gt;:8000/api/v1/ingest/<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer &lt;SOCA_CONTROL_INGEST_KEY&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
@@ -1775,7 +1775,7 @@ uvicorn<span class="w"> </span>main:app<span class="w"> </span>--host<span class
 <span class="c1"># Expected: 201 {&quot;id&quot;: N}</span>
 </code></pre></div>
 <h3 id="2-test-the-edges-api">2. Test the edges API<a class="headerlink" href="#2-test-the-edges-api" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8000/api/v1/edges/<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://&lt;soca-control-ip&gt;:8000/api/v1/edges/<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer &lt;SOCA_CONTROL_INGEST_KEY&gt;&quot;</span>
 <span class="c1"># Expected: 200 {&quot;edges&quot;: [...]}</span>
 </code></pre></div>
@@ -1805,7 +1805,7 @@ uvicorn<span class="w"> </span>main:app<span class="w"> </span>--host<span class
 <h3 id="soca-service-cannot-reach-soca-control">soca-service cannot reach soca-control<a class="headerlink" href="#soca-service-cannot-reach-soca-control" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Check <code>SOCA_CONTROL_URL</code> in <code>soca-service/.env</code></li>
-<li>Ensure soca-control is running: <code>curl http://localhost:8000/health</code></li>
+<li>Ensure soca-control is running: <code>curl http://&lt;soca-control-ip&gt;:8000/health</code></li>
 <li>Check firewall rules if on different hosts</li>
 </ul>
 <h3 id="ingest-returns-401-unauthorized">Ingest returns 401 Unauthorized<a class="headerlink" href="#ingest-returns-401-unauthorized" title="Permanent link">&para;</a></h3>
@@ -1815,7 +1815,7 @@ uvicorn<span class="w"> </span>main:app<span class="w"> </span>--host<span class
 </ul>
 <h3 id="no-alerts-appearing-in-soca-control">No alerts appearing in soca-control<a class="headerlink" href="#no-alerts-appearing-in-soca-control" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Check soca-service health: <code>curl http://localhost:8010/health</code> — both consumers should show <code>"status": "running"</code></li>
+<li>Check soca-service health: <code>curl http://&lt;soca-control-ip&gt;:8010/health</code> — both consumers should show <code>"status": "running"</code></li>
 <li>Check <code>active_edges</code> — should be &gt; 0 after edge is registered in soca-control</li>
 <li>Check <code>last_error</code> — will show the most recent error if POSTs are failing</li>
 <li>Check soca-engine is publishing: look for messages in the Redis stream
@@ -1825,7 +1825,7 @@ uvicorn<span class="w"> </span>main:app<span class="w"> </span>--host<span class
 <h3 id="soca-engine-rtsp-connection-fails">soca-engine RTSP connection fails<a class="headerlink" href="#soca-engine-rtsp-connection-fails" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Verify the camera RTSP URL: <code>ffprobe rtsp://user:pass@camera-ip/stream</code></li>
-<li>Check MediaMTX is running for RTSP relay: <code>curl http://localhost:8888/v3/config/global/get</code></li>
+<li>Check MediaMTX is running for RTSP relay: <code>curl http://&lt;edge-ip&gt;:8888/v3/config/global/get</code></li>
 </ul>
 <h3 id="redis-consumer-group-already-exists-busygroup">Redis Consumer Group already exists (BUSYGROUP)<a class="headerlink" href="#redis-consumer-group-already-exists-busygroup" title="Permanent link">&para;</a></h3>
 <p>This is normal — soca-service handles <code>BUSYGROUP</code> errors gracefully. The consumer group already exists from a previous run, which is correct behavior.</p>

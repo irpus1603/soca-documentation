@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/testing/soca-dashboard-test-scenarios/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/testing/soca-dashboard-test-scenarios/">
       
       
       
@@ -783,7 +783,7 @@
 <p><strong>Application:</strong> soca-dashboard<br />
 <strong>Test type:</strong> Functional (browser-based, user perspective)<br />
 <strong>Executed by:</strong> Claude Code with Chrome DevTools connector<br />
-<strong>Base URL:</strong> <code>http://localhost:8000</code></p>
+<strong>Base URL:</strong> <code>http://&lt;soca-control-ip&gt;:8000</code></p>
 <hr />
 <h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
 <ol>
@@ -805,28 +805,28 @@
 <h2 id="1-authentication">1. Authentication<a class="headerlink" href="#1-authentication" title="Permanent link">&para;</a></h2>
 <h3 id="tc-auth-001-login-with-valid-credentials-positive">TC-AUTH-001 — Login with valid credentials (Positive)<a class="headerlink" href="#tc-auth-001-login-with-valid-credentials-positive" title="Permanent link">&para;</a></h3>
 <p><strong>Steps:</strong>
-1. Navigate to <code>http://localhost:8000/login/</code>
+1. Navigate to <code>http://&lt;soca-control-ip&gt;:8000/login/</code>
 2. Enter valid username and password
 3. Click <strong>Login</strong></p>
 <p><strong>Expected:</strong> Redirected to dashboard (<code>/</code>). Navbar shows username and role.</p>
 <hr />
 <h3 id="tc-auth-002-login-with-wrong-password-negative">TC-AUTH-002 — Login with wrong password (Negative)<a class="headerlink" href="#tc-auth-002-login-with-wrong-password-negative" title="Permanent link">&para;</a></h3>
 <p><strong>Steps:</strong>
-1. Navigate to <code>http://localhost:8000/login/</code>
+1. Navigate to <code>http://&lt;soca-control-ip&gt;:8000/login/</code>
 2. Enter valid username, wrong password
 3. Click <strong>Login</strong></p>
 <p><strong>Expected:</strong> Stay on login page. Error message shown ("Please enter a correct username and password").</p>
 <hr />
 <h3 id="tc-auth-003-login-with-empty-fields-negative">TC-AUTH-003 — Login with empty fields (Negative)<a class="headerlink" href="#tc-auth-003-login-with-empty-fields-negative" title="Permanent link">&para;</a></h3>
 <p><strong>Steps:</strong>
-1. Navigate to <code>http://localhost:8000/login/</code>
+1. Navigate to <code>http://&lt;soca-control-ip&gt;:8000/login/</code>
 2. Leave username and password blank
 3. Click <strong>Login</strong></p>
 <p><strong>Expected:</strong> Stay on login page. Validation error shown for required fields.</p>
 <hr />
 <h3 id="tc-auth-004-access-protected-page-without-login-negative">TC-AUTH-004 — Access protected page without login (Negative)<a class="headerlink" href="#tc-auth-004-access-protected-page-without-login-negative" title="Permanent link">&para;</a></h3>
 <p><strong>Steps:</strong>
-1. Without logging in, navigate directly to <code>http://localhost:8000/cameras/</code></p>
+1. Without logging in, navigate directly to <code>http://&lt;soca-control-ip&gt;:8000/cameras/</code></p>
 <p><strong>Expected:</strong> Redirected to <code>/login/?next=/cameras/</code>. Dashboard not accessible.</p>
 <hr />
 <h3 id="tc-auth-005-logout-positive">TC-AUTH-005 — Logout (Positive)<a class="headerlink" href="#tc-auth-005-logout-positive" title="Permanent link">&para;</a></h3>
@@ -870,7 +870,7 @@
 1. Navigate to <code>/cameras/new/</code>
 2. Fill in:
    - Name: <code>test-cam-01</code>
-   - RTSP URL: <code>rtsp://192.168.1.100:554/stream</code>
+   - RTSP URL: <code>rtsp://&lt;camera-ip&gt;:554/stream</code>
    - Site Name: <code>HQ</code>
    - Floor: <code>1</code>
    - Location: <code>Lobby</code>
@@ -909,7 +909,7 @@
 <h3 id="tc-cam-006-edit-camera-rtsp-url-positive">TC-CAM-006 — Edit camera RTSP URL (Positive)<a class="headerlink" href="#tc-cam-006-edit-camera-rtsp-url-positive" title="Permanent link">&para;</a></h3>
 <p><strong>Steps:</strong>
 1. Open edit page for <code>test-cam-01</code>
-2. Change <strong>RTSP URL</strong> to <code>rtsp://192.168.1.101:554/stream</code>
+2. Change <strong>RTSP URL</strong> to <code>rtsp://&lt;camera-ip&gt;:554/stream</code>
 3. Click <strong>Save</strong></p>
 <p><strong>Expected:</strong>
 - Success message shown
@@ -1200,7 +1200,7 @@
 <h3 id="tc-edge-001-save-valid-engine-url-positive">TC-EDGE-001 — Save valid engine URL (Positive)<a class="headerlink" href="#tc-edge-001-save-valid-engine-url-positive" title="Permanent link">&para;</a></h3>
 <p><strong>Steps:</strong>
 1. Navigate to <code>/settings/</code>
-2. In <strong>Edge</strong> section, set Engine URL to <code>http://localhost:8001</code>
+2. In <strong>Edge</strong> section, set Engine URL to <code>http://&lt;edge-ip&gt;:8001</code>
 3. Click <strong>Save</strong></p>
 <p><strong>Expected:</strong> Success message. Engine URL updated.</p>
 <hr />
@@ -1353,7 +1353,7 @@
 <h2 id="test-execution-notes">Test Execution Notes<a class="headerlink" href="#test-execution-notes" title="Permanent link">&para;</a></h2>
 <h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
 <ul>
-<li>soca-dashboard running at <code>http://localhost:8000</code></li>
+<li>soca-dashboard running at <code>http://&lt;soca-control-ip&gt;:8000</code></li>
 <li>At least one admin user exists</li>
 <li>soca-engine running at configured URL (for engine-dependent tests)</li>
 <li>GCS bucket configured (for snapshot/thumbnail tests)</li>

@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/deployment/gcp-cloud-run-guide/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/deployment/gcp-cloud-run-guide/">
       
       
         <link rel="prev" href="../bare-metal-rhel-guide/">
@@ -1642,8 +1642,8 @@ gcloud<span class="w"> </span>compute<span class="w"> </span>networks<span class
 <div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>redis<span class="w"> </span>instances<span class="w"> </span>describe<span class="w"> </span>soca-redis<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--region<span class="o">=</span>asia-southeast2<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--format<span class="o">=</span><span class="s2">&quot;value(host)&quot;</span><span class="w"> </span>
-<span class="c1"># get IP 10.132.156.123</span>
-<span class="c1"># e.g. 10.121.0.3  →  save this as MEMORYSTORE_IP</span>
+<span class="c1"># get IP &lt;memorystore-ip&gt;</span>
+<span class="c1"># e.g. &lt;memorystore-ip&gt;  →  save this as MEMORYSTORE_IP</span>
 </code></pre></div>
 <hr />
 <h2 id="step-4-expose-redis-to-edge-devices-proxy-vm">Step 4 — Expose Redis to edge devices (proxy VM)<a class="headerlink" href="#step-4-expose-redis-to-edge-devices-proxy-vm" title="Permanent link">&para;</a></h2>

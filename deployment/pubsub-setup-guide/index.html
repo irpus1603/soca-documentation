@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://example.com/soca-documentation/deployment/pubsub-setup-guide/">
+        <link rel="canonical" href="https://irpus1603.github.io/soca-documentation/deployment/pubsub-setup-guide/">
       
       
         <link rel="prev" href="../gcp-cloud-run-guide/">
@@ -1537,7 +1537,7 @@ PUBSUB_KEY_PATH=credentials/pubsub.json    # path to service account JSON
 <span class="s2">&quot;</span>
 </code></pre></div></p>
 <p><strong>Check soca-service is consuming</strong> — look at the <code>/health</code> endpoint:
-<div class="highlight"><pre><span></span><code>GET http://localhost:8010/health
+<div class="highlight"><pre><span></span><code>GET http://&lt;soca-control-ip&gt;:8010/health
 </code></pre></div>
 <code>pubsub.active_edges</code> should be &gt; 0 and <code>messages_processed</code> should increment after a detection.</p>
 <hr />
