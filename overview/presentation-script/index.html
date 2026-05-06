@@ -1,0 +1,1562 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/overview/presentation-script/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>SOCA Platform — Presentation Script - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#soca-platform-presentation-script" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SOCA Platform — Presentation Script
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="soca-platform-presentation-script">SOCA Platform — Presentation Script<a class="headerlink" href="#soca-platform-presentation-script" title="Permanent link">&para;</a></h1>
+<p><strong>For AI-Generated Presentation (Gamma / Similar Tool)</strong></p>
+<blockquote>
+<p><strong>Instructions for GenAI:</strong> Use this script as the exact content baseline.<br />
+Tone: professional, confident, enterprise-grade. Not casual.<br />
+Color palette suggestion: deep navy (<code>#0F172A</code>), electric blue (<code>#3B82F6</code>), white, subtle green accent (<code>#22C55E</code>).<br />
+Include diagrams, icons, and data visualizations where noted. Avoid stock photography of people.<br />
+Total target slides: ~22–26 slides.</p>
+</blockquote>
+<hr />
+<h2 id="section-1-introduction-ecosystem">SECTION 1 — INTRODUCTION &amp; ECOSYSTEM<a class="headerlink" href="#section-1-introduction-ecosystem" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="slide-1-cover-slide">SLIDE 1 — Cover Slide<a class="headerlink" href="#slide-1-cover-slide" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> SOCA
+<strong>Subtitle:</strong> Security Operations &amp; Camera Analytics
+<strong>Tagline:</strong> <em>Turn Your Existing CCTV Into an Intelligent AI Guard</em></p>
+<p><strong>Visual:</strong> Full-bleed dark background. CCTV camera silhouette with AI detection bounding boxes overlaid in blue. SOCA logo centered.</p>
+<p><strong>Speaker note:</strong>
+Welcome. Today we are presenting SOCA — Security Operations and Camera Analytics. SOCA is an AI-powered video analytics platform that transforms the CCTV infrastructure you already own into an intelligent, real-time monitoring system. We will walk you through the ecosystem, the architecture, the capabilities, and where this technology is going.</p>
+<hr />
+<h3 id="slide-2-the-problem">SLIDE 2 — The Problem<a class="headerlink" href="#slide-2-the-problem" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> The Gap in Traditional CCTV</p>
+<p><strong>Three columns layout:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Column 1</th>
+<th>Column 2</th>
+<th>Column 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>👁 <strong>Human Fatigue</strong></td>
+<td>⏱ <strong>Reactive, Not Proactive</strong></td>
+<td>📂 <strong>No Actionable Data</strong></td>
+</tr>
+<tr>
+<td>Security operators cannot watch 20+ camera feeds continuously for 12-hour shifts without missing events</td>
+<td>Incidents are discovered after they happen — no real-time alerting based on what is actually happening in the frame</td>
+<td>Hours of footage exist but produce no statistical insights on patterns, compliance, or risk</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Speaker note:</strong>
+The challenge with traditional CCTV is simple: cameras see everything, but humans cannot process it all. Security teams are overloaded, events get missed, and terabytes of footage go unanalyzed. The camera is there — the intelligence is not. SOCA closes that gap.</p>
+<hr />
+<h3 id="slide-3-what-is-soca">SLIDE 3 — What is SOCA?<a class="headerlink" href="#slide-3-what-is-soca" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> SOCA — The AI Layer on Top of Your Cameras</p>
+<p><strong>Visual:</strong> Split layout — left: traditional CCTV camera → right: camera + SOCA logo + detection overlays + alert notification on phone.</p>
+<p><strong>Key points (3 bullets):</strong>
+- <strong>Real-time AI detection</strong> — YOLO deep learning models analyze live video streams at the edge, frame by frame
+- <strong>Configurable intelligence</strong> — define zones, rules, and thresholds for your specific environment — no coding required
+- <strong>Centralized visibility</strong> — manage every camera across every site from a single dashboard, with unified reporting and alerting</p>
+<p><strong>Speaker note:</strong>
+SOCA sits as a software layer between your existing CCTV cameras and your security team. It continuously watches the video feed, applies AI detection, and only surfaces events that matter — based on rules you define. The result: your cameras become proactive, always-on intelligent sensors.</p>
+<hr />
+<h3 id="slide-4-the-soca-ecosystem">SLIDE 4 — The SOCA Ecosystem<a class="headerlink" href="#slide-4-the-soca-ecosystem" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Five Services, One Intelligent Platform</p>
+<p><strong>Visual:</strong> Ecosystem diagram — two zones:</p>
+<div class="highlight"><pre><span></span><code>┌──────────────────────────────────┐    ┌──────────────────────────────────┐
+│          EDGE DEVICE             │    │         CLOUD / SERVER           │
+│                                  │    │                                  │
+│  ┌─────────────┐  ┌───────────┐  │    │  ┌────────────┐  ┌───────────┐  │
+│  │  soca-      │  │  soca-    │  │───►│  │  soca-     │  │  soca-    │  │
+│  │  dashboard  │  │  engine   │  │    │  │  service   │  │  control  │  │
+│  │  (Config UI)│  │  (AI Core)│  │    │  │  (Ingest)  │  │  (Fleet)  │  │
+│  └─────────────┘  └───────────┘  │    │  └────────────┘  └───────────┘  │
+└──────────────────────────────────┘    └──────────────────────────────────┘
+                                                              │
+                                              ┌───────────────┴──────────┐
+                                              │     soca-entitlement     │
+                                              │     (License Server)     │
+                                              └──────────────────────────┘
+</code></pre></div>
+<p><strong>Five service cards (icon + name + one-line description):</strong>
+1. 🧠 <strong>soca-engine</strong> — YOLO AI inference engine; processes RTSP video streams in real-time
+2. ⚙️ <strong>soca-dashboard</strong> — Per-site web UI; manage cameras, schedules, detection rules, and settings
+3. 📡 <strong>soca-service</strong> — Alert consumer microservice; bridges edge data to the central server
+4. 🖥 <strong>soca-control</strong> — Fleet management dashboard; unified view of all sites, reports, and analytics
+5. 🔑 <strong>soca-entitlement</strong> — License server; controls access tier and feature limits per deployment</p>
+<p><strong>Speaker note:</strong>
+SOCA is a microservices ecosystem. On each edge device, two services run: soca-dashboard handles configuration and the soca-engine runs the actual AI inference. On the server side, soca-control is your command center — a single dashboard for your entire camera fleet. soca-service is the data pipeline that bridges the two. And soca-entitlement manages licensing, ensuring deployments operate within their authorized capacity.</p>
+<hr />
+<h3 id="slide-5-version-licensing-model">SLIDE 5 — Version &amp; Licensing Model<a class="headerlink" href="#slide-5-version-licensing-model" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Built for Enterprise Scale — Flexible Licensing</p>
+<p><strong>Two columns:</strong></p>
+<p><strong>Left — Version:</strong>
+- Current platform version: <strong>v1.2</strong>
+- Production-ready, deployed on edge hardware
+- Django + FastAPI microservices stack
+- YOLO11 / YOLOv8 AI models</p>
+<p><strong>Right — License Tiers:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Cameras</th>
+<th>AI Models</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Free</strong></td>
+<td>1</td>
+<td>1</td>
+<td>Community</td>
+</tr>
+<tr>
+<td><strong>Starter</strong></td>
+<td>Up to 5</td>
+<td>Up to 2</td>
+<td>Email</td>
+</tr>
+<tr>
+<td><strong>Professional</strong></td>
+<td>Up to 20</td>
+<td>Up to 8</td>
+<td>Priority</td>
+</tr>
+<tr>
+<td><strong>Enterprise</strong></td>
+<td>Unlimited</td>
+<td>Unlimited</td>
+<td>Dedicated SLA</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Speaker note:</strong>
+SOCA version 1.2 is in active production. Licensing is handled through the soca-entitlement service — a UUID-based key is issued to each edge device and activates its camera and AI model limits. Free tier runs with one camera and one model, allowing customers to evaluate the platform before committing.</p>
+<hr />
+<h2 id="section-2-architecture">SECTION 2 — ARCHITECTURE<a class="headerlink" href="#section-2-architecture" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="slide-6-architecture-philosophy">SLIDE 6 — Architecture Philosophy<a class="headerlink" href="#slide-6-architecture-philosophy" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Edge-First. Cloud-Optional.</p>
+<p><strong>Three principles (large icon + heading + 2-line description):</strong></p>
+<p>🏗 <strong>Edge Computing</strong>
+AI inference happens on the device where the cameras are. No video stream leaves the premises. Only alerts and snapshots are transmitted.</p>
+<p>🌐 <strong>Centralized Management</strong>
+All edges — regardless of location — report to a single soca-control dashboard. One login. Complete visibility.</p>
+<p>🔄 <strong>Transport Flexibility</strong>
+Choose Redis Stream for on-premises LAN deployments, or Google Pub/Sub for cloud and multi-region setups. Both work seamlessly.</p>
+<p><strong>Speaker note:</strong>
+SOCA is designed edge-first by philosophy. Processing happens where the cameras are, which means low latency, high privacy, and resilience — the system keeps working even if the internet goes down. Cloud connectivity is optional, not mandatory.</p>
+<hr />
+<h3 id="slide-7-the-data-flow">SLIDE 7 — The Data Flow<a class="headerlink" href="#slide-7-the-data-flow" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> From Camera Frame to Actionable Alert</p>
+<p><strong>Visual:</strong> Horizontal flow diagram with 6 numbered steps:</p>
+<div class="highlight"><pre><span></span><code>[Camera] ──1──► [MediaMTX Relay] ──2──► [soca-engine YOLO]
+                                               │
+                                        3. Rule fires
+                                               │
+                              ┌────────────────┴────────────────┐
+                              ▼                                  ▼
+                     4. Snapshot saved                  5. Alert published
+                     (local / GCS)                (Redis Stream / Pub/Sub)
+                                                         │
+                                                  6. soca-control
+                                                  stores + displays
+</code></pre></div>
+<p><strong>Steps list:</strong>
+1. <strong>RTSP Capture</strong> — Camera streams to MediaMTX relay; soca-engine reads at <code>rtsp://localhost:8554/&lt;camera&gt;</code>
+2. <strong>YOLO Inference</strong> — Frame analyzed: object detection + ROI filtering + tracking
+3. <strong>Rule Evaluation</strong> — Detection matched against configured rules (zone, threshold, schedule)
+4. <strong>Snapshot</strong> — Incident frame saved locally and synced to Google Cloud Storage (10-second async)
+5. <strong>Alert Published</strong> — Event pushed to Redis stream or Google Pub/Sub
+6. <strong>soca-control</strong> — Alert stored in database; appears in dashboard, reports, and live feed</p>
+<p><strong>Speaker note:</strong>
+This is the heartbeat of SOCA. A camera frame enters, YOLO processes it in milliseconds, the rule engine decides if it's noteworthy, and an alert — with a snapshot — is published. From event to visible alert in soca-control takes under 2 seconds on standard hardware.</p>
+<hr />
+<h3 id="slide-8-edge-device-deep-dive">SLIDE 8 — Edge Device Deep Dive<a class="headerlink" href="#slide-8-edge-device-deep-dive" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> What Lives on the Edge Device</p>
+<p><strong>Visual:</strong> Edge device illustration (small PC / industrial computer) with service labels.</p>
+<p><strong>Two-column layout:</strong></p>
+<p><strong>soca-dashboard (Config Layer)</strong>
+- Web UI accessible from local network
+- Manage cameras (RTSP URLs, credentials)
+- Configure detection schedules and zones
+- Sync settings to soca-engine via <code>.env</code>
+- License activation and management
+- Role-based access: Admin / Operator / Viewer</p>
+<p><strong>soca-engine (AI Layer)</strong>
+- YOLO11 / YOLOv8 inference (<code>.pt</code> or <code>.onnx</code>)
+- MediaMTX RTSP relay integration
+- ROI: Polygon, Rectangle, Line Crossing
+- Multi-rule evaluation per schedule
+- GCS snapshot sync (background async)
+- Job management API (start / stop / monitor)</p>
+<p><strong>Speaker note:</strong>
+Each edge device is self-contained. soca-dashboard handles all configuration — you add cameras, draw detection zones, set rules, and it writes the configuration to soca-engine. The engine then runs continuously, processing video streams, making decisions, and publishing events — independently of the central server.</p>
+<hr />
+<h3 id="slide-9-transport-storage-options">SLIDE 9 — Transport &amp; Storage Options<a class="headerlink" href="#slide-9-transport-storage-options" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Flexible by Design — Fits Your Infrastructure</p>
+<p><strong>Two rows of option cards:</strong></p>
+<p><strong>Alert Transport:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Best For</th>
+<th>How It Works</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🔴 <strong>Redis Stream</strong></td>
+<td>On-premises, LAN</td>
+<td>Engine pushes to Redis → soca-service consumes → forwards to soca-control</td>
+</tr>
+<tr>
+<td>☁️ <strong>Google Pub/Sub</strong></td>
+<td>Cloud, multi-region</td>
+<td>Engine publishes to GCP topic → soca-control subscribes directly</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Snapshot Storage:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Best For</th>
+<th>How It Works</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>💾 <strong>Edge Local</strong></td>
+<td>Air-gapped, LAN</td>
+<td>Snapshots served via soca-dashboard proxy URL</td>
+</tr>
+<tr>
+<td>☁️ <strong>Google Cloud Storage</strong></td>
+<td>Cloud, multi-edge</td>
+<td>Async background sync to <code>gs://bucket/edge-prefix/snapshots/</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Speaker note:</strong>
+We did not lock customers into a single infrastructure choice. If you are running fully on-premises, Redis is simple and fast. If you are cloud-native or geographically distributed, Pub/Sub scales without any infrastructure to manage. The same is true for snapshots — local or GCS, your choice.</p>
+<hr />
+<h3 id="slide-10-security-architecture">SLIDE 10 — Security Architecture<a class="headerlink" href="#slide-10-security-architecture" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Enterprise-Grade Security Model</p>
+<p><strong>Visual:</strong> Lock icon centered, four cards around it.</p>
+<p><strong>Four security cards:</strong></p>
+<p>🔑 <strong>API Key Authentication</strong>
+Inter-service communication protected by bearer tokens. Ingest keys generated per deployment and stored securely.</p>
+<p>🛡 <strong>Role-Based Access Control</strong>
+Three roles — Admin, Operator, Viewer — with granular permissions across soca-dashboard and soca-control.</p>
+<p>🔐 <strong>License Binding</strong>
+Each license key is bound to an edge device by MAC address. Keys cannot be reused across machines.</p>
+<p>📁 <strong>Credential Isolation</strong>
+Camera RTSP credentials never leave the edge. Detection jobs use MediaMTX relay URLs, not raw camera addresses.</p>
+<p><strong>Speaker note:</strong>
+Security is not an afterthought. Credentials are isolated at the edge, inter-service APIs are authenticated, and the licensing system adds a hardware binding layer so licenses cannot be shared across deployments.</p>
+<hr />
+<h2 id="section-3-features-capabilities">SECTION 3 — FEATURES &amp; CAPABILITIES<a class="headerlink" href="#section-3-features-capabilities" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="slide-11-ai-detection-modules">SLIDE 11 — AI Detection Modules<a class="headerlink" href="#slide-11-ai-detection-modules" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Six Detection Capabilities, Out of the Box</p>
+<p><strong>Visual:</strong> 2×3 grid of feature cards with icon + title + one-line description.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🚧 <strong>Intrusion Detection</strong></td>
+<td>🦺 <strong>PPE Compliance</strong></td>
+<td>🔍 <strong>Object Detection</strong></td>
+</tr>
+<tr>
+<td>Virtual zone-based alerts when unauthorized persons enter restricted areas</td>
+<td>Automated detection of missing safety equipment: helmets, vests, goggles, masks</td>
+<td>Detect, classify, and track any COCO object class in real time</td>
+</tr>
+<tr>
+<td>👥 <strong>People Counting</strong></td>
+<td>🔴 <strong>Crowd Detection</strong></td>
+<td>🚗 <strong>License Plate Recognition</strong></td>
+</tr>
+<tr>
+<td>Count IN/OUT crossings across a virtual line with directional filtering</td>
+<td>Alert when crowd density in a zone exceeds a configurable threshold</td>
+<td>OCR-based plate number capture with confidence scoring and expiry tracking</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Speaker note:</strong>
+Six detection modules, all configurable without writing code. Each module maps to a distinct report category in soca-control, making it easy to segment analytics by use case. Customers typically start with one or two modules and expand as they see value.</p>
+<hr />
+<h3 id="slide-12-detection-intelligence">SLIDE 12 — Detection Intelligence<a class="headerlink" href="#slide-12-detection-intelligence" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Configurable Intelligence — Not Just Motion Detection</p>
+<p><strong>Three capability sections:</strong></p>
+<p><strong>Region of Interest (ROI)</strong>
+Draw exactly where detection applies:
+- Polygon zones — complex irregular shapes
+- Rectangle zones — simple boundary areas
+- Crossing lines — directional people/vehicle counting</p>
+<p><strong>Rule Engine</strong>
+- Multiple rules per detection schedule
+- Each rule: define object classes, trigger condition, cooldown, cron schedule
+- Actions per rule: save snapshot, publish alert, send Telegram notification, webhook</p>
+<p><strong>Alert Categories &amp; Routing</strong>
+- Every alert tagged with a category: <code>Intrusion</code>, <code>PPE</code>, <code>Detection</code>, <code>Counting</code>, <code>Crowd</code>, <code>LPR</code>
+- Automatically routed to corresponding report pages in soca-control
+- Filter, search, export — CSV and PDF</p>
+<p><strong>Speaker note:</strong>
+What separates SOCA from basic motion detection is the rule engine. You define what matters in your environment — a person entering a polygon zone after hours, more than 3 people in a waiting area, a car without a valid plate approaching a gate — and SOCA monitors for exactly that, continuously, with no operator fatigue.</p>
+<hr />
+<h3 id="slide-13-analytics-reporting">SLIDE 13 — Analytics &amp; Reporting<a class="headerlink" href="#slide-13-analytics-reporting" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> From Raw Alerts to Business Intelligence</p>
+<p><strong>Visual:</strong> Dashboard screenshot mockup showing report cards and heatmap.</p>
+<p><strong>Six report types (two rows of three):</strong></p>
+<p>📌 <strong>Intrusion Report</strong> — Timeline, camera distribution, severity breakdown, peak hours</p>
+<p>🦺 <strong>PPE Violations</strong> — Compliance rate by shift, class-level breakdown (helmet vs vest vs mask), trend over 30 days</p>
+<p>🔍 <strong>Object Detection</strong> — Alert volume by class, camera hotspot matrix, hourly patterns</p>
+<p>👥 <strong>People Counting</strong> — IN/OUT flow by time period, camera-level comparisons</p>
+<p>🔴 <strong>Crowd Detection</strong> — Density events by location and time, peak crowd periods</p>
+<p>🚗 <strong>LPR Report</strong> — Plate log with confidence scores, searchable by plate number</p>
+<p><strong>All reports support:</strong>
+- Date range filtering
+- Per-edge and per-camera filtering
+- Export to CSV and PDF</p>
+<p><strong>Speaker note:</strong>
+Every alert SOCA generates feeds into a structured reporting layer. Security teams get incident timelines. Safety managers get compliance trends. Operations leaders get traffic flow data. All from the same platform — no third-party BI tool required.</p>
+<hr />
+<h3 id="slide-14-live-monitoring-real-time-view">SLIDE 14 — Live Monitoring &amp; Real-Time View<a class="headerlink" href="#slide-14-live-monitoring-real-time-view" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Operational Awareness, Right Now</p>
+<p><strong>Visual:</strong> Monitor page mockup with multiple MJPEG streams and bounding boxes.</p>
+<p><strong>Three live capabilities:</strong></p>
+<p>📹 <strong>Live Stream Monitor</strong>
+Watch active inference jobs in real time — MJPEG stream with AI bounding boxes overlaid. Open individual streams in resizable popup windows.</p>
+<p>📸 <strong>Instant Snapshots</strong>
+Click any camera in the Assets page to grab a current frame. Confirm camera connectivity and framing before starting a detection job.</p>
+<p>🌐 <strong>HLS Stream Viewer</strong>
+MediaMTX provides a browser-accessible HLS video player for each camera at <code>http://edge-host:8888/&lt;camera&gt;</code> — no VPN or special client required.</p>
+<p><strong>Speaker note:</strong>
+SOCA is not just a reporting tool — operators can see what is happening right now. The live monitor page shows active detection jobs with real-time bounding boxes. The HLS player makes it accessible from any browser on the local network without specialized software.</p>
+<hr />
+<h3 id="slide-15-fleet-management-soca-control">SLIDE 15 — Fleet Management (soca-control)<a class="headerlink" href="#slide-15-fleet-management-soca-control" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> One Dashboard. Every Site. Complete Visibility.</p>
+<p><strong>Visual:</strong> soca-control dashboard mockup — sidebar with edges listed, main panel showing fleet health grid.</p>
+<p><strong>Four fleet management pillars:</strong></p>
+<p>🗺 <strong>Multi-Edge Overview</strong>
+All registered edge devices shown on one screen. Online/offline status, last-seen timestamp, active job count.</p>
+<p>💓 <strong>Health Monitoring</strong>
+Per-edge system metrics: CPU, RAM, disk usage, active detection jobs, network latency. Identify overloaded or failing edges instantly.</p>
+<p>🎯 <strong>Unified Alert Inbox</strong>
+All detection events from all edges, searchable and filterable by date, camera, category, and edge. Complete incident history.</p>
+<p>👤 <strong>User Management</strong>
+Role-based access control — Admin, Operator, Viewer — configurable per user across the entire fleet.</p>
+<p><strong>Speaker note:</strong>
+soca-control is the command center for your entire deployment. Whether you have 2 edge devices or 200, it is all in one place. Security teams see the incident feed. IT sees system health. Management sees reports. Each role gets exactly what it needs.</p>
+<hr />
+<h2 id="section-4-real-world-use-cases">SECTION 4 — REAL-WORLD USE CASES<a class="headerlink" href="#section-4-real-world-use-cases" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="slide-16-use-case-overview-map">SLIDE 16 — Use Case Overview Map<a class="headerlink" href="#slide-16-use-case-overview-map" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> SOCA Across Industries</p>
+<p><strong>Visual:</strong> Industry hexagon grid or world map with industry icons placed on sectors.</p>
+<p><strong>Eight industries:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Icon</th>
+<th>Industry</th>
+<th>Primary Module</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🏭</td>
+<td><strong>Manufacturing &amp; Industrial</strong></td>
+<td>PPE Compliance + Intrusion Detection</td>
+</tr>
+<tr>
+<td>🏗</td>
+<td><strong>Construction</strong></td>
+<td>PPE Compliance + Zone Safety</td>
+</tr>
+<tr>
+<td>🏪</td>
+<td><strong>Retail &amp; Hospitality</strong></td>
+<td>People Counting + Crowd Detection</td>
+</tr>
+<tr>
+<td>🏢</td>
+<td><strong>Corporate &amp; Office</strong></td>
+<td>Intrusion Detection + Access Control</td>
+</tr>
+<tr>
+<td>🏙</td>
+<td><strong>Smart City &amp; Public Safety</strong></td>
+<td>Crowd Detection + LPR</td>
+</tr>
+<tr>
+<td>🚛</td>
+<td><strong>Logistics &amp; Warehousing</strong></td>
+<td>Loading Dock Security + LPR</td>
+</tr>
+<tr>
+<td>🏥</td>
+<td><strong>Healthcare</strong></td>
+<td>Restricted Area Monitoring</td>
+</tr>
+<tr>
+<td>🎓</td>
+<td><strong>Education</strong></td>
+<td>Campus Security + After-Hours</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Speaker note:</strong>
+SOCA is purpose-built for any environment where cameras already exist but intelligence does not. The following slides show four specific real-world applications in depth.</p>
+<hr />
+<h3 id="slide-17-use-case-1-industrial-ppe-compliance">SLIDE 17 — Use Case 1: Industrial PPE Compliance<a class="headerlink" href="#slide-17-use-case-1-industrial-ppe-compliance" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Manufacturing — Zero Tolerance for PPE Violations</p>
+<p><strong>Visual:</strong> Construction/factory scene with bounding boxes on workers — red box on worker without helmet, green on compliant worker.</p>
+<p><strong>Problem → Solution → Result layout:</strong></p>
+<p>❌ <strong>The Problem</strong>
+Workers on production floors and construction sites routinely remove helmets, vests, or goggles. Manual spot-checks are inconsistent and supervisors cannot be everywhere. A single violation can result in serious injury and regulatory fines.</p>
+<p>✅ <strong>How SOCA Solves It</strong>
+- PPE detection model runs on every camera in the work zone
+- Alerts fire the moment a non-compliant worker is detected — with a snapshot
+- 30-day compliance trend report shows which shifts, cameras, and time periods have the most violations
+- Supervisors receive Telegram notifications in real time</p>
+<p>📊 <strong>Business Value</strong>
+- Consistent 24/7 compliance monitoring — not periodic spot checks
+- Data-driven safety training: target the specific shift, camera, or time with highest violation rates
+- Auditable compliance records for OSHA and local regulator inspections</p>
+<p><strong>Speaker note:</strong>
+PPE compliance is one of SOCA's highest-impact use cases. The cost of a single lost-time injury far exceeds the cost of the entire platform deployment. SOCA makes compliance monitoring continuous, objective, and evidenced.</p>
+<hr />
+<h3 id="slide-18-use-case-2-retail-traffic-queue-intelligence">SLIDE 18 — Use Case 2: Retail Traffic &amp; Queue Intelligence<a class="headerlink" href="#slide-18-use-case-2-retail-traffic-queue-intelligence" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Retail — From Guesswork to Data-Driven Operations</p>
+<p><strong>Visual:</strong> Overhead view of retail entrance with crossing line drawn across the doorway and counter visible.</p>
+<p><strong>Problem → Solution → Result layout:</strong></p>
+<p>❌ <strong>The Problem</strong>
+Store managers schedule staff based on experience and intuition — not actual foot traffic data. Peak hours are understaffed; quiet periods are overstaffed. Queue buildup causes customer walkouts.</p>
+<p>✅ <strong>How SOCA Solves It</strong>
+- Crossing-line counting at all entrances measures exact IN/OUT counts by hour and day
+- Crowd detection in checkout areas triggers alerts when queue length exceeds threshold
+- Daily and weekly traffic reports enable precise staff scheduling decisions</p>
+<p>📊 <strong>Business Value</strong>
+- Labor cost optimization — schedule the right number of staff at the right times
+- Measurable ROI on promotions — correlate traffic spikes with marketing events
+- Customer experience improvement — proactive queue management before it becomes a problem</p>
+<p><strong>Speaker note:</strong>
+Retail customers often discover that their highest-traffic days are not the days they assumed. SOCA gives you the actual number — not a guess — and the trend over time to staff accordingly.</p>
+<hr />
+<h3 id="slide-19-use-case-3-smart-city-public-safety">SLIDE 19 — Use Case 3: Smart City &amp; Public Safety<a class="headerlink" href="#slide-19-use-case-3-smart-city-public-safety" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Smart City — Proactive Crowd &amp; Vehicle Intelligence</p>
+<p><strong>Visual:</strong> Bird's-eye view of a public square or transportation hub with zone overlays and vehicle bounding boxes.</p>
+<p><strong>Problem → Solution → Result layout:</strong></p>
+<p>❌ <strong>The Problem</strong>
+City operators react to crowding incidents after they escalate — no early warning. Vehicle access to restricted zones relies entirely on human guards. Parking enforcement is manual and inconsistent.</p>
+<p>✅ <strong>How SOCA Solves It</strong>
+- Crowd density detection in public squares and transit hubs triggers operator alerts before dangerous conditions develop
+- LPR captures and logs every vehicle at entry points — unauthorized plates flagged immediately
+- Heatmap analytics show which areas attract crowds at which times, informing urban planning decisions</p>
+<p>📊 <strong>Business Value</strong>
+- Prevention over reaction — intervene before a crowd becomes a safety hazard
+- Automated vehicle access enforcement — scalable without increasing staffing
+- Evidence-based infrastructure planning decisions</p>
+<p><strong>Speaker note:</strong>
+Smart city applications require scale. SOCA's multi-edge architecture means you can deploy dozens of nodes across a city and manage them all from one soca-control instance — whether they connect via the city's LAN or Google Pub/Sub over the internet.</p>
+<hr />
+<h3 id="slide-20-use-case-4-corporate-campus-security">SLIDE 20 — Use Case 4: Corporate Campus Security<a class="headerlink" href="#slide-20-use-case-4-corporate-campus-security" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Corporate — After-Hours Security Without Overtime Costs</p>
+<p><strong>Visual:</strong> Corporate building exterior at night with intrusion detection zone highlighted in red.</p>
+<p><strong>Problem → Solution → Result layout:</strong></p>
+<p>❌ <strong>The Problem</strong>
+After-hours security relies on on-site guards — expensive, prone to inattention, and unable to monitor all areas simultaneously. Incidents are discovered the next morning, not in real time.</p>
+<p>✅ <strong>How SOCA Solves It</strong>
+- Intrusion detection activates automatically after business hours via cron-based rule scheduling
+- Any person detected in restricted zones triggers an instant alert with snapshot evidence
+- Crossing-line rules monitor entry points — detect tailgating that badge systems miss
+- Multi-camera correlation tracks movement through the facility</p>
+<p>📊 <strong>Business Value</strong>
+- Significant reduction in on-site guard hours required
+- Response time measured in seconds, not minutes
+- Complete photographic incident record for insurance and investigations</p>
+<p><strong>Speaker note:</strong>
+The cron-based rule scheduling is important here — you configure SOCA once, and it automatically activates the after-hours detection rules at the right time. No human needs to toggle the system every day.</p>
+<hr />
+<h2 id="section-5-future-roadmap">SECTION 5 — FUTURE ROADMAP<a class="headerlink" href="#section-5-future-roadmap" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="slide-21-roadmap-overview">SLIDE 21 — Roadmap Overview<a class="headerlink" href="#slide-21-roadmap-overview" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> What's Coming — The SOCA Roadmap</p>
+<p><strong>Visual:</strong> Three-column timeline: Near-Term | Mid-Term | Long-Term</p>
+<p><strong>Near-Term (v1.x)</strong>
+- 📱 Mobile push notifications — iOS and Android alert delivery
+- 📧 Email / SMS alerting — direct notification without third-party integration
+- 🗺 GIS map view in soca-control — see all edges plotted on a live map
+- 🤖 Pre-built industry models — construction, retail, healthcare-specific YOLO weights</p>
+<p><strong>Mid-Term</strong>
+- 🚶 Behavioral analytics — loitering detection, fall detection, wrong-direction alerts
+- 🔗 Access control integration — trigger door locks/unlocks on detection events
+- 📊 Custom dashboard widgets — role-specific KPI widgets per user
+- 🔊 Two-way audio — trigger PA announcements from detection events</p>
+<p><strong>Long-Term Vision</strong>
+- 🧭 Multi-camera object tracking — follow an individual across camera views
+- 🔍 Video search — natural language queries ("show all red shirts yesterday between 2–4pm")
+- 🌐 Edge-to-edge coordination — automated tracking handoff between adjacent edges
+- 🔮 Predictive analytics — ML forecasting of incident probability by location and time</p>
+<p><strong>Speaker note:</strong>
+The roadmap is customer-driven. The near-term items address the most common feedback we receive: notifications without complex integrations, and industry-tuned models that work out of the box. The long-term vision moves SOCA from reactive analytics to predictive, coordinated intelligence.</p>
+<hr />
+<h3 id="slide-22-technology-trajectory">SLIDE 22 — Technology Trajectory<a class="headerlink" href="#slide-22-technology-trajectory" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> AI at the Edge — A Platform That Evolves</p>
+<p><strong>Visual:</strong> Ascending capability curve with milestone markers.</p>
+<p><strong>Three trajectory stages:</strong></p>
+<p><strong>Today — v1.2: Detect &amp; Alert</strong>
+- Real-time YOLO detection across 6 use cases
+- Rule-based alerting with snapshot evidence
+- Fleet management with unified reporting
+- Edge-first, cloud-optional architecture</p>
+<p><strong>Near Future — v2.x: Understand &amp; Predict</strong>
+- Behavioral AI: intent recognition, anomaly detection
+- Predictive risk scoring by location and time pattern
+- Automated model retraining from flagged incidents
+- Mobile-first operator experience</p>
+<p><strong>Far Future — v3.x: Coordinate &amp; Act</strong>
+- Multi-camera object identity tracking across entire sites
+- Natural language video search and querying
+- Autonomous response triggers (access control, audio, lighting)
+- Edge-to-cloud federated learning — models improve from all deployments</p>
+<p><strong>Speaker note:</strong>
+We are at version 1.2. The platform is production-ready and deployed. The roadmap takes SOCA from detection and alerting today, to understanding context and predicting risk in the near term, to fully coordinated autonomous response in the longer horizon. Each stage builds on real customer deployments and feedback.</p>
+<hr />
+<h3 id="slide-23-competitive-positioning">SLIDE 23 — Competitive Positioning<a class="headerlink" href="#slide-23-competitive-positioning" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Why SOCA — The Differentiators</p>
+<p><strong>Visual:</strong> Comparison table with SOCA column highlighted.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th style="text-align: center;">SOCA</th>
+<th style="text-align: center;">Traditional VMS</th>
+<th style="text-align: center;">Cloud-Only AI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edge AI Processing</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>Works Offline</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>Bandwidth Efficient</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>Real-Time Alerts</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">Limited</td>
+<td style="text-align: center;">Latency</td>
+</tr>
+<tr>
+<td>Custom ROI Zones</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">Limited</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Multi-Site Fleet Management</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">Expensive</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>PPE + LPR + Crowd (same platform)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">Separate add-ons</td>
+</tr>
+<tr>
+<td>Open API (Redis / Pub/Sub)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">Proprietary</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Self-Hosted Option</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>License Flexibility</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">Per-seat, expensive</td>
+<td style="text-align: center;">Subscription only</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Speaker note:</strong>
+The key differentiators are edge processing and the breadth of detection in one platform. Cloud-only AI solutions require your video to leave the premises and are vulnerable to internet outages. Traditional VMS systems do not include AI detection — it is always an expensive add-on. SOCA is purpose-built for AI at the edge, with the fleet management layer built in from day one.</p>
+<hr />
+<h3 id="slide-24-deployment-model">SLIDE 24 — Deployment Model<a class="headerlink" href="#slide-24-deployment-model" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Up and Running in One Day</p>
+<p><strong>Visual:</strong> Four-step timeline with icons.</p>
+<p><strong>Step 1 — Install</strong>
+Deploy soca-engine + soca-dashboard on an edge device (Linux bare-metal, Docker, or cloud VM). Start services with a single shell script.</p>
+<p><strong>Step 2 — Connect</strong>
+Add camera RTSP URLs in soca-dashboard. Draw detection zones. Configure rules. No coding required.</p>
+<p><strong>Step 3 — Activate</strong>
+Register the edge in soca-control. Activate license key via Settings → License. System is live.</p>
+<p><strong>Step 4 — Operate</strong>
+Monitor live, respond to alerts, review reports. Add additional edges by repeating steps 1–3.</p>
+<p><strong>Speaker note:</strong>
+Deployment is designed to be fast. A single-site pilot can be live in under four hours. Adding more edges does not require any changes to the central server — each edge is independent and self-registering.</p>
+<hr />
+<h3 id="slide-25-closing-call-to-action">SLIDE 25 — Closing / Call to Action<a class="headerlink" href="#slide-25-closing-call-to-action" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> See It Working on Your Cameras</p>
+<p><strong>Visual:</strong> Clean dark slide with a single bold CTA and contact information.</p>
+<p><strong>Three options:</strong></p>
+<p>📋 <strong>30-Day Pilot Program</strong>
+Deploy SOCA on one site. We measure baseline incident rates and compliance levels. At day 30, you receive a quantified improvement report.</p>
+<p>🎯 <strong>Live Demo</strong>
+Schedule a demonstration using your actual camera feeds or our reference environment.</p>
+<p>📩 <strong>Contact</strong>
+[contact information / email / website placeholder]</p>
+<p><strong>Three proof points (bottom bar):</strong>
+- ⚡ Sub-2-second alert latency from detection to notification
+- 🔋 Runs on existing CCTV infrastructure — no camera replacement
+- 🛡 On-premises processing — your video never leaves your site</p>
+<p><strong>Speaker note:</strong>
+The best way to evaluate SOCA is to run it on your own cameras, against your actual security or safety challenges. The 30-day pilot is zero-risk — you measure improvement with your own data. Let us show you what your cameras have been seeing all along.</p>
+<hr />
+<h2 id="appendix">APPENDIX<a class="headerlink" href="#appendix" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="slide-26-technical-specifications">SLIDE 26 — Technical Specifications<a class="headerlink" href="#slide-26-technical-specifications" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Platform Technical Reference</p>
+<p><strong>Three-column specs table:</strong></p>
+<p><strong>Infrastructure:</strong>
+- soca-engine: FastAPI / Python 3.11+
+- soca-dashboard: Django 5.0+ / Python 3.11+
+- soca-control: Django 5.0+ / Python 3.11+
+- Database: SQLite (dev) / PostgreSQL (prod)
+- RTSP relay: MediaMTX
+- Message queue: Redis / Google Pub/Sub</p>
+<p><strong>AI Models:</strong>
+- Framework: Ultralytics YOLO (v8 / v11)
+- Formats: PyTorch <code>.pt</code> (with tracking), ONNX <code>.onnx</code>
+- Device: CPU / CUDA GPU (configurable)
+- Resolution: 640px default (configurable)
+- FP16 half-precision: optional</p>
+<p><strong>Ports (default):</strong>
+- soca-engine: 8001
+- soca-dashboard: 8080
+- soca-control: 8000
+- soca-service: 8010
+- MediaMTX RTSP: 8554
+- MediaMTX HLS: 8888</p>
+<hr />
+<h3 id="slide-27-glossary">SLIDE 27 — Glossary<a class="headerlink" href="#slide-27-glossary" title="Permanent link">&para;</a></h3>
+<p><strong>Title:</strong> Terminology Reference</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Edge Device</strong></td>
+<td>The on-premises machine running soca-dashboard and soca-engine, co-located with CCTV cameras</td>
+</tr>
+<tr>
+<td><strong>ROI</strong></td>
+<td>Region of Interest — the polygon, rectangle, or line drawn in the camera frame where detection applies</td>
+</tr>
+<tr>
+<td><strong>Schedule</strong></td>
+<td>A configuration binding one camera to one AI model with a specific ROI and set of detection rules</td>
+</tr>
+<tr>
+<td><strong>Job</strong></td>
+<td>A running inference process in soca-engine — one job per active schedule</td>
+</tr>
+<tr>
+<td><strong>Rule</strong></td>
+<td>A detection trigger condition: object class, threshold, timing, and action (alert/snapshot/Telegram)</td>
+</tr>
+<tr>
+<td><strong>soca-entitlement</strong></td>
+<td>The license server that issues and validates UUID keys controlling camera and model limits</td>
+</tr>
+<tr>
+<td><strong>Free Tier</strong></td>
+<td>Default mode with no license — limited to 1 active camera and 1 concurrent AI model</td>
+</tr>
+<tr>
+<td><strong>MediaMTX</strong></td>
+<td>RTSP/HLS relay server on each edge device; reduces camera connection slots and hides credentials</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Document Version: 1.0 — SOCA Platform v1.2</em>
+<em>Prepared: May 2026</em>
+<em>Classification: Internal — For GenAI Presentation Development</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

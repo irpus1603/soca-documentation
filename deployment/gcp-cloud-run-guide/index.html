@@ -1,0 +1,1985 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/deployment/gcp-cloud-run-guide/">
+      
+      
+        <link rel="prev" href="../bare-metal-rhel-guide/">
+      
+      
+        <link rel="next" href="../pubsub-setup-guide/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>GCP Cloud Run - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#soca-control-gcp-cloud-run-deployment-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              GCP Cloud Run
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infrastructure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Infrastructure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bare-metal-rhel-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bare Metal RHEL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GCP Cloud Run
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GCP Cloud Run
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-a-redis-stream-transport-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option A — Redis Stream transport (default)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-b-google-pubsub-transport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option B — Google Pub/Sub transport
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-set-project-and-enable-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Set project and enable APIs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-create-vpc-and-serverless-vpc-connector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Create VPC and Serverless VPC connector
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-create-cloud-memorystore-redis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Create Cloud Memorystore (Redis)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-expose-redis-to-edge-devices-proxy-vm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Expose Redis to edge devices (proxy VM)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-create-artifact-registry-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Create Artifact Registry repository
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-create-cloud-sql-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6 — Create Cloud SQL (PostgreSQL)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-create-gcs-bucket-for-media-logos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7 — Create GCS bucket for media (logos)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-store-secrets-in-secret-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8 — Store secrets in Secret Manager
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-9-grant-service-account-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 9 — Grant service account permissions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-9b-option-b-set-up-google-pubsub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 9b — (Option B) Set up Google Pub/Sub
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 9b — (Option B) Set up Google Pub/Sub">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-topic-and-subscription" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create topic and subscription
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grant-iam-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grant IAM permissions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-soca-engine-on-each-edge-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure soca-engine on each edge device
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-soca-control-edges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure soca-control edges
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-10-build-and-push-docker-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 10 — Build and push Docker image
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-11-deploy-cloud-run-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 11 — Deploy Cloud Run services
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 11 — Deploy Cloud Run services">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#web-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Web service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worker-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pubsub-worker-service-option-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pub/Sub worker service (Option B)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-12-create-superuser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 12 — Create superuser
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-13-configure-edges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 13 — Configure edges
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 13 — Configure edges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#soca-control-settings-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-control (Settings page)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soca-engine-on-each-edge-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-engine on each edge device
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-14-optional-cicd-with-cloud-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 14 — (Optional) CI/CD with Cloud Build
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#useful-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Useful commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../pubsub-setup-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integrations
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../metabase-reporting-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporting
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../cython-protection-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="soca-control-gcp-cloud-run-deployment-guide">soca-control — GCP Cloud Run Deployment Guide<a class="headerlink" href="#soca-control-gcp-cloud-run-deployment-guide" title="Permanent link">&para;</a></h1>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
+<h3 id="option-a-redis-stream-transport-default">Option A — Redis Stream transport (default)<a class="headerlink" href="#option-a-redis-stream-transport-default" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>                    ┌────────────────────────────────────────────────────┐
+                    │                  Google Cloud                       │
+                    │                                                     │
+  Browser ──HTTPS──►│  Cloud Run: soca-control-web                        │
+                    │  (gunicorn, min 1 instance)                         │
+                    │           │ Cloud SQL Auth Proxy                    │
+                    │           ▼                                         │
+                    │  Cloud SQL (PostgreSQL)                              │
+                    │           ▲                                         │
+                    │           │ Cloud SQL Auth Proxy                    │
+                    │  Cloud Run: soca-control-worker                     │
+                    │  (manage.py consume_streams)                        │
+                    │           │ VPC connector                           │
+                    │           ▼                                         │
+                    │  Cloud Memorystore (Redis 7, private IP)            │
+                    │                                                     │
+                    │  Compute Engine: redis-proxy (e2-micro, public IP)  │
+                    │           │ rinetd 0.0.0.0:6379 → Memorystore:6379  │
+                    └───────────┼────────────────────────────────────────┘
+                                ▲
+                                │ each edge pushes detection events
+                                │ redis://PROXY_PUBLIC_IP:6379
+                    On-premises edge devices
+                    soca-engine → XADD → edge-NAME:soca:detections
+</code></pre></div>
+<h3 id="option-b-google-pubsub-transport">Option B — Google Pub/Sub transport<a class="headerlink" href="#option-b-google-pubsub-transport" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>                    ┌────────────────────────────────────────────────────┐
+                    │                  Google Cloud                       │
+                    │                                                     │
+  Browser ──HTTPS──►│  Cloud Run: soca-control-web                        │
+                    │           │ Cloud SQL Auth Proxy                    │
+                    │           ▼                                         │
+                    │  Cloud SQL (PostgreSQL)                              │
+                    │           ▲                                         │
+                    │           │ Cloud SQL Auth Proxy                    │
+                    │  Cloud Run: soca-control-pubsub-worker              │
+                    │  (manage.py consume_pubsub)                         │
+                    │           │ streaming pull                          │
+                    │           ▼                                         │
+                    │  Cloud Pub/Sub topic: soca-detections               │
+                    │           ▲                                         │
+                    └───────────┼────────────────────────────────────────┘
+                                │ each edge publishes detection events
+                                │ (GOOGLE_APPLICATION_CREDENTIALS or ADC)
+                    On-premises edge devices
+                    soca-engine → Pub/Sub publish → projects/PROJECT/topics/soca-detections
+</code></pre></div>
+<p><strong>Pub/Sub advantages over Redis:</strong> no proxy VM required, no VPC connector needed, fully managed delivery, dead-letter support, scales to any number of edges.</p>
+<p><strong>Two Cloud Run services, one Docker image (Redis path):</strong>
+- <code>soca-control-web</code> — HTTP server (gunicorn via <code>start.sh</code>)
+- <code>soca-control-worker</code> — always-on stream consumer (<code>manage.py consume_streams</code>)</p>
+<p><strong>Three Cloud Run services for Pub/Sub path:</strong>
+- <code>soca-control-web</code> — HTTP server
+- <code>soca-control-pubsub-worker</code> — Pub/Sub subscriber (<code>manage.py consume_pubsub</code>)
+- Both workers can run simultaneously if you have a mix of Redis and Pub/Sub edges.</p>
+<p><strong>Stream naming (Redis):</strong> All edges share the same Redis (Memorystore) but use unique stream names so <code>consume_streams</code> can distinguish them:</p>
+<table>
+<thead>
+<tr>
+<th>Edge</th>
+<th><code>redis_url</code></th>
+<th><code>redis_stream</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>edge-jakarta-01</td>
+<td><code>redis://MEMORYSTORE_IP:6379</code></td>
+<td><code>edge-jakarta-01:soca:detections</code></td>
+</tr>
+<tr>
+<td>edge-bali-02</td>
+<td><code>redis://MEMORYSTORE_IP:6379</code></td>
+<td><code>edge-bali-02:soca:detections</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>gcloud</code> CLI installed and authenticated (<code>gcloud auth login</code>)</li>
+<li>GCP project created with billing enabled</li>
+<li>Docker installed locally (for the first manual build)</li>
+</ul>
+<hr />
+<h2 id="step-1-set-project-and-enable-apis">Step 1 — Set project and enable APIs<a class="headerlink" href="#step-1-set-project-and-enable-apis" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>project<span class="w"> </span>YOUR_PROJECT_ID
+
+gcloud<span class="w"> </span>services<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>run.googleapis.com<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>sqladmin.googleapis.com<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>artifactregistry.googleapis.com<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>cloudbuild.googleapis.com<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>secretmanager.googleapis.com<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>storage.googleapis.com<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>redis.googleapis.com<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>vpcaccess.googleapis.com<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>compute.googleapis.com
+</code></pre></div>
+<hr />
+<h2 id="step-2-create-vpc-and-serverless-vpc-connector">Step 2 — Create VPC and Serverless VPC connector<a class="headerlink" href="#step-2-create-vpc-and-serverless-vpc-connector" title="Permanent link">&para;</a></h2>
+<p>Cloud Memorystore only has a private VPC IP. Cloud Run needs a VPC connector to reach it.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create a VPC (skip if you want to reuse the default VPC)</span>
+gcloud<span class="w"> </span>compute<span class="w"> </span>networks<span class="w"> </span>create<span class="w"> </span>soca-vpc<span class="w"> </span>--subnet-mode<span class="o">=</span>auto
+
+<span class="c1"># Create the connector (Cloud Run ↔ VPC)</span>
+gcloud<span class="w"> </span>compute<span class="w"> </span>networks<span class="w"> </span>vpc-access<span class="w"> </span>connectors<span class="w"> </span>create<span class="w"> </span>soca-connector<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--region<span class="o">=</span>asia-southeast2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--network<span class="o">=</span>soca-vpc<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--range<span class="o">=</span><span class="m">10</span>.8.0.0/28<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--min-instances<span class="o">=</span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--max-instances<span class="o">=</span><span class="m">3</span>
+</code></pre></div>
+<hr />
+<h2 id="step-3-create-cloud-memorystore-redis">Step 3 — Create Cloud Memorystore (Redis)<a class="headerlink" href="#step-3-create-cloud-memorystore-redis" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>redis<span class="w"> </span>instances<span class="w"> </span>create<span class="w"> </span>soca-redis<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--size<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--region<span class="o">=</span>asia-southeast1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--network<span class="o">=</span>soca-vpc<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--redis-version<span class="o">=</span>redis_7_0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--tier<span class="o">=</span>basic
+</code></pre></div>
+<blockquote>
+<p><strong>basic</strong> tier is single-node (cheapest). Use <code>--tier=standard</code> for HA with automatic failover.</p>
+</blockquote>
+<p>Get the private IP — you'll need it later:</p>
+<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>redis<span class="w"> </span>instances<span class="w"> </span>describe<span class="w"> </span>soca-redis<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--region<span class="o">=</span>asia-southeast2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--format<span class="o">=</span><span class="s2">&quot;value(host)&quot;</span><span class="w"> </span>
+<span class="c1"># get IP 10.132.156.123</span>
+<span class="c1"># e.g. 10.121.0.3  →  save this as MEMORYSTORE_IP</span>
+</code></pre></div>
+<hr />
+<h2 id="step-4-expose-redis-to-edge-devices-proxy-vm">Step 4 — Expose Redis to edge devices (proxy VM)<a class="headerlink" href="#step-4-expose-redis-to-edge-devices-proxy-vm" title="Permanent link">&para;</a></h2>
+<p>Memorystore has no public IP. Run a tiny Compute Engine VM as a TCP proxy so on-premises edge devices can push their detection events to it.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create e2-micro VM in the same VPC (free tier eligible)</span>
+gcloud<span class="w"> </span>compute<span class="w"> </span>instances<span class="w"> </span>create<span class="w"> </span>redis-proxy<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--zone<span class="o">=</span>asia-southeast1-b<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--machine-type<span class="o">=</span>e2-micro<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--network<span class="o">=</span>soca-vpc<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--subnet<span class="o">=</span>soca-vpc<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--tags<span class="o">=</span>redis-proxy<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--image-family<span class="o">=</span>debian-12<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--image-project<span class="o">=</span>debian-cloud
+
+<span class="c1"># Allow port 6379 only from your edge device public IPs</span>
+gcloud<span class="w"> </span>compute<span class="w"> </span>firewall-rules<span class="w"> </span>create<span class="w"> </span>allow-redis-from-edges<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--network<span class="o">=</span>soca-vpc<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--allow<span class="o">=</span>tcp:6379<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--source-ranges<span class="o">=</span>EDGE_PUBLIC_IP_1/32,EDGE_PUBLIC_IP_2/32<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--target-tags<span class="o">=</span>redis-proxy
+</code></pre></div>
+<p>SSH into the VM and install <code>rinetd</code> as a TCP forwarder:</p>
+<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>compute<span class="w"> </span>ssh<span class="w"> </span>redis-proxy<span class="w"> </span>--zone<span class="o">=</span>asia-southeast1-b
+
+<span class="c1"># On the VM:</span>
+sudo<span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>rinetd
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;0.0.0.0 6379 MEMORYSTORE_IP 6379&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/rinetd.conf
+sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>rinetd<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>rinetd
+<span class="nb">exit</span>
+</code></pre></div>
+<p>Get the proxy VM's external IP:</p>
+<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>compute<span class="w"> </span>instances<span class="w"> </span>describe<span class="w"> </span>redis-proxy<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--zone<span class="o">=</span>asia-southeast1-b<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--format<span class="o">=</span><span class="s2">&quot;value(networkInterfaces[0].accessConfigs[0].natIP)&quot;</span>
+<span class="c1"># e.g. 34.101.x.x  →  save as PROXY_PUBLIC_IP</span>
+</code></pre></div>
+<p>Edge devices will connect to <code>redis://PROXY_PUBLIC_IP:6379</code>.</p>
+<hr />
+<h2 id="step-5-create-artifact-registry-repository">Step 5 — Create Artifact Registry repository<a class="headerlink" href="#step-5-create-artifact-registry-repository" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>artifacts<span class="w"> </span>repositories<span class="w"> </span>create<span class="w"> </span>soca<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--repository-format<span class="o">=</span>docker<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--location<span class="o">=</span>asia-southeast1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--description<span class="o">=</span><span class="s2">&quot;SOCA container images&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="step-6-create-cloud-sql-postgresql">Step 6 — Create Cloud SQL (PostgreSQL)<a class="headerlink" href="#step-6-create-cloud-sql-postgresql" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>sql<span class="w"> </span>instances<span class="w"> </span>create<span class="w"> </span>soca-control-db<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--database-version<span class="o">=</span>POSTGRES_16<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--tier<span class="o">=</span>db-f1-micro<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--region<span class="o">=</span>asia-southeast1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--storage-auto-increase<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--backup-start-time<span class="o">=</span><span class="m">02</span>:00
+
+gcloud<span class="w"> </span>sql<span class="w"> </span>databases<span class="w"> </span>create<span class="w"> </span>soca_control<span class="w"> </span>--instance<span class="o">=</span>soca-control-db
+
+gcloud<span class="w"> </span>sql<span class="w"> </span>users<span class="w"> </span>create<span class="w"> </span>soca_user<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--instance<span class="o">=</span>soca-control-db<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--password<span class="o">=</span>CHOOSE_A_STRONG_PASSWORD
+</code></pre></div>
+<p>Connection string (save for Step 7):
+<div class="highlight"><pre><span></span><code>postgres://soca_user:CHOOSE_A_STRONG_PASSWORD@/soca_control?host=/cloudsql/YOUR_PROJECT_ID:asia-southeast1:soca-control-db
+</code></pre></div></p>
+<hr />
+<h2 id="step-7-create-gcs-bucket-for-media-logos">Step 7 — Create GCS bucket for media (logos)<a class="headerlink" href="#step-7-create-gcs-bucket-for-media-logos" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>storage<span class="w"> </span>buckets<span class="w"> </span>create<span class="w"> </span>gs://soca-control-media-YOUR_PROJECT_ID<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--location<span class="o">=</span>asia-southeast1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--uniform-bucket-level-access
+
+<span class="c1"># Allow public read so logo images are accessible in the browser</span>
+gcloud<span class="w"> </span>storage<span class="w"> </span>buckets<span class="w"> </span>add-iam-policy-binding<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>gs://soca-control-media-YOUR_PROJECT_ID<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--member<span class="o">=</span>allUsers<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--role<span class="o">=</span>roles/storage.objectViewer
+</code></pre></div>
+<hr />
+<h2 id="step-8-store-secrets-in-secret-manager">Step 8 — Store secrets in Secret Manager<a class="headerlink" href="#step-8-store-secrets-in-secret-manager" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Generate a strong random Django secret key</span>
+<span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import secrets; print(secrets.token_urlsafe(50))&quot;</span><span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>gcloud<span class="w"> </span>secrets<span class="w"> </span>create<span class="w"> </span>soca-control-secret-key<span class="w"> </span>--data-file<span class="o">=</span>-
+
+<span class="c1"># Database URL (Cloud SQL socket format)</span>
+<span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;postgres://soca_user:CHOOSE_A_STRONG_PASSWORD@/soca_control?host=/cloudsql/YOUR_PROJECT_ID:asia-southeast1:soca-control-db&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>gcloud<span class="w"> </span>secrets<span class="w"> </span>create<span class="w"> </span>soca-control-db-url<span class="w"> </span>--data-file<span class="o">=</span>-
+</code></pre></div>
+<hr />
+<h2 id="step-9-grant-service-account-permissions">Step 9 — Grant service account permissions<a class="headerlink" href="#step-9-grant-service-account-permissions" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="nv">SA</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>gcloud<span class="w"> </span>projects<span class="w"> </span>describe<span class="w"> </span>YOUR_PROJECT_ID<span class="w"> </span>--format<span class="o">=</span><span class="s1">&#39;value(projectNumber)&#39;</span><span class="k">)</span><span class="s2">-compute@developer.gserviceaccount.com&quot;</span>
+
+<span class="c1"># Cloud SQL</span>
+gcloud<span class="w"> </span>projects<span class="w"> </span>add-iam-policy-binding<span class="w"> </span>YOUR_PROJECT_ID<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--member<span class="o">=</span><span class="s2">&quot;serviceAccount:</span><span class="nv">$SA</span><span class="s2">&quot;</span><span class="w"> </span>--role<span class="o">=</span>roles/cloudsql.client
+
+<span class="c1"># Secret Manager</span>
+gcloud<span class="w"> </span>secrets<span class="w"> </span>add-iam-policy-binding<span class="w"> </span>soca-control-secret-key<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--member<span class="o">=</span><span class="s2">&quot;serviceAccount:</span><span class="nv">$SA</span><span class="s2">&quot;</span><span class="w"> </span>--role<span class="o">=</span>roles/secretmanager.secretAccessor
+gcloud<span class="w"> </span>secrets<span class="w"> </span>add-iam-policy-binding<span class="w"> </span>soca-control-db-url<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--member<span class="o">=</span><span class="s2">&quot;serviceAccount:</span><span class="nv">$SA</span><span class="s2">&quot;</span><span class="w"> </span>--role<span class="o">=</span>roles/secretmanager.secretAccessor
+
+<span class="c1"># GCS</span>
+gcloud<span class="w"> </span>storage<span class="w"> </span>buckets<span class="w"> </span>add-iam-policy-binding<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>gs://soca-control-media-YOUR_PROJECT_ID<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--member<span class="o">=</span><span class="s2">&quot;serviceAccount:</span><span class="nv">$SA</span><span class="s2">&quot;</span><span class="w"> </span>--role<span class="o">=</span>roles/storage.objectAdmin
+</code></pre></div>
+<hr />
+<h2 id="step-9b-option-b-set-up-google-pubsub">Step 9b — (Option B) Set up Google Pub/Sub<a class="headerlink" href="#step-9b-option-b-set-up-google-pubsub" title="Permanent link">&para;</a></h2>
+<p>Skip this step if you are using Redis transport only.</p>
+<h3 id="create-topic-and-subscription">Create topic and subscription<a class="headerlink" href="#create-topic-and-subscription" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create the topic soca-engine publishes to</span>
+gcloud<span class="w"> </span>pubsub<span class="w"> </span>topics<span class="w"> </span>create<span class="w"> </span>soca-detections<span class="w"> </span>--project<span class="o">=</span>YOUR_PROJECT_ID
+
+<span class="c1"># Create a pull subscription for soca-control-pubsub-worker</span>
+gcloud<span class="w"> </span>pubsub<span class="w"> </span>subscriptions<span class="w"> </span>create<span class="w"> </span>soca-detections-sub<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--topic<span class="o">=</span>soca-detections<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project<span class="o">=</span>YOUR_PROJECT_ID<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--ack-deadline<span class="o">=</span><span class="m">60</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--message-retention-duration<span class="o">=</span>7d
+</code></pre></div>
+<blockquote>
+<p>Use one topic per project. Multiple edges publish to the same topic; the <code>edge_name</code> field inside each message identifies the source.</p>
+</blockquote>
+<h3 id="grant-iam-permissions">Grant IAM permissions<a class="headerlink" href="#grant-iam-permissions" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nv">SA</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>gcloud<span class="w"> </span>projects<span class="w"> </span>describe<span class="w"> </span>YOUR_PROJECT_ID<span class="w"> </span>--format<span class="o">=</span><span class="s1">&#39;value(projectNumber)&#39;</span><span class="k">)</span><span class="s2">-compute@developer.gserviceaccount.com&quot;</span>
+
+<span class="c1"># soca-control-pubsub-worker needs to subscribe (pull + ack)</span>
+gcloud<span class="w"> </span>pubsub<span class="w"> </span>subscriptions<span class="w"> </span>add-iam-policy-binding<span class="w"> </span>soca-detections-sub<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--member<span class="o">=</span><span class="s2">&quot;serviceAccount:</span><span class="nv">$SA</span><span class="s2">&quot;</span><span class="w"> </span>--role<span class="o">=</span>roles/pubsub.subscriber
+
+<span class="c1"># soca-engine on each edge device needs to publish</span>
+<span class="c1"># (use a separate service account for edge devices in production)</span>
+gcloud<span class="w"> </span>pubsub<span class="w"> </span>topics<span class="w"> </span>add-iam-policy-binding<span class="w"> </span>soca-detections<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--member<span class="o">=</span><span class="s2">&quot;serviceAccount:</span><span class="nv">$SA</span><span class="s2">&quot;</span><span class="w"> </span>--role<span class="o">=</span>roles/pubsub.publisher
+</code></pre></div>
+<h3 id="configure-soca-engine-on-each-edge-device">Configure soca-engine on each edge device<a class="headerlink" href="#configure-soca-engine-on-each-edge-device" title="Permanent link">&para;</a></h3>
+<p>Set these env vars in <code>soca-engine/.env</code> (or via soca-dashboard Settings → Edge Config → Publisher Transport):</p>
+<div class="highlight"><pre><span></span><code>PUBLISHER_TYPE=pubsub
+PUBSUB_PROJECT_ID=YOUR_PROJECT_ID
+PUBSUB_TOPIC=soca-detections
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json
+</code></pre></div>
+<h3 id="configure-soca-control-edges">Configure soca-control edges<a class="headerlink" href="#configure-soca-control-edges" title="Permanent link">&para;</a></h3>
+<p>In soca-control Settings → Edit Edge, set:
+- <strong>Subscriber Transport</strong>: Google Pub/Sub
+- <strong>GCP Project ID</strong>: <code>YOUR_PROJECT_ID</code>
+- <strong>Pub/Sub Subscription</strong>: <code>soca-detections-sub</code></p>
+<hr />
+<h2 id="step-10-build-and-push-docker-image">Step 10 — Build and push Docker image<a class="headerlink" href="#step-10-build-and-push-docker-image" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>auth<span class="w"> </span>configure-docker<span class="w"> </span>asia-southeast1-docker.pkg.dev
+
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>asia-southeast1-docker.pkg.dev/YOUR_PROJECT_ID/soca/soca-control:latest<span class="w"> </span>.
+docker<span class="w"> </span>push<span class="w"> </span>asia-southeast1-docker.pkg.dev/YOUR_PROJECT_ID/soca/soca-control:latest
+</code></pre></div>
+<hr />
+<h2 id="step-11-deploy-cloud-run-services">Step 11 — Deploy Cloud Run services<a class="headerlink" href="#step-11-deploy-cloud-run-services" title="Permanent link">&para;</a></h2>
+<h3 id="web-service">Web service<a class="headerlink" href="#web-service" title="Permanent link">&para;</a></h3>
+<p>The web service only connects to Cloud SQL and GCS. It does <strong>not</strong> talk to Redis, so no VPC connector is needed here.</p>
+<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>run<span class="w"> </span>deploy<span class="w"> </span>soca-control-web<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--image<span class="o">=</span>asia-southeast1-docker.pkg.dev/YOUR_PROJECT_ID/soca/soca-control:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--region<span class="o">=</span>asia-southeast1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--platform<span class="o">=</span>managed<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--allow-unauthenticated<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--min-instances<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--max-instances<span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--command<span class="o">=</span><span class="s2">&quot;./start.sh&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--update-secrets<span class="o">=</span><span class="s2">&quot;DJANGO_SECRET_KEY=soca-control-secret-key:latest,DATABASE_URL=soca-control-db-url:latest&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set-env-vars<span class="o">=</span><span class="s2">&quot;GCS_BUCKET=soca-control-media-YOUR_PROJECT_ID,ALLOWED_HOSTS=YOUR_SERVICE_URL_HOST,CSRF_TRUSTED_ORIGINS=https://YOUR_SERVICE_URL&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--add-cloudsql-instances<span class="o">=</span>YOUR_PROJECT_ID:asia-southeast1:soca-control-db
+</code></pre></div>
+<p>After the first deploy you'll get the service URL (e.g. <code>https://soca-control-web-xxxx-as.a.run.app</code>).
+Update <code>ALLOWED_HOSTS</code> and <code>CSRF_TRUSTED_ORIGINS</code> with that URL and redeploy once.</p>
+<h3 id="worker-service">Worker service<a class="headerlink" href="#worker-service" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>run<span class="w"> </span>deploy<span class="w"> </span>soca-control-worker<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--image<span class="o">=</span>asia-southeast1-docker.pkg.dev/YOUR_PROJECT_ID/soca/soca-control:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--region<span class="o">=</span>asia-southeast1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--platform<span class="o">=</span>managed<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--no-allow-unauthenticated<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--min-instances<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--max-instances<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--command<span class="o">=</span><span class="s2">&quot;python&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--args<span class="o">=</span><span class="s2">&quot;manage.py,consume_streams&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--vpc-connector<span class="o">=</span>soca-connector<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--vpc-egress<span class="o">=</span>private-ranges-only<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--update-secrets<span class="o">=</span><span class="s2">&quot;DJANGO_SECRET_KEY=soca-control-secret-key:latest,DATABASE_URL=soca-control-db-url:latest&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set-env-vars<span class="o">=</span><span class="s2">&quot;GCS_BUCKET=soca-control-media-YOUR_PROJECT_ID&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--add-cloudsql-instances<span class="o">=</span>YOUR_PROJECT_ID:asia-southeast1:soca-control-db
+</code></pre></div>
+<blockquote>
+<p><code>--min-instances=1</code> is required on the worker so it always runs and never cold-starts. Cloud Run will keep one instance alive continuously.</p>
+</blockquote>
+<h3 id="pubsub-worker-service-option-b">Pub/Sub worker service (Option B)<a class="headerlink" href="#pubsub-worker-service-option-b" title="Permanent link">&para;</a></h3>
+<p>No VPC connector is needed — Pub/Sub is a public GCP endpoint.</p>
+<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>run<span class="w"> </span>deploy<span class="w"> </span>soca-control-pubsub-worker<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--image<span class="o">=</span>asia-southeast1-docker.pkg.dev/YOUR_PROJECT_ID/soca/soca-control:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--region<span class="o">=</span>asia-southeast1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--platform<span class="o">=</span>managed<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--no-allow-unauthenticated<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--min-instances<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--max-instances<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--command<span class="o">=</span><span class="s2">&quot;python&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--args<span class="o">=</span><span class="s2">&quot;manage.py,consume_pubsub&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--update-secrets<span class="o">=</span><span class="s2">&quot;DJANGO_SECRET_KEY=soca-control-secret-key:latest,DATABASE_URL=soca-control-db-url:latest&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set-env-vars<span class="o">=</span><span class="s2">&quot;GCS_BUCKET=soca-control-media-YOUR_PROJECT_ID&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--add-cloudsql-instances<span class="o">=</span>YOUR_PROJECT_ID:asia-southeast1:soca-control-db
+</code></pre></div>
+<blockquote>
+<p>You can run both <code>soca-control-worker</code> (Redis) and <code>soca-control-pubsub-worker</code> (Pub/Sub) simultaneously if you have a mix of edge transport types.</p>
+</blockquote>
+<hr />
+<h2 id="step-12-create-superuser">Step 12 — Create superuser<a class="headerlink" href="#step-12-create-superuser" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>run<span class="w"> </span><span class="nb">jobs</span><span class="w"> </span>create<span class="w"> </span>soca-control-setup<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--image<span class="o">=</span>asia-southeast1-docker.pkg.dev/YOUR_PROJECT_ID/soca/soca-control:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--region<span class="o">=</span>asia-southeast1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--command<span class="o">=</span><span class="s2">&quot;python&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--args<span class="o">=</span><span class="s2">&quot;manage.py,createsuperuser,--noinput&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--vpc-connector<span class="o">=</span>soca-connector<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set-env-vars<span class="o">=</span><span class="s2">&quot;DJANGO_SUPERUSER_USERNAME=admin,DJANGO_SUPERUSER_EMAIL=admin@example.com,DJANGO_SUPERUSER_PASSWORD=CHANGE_ME&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--update-secrets<span class="o">=</span><span class="s2">&quot;DJANGO_SECRET_KEY=soca-control-secret-key:latest,DATABASE_URL=soca-control-db-url:latest&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--add-cloudsql-instances<span class="o">=</span>YOUR_PROJECT_ID:asia-southeast1:soca-control-db
+
+gcloud<span class="w"> </span>run<span class="w"> </span><span class="nb">jobs</span><span class="w"> </span>execute<span class="w"> </span>soca-control-setup<span class="w"> </span>--region<span class="o">=</span>asia-southeast1<span class="w"> </span>--wait
+</code></pre></div>
+<hr />
+<h2 id="step-13-configure-edges">Step 13 — Configure edges<a class="headerlink" href="#step-13-configure-edges" title="Permanent link">&para;</a></h2>
+<h3 id="soca-control-settings-page">soca-control (Settings page)<a class="headerlink" href="#soca-control-settings-page" title="Permanent link">&para;</a></h3>
+<p><strong>Redis transport:</strong> Register each edge with:
+- <strong>Redis URL</strong>: <code>redis://MEMORYSTORE_IP:6379</code> ← private Memorystore IP; the worker reaches it via VPC connector
+- <strong>Stream Name</strong>: <code>edge-NAME:soca:detections</code> (unique per edge)
+- <strong>Subscriber Transport</strong>: Redis Stream</p>
+<p>Only the <strong>worker</strong> service uses this Redis URL. The web service does not connect to Redis.</p>
+<p><strong>Pub/Sub transport:</strong> Register each edge with:
+- <strong>Subscriber Transport</strong>: Google Pub/Sub
+- <strong>GCP Project ID</strong>: your GCP project ID
+- <strong>Pub/Sub Subscription</strong>: <code>soca-detections-sub</code> (or per-edge subscriptions)</p>
+<h3 id="soca-engine-on-each-edge-device">soca-engine on each edge device<a class="headerlink" href="#soca-engine-on-each-edge-device" title="Permanent link">&para;</a></h3>
+<p><strong>Redis transport</strong> — Update <code>.env</code> so each engine pushes to GCP Redis via the proxy VM:</p>
+<div class="highlight"><pre><span></span><code>PUBLISHER_TYPE=redis
+REDIS_URL=redis://PROXY_PUBLIC_IP:6379
+REDIS_STREAM=edge-NAME:soca:detections
+</code></pre></div>
+<p><strong>Pub/Sub transport</strong> — Update <code>.env</code> so each engine publishes to Pub/Sub:</p>
+<div class="highlight"><pre><span></span><code>PUBLISHER_TYPE=pubsub
+PUBSUB_PROJECT_ID=YOUR_PROJECT_ID
+PUBSUB_TOPIC=soca-detections
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json
+</code></pre></div>
+<p>These values can also be set via soca-dashboard Settings → Edge Config → Publisher Transport and will be written automatically to <code>soca-engine/.env</code> on Save.</p>
+<p>Replace <code>edge-NAME</code> with the same identifier used in soca-control (e.g. <code>edge-jakarta-01</code>).</p>
+<hr />
+<h2 id="step-14-optional-cicd-with-cloud-build">Step 14 — (Optional) CI/CD with Cloud Build<a class="headerlink" href="#step-14-optional-cicd-with-cloud-build" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>builds<span class="w"> </span>submit<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--config<span class="o">=</span>cloudbuild.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--substitutions<span class="o">=</span><span class="se">\</span>
+<span class="nv">_REGION</span><span class="o">=</span>asia-southeast1,<span class="se">\</span>
+<span class="nv">_REPO</span><span class="o">=</span>soca,<span class="se">\</span>
+<span class="nv">_GCS_BUCKET</span><span class="o">=</span>soca-control-media-YOUR_PROJECT_ID,<span class="se">\</span>
+<span class="nv">_ALLOWED_HOSTS</span><span class="o">=</span>soca-control-web-xxxx-as.a.run.app,<span class="se">\</span>
+<span class="nv">_CSRF_ORIGINS</span><span class="o">=</span>https://soca-control-web-xxxx-as.a.run.app
+</code></pre></div>
+<p>For automated deploys, create a Cloud Build trigger on the <code>main</code> branch using the same substitutions.</p>
+<hr />
+<h2 id="useful-commands">Useful commands<a class="headerlink" href="#useful-commands" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># View logs</span>
+gcloud<span class="w"> </span>run<span class="w"> </span>services<span class="w"> </span>logs<span class="w"> </span><span class="nb">read</span><span class="w"> </span>soca-control-web<span class="w">   </span>--region<span class="o">=</span>asia-southeast1<span class="w"> </span>--limit<span class="o">=</span><span class="m">50</span>
+gcloud<span class="w"> </span>run<span class="w"> </span>services<span class="w"> </span>logs<span class="w"> </span><span class="nb">read</span><span class="w"> </span>soca-control-worker<span class="w"> </span>--region<span class="o">=</span>asia-southeast1<span class="w"> </span>--limit<span class="o">=</span><span class="m">50</span>
+
+<span class="c1"># Update an env var without full redeploy</span>
+gcloud<span class="w"> </span>run<span class="w"> </span>services<span class="w"> </span>update<span class="w"> </span>soca-control-web<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--region<span class="o">=</span>asia-southeast1<span class="w"> </span>--update-env-vars<span class="o">=</span><span class="nv">DEBUG</span><span class="o">=</span><span class="nb">false</span>
+
+<span class="c1"># Roll back to a previous revision</span>
+gcloud<span class="w"> </span>run<span class="w"> </span>services<span class="w"> </span>update-traffic<span class="w"> </span>soca-control-web<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--region<span class="o">=</span>asia-southeast1<span class="w"> </span>--to-revisions<span class="o">=</span><span class="nv">PREV_REVISION</span><span class="o">=</span><span class="m">100</span>
+
+<span class="c1"># Test Redis connectivity from the proxy VM</span>
+gcloud<span class="w"> </span>compute<span class="w"> </span>ssh<span class="w"> </span>redis-proxy<span class="w"> </span>--zone<span class="o">=</span>asia-southeast1-b
+redis-cli<span class="w"> </span>-h<span class="w"> </span>MEMORYSTORE_IP<span class="w"> </span>ping
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

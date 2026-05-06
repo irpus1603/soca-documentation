@@ -1,0 +1,1958 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/soca-control/pubsub-transport-plan/">
+      
+      
+        <link rel="prev" href="../implementation-plan/">
+      
+      
+        <link rel="next" href="../../soca-engine/api-testing/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Pub/Sub Transport - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#google-pubsub-transport-implementation-plan" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Pub/Sub Transport
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/user-guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Dashboard (Edge)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Control (Fleet)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SOCA Control (Fleet)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/soca-control-user-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../edge-operations-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Edge Operations Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../implementation-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pub/Sub Transport
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pub/Sub Transport
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#file-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-1-soca-engine-pubsub-publisher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 1: soca-engine — Pub/Sub publisher
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-2-soca-engine-add-config-vars" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 2: soca-engine — Add config vars
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-3-soca-engine-route-output_publisherpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 3: soca-engine — Route output_publisher.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-4-soca-dashboard-edgeconfig-model-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 4: soca-dashboard — EdgeConfig model + migration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-5-soca-dashboard-settings-ui-edge-config-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 5: soca-dashboard — Settings UI (Edge Config tab)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-6-soca-dashboard-viewspy-save-env-write" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 6: soca-dashboard — views.py save + .env write
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-7-soca-control-edge-model-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 7: soca-control — Edge model + migration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-8-soca-control-edge-edit-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 8: soca-control — Edge edit UI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-9-soca-control-shared-message_parser-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 9: soca-control — Shared message_parser module
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-10-soca-control-consume_pubsubpy-microservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 10: soca-control — consume_pubsub.py microservice
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-11-integration-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 11: Integration verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-as-separate-microservices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running as separate microservices
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="google-pubsub-transport-implementation-plan">Google Pub/Sub Transport Implementation Plan<a class="headerlink" href="#google-pubsub-transport-implementation-plan" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Status: COMPLETED 2026-03-25</strong> — All 11 tasks implemented and committed. See commits: soca-control <code>7042f52</code>, soca-dashboard <code>c10ccf6</code>, soca-engine <code>843a2e9</code>.</p>
+<p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (<code>- [ ]</code>) syntax for tracking.</p>
+</blockquote>
+<p><strong>Goal:</strong> Add Google Cloud Pub/Sub as an alternative message transport alongside Redis in soca-engine (publisher) and soca-control (subscriber/consumer microservice), with the choice configurable per-edge.</p>
+<p><strong>Architecture:</strong> soca-engine writes to either a Redis stream or a Pub/Sub topic based on <code>PUBLISHER_TYPE</code> env var (written by soca-dashboard's EdgeConfig save). soca-control has two independent management commands — existing <code>consume_streams</code> for Redis, new <code>consume_pubsub</code> for Pub/Sub — each run as a separate process/microservice. Both share the same <code>parse_message()</code> utility.</p>
+<p><strong>Tech Stack:</strong> <code>google-cloud-pubsub</code> (both soca-engine and soca-control), Django model migrations, DaisyUI settings UI.</p>
+<hr />
+<h2 id="file-map">File Map<a class="headerlink" href="#file-map" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Action</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>soca-engine/core/pubsub_publisher.py</code></td>
+<td><strong>Create</strong></td>
+<td>Pub/Sub publish wrapper</td>
+</tr>
+<tr>
+<td><code>soca-engine/core/output_publisher.py</code></td>
+<td><strong>Modify</strong></td>
+<td>Route to Redis or Pub/Sub</td>
+</tr>
+<tr>
+<td><code>soca-engine/config.py</code></td>
+<td><strong>Modify</strong></td>
+<td>Add <code>PUBLISHER_TYPE</code>, <code>PUBSUB_PROJECT_ID</code>, <code>PUBSUB_TOPIC</code></td>
+</tr>
+<tr>
+<td><code>soca-engine/requirements.txt</code></td>
+<td><strong>Modify</strong></td>
+<td>Add <code>google-cloud-pubsub</code></td>
+</tr>
+<tr>
+<td><code>soca-dashboard/app/models.py</code></td>
+<td><strong>Modify</strong></td>
+<td>Add 3 fields to <code>EdgeConfig</code></td>
+</tr>
+<tr>
+<td><code>soca-dashboard/app/migrations/0017_edgeconfig_pubsub.py</code></td>
+<td><strong>Create</strong></td>
+<td>Migration</td>
+</tr>
+<tr>
+<td><code>soca-dashboard/app/views.py</code></td>
+<td><strong>Modify</strong></td>
+<td>Read/save new fields + write to .env</td>
+</tr>
+<tr>
+<td><code>soca-dashboard/templates/settings/index.html</code></td>
+<td><strong>Modify</strong></td>
+<td>Pub/Sub fields in Edge Config tab</td>
+</tr>
+<tr>
+<td><code>soca-control/app/models.py</code></td>
+<td><strong>Modify</strong></td>
+<td>Add 3 fields to <code>Edge</code></td>
+</tr>
+<tr>
+<td><code>soca-control/app/migrations/0011_edge_pubsub.py</code></td>
+<td><strong>Create</strong></td>
+<td>Migration</td>
+</tr>
+<tr>
+<td><code>soca-control/app/templates/settings/edge_edit.html</code></td>
+<td><strong>Modify</strong></td>
+<td>Pub/Sub fields in edge form</td>
+</tr>
+<tr>
+<td><code>soca-control/app/views.py</code></td>
+<td><strong>Modify</strong></td>
+<td>Save new Edge fields</td>
+</tr>
+<tr>
+<td><code>soca-control/app/management/commands/message_parser.py</code></td>
+<td><strong>Create</strong></td>
+<td>Shared <code>parse_message()</code> utility</td>
+</tr>
+<tr>
+<td><code>soca-control/app/management/commands/consume_streams.py</code></td>
+<td><strong>Modify</strong></td>
+<td>Import <code>parse_message</code> from shared module</td>
+</tr>
+<tr>
+<td><code>soca-control/app/management/commands/consume_pubsub.py</code></td>
+<td><strong>Create</strong></td>
+<td>Pub/Sub consumer microservice</td>
+</tr>
+<tr>
+<td><code>soca-control/requirements.txt</code></td>
+<td><strong>Modify</strong></td>
+<td>Add <code>google-cloud-pubsub</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="task-1-soca-engine-pubsub-publisher">Task 1: soca-engine — Pub/Sub publisher<a class="headerlink" href="#task-1-soca-engine-pubsub-publisher" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Create: <code>soca-engine/core/pubsub_publisher.py</code>
+- Modify: <code>soca-engine/requirements.txt</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Add dependency</strong></li>
+</ul>
+<p>In <code>soca-engine/requirements.txt</code>, add after <code>easyocr</code>:
+<div class="highlight"><pre><span></span><code>google-cloud-pubsub&gt;=2.21
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 2: Create <code>core/pubsub_publisher.py</code></strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.cloud</span><span class="w"> </span><span class="kn">import</span> <span class="n">pubsub_v1</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">_publisher</span><span class="p">:</span> <span class="n">pubsub_v1</span><span class="o">.</span><span class="n">PublisherClient</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_publisher</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">pubsub_v1</span><span class="o">.</span><span class="n">PublisherClient</span><span class="p">:</span>
+    <span class="k">global</span> <span class="n">_publisher</span>
+    <span class="k">if</span> <span class="n">_publisher</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_publisher</span> <span class="o">=</span> <span class="n">pubsub_v1</span><span class="o">.</span><span class="n">PublisherClient</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">_publisher</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">publish_to_pubsub</span><span class="p">(</span><span class="n">topic_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Publish a single JSON message to a Pub/Sub topic.</span>
+
+<span class="sd">    topic_path: full resource name, e.g.</span>
+<span class="sd">        projects/my-project/topics/soca-detections</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">future</span> <span class="o">=</span> <span class="n">get_publisher</span><span class="p">()</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">topic_path</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>  <span class="c1"># wait for delivery confirmation</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Pub/Sub publish failed for </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">topic_path</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">raise</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 3: Verify import works (no syntax errors)</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>soca-engine<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from core.pubsub_publisher import publish_to_pubsub; print(&#39;ok&#39;)&quot;</span>
+</code></pre></div>
+Expected: <code>ok</code>
+(Will only fail at runtime if google-cloud-pubsub is not installed — install it: <code>pip3.12 install google-cloud-pubsub</code>)</p>
+<hr />
+<h2 id="task-2-soca-engine-add-config-vars">Task 2: soca-engine — Add config vars<a class="headerlink" href="#task-2-soca-engine-add-config-vars" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>soca-engine/config.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Add Pub/Sub config vars to <code>config.py</code></strong></li>
+</ul>
+<p>After the <code>REDIS_STREAM_MAXLEN</code> line, add:
+<div class="highlight"><pre><span></span><code><span class="n">PUBLISHER_TYPE</span>   <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;PUBLISHER_TYPE&quot;</span><span class="p">,</span> <span class="s2">&quot;redis&quot;</span><span class="p">)</span>   <span class="c1"># &quot;redis&quot; | &quot;pubsub&quot;</span>
+<span class="n">PUBSUB_PROJECT_ID</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;PUBSUB_PROJECT_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">PUBSUB_TOPIC</span>      <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;PUBSUB_TOPIC&quot;</span><span class="p">,</span> <span class="s2">&quot;soca-detections&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 2: Verify config loads</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>soca-engine<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import config; print(config.PUBLISHER_TYPE, config.PUBSUB_PROJECT_ID)&quot;</span>
+</code></pre></div>
+Expected: <code>redis</code> (empty string for project ID)</p>
+<hr />
+<h2 id="task-3-soca-engine-route-output_publisherpy">Task 3: soca-engine — Route output_publisher.py<a class="headerlink" href="#task-3-soca-engine-route-output_publisherpy" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>soca-engine/core/output_publisher.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Add Pub/Sub routing to <code>publish_to_queue()</code></strong></li>
+</ul>
+<p>Replace the <code>publish_to_queue</code> function with:
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">publish_to_queue</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="n">FrameResult</span><span class="p">,</span> <span class="n">stream_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">_to_dict</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">PUBLISHER_TYPE</span> <span class="o">==</span> <span class="s2">&quot;pubsub&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">PUBSUB_PROJECT_ID</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">PUBSUB_TOPIC</span><span class="p">:</span>
+            <span class="n">topic_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;projects/</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">PUBSUB_PROJECT_ID</span><span class="si">}</span><span class="s2">/topics/</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">PUBSUB_TOPIC</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">core.pubsub_publisher</span><span class="w"> </span><span class="kn">import</span> <span class="n">publish_to_pubsub</span>
+                <span class="n">publish_to_pubsub</span><span class="p">(</span><span class="n">topic_path</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pub/Sub publish failed, falling back to DLQ: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;PUBLISHER_TYPE=pubsub but PUBSUB_PROJECT_ID or PUBSUB_TOPIC not set; using DLQ&quot;</span><span class="p">)</span>
+        <span class="n">_write_dlq</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">job_id</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Redis path (default)</span>
+    <span class="n">serialised</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">get_redis</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">client</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">xadd</span><span class="p">(</span><span class="n">stream_name</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;payload&quot;</span><span class="p">:</span> <span class="n">serialised</span><span class="p">},</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">REDIS_STREAM_MAXLEN</span><span class="p">,</span> <span class="n">approximate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Redis publish failed, falling back to DLQ: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">_write_dlq</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">job_id</span><span class="p">,</span> <span class="n">serialised</span><span class="p">)</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 2: Verify no import errors</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>soca-engine<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from core.output_publisher import publish_to_queue; print(&#39;ok&#39;)&quot;</span>
+</code></pre></div>
+Expected: <code>ok</code></p>
+<hr />
+<h2 id="task-4-soca-dashboard-edgeconfig-model-migration">Task 4: soca-dashboard — EdgeConfig model + migration<a class="headerlink" href="#task-4-soca-dashboard-edgeconfig-model-migration" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>soca-dashboard/app/models.py</code>
+- Create: <code>soca-dashboard/app/migrations/0017_edgeconfig_pubsub.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Add fields to <code>EdgeConfig</code> in <code>models.py</code></strong></li>
+</ul>
+<p>After the <code>redis_stream</code> field, add:
+<div class="highlight"><pre><span></span><code><span class="n">publisher_type</span>    <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+    <span class="n">max_length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;redis&#39;</span><span class="p">,</span>
+    <span class="n">choices</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;redis&#39;</span><span class="p">,</span> <span class="s1">&#39;Redis Stream&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;pubsub&#39;</span><span class="p">,</span> <span class="s1">&#39;Google Pub/Sub&#39;</span><span class="p">)],</span>
+    <span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;Transport for publishing detection events&#39;</span>
+<span class="p">)</span>
+<span class="n">pubsub_project_id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;Google Cloud project ID, e.g. my-gcp-project&#39;</span><span class="p">)</span>
+<span class="n">pubsub_topic</span>      <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;soca-detections&#39;</span><span class="p">,</span>
+    <span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;Pub/Sub topic name (not full path), e.g. soca-detections&#39;</span><span class="p">)</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 2: Create migration</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>soca-dashboard<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>python<span class="w"> </span>manage.py<span class="w"> </span>makemigrations<span class="w"> </span>app<span class="w"> </span>--name<span class="w"> </span>edgeconfig_pubsub
+</code></pre></div>
+Expected: <code>Migrations for 'app': app/migrations/0017_edgeconfig_pubsub.py</code></p>
+<ul>
+<li>[ ] <strong>Step 3: Apply migration</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>soca-dashboard<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>python<span class="w"> </span>manage.py<span class="w"> </span>migrate
+</code></pre></div>
+Expected: <code>Applying app.0017_edgeconfig_pubsub... OK</code></p>
+<hr />
+<h2 id="task-5-soca-dashboard-settings-ui-edge-config-tab">Task 5: soca-dashboard — Settings UI (Edge Config tab)<a class="headerlink" href="#task-5-soca-dashboard-settings-ui-edge-config-tab" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>soca-dashboard/templates/settings/index.html</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Add Pub/Sub section to Edge Config tab</strong></li>
+</ul>
+<p>After the Redis Stream <code>form-control</code> block (around line 257), add:
+<div class="highlight"><pre><span></span><code><span class="cm">&lt;!-- Publisher Transport --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;form-control md:col-span-2&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label&quot;</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label-text font-medium&quot;</span><span class="p">&gt;</span>Publisher Transport<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">select</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;publisher_type&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;publisher-type-select&quot;</span>
+          <span class="na">class</span><span class="o">=</span><span class="s">&quot;select select-bordered select-sm w-48&quot;</span>
+          <span class="na">onchange</span><span class="o">=</span><span class="s">&quot;togglePubSubFields(this.value)&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;redis&quot;</span> <span class="err">{%</span> <span class="na">if</span> <span class="na">edge</span><span class="err">.</span><span class="na">publisher_type</span> <span class="err">!=</span> <span class="err">&#39;</span><span class="na">pubsub</span><span class="err">&#39;</span> <span class="err">%}</span><span class="na">selected</span><span class="err">{%</span> <span class="na">endif</span> <span class="err">%}</span><span class="p">&gt;</span>Redis Stream<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;pubsub&quot;</span> <span class="err">{%</span> <span class="na">if</span> <span class="na">edge</span><span class="err">.</span><span class="na">publisher_type </span><span class="o">=</span><span class="s">=</span> <span class="err">&#39;</span><span class="na">pubsub</span><span class="err">&#39;</span> <span class="err">%}</span><span class="na">selected</span><span class="err">{%</span> <span class="na">endif</span> <span class="err">%}</span><span class="p">&gt;</span>Google Pub/Sub<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label&quot;</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label-text-alt text-xs text-base-content/40&quot;</span><span class="p">&gt;</span>Where to publish detection events<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;pubsub-fields&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4&quot;</span>
+     <span class="na">style</span><span class="o">=</span><span class="s">&quot;{% if edge.publisher_type != &#39;pubsub&#39; %}display:none{% endif %}&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;form-control&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label&quot;</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label-text font-medium&quot;</span><span class="p">&gt;</span>GCP Project ID<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;pubsub_project_id&quot;</span>
+           <span class="na">value</span><span class="o">=</span><span class="s">&quot;{{ edge.pubsub_project_id|default:&#39;&#39; }}&quot;</span>
+           <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;my-gcp-project&quot;</span>
+           <span class="na">class</span><span class="o">=</span><span class="s">&quot;input input-bordered input-sm font-mono&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;form-control&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label&quot;</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label-text font-medium&quot;</span><span class="p">&gt;</span>Pub/Sub Topic<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;pubsub_topic&quot;</span>
+           <span class="na">value</span><span class="o">=</span><span class="s">&quot;{{ edge.pubsub_topic|default:&#39;soca-detections&#39; }}&quot;</span>
+           <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;soca-detections&quot;</span>
+           <span class="na">class</span><span class="o">=</span><span class="s">&quot;input input-bordered input-sm font-mono&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label&quot;</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label-text-alt text-xs text-base-content/40&quot;</span><span class="p">&gt;</span>Topic name only — not full projects/…/topics/… path<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div></p>
+<p>Also add the hidden field for <code>publisher_type</code> in the Telegram tab form (which echoes edge config fields as hidden inputs). After the existing <code>redis_stream</code> hidden input:
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;publisher_type&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;{{ edge.publisher_type|default:&#39;redis&#39; }}&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;pubsub_project_id&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;{{ edge.pubsub_project_id|default:&#39;&#39; }}&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;pubsub_topic&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;{{ edge.pubsub_topic|default:&#39;soca-detections&#39; }}&quot;</span> <span class="p">/&gt;</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 2: Add <code>togglePubSubFields</code> JS function</strong></li>
+</ul>
+<p>Add inside the <code>&lt;script&gt;</code> block before <code>showTab</code>:
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">togglePubSubFields</span><span class="p">(</span><span class="nx">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;pubsub-fields&#39;</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">val</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;pubsub&#39;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;none&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h2 id="task-6-soca-dashboard-viewspy-save-env-write">Task 6: soca-dashboard — views.py save + .env write<a class="headerlink" href="#task-6-soca-dashboard-viewspy-save-env-write" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>soca-dashboard/app/views.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Read new fields in <code>edge_settings</code> view</strong></li>
+</ul>
+<p>In the <code>edge_settings</code> POST handler, after reading <code>redis_stream</code>, add:
+<div class="highlight"><pre><span></span><code><span class="n">edge</span><span class="o">.</span><span class="n">publisher_type</span>    <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;publisher_type&quot;</span><span class="p">,</span> <span class="s2">&quot;redis&quot;</span><span class="p">)</span>
+<span class="n">edge</span><span class="o">.</span><span class="n">pubsub_project_id</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pubsub_project_id&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">edge</span><span class="o">.</span><span class="n">pubsub_topic</span>      <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pubsub_topic&quot;</span><span class="p">,</span> <span class="s2">&quot;soca-detections&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 2: Write new vars to .env in <code>_write_engine_env</code></strong></li>
+</ul>
+<p>Update <code>_write_engine_env(engine_env_path, edge_name)</code> signature to:
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_write_engine_env</span><span class="p">(</span><span class="n">engine_env_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">edge_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">publisher_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;redis&quot;</span><span class="p">,</span>
+                      <span class="n">pubsub_project_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">pubsub_topic</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;soca-detections&quot;</span><span class="p">):</span>
+</code></pre></div></p>
+<p>Inside the function, alongside the <code>EDGE_NAME</code> logic, also update/insert:
+- <code>PUBLISHER_TYPE</code>
+- <code>PUBSUB_PROJECT_ID</code>
+- <code>PUBSUB_TOPIC</code></p>
+<p>Pattern (same approach as EDGE_NAME):
+<div class="highlight"><pre><span></span><code><span class="n">ENV_KEYS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;EDGE_NAME&quot;</span><span class="p">:</span> <span class="n">edge_name</span><span class="p">,</span>
+    <span class="s2">&quot;PUBLISHER_TYPE&quot;</span><span class="p">:</span> <span class="n">publisher_type</span><span class="p">,</span>
+    <span class="s2">&quot;PUBSUB_PROJECT_ID&quot;</span><span class="p">:</span> <span class="n">pubsub_project_id</span><span class="p">,</span>
+    <span class="s2">&quot;PUBSUB_TOPIC&quot;</span><span class="p">:</span> <span class="n">pubsub_topic</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="c1"># For each line: if it starts with key= update it; if key not found, append it</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 3: Pass new args when calling <code>_write_engine_env</code></strong></li>
+</ul>
+<p>In <code>edge_settings</code>:
+<div class="highlight"><pre><span></span><code><span class="n">_write_engine_env</span><span class="p">(</span>
+    <span class="n">edge</span><span class="o">.</span><span class="n">engine_env_path</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">edge_name</span><span class="p">,</span>
+    <span class="n">publisher_type</span><span class="o">=</span><span class="n">edge</span><span class="o">.</span><span class="n">publisher_type</span><span class="p">,</span>
+    <span class="n">pubsub_project_id</span><span class="o">=</span><span class="n">edge</span><span class="o">.</span><span class="n">pubsub_project_id</span><span class="p">,</span>
+    <span class="n">pubsub_topic</span><span class="o">=</span><span class="n">edge</span><span class="o">.</span><span class="n">pubsub_topic</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 4: Smoke-test in browser</strong></li>
+</ul>
+<p>Start soca-dashboard, go to Settings → Edge Config → switch transport to Pub/Sub, fill in project/topic, Save. Verify soca-engine <code>.env</code> now contains <code>PUBLISHER_TYPE=pubsub</code>.</p>
+<hr />
+<h2 id="task-7-soca-control-edge-model-migration">Task 7: soca-control — Edge model + migration<a class="headerlink" href="#task-7-soca-control-edge-model-migration" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>soca-control/app/models.py</code>
+- Create: <code>soca-control/app/migrations/0011_edge_pubsub.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Add fields to <code>Edge</code> model</strong></li>
+</ul>
+<p>After the <code>redis_stream</code> field, add:
+<div class="highlight"><pre><span></span><code><span class="n">subscriber_type</span>    <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+    <span class="n">max_length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;redis&#39;</span><span class="p">,</span>
+    <span class="n">choices</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;redis&#39;</span><span class="p">,</span> <span class="s1">&#39;Redis Stream&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;pubsub&#39;</span><span class="p">,</span> <span class="s1">&#39;Google Pub/Sub&#39;</span><span class="p">)],</span>
+<span class="p">)</span>
+<span class="n">pubsub_project_id</span>  <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">pubsub_subscription</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;soca-detections-sub&#39;</span><span class="p">,</span>
+    <span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;Pub/Sub subscription name (not full path)&#39;</span><span class="p">)</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 2: Create and apply migration</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>soca-control<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>python<span class="w"> </span>manage.py<span class="w"> </span>makemigrations<span class="w"> </span>app<span class="w"> </span>--name<span class="w"> </span>edge_pubsub<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>python<span class="w"> </span>manage.py<span class="w"> </span>migrate
+</code></pre></div>
+Expected: <code>Applying app.0011_edge_pubsub... OK</code></p>
+<hr />
+<h2 id="task-8-soca-control-edge-edit-ui">Task 8: soca-control — Edge edit UI<a class="headerlink" href="#task-8-soca-control-edge-edit-ui" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>soca-control/app/templates/settings/edge_edit.html</code>
+- Modify: <code>soca-control/app/views.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Add subscriber transport fields to edge_edit.html</strong></li>
+</ul>
+<p>After the Redis URL + Stream Name fields, add:
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;form-control&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label label-text text-sm&quot;</span><span class="p">&gt;</span>Subscriber Transport<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">select</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;subscriber_type&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;sub-type-select&quot;</span>
+          <span class="na">class</span><span class="o">=</span><span class="s">&quot;select select-bordered select-sm&quot;</span>
+          <span class="na">onchange</span><span class="o">=</span><span class="s">&quot;toggleSubPubSubFields(this.value)&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;redis&quot;</span> <span class="err">{%</span> <span class="na">if</span> <span class="na">edge</span><span class="err">.</span><span class="na">subscriber_type</span> <span class="err">!=</span> <span class="err">&#39;</span><span class="na">pubsub</span><span class="err">&#39;</span> <span class="err">%}</span><span class="na">selected</span><span class="err">{%</span> <span class="na">endif</span> <span class="err">%}</span><span class="p">&gt;</span>Redis Stream<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;pubsub&quot;</span> <span class="err">{%</span> <span class="na">if</span> <span class="na">edge</span><span class="err">.</span><span class="na">subscriber_type </span><span class="o">=</span><span class="s">=</span> <span class="err">&#39;</span><span class="na">pubsub</span><span class="err">&#39;</span> <span class="err">%}</span><span class="na">selected</span><span class="err">{%</span> <span class="na">endif</span> <span class="err">%}</span><span class="p">&gt;</span>Google Pub/Sub<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;sub-pubsub-fields&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3&quot;</span>
+     <span class="na">style</span><span class="o">=</span><span class="s">&quot;{% if edge.subscriber_type != &#39;pubsub&#39; %}display:none{% endif %}&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;form-control&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label label-text text-sm&quot;</span><span class="p">&gt;</span>GCP Project ID<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;pubsub_project_id&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;{{ edge.pubsub_project_id }}&quot;</span>
+           <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;my-gcp-project&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;input input-bordered input-sm font-mono&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;form-control&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label label-text text-sm&quot;</span><span class="p">&gt;</span>Pub/Sub Subscription<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;pubsub_subscription&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;{{ edge.pubsub_subscription }}&quot;</span>
+           <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;soca-detections-sub&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;input input-bordered input-sm font-mono&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div></p>
+<p>Add at end of the form (before <code>&lt;/form&gt;</code>):
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">toggleSubPubSubFields</span><span class="p">(</span><span class="nx">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;sub-pubsub-fields&#39;</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">val</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;pubsub&#39;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;none&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 2: Update <code>edge_edit</code> view in <code>views.py</code> to save new fields</strong></li>
+</ul>
+<p>In the POST handler for edge edit, after saving <code>redis_stream</code>, add:
+<div class="highlight"><pre><span></span><code><span class="n">edge</span><span class="o">.</span><span class="n">subscriber_type</span>     <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;subscriber_type&#39;</span><span class="p">,</span> <span class="s1">&#39;redis&#39;</span><span class="p">)</span>
+<span class="n">edge</span><span class="o">.</span><span class="n">pubsub_project_id</span>   <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pubsub_project_id&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">edge</span><span class="o">.</span><span class="n">pubsub_subscription</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pubsub_subscription&#39;</span><span class="p">,</span> <span class="s1">&#39;soca-detections-sub&#39;</span><span class="p">)</span>
+</code></pre></div></p>
+<hr />
+<h2 id="task-9-soca-control-shared-message_parser-module">Task 9: soca-control — Shared message_parser module<a class="headerlink" href="#task-9-soca-control-shared-message_parser-module" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Create: <code>soca-control/app/management/commands/message_parser.py</code>
+- Modify: <code>soca-control/app/management/commands/consume_streams.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Create <code>message_parser.py</code> with the <code>parse_message</code> function</strong></li>
+</ul>
+<p>Extract <code>parse_message()</code> from <code>consume_streams.py</code> into a new file:
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">django.utils.dateparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">timezone</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_message</span><span class="p">(</span><span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="n">roi</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;roi_summary&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+    <span class="n">rules</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rule_results&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[]</span>
+    <span class="n">rule_name</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;rule_name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rules</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;triggered&#39;</span><span class="p">)),</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="n">lpr_plates</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;plate_number&#39;</span><span class="p">,</span> <span class="s1">&#39;plate_expiry&#39;</span><span class="p">,</span> <span class="s1">&#39;plate_confidence&#39;</span><span class="p">)}</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="p">(</span><span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lpr_results&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[])</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;plate_number&#39;</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;edge_name&#39;</span><span class="p">:</span>        <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;edge_name&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;camera_id&#39;</span><span class="p">:</span>        <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;camera_id&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;camera_name&#39;</span><span class="p">:</span>      <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;camera_name&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;job_id&#39;</span><span class="p">:</span>           <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;frame_id&#39;</span><span class="p">:</span>         <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;frame_id&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;timestamp&#39;</span><span class="p">:</span>        <span class="n">parse_datetime</span><span class="p">(</span><span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+        <span class="s1">&#39;alert_category&#39;</span><span class="p">:</span>   <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;alert_category&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rule_name&#39;</span><span class="p">:</span>        <span class="n">rule_name</span><span class="p">,</span>
+        <span class="s1">&#39;snapshot_message&#39;</span><span class="p">:</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;snapshot_message&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;snapshot_path&#39;</span><span class="p">:</span>    <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;snapshot_path&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;detection_count&#39;</span><span class="p">:</span>  <span class="n">roi</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;total_count&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="s1">&#39;in_roi_count&#39;</span><span class="p">:</span>     <span class="n">roi</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;in_roi_count&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="s1">&#39;cls_summary&#39;</span><span class="p">:</span>      <span class="n">roi</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cls_counts&#39;</span><span class="p">,</span> <span class="p">{}),</span>
+        <span class="s1">&#39;crossing_counts&#39;</span><span class="p">:</span>  <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;crossing_counts&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{},</span>
+        <span class="s1">&#39;crowd_count&#39;</span><span class="p">:</span>      <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;crowd_count&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;lpr_plates&#39;</span><span class="p">:</span>       <span class="n">lpr_plates</span><span class="p">,</span>
+        <span class="s1">&#39;raw&#39;</span><span class="p">:</span>              <span class="n">payload</span><span class="p">,</span>
+    <span class="p">}</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 2: Update <code>consume_streams.py</code> to import from shared module</strong></li>
+</ul>
+<p>Remove the <code>parse_message</code> function body from <code>consume_streams.py</code> and replace with:
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">app.management.commands.message_parser</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_message</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 3: Verify Redis consumer still works</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>soca-control<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>python<span class="w"> </span>manage.py<span class="w"> </span>check
+</code></pre></div>
+Expected: <code>System check identified no issues (0 silenced).</code></p>
+<hr />
+<h2 id="task-10-soca-control-consume_pubsubpy-microservice">Task 10: soca-control — consume_pubsub.py microservice<a class="headerlink" href="#task-10-soca-control-consume_pubsubpy-microservice" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Create: <code>soca-control/app/management/commands/consume_pubsub.py</code>
+- Modify: <code>soca-control/requirements.txt</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Add google-cloud-pubsub to requirements</strong></li>
+</ul>
+<p>In <code>soca-control/requirements.txt</code>, add:
+<div class="highlight"><pre><span></span><code>google-cloud-pubsub&gt;=2.21
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 2: Create <code>consume_pubsub.py</code></strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.core.management.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseCommand</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.cloud</span><span class="w"> </span><span class="kn">import</span> <span class="n">pubsub_v1</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">app.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Edge</span><span class="p">,</span> <span class="n">Alert</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">app.management.commands.message_parser</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_message</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">RELOAD_INTERVAL</span> <span class="o">=</span> <span class="mi">60</span>   <span class="c1"># seconds between edge list reloads</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Command</span><span class="p">(</span><span class="n">BaseCommand</span><span class="p">):</span>
+    <span class="n">help</span> <span class="o">=</span> <span class="s1">&#39;Consume Google Pub/Sub subscriptions from all active Pub/Sub edges.&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Starting consume_pubsub...&#39;</span><span class="p">)</span>
+        <span class="n">subscribers</span> <span class="o">=</span> <span class="p">{}</span>   <span class="c1"># edge.id → StreamingPullFuture</span>
+        <span class="n">last_reload</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">now</span> <span class="o">-</span> <span class="n">last_reload</span> <span class="o">&gt;</span> <span class="n">RELOAD_INTERVAL</span><span class="p">:</span>
+                <span class="n">edges</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Edge</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">active</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">subscriber_type</span><span class="o">=</span><span class="s1">&#39;pubsub&#39;</span><span class="p">))</span>
+                <span class="n">last_reload</span> <span class="o">=</span> <span class="n">now</span>
+                <span class="c1"># Cancel futures for removed edges</span>
+                <span class="n">active_ids</span> <span class="o">=</span> <span class="p">{</span><span class="n">e</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">}</span>
+                <span class="k">for</span> <span class="n">eid</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">subscribers</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                    <span class="k">if</span> <span class="n">eid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">active_ids</span><span class="p">:</span>
+                        <span class="n">subscribers</span><span class="p">[</span><span class="n">eid</span><span class="p">]</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+                        <span class="k">del</span> <span class="n">subscribers</span><span class="p">[</span><span class="n">eid</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">edge</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">subscribers</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">edge</span><span class="o">.</span><span class="n">pubsub_project_id</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">edge</span><span class="o">.</span><span class="n">pubsub_subscription</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Edge </span><span class="si">%s</span><span class="s1"> missing pubsub_project_id or pubsub_subscription&#39;</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                        <span class="k">continue</span>
+                    <span class="n">sub_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;projects/</span><span class="si">{</span><span class="n">edge</span><span class="o">.</span><span class="n">pubsub_project_id</span><span class="si">}</span><span class="s2">/subscriptions/</span><span class="si">{</span><span class="n">edge</span><span class="o">.</span><span class="n">pubsub_subscription</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">client</span> <span class="o">=</span> <span class="n">pubsub_v1</span><span class="o">.</span><span class="n">SubscriberClient</span><span class="p">()</span>
+                        <span class="n">future</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">sub_path</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">_make_callback</span><span class="p">(</span><span class="n">edge</span><span class="p">))</span>
+                        <span class="n">subscribers</span><span class="p">[</span><span class="n">edge</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">future</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Subscribed to </span><span class="si">{</span><span class="n">sub_path</span><span class="si">}</span><span class="s1"> for edge </span><span class="si">{</span><span class="n">edge</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Cannot subscribe for </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_callback</span><span class="p">(</span><span class="n">edge</span><span class="p">:</span> <span class="n">Edge</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">callback</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">parse_message</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+            <span class="n">Alert</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">edge</span><span class="o">=</span><span class="n">edge</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">ack</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Failed to save alert from </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">nack</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">callback</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 3: Verify management command registers</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>soca-control<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>python<span class="w"> </span>manage.py<span class="w"> </span><span class="nb">help</span><span class="w"> </span>consume_pubsub
+</code></pre></div>
+Expected: Shows command help text without errors.</p>
+<ul>
+<li>[ ] <strong>Step 4: Test with <code>--check</code> flag (dry run)</strong></li>
+</ul>
+<p>Start the command and verify it runs without crashing when no Pub/Sub edges are configured:
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>soca-control<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>timeout<span class="w"> </span><span class="m">10</span><span class="w"> </span>python<span class="w"> </span>manage.py<span class="w"> </span>consume_pubsub<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+</code></pre></div>
+Expected: Prints <code>Starting consume_pubsub...</code> and loops silently.</p>
+<hr />
+<h2 id="task-11-integration-verification">Task 11: Integration verification<a class="headerlink" href="#task-11-integration-verification" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[ ] <strong>Step 1: Test Redis path unchanged</strong></li>
+</ul>
+<p>With <code>PUBLISHER_TYPE=redis</code> (default), start a job — verify events still arrive in <code>consume_streams</code>.</p>
+<ul>
+<li>
+<p>[ ] <strong>Step 2: Test Pub/Sub path end-to-end</strong></p>
+</li>
+<li>
+<p>Set <code>PUBLISHER_TYPE=pubsub</code>, <code>PUBSUB_PROJECT_ID=&lt;your-project&gt;</code>, <code>PUBSUB_TOPIC=soca-detections</code> in soca-engine <code>.env</code></p>
+</li>
+<li>Create Pub/Sub topic + subscription in GCP (or use emulator)</li>
+<li>Set Edge in soca-control to <code>subscriber_type=pubsub</code>, fill project/subscription</li>
+<li>Run <code>python manage.py consume_pubsub</code> in one terminal</li>
+<li>Trigger a detection event</li>
+<li>
+<p>Verify Alert is created with correct fields</p>
+</li>
+<li>
+<p>[ ] <strong>Step 3: Verify soca-dashboard settings save writes to .env</strong></p>
+</li>
+<li>
+<p>Go to Settings → Edge Config → switch to Pub/Sub, fill fields, Save</p>
+</li>
+<li><code>cat soca-engine/.env</code> → confirm <code>PUBLISHER_TYPE=pubsub</code> is written</li>
+</ul>
+<hr />
+<h2 id="running-as-separate-microservices">Running as separate microservices<a class="headerlink" href="#running-as-separate-microservices" title="Permanent link">&para;</a></h2>
+<p>Each consumer runs as its own process:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Terminal 1 — Redis consumer (existing)</span>
+python<span class="w"> </span>manage.py<span class="w"> </span>consume_streams
+
+<span class="c1"># Terminal 2 — Pub/Sub consumer (new)</span>
+python<span class="w"> </span>manage.py<span class="w"> </span>consume_pubsub
+</code></pre></div>
+<p>For production, configure as separate systemd units or Docker containers. Only start the one matching your configured transport.</p>
+<p><strong>GCP credentials:</strong> Set <code>GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json</code> env var before running <code>consume_pubsub</code> and before running soca-engine (when using Pub/Sub publisher). Or use Workload Identity / ADC on GCE/GKE.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2002 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/soca-dashboard/edge-operations-design/">
+      
+      
+        <link rel="prev" href="../edge-operations-plan/">
+      
+      
+        <link rel="next" href="../rule-management-plan/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Edge Operations Design - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#edge-operations-design-spec" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Edge Operations Design
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/user-guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Dashboard (Edge)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SOCA Dashboard (Edge)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/user-guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../edge-operations-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Edge Operations Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Edge Operations Design
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Edge Operations Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Context
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-data-model-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Data Model Changes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Data Model Changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#soca-dashboard-edgeconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-dashboard: EdgeConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soca-control-edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-control: Edge
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-purge-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Purge Logic
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Purge Logic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-gets-purged-soca-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Gets Purged (soca-dashboard)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#purge-age-thresholds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purge Age Thresholds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#purge-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purge Steps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-gets-purged-soca-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Gets Purged (soca-control)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-api-design-apiv1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. API Design (/api/v1/)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. API Design (/api/v1/)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#standard-error-responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Standard Error Responses
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Endpoints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-apiv1schedules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GET /api/v1/schedules/
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-apiv1schedulesidstart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST /api/v1/schedules/&lt;id&gt;/start/
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-apiv1schedulesidstop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST /api/v1/schedules/&lt;id&gt;/stop/
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-apiv1purgepreviewolder_thandays" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GET /api/v1/purge/preview/?older_than=&lt;days&gt;
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-apiv1purgeexecute" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST /api/v1/purge/execute/
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-soca-dashboard-settings-operations-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. soca-dashboard: Settings &gt; Operations Tab
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. soca-dashboard: Settings &gt; Operations Tab">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#block-1-api-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Block 1 — API Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#block-2-purge-edge-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Block 2 — Purge Edge Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#block-3-schedule-remote-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Block 3 — Schedule Remote Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-soca-control-additions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. soca-control Additions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. soca-control Additions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#edge-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settings-edge-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings &gt; Edge form
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edge_clientpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        edge_client.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-page-edgesedge_idoperations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New page: /edges/&lt;edge_id&gt;/operations/
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-url-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. URL Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. URL Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#soca-dashboard-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-dashboard (new)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soca-control-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-control (new)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-security-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Security Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rule-management-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rule Management Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced-rule-management-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Rule Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/soca-control-user-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Control (Fleet)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="edge-operations-design-spec">Edge Operations Design Spec<a class="headerlink" href="#edge-operations-design-spec" title="Permanent link">&para;</a></h1>
+<p><strong>Date:</strong> 2026-03-22
+<strong>Project:</strong> soca-dashboard + soca-control</p>
+<h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
+<p>soca-dashboard manages a single edge device. As deployments grow and data accumulates, operators need:
+1. A way to purge aging detection data and free disk space
+2. A machine-readable API so soca-control can remotely manage schedules and trigger purges
+3. A dedicated UI section in Settings to expose these operations</p>
+<hr />
+<h2 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">&para;</a></h2>
+<p>Three coordinated deliverables:</p>
+<table>
+<thead>
+<tr>
+<th>Deliverable</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Purge tool (local + remote)</td>
+<td>soca-dashboard</td>
+</tr>
+<tr>
+<td>REST API v1 for soca-control</td>
+<td>soca-dashboard</td>
+</tr>
+<tr>
+<td>Settings &gt; Operations tab</td>
+<td>soca-dashboard</td>
+</tr>
+<tr>
+<td>Schedule remote control + purge trigger</td>
+<td>soca-control</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-data-model-changes">1. Data Model Changes<a class="headerlink" href="#1-data-model-changes" title="Permanent link">&para;</a></h2>
+<h3 id="soca-dashboard-edgeconfig">soca-dashboard: <code>EdgeConfig</code><a class="headerlink" href="#soca-dashboard-edgeconfig" title="Permanent link">&para;</a></h3>
+<p>Add two fields:</p>
+<div class="highlight"><pre><span></span><code><span class="n">api_key</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="c1"># Generated via secrets.token_hex(32); stored plain text (private network only)</span>
+
+<span class="n">engine_db_path</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="c1"># Absolute path to soca-engine&#39;s SQLite file, e.g. &quot;/opt/soca-engine/db.sqlite3&quot;</span>
+<span class="c1"># Shown in Settings &gt; Edge Config as a plain text field (same section as engine_env_path)</span>
+<span class="c1"># The snapshots root is derived: parent dir of the first snapshot_path in detection_events,</span>
+<span class="c1"># or stored as a sibling field (see Section 2).</span>
+</code></pre></div>
+<p>Also add:</p>
+<div class="highlight"><pre><span></span><code><span class="n">snapshots_root</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="c1"># Absolute path to the snapshots directory on this edge, e.g. &quot;/opt/soca-engine/snapshots&quot;</span>
+<span class="c1"># Used by purge to find and delete snapshot files</span>
+</code></pre></div>
+<p>Both <code>engine_db_path</code> and <code>snapshots_root</code> are added to the existing <strong>Settings &gt; Edge Config</strong> tab form (not the Operations tab).</p>
+<h3 id="soca-control-edge">soca-control: <code>Edge</code><a class="headerlink" href="#soca-control-edge" title="Permanent link">&para;</a></h3>
+<p>Add one field:</p>
+<div class="highlight"><pre><span></span><code><span class="n">api_key</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="c1"># Operator pastes this from the target edge&#39;s Settings &gt; Operations tab</span>
+</code></pre></div>
+<hr />
+<h2 id="2-purge-logic">2. Purge Logic<a class="headerlink" href="#2-purge-logic" title="Permanent link">&para;</a></h2>
+<h3 id="what-gets-purged-soca-dashboard">What Gets Purged (soca-dashboard)<a class="headerlink" href="#what-gets-purged-soca-dashboard" title="Permanent link">&para;</a></h3>
+<p>soca-dashboard reads detection data directly from <strong>soca-engine's SQLite</strong> file at <code>EdgeConfig.engine_db_path</code>. Purge targets:</p>
+<ol>
+<li><strong><code>detection_events</code> rows</strong> where <code>created_at &lt; cutoff_date</code></li>
+<li><strong>Snapshot image files</strong> on disk: for each matching row, derive the absolute path as <code>{EdgeConfig.snapshots_root}/{row.snapshot_path}</code>. Delete the file if it exists; skip silently if missing.</li>
+</ol>
+<p><strong>Partial failure handling:</strong> DB rows are deleted first in a single transaction. File deletion runs after commit — errors on individual files are logged and skipped (no rollback possible). The response reports <code>deleted_records</code>, <code>deleted_files</code>, and <code>skipped_files</code> (count of missing/unreadable files).</p>
+<p><strong><code>freed_bytes</code> computation:</strong> File sizes are summed <strong>before</strong> deletion. Files that are skipped (missing or unreadable) are <strong>excluded</strong> from <code>freed_bytes</code>.</p>
+<p><strong>Path safety:</strong> Before deleting any file, validate that its resolved absolute path starts with <code>EdgeConfig.snapshots_root</code>. Skip any file that fails this check (path traversal guard).</p>
+<h3 id="purge-age-thresholds">Purge Age Thresholds<a class="headerlink" href="#purge-age-thresholds" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th><code>older_than</code> value</th>
+<th>Cutoff</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Older than 1 month</td>
+<td><code>30</code></td>
+<td><code>now - 30 days</code></td>
+</tr>
+<tr>
+<td>Older than 3 months</td>
+<td><code>90</code></td>
+<td><code>now - 90 days</code></td>
+</tr>
+<tr>
+<td>Older than 6 months</td>
+<td><code>180</code></td>
+<td><code>now - 180 days</code></td>
+</tr>
+<tr>
+<td>Older than 1 year</td>
+<td><code>365</code></td>
+<td><code>now - 365 days</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="purge-steps">Purge Steps<a class="headerlink" href="#purge-steps" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Preview</strong> — query count of matching rows + sum disk size of snapshot files → return JSON <code>{record_count, file_count, disk_bytes}</code></li>
+<li><strong>Execute</strong> — delete rows, delete files (skip missing), return <code>{deleted_records, deleted_files, skipped_files, freed_bytes}</code></li>
+</ol>
+<p>Both steps are implemented as Django view functions callable via the UI and the API.</p>
+<h3 id="what-gets-purged-soca-control">What Gets Purged (soca-control)<a class="headerlink" href="#what-gets-purged-soca-control" title="Permanent link">&para;</a></h3>
+<p>soca-control has its own <code>Alert</code> table. Purge targets <code>Alert</code> rows filtered by <code>created_at &lt; cutoff_date</code> (and optionally by <code>edge</code> FK). This is handled by soca-control's own view (<code>edge_purge_local</code>) — it does not go through soca-dashboard's API.</p>
+<hr />
+<h2 id="3-api-design-apiv1">3. API Design (<code>/api/v1/</code>)<a class="headerlink" href="#3-api-design-apiv1" title="Permanent link">&para;</a></h2>
+<h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h3>
+<p>All <code>/api/v1/</code> endpoints are authenticated by <strong>API key only</strong> (not session). This simplifies the auth model — the browser UI calls separate non-<code>/api/v1/</code> view functions for the same operations (see Section 4).</p>
+<p>Request header:
+<div class="highlight"><pre><span></span><code>Authorization: Api-Key &lt;token&gt;
+</code></pre></div></p>
+<p>If the header is missing or the token doesn't match <code>EdgeConfig.api_key</code> → <code>403</code> with body:
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Invalid or missing API key&quot;</span><span class="p">}</span>
+</code></pre></div></p>
+<p>Existing public endpoints (<code>/api/edge-info/</code>, <code>/api/cameras/</code>) are unaffected — no key required.</p>
+<h3 id="standard-error-responses">Standard Error Responses<a class="headerlink" href="#standard-error-responses" title="Permanent link">&para;</a></h3>
+<p>All endpoints return JSON. On error:</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Status</th>
+<th>Body</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Missing/invalid API key</td>
+<td>403</td>
+<td><code>{"error": "Invalid or missing API key"}</code></td>
+</tr>
+<tr>
+<td>Schedule not found</td>
+<td>404</td>
+<td><code>{"error": "Schedule not found"}</code></td>
+</tr>
+<tr>
+<td>soca-engine unreachable (start/stop)</td>
+<td>502</td>
+<td><code>{"error": "Engine unreachable"}</code></td>
+</tr>
+<tr>
+<td>engine_db_path not configured</td>
+<td>503</td>
+<td><code>{"error": "Engine DB path not configured"}</code></td>
+</tr>
+<tr>
+<td>Unexpected server error</td>
+<td>500</td>
+<td><code>{"error": "Internal error", "detail": "..."}</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="endpoints">Endpoints<a class="headerlink" href="#endpoints" title="Permanent link">&para;</a></h3>
+<h4 id="get-apiv1schedules"><code>GET /api/v1/schedules/</code><a class="headerlink" href="#get-apiv1schedules" title="Permanent link">&para;</a></h4>
+<p>Returns all schedules with current running state.</p>
+<div class="highlight"><pre><span></span><code><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Stairs Intrusion&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;camera_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;camera_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bardi Stairs Front&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;is_active&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;alert_category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Intrusion&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;job_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;550e8400-...&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;running&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div>
+<p><code>status</code> values: <code>"running"</code> (job_id set and engine confirms running), <code>"stopped"</code> (no job_id or engine says stopped), <code>"unknown"</code> (engine unreachable).</p>
+<h4 id="post-apiv1schedulesidstart"><code>POST /api/v1/schedules/&lt;id&gt;/start/</code><a class="headerlink" href="#post-apiv1schedulesidstart" title="Permanent link">&para;</a></h4>
+<p>Starts the schedule (calls soca-engine, stores job_id). Returns:
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;started&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;job_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;550e8400-...&quot;</span><span class="p">}</span>
+</code></pre></div></p>
+<p>If schedule has no camera or is_active=False → <code>400 {"error": "Schedule not startable"}</code>.</p>
+<h4 id="post-apiv1schedulesidstop"><code>POST /api/v1/schedules/&lt;id&gt;/stop/</code><a class="headerlink" href="#post-apiv1schedulesidstop" title="Permanent link">&para;</a></h4>
+<p>Stops the running job. Returns:
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stopped&quot;</span><span class="p">}</span>
+</code></pre></div></p>
+<p>If no job is running → returns <code>{"status": "already_stopped"}</code> (not an error).</p>
+<h4 id="get-apiv1purgepreviewolder_thandays"><code>GET /api/v1/purge/preview/?older_than=&lt;days&gt;</code><a class="headerlink" href="#get-apiv1purgepreviewolder_thandays" title="Permanent link">&para;</a></h4>
+<p>Returns purge preview without deleting anything.</p>
+<p><code>older_than</code> must be one of: <code>30</code>, <code>90</code>, <code>180</code>, <code>365</code>. Other values → <code>400 {"error": "Invalid older_than value"}</code>.</p>
+<p>If <code>engine_db_path</code> is not set → <code>503</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;older_than_days&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">90</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;cutoff_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-12-22&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;record_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4821</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;file_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4102</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;disk_bytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2147483648</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="post-apiv1purgeexecute"><code>POST /api/v1/purge/execute/</code><a class="headerlink" href="#post-apiv1purgeexecute" title="Permanent link">&para;</a></h4>
+<p>Body: <code>{"older_than": 90}</code></p>
+<p>Same validation as preview. Executes the purge.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;deleted_records&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4821</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;deleted_files&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4102</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;skipped_files&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;freed_bytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2147483648</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="4-soca-dashboard-settings-operations-tab">4. soca-dashboard: Settings &gt; Operations Tab<a class="headerlink" href="#4-soca-dashboard-settings-operations-tab" title="Permanent link">&para;</a></h2>
+<p>The existing Settings page gains a <strong>4th tab: Operations</strong>.</p>
+<p>The browser UI calls <strong>separate, session-authenticated view functions</strong> (not the <code>/api/v1/</code> endpoints) for all Operations tab actions. This avoids the need to handle both session and API key auth in the same view.</p>
+<table>
+<thead>
+<tr>
+<th>UI action</th>
+<th>View function</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Generate API key</td>
+<td><code>generate_api_key</code></td>
+<td><code>POST /settings/edge/generate-key/</code></td>
+</tr>
+<tr>
+<td>Preview purge</td>
+<td><code>purge_preview_view</code></td>
+<td><code>GET /settings/operations/purge/preview/</code></td>
+</tr>
+<tr>
+<td>Execute purge</td>
+<td><code>purge_execute_view</code></td>
+<td><code>POST /settings/operations/purge/execute/</code></td>
+</tr>
+<tr>
+<td>List schedules (poll)</td>
+<td><code>schedule_status_all</code></td>
+<td><code>GET /settings/operations/schedules/</code></td>
+</tr>
+</tbody>
+</table>
+<p>These views share the same underlying logic as the <code>/api/v1/</code> handlers via extracted helper functions (<code>_purge_preview()</code>, <code>_purge_execute()</code>, <code>_list_schedules()</code>). All three session-auth views return the <strong>same JSON response shapes</strong> as their <code>/api/v1/</code> counterparts.</p>
+<h3 id="block-1-api-access">Block 1 — API Access<a class="headerlink" href="#block-1-api-access" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>API Key</strong> field: masked value with "Reveal" toggle + "Copy" button</li>
+<li><strong>Generate Key</strong> button → <code>POST /settings/edge/generate-key/</code> → saves new <code>secrets.token_hex(32)</code> to <code>EdgeConfig.api_key</code></li>
+<li>Inline warning: "Regenerating will invalidate any existing soca-control connection"</li>
+<li>Static read-only list of available API endpoints (hardcoded HTML — no dynamic generation needed)</li>
+</ul>
+<h3 id="block-2-purge-edge-data">Block 2 — Purge Edge Data<a class="headerlink" href="#block-2-purge-edge-data" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>&lt;select&gt;</code> dropdown: "Older than" → 1 month / 3 months / 6 months / 1 year</li>
+<li><strong>Preview</strong> button → AJAX <code>GET /settings/operations/purge/preview/?older_than=&lt;days&gt;</code> → inline result:
+  <div class="highlight"><pre><span></span><code>4,821 detection records · 4,102 snapshot files · 2.0 GB will be freed
+</code></pre></div></li>
+<li><strong>Purge Now</strong> button (disabled until preview loaded) → DaisyUI confirmation modal</li>
+<li>Modal shows preview numbers again</li>
+<li>"Confirm Purge" → <code>POST /settings/operations/purge/execute/</code> → flash message with result</li>
+<li>Loading spinner during async calls</li>
+</ul>
+<h3 id="block-3-schedule-remote-control">Block 3 — Schedule Remote Control<a class="headerlink" href="#block-3-schedule-remote-control" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Table: Schedule Name | Camera | Status badge | Start / Stop buttons</li>
+<li>Status badge: green "Running" / gray "Stopped" / amber "Unknown"</li>
+<li>Start → <code>POST /schedules/&lt;id&gt;/start/</code> (existing view), Stop → <code>POST /schedules/&lt;id&gt;/stop/</code> (existing view)</li>
+<li>Table auto-refreshes every 10s by polling <code>GET /settings/operations/schedules/</code></li>
+<li>Poll pauses when <code>document.visibilityState === 'hidden'</code> (tab not visible) to avoid unnecessary requests</li>
+</ul>
+<hr />
+<h2 id="5-soca-control-additions">5. soca-control Additions<a class="headerlink" href="#5-soca-control-additions" title="Permanent link">&para;</a></h2>
+<h3 id="edge-model"><code>Edge</code> model<a class="headerlink" href="#edge-model" title="Permanent link">&para;</a></h3>
+<p>Add <code>api_key = models.CharField(max_length=64, blank=True, default='')</code>.</p>
+<h3 id="settings-edge-form">Settings &gt; Edge form<a class="headerlink" href="#settings-edge-form" title="Permanent link">&para;</a></h3>
+<p>Add "API Key" text field to the edge add/edit form. Operator pastes the key from soca-dashboard's Operations tab.</p>
+<h3 id="edge_clientpy"><code>edge_client.py</code><a class="headerlink" href="#edge_clientpy" title="Permanent link">&para;</a></h3>
+<p>New functions, all send <code>Authorization: Api-Key {edge.api_key}</code> header.</p>
+<p><strong>Return contract for write operations:</strong> Return the parsed JSON dict on success, or <code>None</code> on any failure (network error, 4xx, 5xx). Callers check for <code>None</code> and show an appropriate error.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fetch_schedules</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>             <span class="c1"># GET /api/v1/schedules/ → list or None</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">start_schedule</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="n">sched_id</span><span class="p">)</span>    <span class="c1"># POST /api/v1/schedules/&lt;id&gt;/start/ → dict or None</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">stop_schedule</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="n">sched_id</span><span class="p">)</span>     <span class="c1"># POST /api/v1/schedules/&lt;id&gt;/stop/ → dict or None</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">purge_preview</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="n">older_than</span><span class="p">)</span>   <span class="c1"># GET /api/v1/purge/preview/ → dict or None</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">purge_execute</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="n">older_than</span><span class="p">)</span>   <span class="c1"># POST /api/v1/purge/execute/ → dict or None</span>
+</code></pre></div>
+<h3 id="new-page-edgesedge_idoperations">New page: <code>/edges/&lt;edge_id&gt;/operations/</code><a class="headerlink" href="#new-page-edgesedge_idoperations" title="Permanent link">&para;</a></h3>
+<p>A dedicated operations page per edge. This is the <strong>canonical entry point</strong> — accessible via an "Operations" link in the edge list table row on soca-control's Settings page.</p>
+<p><strong>Section 1 — Schedule Control</strong>
+- Table: Name | Camera | Status | Start / Stop
+- Start → <code>POST /edges/&lt;edge_id&gt;/operations/schedules/&lt;sched_id&gt;/start/</code>
+- Stop → <code>POST /edges/&lt;edge_id&gt;/operations/schedules/&lt;sched_id&gt;/stop/</code>
+- Table auto-refreshes every 10s (same visibilityState pause as soca-dashboard)</p>
+<p><strong>Section 2 — Purge Edge Data (remote)</strong>
+- Purges records from the remote soca-dashboard (via <code>/api/v1/purge/</code>)
+- Same preview + confirm flow
+- <code>POST /edges/&lt;edge_id&gt;/operations/purge/execute/</code> → soca-control proxy view → calls <code>purge_execute(edge, older_than)</code></p>
+<p><strong>Section 3 — Purge soca-control Records (local)</strong>
+- Purges soca-control's own <code>Alert</code> table for this specific edge (<code>Alert.edge = edge</code>)
+- Preview: count of matching Alert rows (no disk files — soca-control doesn't store snapshots)
+- Execute: <code>Alert.objects.filter(edge=edge, created_at__lt=cutoff).delete()</code>
+- <code>POST /edges/&lt;edge_id&gt;/operations/purge/local/</code> → <code>edge_purge_local</code> view
+- Both preview and execute accept <code>{"older_than": &lt;days&gt;}</code> JSON body with the same four-value allowlist (<code>30</code>, <code>90</code>, <code>180</code>, <code>365</code>) as the remote purge
+- Preview response shape: <code>{"older_than_days": 90, "cutoff_date": "2025-12-22", "record_count": 412}</code>
+- Execute response shape: <code>{"deleted_records": 412}</code></p>
+<hr />
+<h2 id="6-url-summary">6. URL Summary<a class="headerlink" href="#6-url-summary" title="Permanent link">&para;</a></h2>
+<h3 id="soca-dashboard-new">soca-dashboard (new)<a class="headerlink" href="#soca-dashboard-new" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>api/v1/schedules/                         GET  → api_v1_schedules
+api/v1/schedules/&lt;id&gt;/start/              POST → api_v1_schedule_start
+api/v1/schedules/&lt;id&gt;/stop/               POST → api_v1_schedule_stop
+api/v1/purge/preview/                     GET  → api_v1_purge_preview
+api/v1/purge/execute/                     POST → api_v1_purge_execute
+
+settings/edge/generate-key/              POST → generate_api_key
+settings/operations/schedules/           GET  → schedule_status_all
+settings/operations/purge/preview/       GET  → purge_preview_view
+settings/operations/purge/execute/       POST → purge_execute_view
+</code></pre></div>
+<h3 id="soca-control-new">soca-control (new)<a class="headerlink" href="#soca-control-new" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>edges/&lt;id&gt;/operations/                          GET  → edge_operations
+edges/&lt;id&gt;/operations/schedules/&lt;sid&gt;/start/    POST → edge_schedule_start
+edges/&lt;id&gt;/operations/schedules/&lt;sid&gt;/stop/     POST → edge_schedule_stop
+edges/&lt;id&gt;/operations/purge/execute/            POST → edge_purge_remote
+edges/&lt;id&gt;/operations/purge/local/              POST → edge_purge_local
+</code></pre></div>
+<hr />
+<h2 id="7-security-notes">7. Security Notes<a class="headerlink" href="#7-security-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>API key is stored in plain text — acceptable for private network deployments</li>
+<li>All write operations (start, stop, purge execute) are POST only</li>
+<li>Purge preview and schedule list are GET (read-only)</li>
+<li>File deletion validates all paths start with <code>EdgeConfig.snapshots_root</code> before deleting (path traversal guard)</li>
+<li>soca-dashboard's purge operates on soca-engine's SQLite — requires the engine DB file to be readable/writable by the Django process user</li>
+</ul>
+<hr />
+<h2 id="8-verification">8. Verification<a class="headerlink" href="#8-verification" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Add <code>engine_db_path</code> and <code>snapshots_root</code> in Settings &gt; Edge Config → save</li>
+<li>Generate API key in Settings &gt; Operations → copy it</li>
+<li>Register key in soca-control's edge settings</li>
+<li><code>GET /api/v1/schedules/</code> with key → returns schedule list</li>
+<li>Start/stop a schedule from soca-control → verify job starts/stops in soca-engine</li>
+<li>Run purge preview in Operations tab → verify counts match actual DB rows + files</li>
+<li>Execute purge → verify rows deleted, files removed, <code>freed_bytes</code> reported</li>
+<li>Trigger remote purge from soca-control Operations page → same verification</li>
+<li>Purge soca-control's own Alert table → verify local records deleted</li>
+<li>Regenerate API key → verify old key returns <code>403 {"error": "Invalid or missing API key"}</code></li>
+<li>Disconnect soca-engine → verify start/stop returns <code>502</code> gracefully</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

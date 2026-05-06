@@ -1,0 +1,1237 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/architecture/licensing-model/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>SOCA Licensing Model - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#soca-licensing-model" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SOCA Licensing Model
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="soca-licensing-model">SOCA Licensing Model<a class="headerlink" href="#soca-licensing-model" title="Permanent link">&para;</a></h1>
+<p><strong>Date:</strong> 2026-05-01<br />
+<strong>Version:</strong> 1.2<br />
+<strong>Scope:</strong> soca-dashboard · soca-engine · soca-entitlement</p>
+<hr />
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>SOCA uses a server-side license model managed by <strong>soca-entitlement</strong> — a dedicated Django service that issues and tracks UUID license keys. Each edge device activates one key; the entitlement server returns the device's allowed limits. Without an active license, an edge runs in <strong>free tier</strong> (1 active camera, 1 concurrent AI model).</p>
+<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────┐
+│                        EDGE DEVICE                          │
+│                                                             │
+│  soca-dashboard                    soca-engine              │
+│  ┌───────────────────────┐         ┌──────────────────────┐ │
+│  │ Settings → License tab│         │ MAX_CONCURRENT_JOBS  │ │
+│  │ [Activate License]    │         │ MAX_LOADED_MODELS     │ │
+│  │                       │◄──env──►│  (read from .env)    │ │
+│  │ EdgeConfig            │         └──────────────────────┘ │
+│  │  license_key          │                                   │
+│  │  license_status       │                                   │
+│  │  license_max_cameras  │                                   │
+│  │  license_max_models   │                                   │
+│  └──────────┬────────────┘                                   │
+│             │ HTTP POST/GET                                   │
+└─────────────┼───────────────────────────────────────────────┘
+              │
+              ▼
+┌─────────────────────────────────────────────────────────────┐
+│              soca-entitlement  (port 8080)                   │
+│              http://34.101.213.40:8080                       │
+│                                                              │
+│  POST /api/v1/license/activate/    ← one-time activation     │
+│  GET  /api/v1/license/check/&lt;key&gt;/ ← status check / refresh  │
+└─────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<hr />
+<h2 id="free-tier-vs-licensed">Free Tier vs Licensed<a class="headerlink" href="#free-tier-vs-licensed" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Limit</th>
+<th>Free Tier</th>
+<th>Licensed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active cameras</td>
+<td><strong>1</strong></td>
+<td><code>max_cameras</code> from license</td>
+</tr>
+<tr>
+<td>Concurrent AI models</td>
+<td><strong>1</strong></td>
+<td><code>max_ai_models</code> from license</td>
+</tr>
+<tr>
+<td><code>MAX_CONCURRENT_JOBS</code> in engine</td>
+<td><strong>1</strong></td>
+<td>synced from license</td>
+</tr>
+<tr>
+<td><code>MAX_LOADED_MODELS</code> in engine</td>
+<td><strong>1</strong></td>
+<td>synced from license</td>
+</tr>
+</tbody>
+</table>
+<p>Free tier is the default when:
+- No license key has been entered
+- The license has expired
+- The license has been revoked</p>
+<hr />
+<h2 id="data-model-edgeconfig-soca-dashboard">Data Model — <code>EdgeConfig</code> (soca-dashboard)<a class="headerlink" href="#data-model-edgeconfig-soca-dashboard" title="Permanent link">&para;</a></h2>
+<p>Seven license fields are stored on the <code>EdgeConfig</code> singleton (<code>pk=1</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>license_key</code></td>
+<td><code>CharField(36)</code></td>
+<td>UUID key entered by the admin</td>
+</tr>
+<tr>
+<td><code>license_status</code></td>
+<td><code>CharField</code></td>
+<td><code>UNLICENSED</code> / <code>ACTIVE</code> / <code>EXPIRED</code> / <code>REVOKED</code></td>
+</tr>
+<tr>
+<td><code>license_max_cameras</code></td>
+<td><code>PositiveIntegerField</code></td>
+<td>Cached <code>max_cameras</code> from entitlement</td>
+</tr>
+<tr>
+<td><code>license_max_models</code></td>
+<td><code>PositiveIntegerField</code></td>
+<td>Cached <code>max_ai_models</code> from entitlement</td>
+</tr>
+<tr>
+<td><code>license_expires_at</code></td>
+<td><code>DateField</code></td>
+<td>Cached expiry date (<code>null</code> = never expires)</td>
+</tr>
+<tr>
+<td><code>license_activated_at</code></td>
+<td><code>DateTimeField</code></td>
+<td>When this key was activated</td>
+</tr>
+<tr>
+<td><code>license_last_checked</code></td>
+<td><code>DateTimeField</code></td>
+<td>Last time the check endpoint was called</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Computed properties</strong> (no DB column):</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@property</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">effective_max_cameras</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">license_max_cameras</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">license_status</span> <span class="o">==</span> <span class="s1">&#39;ACTIVE&#39;</span> <span class="k">else</span> <span class="mi">1</span>
+
+<span class="nd">@property</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">effective_max_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">license_max_models</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">license_status</span> <span class="o">==</span> <span class="s1">&#39;ACTIVE&#39;</span> <span class="k">else</span> <span class="mi">1</span>
+
+<span class="nd">@property</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_licensed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">license_status</span> <span class="o">==</span> <span class="s1">&#39;ACTIVE&#39;</span>
+</code></pre></div>
+<p><strong>Migration:</strong> <code>0026_edgeconfig_license_fields</code> (<code>soca-edge</code>) / <code>0029_edgeconfig_license_fields</code> (<code>soca-edge-nx</code>)</p>
+<hr />
+<h2 id="activation-flow">Activation Flow<a class="headerlink" href="#activation-flow" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Admin pastes UUID key into Settings → License → Activate License
+        │
+        ▼
+POST /api/v1/license/activate/
+{
+  &quot;license_key&quot;: &quot;xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&quot;,
+  &quot;edge_name&quot;:   &quot;edge-jakarta-lobby&quot;,          ← EdgeConfig.edge_name
+  &quot;mac_address&quot;: &quot;aa:bb:cc:dd:ee:ff&quot;,           ← server NIC MAC address
+  &quot;device_info&quot;: {&quot;edge_id&quot;: &quot;1&quot;}
+}
+        │
+        ▼  soca-entitlement validates:
+        │    ✓ key exists and status == ACTIVE
+        │    ✓ not expired
+        │    ✓ not already activated by a different MAC
+        │
+        ▼
+200 OK
+{
+  &quot;status&quot;:        &quot;activated&quot;,
+  &quot;max_cameras&quot;:   4,
+  &quot;max_ai_models&quot;: 2,
+  &quot;expires_at&quot;:    &quot;2027-05-01&quot;    ← null if perpetual
+}
+        │
+        ▼
+soca-dashboard saves to EdgeConfig:
+  license_status = ACTIVE
+  license_max_cameras = 4
+  license_max_models  = 2
+  license_expires_at  = 2027-05-01
+  max_concurrent_jobs = 2   ← also written, triggers env sync
+  max_loaded_models   = 2
+        │
+        ▼
+_sync_license_to_engine() writes to soca-engine .env:
+  MAX_CONCURRENT_JOBS=2
+  MAX_LOADED_MODELS=2
+</code></pre></div>
+<hr />
+<h2 id="enforcement-points">Enforcement Points<a class="headerlink" href="#enforcement-points" title="Permanent link">&para;</a></h2>
+<h3 id="soca-dashboard">soca-dashboard<a class="headerlink" href="#soca-dashboard" title="Permanent link">&para;</a></h3>
+<p><strong>Camera creation</strong> (<code>app/views.py</code> → <code>camera_form</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="ow">not</span> <span class="n">camera</span><span class="p">:</span>   <span class="c1"># new camera only</span>
+    <span class="n">max_cams</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">effective_max_cameras</span>   <span class="c1"># 1 if unlicensed</span>
+    <span class="n">active_count</span> <span class="o">=</span> <span class="n">Camera</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">is_active</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">fields</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;is_active&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">active_count</span> <span class="o">&gt;=</span> <span class="n">max_cams</span><span class="p">:</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;License limit reached: maximum </span><span class="si">{</span><span class="n">max_cams</span><span class="si">}</span><span class="s1"> active camera(s).&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;cameras/form.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;camera&#39;</span><span class="p">:</span> <span class="n">camera</span><span class="p">})</span>
+</code></pre></div>
+<p><strong>Schedule start</strong> (<code>app/views.py</code> → <code>schedule_start</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="n">max_jobs</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">effective_max_models</span>   <span class="c1"># 1 if unlicensed</span>
+<span class="n">running_count</span> <span class="o">=</span> <span class="n">Schedule</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">is_active</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">exclude</span><span class="p">(</span><span class="n">current_job_id</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">running_count</span> <span class="o">&gt;=</span> <span class="n">max_jobs</span><span class="p">:</span>
+    <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;License limit reached: maximum </span><span class="si">{</span><span class="n">max_jobs</span><span class="si">}</span><span class="s1"> concurrent AI model(s).&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;schedule_list&#39;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="soca-engine">soca-engine<a class="headerlink" href="#soca-engine" title="Permanent link">&para;</a></h3>
+<p>Reads <code>MAX_CONCURRENT_JOBS</code> and <code>MAX_LOADED_MODELS</code> from its <code>.env</code> file at startup. These are written by soca-dashboard after every license activation or refresh.</p>
+<div class="highlight"><pre><span></span><code># soca-engine/.env (written by soca-dashboard)
+MAX_CONCURRENT_JOBS=2
+MAX_LOADED_MODELS=2
+</code></pre></div>
+<p>The engine checks <code>MAX_CONCURRENT_JOBS</code> in <code>api/jobs.py</code> before starting a new job:</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">active_jobs</span> <span class="o">&gt;=</span> <span class="n">config</span><span class="o">.</span><span class="n">MAX_CONCURRENT_JOBS</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="mi">503</span><span class="p">,</span> <span class="s2">&quot;Max concurrent jobs reached&quot;</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> soca-engine must be restarted after an env change for the new limits to take effect. soca-dashboard's <strong>Restart</strong> button in Settings → Operations handles this.</p>
+</blockquote>
+<hr />
+<h2 id="license-client-applicense_clientpy">License Client (<code>app/license_client.py</code>)<a class="headerlink" href="#license-client-applicense_clientpy" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>soca-dashboard/app/license_client.py
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>activate_edge_license(edge, license_key)</code></td>
+<td>POSTs to <code>/api/v1/license/activate/</code>, saves all fields on success</td>
+</tr>
+<tr>
+<td><code>refresh_license_status(edge)</code></td>
+<td>GETs <code>/api/v1/license/check/&lt;key&gt;/</code>, updates status + expiry</td>
+</tr>
+<tr>
+<td><code>_get_mac_address()</code></td>
+<td>Returns the server's hardware MAC (binding fingerprint)</td>
+</tr>
+</tbody>
+</table>
+<p>Entitlement server URL is hardcoded as the module constant:
+<div class="highlight"><pre><span></span><code><span class="n">ENTITLEMENT_URL</span> <span class="o">=</span> <span class="s1">&#39;http://34.101.213.40:8080&#39;</span>
+</code></pre></div></p>
+<hr />
+<h2 id="settings-ui">Settings UI<a class="headerlink" href="#settings-ui" title="Permanent link">&para;</a></h2>
+<p>Navigate to <strong>Settings → License</strong> tab in soca-dashboard.</p>
+<h3 id="unlicensed-state">Unlicensed state<a class="headerlink" href="#unlicensed-state" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Yellow "Free Tier" warning banner</li>
+<li>Input field for the license key UUID</li>
+<li><strong>Activate License</strong> button</li>
+</ul>
+<h3 id="licensed-state">Licensed state<a class="headerlink" href="#licensed-state" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Green <strong>Active</strong> badge</li>
+<li>Stat cards: Max Cameras · Max AI Models · Expires</li>
+<li>Key + timestamps shown</li>
+<li><strong>Refresh Status</strong> button — re-calls the check endpoint</li>
+<li><strong>Unlink License</strong> button — clears license locally (does NOT revoke on entitlement)</li>
+</ul>
+<h3 id="expired-revoked-state">Expired / Revoked state<a class="headerlink" href="#expired-revoked-state" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Red badge with reason</li>
+<li><strong>Re-check Status</strong> button</li>
+<li><strong>Clear License Key</strong> button</li>
+</ul>
+<h3 id="global-warning-banner">Global warning banner<a class="headerlink" href="#global-warning-banner" title="Permanent link">&para;</a></h3>
+<p>A yellow banner is shown on every page when the edge is not licensed. It links to the License tab.</p>
+<h3 id="camera-list">Camera list<a class="headerlink" href="#camera-list" title="Permanent link">&para;</a></h3>
+<p>The camera list subtitle shows <code>x / max active limit</code> with a warning color when at the cap.</p>
+<hr />
+<h2 id="soca-entitlement-api-reference">soca-entitlement API Reference<a class="headerlink" href="#soca-entitlement-api-reference" title="Permanent link">&para;</a></h2>
+<p>Base URL: <code>http://34.101.213.40:8080</code></p>
+<h3 id="post-apiv1licenseactivate">POST <code>/api/v1/license/activate/</code><a class="headerlink" href="#post-apiv1licenseactivate" title="Permanent link">&para;</a></h3>
+<p>Activates a license key for a specific edge device (one-time).</p>
+<p><strong>Request body:</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;license_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;edge_name&quot;</span><span class="p">:</span><span class="w">   </span><span class="s2">&quot;edge-jakarta-lobby&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;mac_address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;aa:bb:cc:dd:ee:ff&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;device_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Responses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>200</code></td>
+<td>Activated — body contains <code>max_cameras</code>, <code>max_ai_models</code>, <code>expires_at</code></td>
+</tr>
+<tr>
+<td><code>404</code></td>
+<td>License key not found</td>
+</tr>
+<tr>
+<td><code>409</code></td>
+<td>Already activated by another device</td>
+</tr>
+<tr>
+<td><code>410</code></td>
+<td>License revoked or expired</td>
+</tr>
+<tr>
+<td><code>422</code></td>
+<td>Missing required fields</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="get-apiv1licensechecklicense_key">GET <code>/api/v1/license/check/&lt;license_key&gt;/</code><a class="headerlink" href="#get-apiv1licensechecklicense_key" title="Permanent link">&para;</a></h3>
+<p>Returns current license status without modifying it. Used for periodic refresh.</p>
+<p><strong>Response (200):</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w">        </span><span class="s2">&quot;USED&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;max_cameras&quot;</span><span class="p">:</span><span class="w">   </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;max_ai_models&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;duration_months&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;activated_by&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;edge-jakarta-lobby&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;activated_at&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;2026-05-01T09:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;expires_at&quot;</span><span class="p">:</span><span class="w">    </span><span class="s2">&quot;2027-05-01&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;is_expired&quot;</span><span class="p">:</span><span class="w">    </span><span class="kc">false</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>Status values: <code>ACTIVE</code> · <code>USED</code> · <code>EXPIRED</code> · <code>REVOKED</code><br />
+(<code>USED</code> = successfully activated, treated as <code>ACTIVE</code> by soca-dashboard)</p>
+<hr />
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<h3 id="soca-dashboard-env">soca-dashboard <code>.env</code><a class="headerlink" href="#soca-dashboard-env" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>APP_VERSION=1.2
+</code></pre></div>
+<p>The entitlement server URL is in <code>app/license_client.py</code>:
+<div class="highlight"><pre><span></span><code><span class="n">ENTITLEMENT_URL</span> <span class="o">=</span> <span class="s1">&#39;http://34.101.213.40:8080&#39;</span>
+</code></pre></div></p>
+<h3 id="soca-engine-env-managed-by-soca-dashboard">soca-engine <code>.env</code> (managed by soca-dashboard)<a class="headerlink" href="#soca-engine-env-managed-by-soca-dashboard" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>MAX_CONCURRENT_JOBS=1   # written after license activation
+MAX_LOADED_MODELS=1     # default free-tier value
+</code></pre></div>
+<hr />
+<h2 id="version">Version<a class="headerlink" href="#version" title="Permanent link">&para;</a></h2>
+<p>Application version is stored in <code>.env</code> and displayed at the bottom of the sidebar:</p>
+<div class="highlight"><pre><span></span><code># soca-dashboard/.env
+APP_VERSION=1.2
+</code></pre></div>
+<p>Read in <code>dashboard/settings.py</code>:
+<div class="highlight"><pre><span></span><code><span class="n">APP_VERSION</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;APP_VERSION&quot;</span><span class="p">,</span> <span class="s2">&quot;1.2&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p>Exposed to all templates via <code>app/context_processors.py</code> as <code>{{ app_version }}</code>.</p>
+<hr />
+<h2 id="sequence-first-boot">Sequence: First Boot<a class="headerlink" href="#sequence-first-boot" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>1. Edge device boots
+2. Admin opens soca-dashboard → Settings → License tab
+3. Admin pastes UUID license key received from vendor
+4. Dashboard calls POST /api/v1/license/activate/
+5. On success: EdgeConfig fields saved, engine .env updated
+6. Admin clicks Settings → Operations → Restart Engine
+7. soca-engine restarts with new MAX_CONCURRENT_JOBS / MAX_LOADED_MODELS
+8. Edge is now fully licensed
+</code></pre></div>
+<hr />
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Cannot reach entitlement server"</td>
+<td>Network blocked to <code>34.101.213.40:8080</code></td>
+<td>Check firewall / internet access from edge</td>
+</tr>
+<tr>
+<td>"License already activated by another device"</td>
+<td>MAC address mismatch</td>
+<td>Use the originally provisioned machine, or contact vendor for a new key</td>
+</tr>
+<tr>
+<td>"License key not found"</td>
+<td>Wrong UUID or key deleted from entitlement server</td>
+<td>Verify key with vendor</td>
+</tr>
+<tr>
+<td>Limits not applied in engine after activation</td>
+<td>Engine reads <code>.env</code> only at startup</td>
+<td>Restart soca-engine via Settings → Operations</td>
+</tr>
+<tr>
+<td>Camera limit not enforced on engine side</td>
+<td>Engine limit is applied at job start, not camera registration</td>
+<td>Camera count is dashboard-enforced; engine limit applies to concurrent jobs</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,3180 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/deployment/grafana-reporting-guide/">
+      
+      
+        <link rel="prev" href="../metabase-reporting-guide/">
+      
+      
+        <link rel="next" href="../cython-protection-guide/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Grafana - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#soca-grafana-reporting-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Grafana
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infrastructure
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../pubsub-setup-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integrations
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporting
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reporting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../metabase-reporting-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metabase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grafana
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grafana
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#database-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-app_alert-core-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table: app_alert — Core Schema
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-app_edge-edge-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table: app_edge — Edge Devices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connecting-grafana-to-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connecting Grafana to PostgreSQL
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grafana-sql-macros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grafana SQL Macros
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#template-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template Variables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Template Variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#edge-edge-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $edge — Edge filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#camera-camera-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $camera — Camera filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#category-alert-category-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $category — Alert category filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plate_search-plate-number-text-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $plate_search — Plate number text filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shared-utility-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shared Utility Queries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Shared Utility Queries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q0-daily-alert-summary-all-categories-time-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q0 — Daily Alert Summary (all categories) — Time series
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-object-detection-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Object Detection Report
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Object Detection Report">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-a-daily-trend-time-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-A — Daily trend — Time series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-b-alerts-by-camera-bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-B — Alerts by camera — Bar chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-c-alerts-by-rule-name-bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-C — Alerts by rule name — Bar chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-d-hourly-distribution-heatmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-D — Hourly distribution — Heatmap
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-e-top-detected-classes-pie-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-E — Top detected classes — Pie chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-f-recent-alerts-list-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-F — Recent alerts list — Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-intrusion-detection-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Intrusion Detection Report
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Intrusion Detection Report">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-a-daily-intrusion-trend-time-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2-A — Daily intrusion trend — Time series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-b-most-triggered-cameras-bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2-B — Most triggered cameras — Bar chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-c-peak-intrusion-hours-bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2-C — Peak intrusion hours — Bar chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-d-intrusion-events-detail-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2-D — Intrusion events detail — Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-e-time-gap-between-consecutive-alerts-per-camera-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2-E — Time gap between consecutive alerts per camera — Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-ppe-violations-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. PPE Violations Report
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. PPE Violations Report">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3-a-daily-ppe-violation-trend-time-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3-A — Daily PPE violation trend — Time series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-b-violations-by-camera-zone-bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3-B — Violations by camera / zone — Bar chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-c-non-compliant-item-breakdown-pie-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3-C — Non-compliant item breakdown — Pie chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-d-recent-ppe-violations-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3-D — Recent PPE violations — Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-people-counting-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. People Counting Report
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. People Counting Report">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4-a-cumulative-crossings-by-camera-and-rule-bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-A — Cumulative crossings by camera and rule — Bar chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-b-hourly-crossing-volume-time-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-B — Hourly crossing volume — Time series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-c-daily-entryexit-balance-per-camera-time-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-C — Daily entry/exit balance per camera — Time series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-d-people-count-events-list-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-D — People count events list — Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-crowd-detection-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Crowd Detection Report
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Crowd Detection Report">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5-a-daily-crowd-alerts-and-peak-count-time-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5-A — Daily crowd alerts and peak count — Time series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-b-crowd-level-by-camera-bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5-B — Crowd level by camera — Bar chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-c-hourly-crowd-distribution-bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5-C — Hourly crowd distribution — Bar chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-d-crowd-events-exceeding-threshold-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5-D — Crowd events exceeding threshold — Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-e-crowd-density-in-15-minute-buckets-time-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5-E — Crowd density in 15-minute buckets — Time series
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-lpr-license-plate-recognition-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. LPR (License Plate Recognition) Report
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. LPR (License Plate Recognition) Report">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6-a-daily-lpr-detections-time-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-A — Daily LPR detections — Time series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-b-all-detected-plates-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-B — All detected plates — Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-c-plate-frequency-most-seen-plates-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-C — Plate frequency (most seen plates) — Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-d-plates-by-camera-bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-D — Plates by camera — Bar chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-e-plate-search-uses-plate_search-variable-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-E — Plate search (uses $plate_search variable) — Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-cross-category-dashboard-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Cross-Category Dashboard Queries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Cross-Category Dashboard Queries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#7-a-fleet-overview-alerts-today-stat-panels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7-A — Fleet overview — alerts today — Stat panels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-b-alert-volume-by-edge-and-category-time-series-bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7-B — Alert volume by edge and category — Time series / Bar chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-c-top-10-busiest-cameras-bar-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7-C — Top 10 busiest cameras — Bar chart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-d-30-minute-alert-heatmap-time-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7-D — 30-minute alert heatmap — Time series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-e-alerts-this-week-vs-last-week-bar-chart-grouped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7-E — Alerts this week vs last week — Bar chart (grouped)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-f-live-alert-feed-table-with-auto-refresh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7-F — Live alert feed — Table with auto-refresh
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-grafana-dashboard-layout-suggestions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Grafana Dashboard Layout Suggestions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Grafana Dashboard Layout Suggestions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-1-fleet-operations-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard 1: Fleet Operations Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-2-object-detection-intrusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard 2: Object Detection &amp; Intrusion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-3-people-counting-crowd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard 3: People Counting &amp; Crowd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-4-ppe-safety-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard 4: PPE &amp; Safety Compliance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-5-lpr-license-plate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard 5: LPR — License Plate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-grafana-variables-dashboard-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Grafana Variables &amp; Dashboard Filters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-recommended-indexes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Recommended Indexes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-json-field-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. JSON Field Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-grafana-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Grafana Tips
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Grafana Tips">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#time-series-panels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time series panels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stat-panels-for-kpis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stat panels for KPIs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snapshot-images-in-table-panels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Snapshot images in Table panels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-refresh-for-live-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-refresh for live monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alerting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alerting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../cython-protection-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="soca-grafana-reporting-guide">SOCA — Grafana Reporting Guide<a class="headerlink" href="#soca-grafana-reporting-guide" title="Permanent link">&para;</a></h1>
+<p>Complete database schema and SQL queries for building Grafana dashboards covering
+Object Detection, People Counting, Intrusion, Crowd, and LPR reports.</p>
+<p><strong>Database: PostgreSQL</strong></p>
+<hr />
+<h2 id="database-overview">Database Overview<a class="headerlink" href="#database-overview" title="Permanent link">&para;</a></h2>
+<p>soca-control uses <strong>PostgreSQL</strong> in production.
+Add it as a Grafana data source — the same PostgreSQL instance used by soca-control.</p>
+<blockquote>
+<p><strong>Timezone note:</strong> All timestamps stored in UTC. Set Grafana's timezone to <code>Asia/Jakarta (GMT+7)</code>
+in Dashboard Settings → Time options → Timezone, <strong>or</strong> apply <code>AT TIME ZONE 'Asia/Jakarta'</code> in queries.</p>
+</blockquote>
+<hr />
+<h2 id="table-app_alert-core-schema">Table: <code>app_alert</code> — Core Schema<a class="headerlink" href="#table-app_alert-core-schema" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Column              Type        Notes
+──────────────────────────────────────────────────────────────────
+id                  SERIAL      Primary key
+edge_id             INTEGER     FK → app_edge.id (nullable)
+edge_name           TEXT        Denormalized edge identifier, e.g. &quot;edge-mac-mini-bekasi&quot;
+camera_id           TEXT        Raw camera identifier
+camera_name         TEXT        Human-readable camera name
+job_id              TEXT        UUID of the soca-engine job
+frame_id            TEXT        Unique frame identifier
+timestamp           TIMESTAMPTZ UTC — when the detection occurred
+alert_category      TEXT        &#39;Intrusion&#39; | &#39;PPE&#39; | &#39;Detection&#39; | &#39;Counting&#39; | &#39;Crowd&#39; | &#39;LPR&#39;
+rule_name           TEXT        Name of the rule that fired
+snapshot_message    TEXT        Formatted alert message
+snapshot_path       TEXT        Local/GCS path to snapshot JPG
+detection_count     INTEGER     Total detections in frame
+in_roi_count        INTEGER     Detections inside ROI
+cls_summary         JSONB       Class ID counts: {&quot;0&quot;: 2, &quot;2&quot;: 1}
+cls_name_summary    JSONB       Class name counts: {&quot;person&quot;: 2, &quot;car&quot;: 1}
+crossing_counts     JSONB       Line crossing: {&quot;rule_name&quot;: {&quot;in&quot;: 5, &quot;out&quot;: 3}}
+crowd_count         INTEGER     In-ROI person count (crowd mode)
+lpr_plates          JSONB       [{plate_number, plate_confidence, plate_expiry}]
+raw                 JSONB       Full raw payload
+created_at          TIMESTAMPTZ UTC — when soca-control received the alert
+</code></pre></div>
+<p><strong>Indexes:</strong> <code>(edge_name, timestamp)</code>, <code>(alert_category, timestamp)</code>, <code>(camera_id)</code></p>
+<hr />
+<h2 id="table-app_edge-edge-devices">Table: <code>app_edge</code> — Edge Devices<a class="headerlink" href="#table-app_edge-edge-devices" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Column              Type        Notes
+──────────────────────────────────────────────────────────────────
+id                  SERIAL      Primary key
+name                TEXT        Unique edge name, e.g. &quot;edge-mac-mini-bekasi&quot;
+url                 TEXT        soca-dashboard base URL
+engine_url          TEXT        soca-engine base URL
+location            TEXT        Physical location description
+active              BOOLEAN     true = active, false = deactivated
+gcs_path_prefix     TEXT        GCS path prefix, e.g. &quot;edge-mac-mini-bekasi&quot;
+created_at          TIMESTAMPTZ
+</code></pre></div>
+<hr />
+<h2 id="connecting-grafana-to-postgresql">Connecting Grafana to PostgreSQL<a class="headerlink" href="#connecting-grafana-to-postgresql" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Grafana → <strong>Connections → Data sources → Add data source → PostgreSQL</strong></li>
+<li>Fill in:</li>
+<li><strong>Host URL</strong>: <code>localhost:5432</code></li>
+<li><strong>Database</strong>: your soca-control database name</li>
+<li><strong>User / Password</strong>: PostgreSQL credentials</li>
+<li><strong>TLS/SSL Mode</strong>: <code>disable</code> (for local) or <code>require</code> (for remote)</li>
+<li><strong>Min time interval</strong>: <code>1m</code></li>
+<li><strong>PostgreSQL version</strong>: select your version (14+)</li>
+<li>Click <strong>Save &amp; Test</strong> — Grafana validates the connection</li>
+</ol>
+<hr />
+<h2 id="grafana-sql-macros">Grafana SQL Macros<a class="headerlink" href="#grafana-sql-macros" title="Permanent link">&para;</a></h2>
+<p>Grafana's PostgreSQL plugin provides time macros for all time-series panels:</p>
+<table>
+<thead>
+<tr>
+<th>Macro</th>
+<th>Expands to</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$__timeFilter(col)</code></td>
+<td><code>col BETWEEN $from AND $to</code></td>
+<td>WHERE clause — respects dashboard time picker</td>
+</tr>
+<tr>
+<td><code>$__timeGroup(col,'$__interval')</code></td>
+<td><code>date_trunc(...)</code> bucket</td>
+<td>GROUP BY in time series</td>
+</tr>
+<tr>
+<td><code>$__timeGroupAlias(col,'$__interval')</code></td>
+<td>Same + aliased as <code>time</code></td>
+<td>Required alias for Time series panels</td>
+</tr>
+<tr>
+<td><code>$__interval</code></td>
+<td>Auto-calculated interval string</td>
+<td>Passed to <code>$__timeGroup</code></td>
+</tr>
+<tr>
+<td><code>$__timeFrom()</code></td>
+<td>Start of selected time range</td>
+<td>Manual date comparisons</td>
+</tr>
+<tr>
+<td><code>$__timeTo()</code></td>
+<td>End of selected time range</td>
+<td>Manual date comparisons</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>All queries below use <code>$__timeFilter(timestamp)</code> in place of a fixed <code>30 days</code> window,
+so they automatically respond to the Grafana time range picker.</p>
+</blockquote>
+<hr />
+<h2 id="template-variables">Template Variables<a class="headerlink" href="#template-variables" title="Permanent link">&para;</a></h2>
+<p>Create these as <strong>Dashboard Variables</strong> (Dashboard Settings → Variables → Add variable):</p>
+<h3 id="edge-edge-filter"><code>$edge</code> — Edge filter<a class="headerlink" href="#edge-edge-filter" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Type</td>
+<td>Query</td>
+</tr>
+<tr>
+<td>Data source</td>
+<td>your PostgreSQL</td>
+</tr>
+<tr>
+<td>Query</td>
+<td><code>SELECT DISTINCT edge_name FROM app_alert WHERE edge_name &lt;&gt; '' ORDER BY 1</code></td>
+</tr>
+<tr>
+<td>Multi-value</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Include All</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>All value</td>
+<td><code>.*</code></td>
+</tr>
+</tbody>
+</table>
+<p>Use in queries: <code>AND edge_name ~ '$edge'</code> (when All = <code>.*</code>) or <code>AND edge_name IN ($edge)</code> for multi-select.</p>
+<h3 id="camera-camera-filter"><code>$camera</code> — Camera filter<a class="headerlink" href="#camera-camera-filter" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Type</td>
+<td>Query</td>
+</tr>
+<tr>
+<td>Query</td>
+<td><code>SELECT DISTINCT COALESCE(NULLIF(camera_name,''), camera_id) FROM app_alert ORDER BY 1</code></td>
+</tr>
+<tr>
+<td>Multi-value</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Include All</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="category-alert-category-filter"><code>$category</code> — Alert category filter<a class="headerlink" href="#category-alert-category-filter" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Type</td>
+<td>Query</td>
+</tr>
+<tr>
+<td>Query</td>
+<td><code>SELECT DISTINCT alert_category FROM app_alert ORDER BY 1</code></td>
+</tr>
+<tr>
+<td>Multi-value</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Include All</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="plate_search-plate-number-text-filter"><code>$plate_search</code> — Plate number text filter<a class="headerlink" href="#plate_search-plate-number-text-filter" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Type</td>
+<td>Text box</td>
+</tr>
+<tr>
+<td>Default</td>
+<td><em>(empty)</em></td>
+</tr>
+</tbody>
+</table>
+<p>Use in query: <code>AND (plate -&gt;&gt; 'plate_number') ILIKE '%${plate_search}%'</code></p>
+<hr />
+<h2 id="shared-utility-queries">Shared Utility Queries<a class="headerlink" href="#shared-utility-queries" title="Permanent link">&para;</a></h2>
+<h3 id="q0-daily-alert-summary-all-categories-time-series">Q0 — Daily Alert Summary (all categories) — Time series<a class="headerlink" href="#q0-daily-alert-summary-all-categories-time-series" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Time series</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="err">$</span><span class="n">__timeGroupAlias</span><span class="p">(</span><span class="k">timestamp</span><span class="p">,</span><span class="w"> </span><span class="err">$</span><span class="n">__interval</span><span class="p">),</span>
+<span class="w">    </span><span class="n">alert_category</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">  </span><span class="k">AS</span><span class="w"> </span><span class="n">alert_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">alert_category</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+</code></pre></div>
+<blockquote>
+<p>Enable <strong>Format as: Time series</strong> and set <strong>Fill mode</strong> to <code>0</code> for missing buckets.</p>
+</blockquote>
+<hr />
+<h2 id="1-object-detection-report">1. Object Detection Report<a class="headerlink" href="#1-object-detection-report" title="Permanent link">&para;</a></h2>
+<p><strong>alert_category = 'Detection'</strong></p>
+<h3 id="1-a-daily-trend-time-series">1-A — Daily trend — Time series<a class="headerlink" href="#1-a-daily-trend-time-series" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Time series</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="err">$</span><span class="n">__timeGroupAlias</span><span class="p">(</span><span class="k">timestamp</span><span class="p">,</span><span class="w"> </span><span class="err">$</span><span class="n">__interval</span><span class="p">),</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">                    </span><span class="k">AS</span><span class="w"> </span><span class="n">alerts</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">detection_count</span><span class="p">)</span><span class="w">        </span><span class="k">AS</span><span class="w"> </span><span class="n">total_objects</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">in_roi_count</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">avg_in_roi</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Detection&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+</code></pre></div>
+<h3 id="1-b-alerts-by-camera-bar-chart">1-B — Alerts by camera — Bar chart<a class="headerlink" href="#1-b-alerts-by-camera-bar-chart" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Bar chart (horizontal)</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">                       </span><span class="k">AS</span><span class="w"> </span><span class="n">alert_count</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">detection_count</span><span class="p">)</span><span class="w">           </span><span class="k">AS</span><span class="w"> </span><span class="n">total_objects</span><span class="p">,</span><span class="n">A</span>
+<span class="w">    </span><span class="k">MAX</span><span class="p">(</span><span class="n">detection_count</span><span class="p">)</span><span class="w">           </span><span class="k">AS</span><span class="w"> </span><span class="n">peak_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Detection&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">camera_id</span><span class="p">,</span><span class="w"> </span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="n">edge_name</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">alert_count</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">20</span>
+</code></pre></div>
+<h3 id="1-c-alerts-by-rule-name-bar-chart">1-C — Alerts by rule name — Bar chart<a class="headerlink" href="#1-c-alerts-by-rule-name-bar-chart" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Bar chart</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">rule_name</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">                       </span><span class="k">AS</span><span class="w"> </span><span class="n">alert_count</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">in_roi_count</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="n">avg_in_roi</span><span class="p">,</span>
+<span class="w">    </span><span class="k">MAX</span><span class="p">(</span><span class="n">detection_count</span><span class="p">)</span><span class="w">           </span><span class="k">AS</span><span class="w"> </span><span class="n">peak_objects</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Detection&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">rule_name</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">alert_count</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+<h3 id="1-d-hourly-distribution-heatmap">1-D — Hourly distribution — Heatmap<a class="headerlink" href="#1-d-hourly-distribution-heatmap" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Heatmap</p>
+<blockquote>
+<p>X-axis = hour of day (0–23), Y-axis = day of week</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="k">EXTRACT</span><span class="p">(</span><span class="n">HOUR</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">timestamp</span><span class="p">)::</span><span class="nb">integer</span><span class="w">      </span><span class="k">AS</span><span class="w"> </span><span class="n">hour_of_day</span><span class="p">,</span>
+<span class="w">    </span><span class="k">EXTRACT</span><span class="p">(</span><span class="n">DOW</span><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="k">timestamp</span><span class="p">)::</span><span class="nb">integer</span><span class="w">      </span><span class="k">AS</span><span class="w"> </span><span class="n">day_of_week</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">                                   </span><span class="k">AS</span><span class="w"> </span><span class="n">alert_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Detection&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">hour_of_day</span><span class="p">,</span><span class="w"> </span><span class="n">day_of_week</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">day_of_week</span><span class="p">,</span><span class="w"> </span><span class="n">hour_of_day</span>
+</code></pre></div>
+<h3 id="1-e-top-detected-classes-pie-chart">1-E — Top detected classes — Pie chart<a class="headerlink" href="#1-e-top-detected-classes-pie-chart" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Pie chart</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">kv</span><span class="p">.</span><span class="k">key</span><span class="w">                         </span><span class="k">AS</span><span class="w"> </span><span class="n">class_name</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">((</span><span class="n">kv</span><span class="p">.</span><span class="n">value</span><span class="p">)::</span><span class="nb">integer</span><span class="p">)</span><span class="w">       </span><span class="k">AS</span><span class="w"> </span><span class="n">total_detections</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span><span class="w"> </span><span class="n">a</span><span class="p">,</span>
+<span class="w">     </span><span class="n">jsonb_each</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">cls_name_summary</span><span class="p">)</span><span class="w"> </span><span class="n">kv</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Detection&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">kv</span><span class="p">.</span><span class="k">key</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">total_detections</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+<h3 id="1-f-recent-alerts-list-table">1-F — Recent alerts list — Table<a class="headerlink" href="#1-f-recent-alerts-list-table" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Table</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="p">(</span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)</span><span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="n">local_time</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">rule_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">detection_count</span><span class="p">,</span>
+<span class="w">    </span><span class="n">in_roi_count</span><span class="p">,</span>
+<span class="w">    </span><span class="n">snapshot_message</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Detection&#39;</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">200</span>
+</code></pre></div>
+<hr />
+<h2 id="2-intrusion-detection-report">2. Intrusion Detection Report<a class="headerlink" href="#2-intrusion-detection-report" title="Permanent link">&para;</a></h2>
+<p><strong>alert_category = 'Intrusion'</strong></p>
+<h3 id="2-a-daily-intrusion-trend-time-series">2-A — Daily intrusion trend — Time series<a class="headerlink" href="#2-a-daily-intrusion-trend-time-series" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Time series</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="err">$</span><span class="n">__timeGroupAlias</span><span class="p">(</span><span class="k">timestamp</span><span class="p">,</span><span class="w"> </span><span class="err">$</span><span class="n">__interval</span><span class="p">),</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">            </span><span class="k">AS</span><span class="w"> </span><span class="n">intrusions</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">in_roi_count</span><span class="p">)</span><span class="w">   </span><span class="k">AS</span><span class="w"> </span><span class="n">total_intruders</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Intrusion&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+</code></pre></div>
+<h3 id="2-b-most-triggered-cameras-bar-chart">2-B — Most triggered cameras — Bar chart<a class="headerlink" href="#2-b-most-triggered-cameras-bar-chart" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Bar chart (horizontal)</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">                       </span><span class="k">AS</span><span class="w"> </span><span class="n">intrusion_count</span><span class="p">,</span>
+<span class="w">    </span><span class="k">MIN</span><span class="p">(</span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">first_seen</span><span class="p">,</span>
+<span class="w">    </span><span class="k">MAX</span><span class="p">(</span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">last_seen</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Intrusion&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">camera_id</span><span class="p">,</span><span class="w"> </span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="n">edge_name</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">intrusion_count</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+<h3 id="2-c-peak-intrusion-hours-bar-chart">2-C — Peak intrusion hours — Bar chart<a class="headerlink" href="#2-c-peak-intrusion-hours-bar-chart" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Bar chart</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="k">EXTRACT</span><span class="p">(</span><span class="n">HOUR</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)::</span><span class="nb">integer</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">hour</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">                       </span><span class="k">AS</span><span class="w"> </span><span class="n">intrusion_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Intrusion&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">hour</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">hour</span>
+</code></pre></div>
+<h3 id="2-d-intrusion-events-detail-table">2-D — Intrusion events detail — Table<a class="headerlink" href="#2-d-intrusion-events-detail-table" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Table</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="p">(</span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)</span><span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="n">local_time</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">rule_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">in_roi_count</span><span class="w">                               </span><span class="k">AS</span><span class="w"> </span><span class="n">intruders_in_roi</span><span class="p">,</span>
+<span class="w">    </span><span class="n">snapshot_message</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Intrusion&#39;</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">500</span>
+</code></pre></div>
+<h3 id="2-e-time-gap-between-consecutive-alerts-per-camera-table">2-E — Time gap between consecutive alerts per camera — Table<a class="headerlink" href="#2-e-time-gap-between-consecutive-alerts-per-camera-table" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Table</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">camera_id</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="p">(</span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)</span><span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="n">local_time</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ROUND</span><span class="p">(</span>
+<span class="w">        </span><span class="k">EXTRACT</span><span class="p">(</span><span class="n">EPOCH</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<span class="w">            </span><span class="k">timestamp</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">LAG</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">camera_id</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">        </span><span class="p">))</span>
+<span class="w">    </span><span class="p">)</span><span class="w">                                          </span><span class="k">AS</span><span class="w"> </span><span class="n">seconds_since_last_alert</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Intrusion&#39;</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">camera_id</span><span class="p">,</span><span class="w"> </span><span class="k">timestamp</span>
+</code></pre></div>
+<hr />
+<h2 id="3-ppe-violations-report">3. PPE Violations Report<a class="headerlink" href="#3-ppe-violations-report" title="Permanent link">&para;</a></h2>
+<p><strong>alert_category = 'PPE'</strong></p>
+<h3 id="3-a-daily-ppe-violation-trend-time-series">3-A — Daily PPE violation trend — Time series<a class="headerlink" href="#3-a-daily-ppe-violation-trend-time-series" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Time series</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="err">$</span><span class="n">__timeGroupAlias</span><span class="p">(</span><span class="k">timestamp</span><span class="p">,</span><span class="w"> </span><span class="err">$</span><span class="n">__interval</span><span class="p">),</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">                </span><span class="k">AS</span><span class="w"> </span><span class="n">violations</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">in_roi_count</span><span class="p">)</span><span class="w">       </span><span class="k">AS</span><span class="w"> </span><span class="n">total_non_compliant</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;PPE&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+</code></pre></div>
+<h3 id="3-b-violations-by-camera-zone-bar-chart">3-B — Violations by camera / zone — Bar chart<a class="headerlink" href="#3-b-violations-by-camera-zone-bar-chart" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Bar chart (horizontal)</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">zone</span><span class="p">,</span>
+<span class="w">    </span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">                       </span><span class="k">AS</span><span class="w"> </span><span class="n">violation_count</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">in_roi_count</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="n">avg_non_compliant</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;PPE&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">camera_id</span><span class="p">,</span><span class="w"> </span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="n">edge_name</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">violation_count</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+<h3 id="3-c-non-compliant-item-breakdown-pie-chart">3-C — Non-compliant item breakdown — Pie chart<a class="headerlink" href="#3-c-non-compliant-item-breakdown-pie-chart" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Pie chart</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">kv</span><span class="p">.</span><span class="k">key</span><span class="w">                         </span><span class="k">AS</span><span class="w"> </span><span class="n">ppe_item</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">((</span><span class="n">kv</span><span class="p">.</span><span class="n">value</span><span class="p">)::</span><span class="nb">integer</span><span class="p">)</span><span class="w">       </span><span class="k">AS</span><span class="w"> </span><span class="n">total_detected</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w">           </span><span class="k">AS</span><span class="w"> </span><span class="n">alert_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span><span class="w"> </span><span class="n">a</span><span class="p">,</span>
+<span class="w">     </span><span class="n">jsonb_each</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">cls_name_summary</span><span class="p">)</span><span class="w"> </span><span class="n">kv</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;PPE&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">kv</span><span class="p">.</span><span class="k">key</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">total_detected</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+<h3 id="3-d-recent-ppe-violations-table">3-D — Recent PPE violations — Table<a class="headerlink" href="#3-d-recent-ppe-violations-table" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Table</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="p">(</span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)</span><span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="n">local_time</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">zone</span><span class="p">,</span>
+<span class="w">    </span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">rule_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">in_roi_count</span><span class="w">                               </span><span class="k">AS</span><span class="w"> </span><span class="n">non_compliant_count</span><span class="p">,</span>
+<span class="w">    </span><span class="n">snapshot_message</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;PPE&#39;</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">500</span>
+</code></pre></div>
+<hr />
+<h2 id="4-people-counting-report">4. People Counting Report<a class="headerlink" href="#4-people-counting-report" title="Permanent link">&para;</a></h2>
+<p><strong>alert_category = 'Counting'</strong></p>
+<h3 id="4-a-cumulative-crossings-by-camera-and-rule-bar-chart">4-A — Cumulative crossings by camera and rule — Bar chart<a class="headerlink" href="#4-a-cumulative-crossings-by-camera-and-rule-bar-chart" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Bar chart</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="n">a</span><span class="p">.</span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="k">rule</span><span class="p">.</span><span class="k">key</span><span class="w">                           </span><span class="k">AS</span><span class="w"> </span><span class="n">rule_name</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">((</span><span class="k">rule</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;in&#39;</span><span class="p">)::</span><span class="nb">integer</span><span class="p">)</span><span class="w">  </span><span class="k">AS</span><span class="w"> </span><span class="n">total_in</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">((</span><span class="k">rule</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;out&#39;</span><span class="p">)::</span><span class="nb">integer</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_out</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">((</span><span class="k">rule</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;in&#39;</span><span class="p">)::</span><span class="nb">integer</span><span class="p">)</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="k">SUM</span><span class="p">((</span><span class="k">rule</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;out&#39;</span><span class="p">)::</span><span class="nb">integer</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">net_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span><span class="w"> </span><span class="n">a</span><span class="p">,</span>
+<span class="w">     </span><span class="n">jsonb_each</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">crossing_counts</span><span class="p">)</span><span class="w"> </span><span class="k">rule</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Counting&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">camera_id</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">edge_name</span><span class="p">,</span><span class="w"> </span><span class="k">rule</span><span class="p">.</span><span class="k">key</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">total_in</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+<h3 id="4-b-hourly-crossing-volume-time-series">4-B — Hourly crossing volume — Time series<a class="headerlink" href="#4-b-hourly-crossing-volume-time-series" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Time series</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="err">$</span><span class="n">__timeGroupAlias</span><span class="p">(</span><span class="k">timestamp</span><span class="p">,</span><span class="w"> </span><span class="err">$</span><span class="n">__interval</span><span class="p">),</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span>
+<span class="w">        </span><span class="k">COALESCE</span><span class="p">((</span><span class="n">crossing_counts</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">rule</span><span class="p">.</span><span class="k">key</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;in&#39;</span><span class="p">)::</span><span class="nb">integer</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="p">)</span><span class="w">                                  </span><span class="k">AS</span><span class="w"> </span><span class="n">crossings_in</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span>
+<span class="w">        </span><span class="k">COALESCE</span><span class="p">((</span><span class="n">crossing_counts</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">rule</span><span class="p">.</span><span class="k">key</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;out&#39;</span><span class="p">)::</span><span class="nb">integer</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="p">)</span><span class="w">                                  </span><span class="k">AS</span><span class="w"> </span><span class="n">crossings_out</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span><span class="w"> </span><span class="n">a</span><span class="p">,</span>
+<span class="w">     </span><span class="n">jsonb_object_keys</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">crossing_counts</span><span class="p">)</span><span class="w"> </span><span class="k">rule</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Counting&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+</code></pre></div>
+<h3 id="4-c-daily-entryexit-balance-per-camera-time-series">4-C — Daily entry/exit balance per camera — Time series<a class="headerlink" href="#4-c-daily-entryexit-balance-per-camera-time-series" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Time series (or Bar chart grouped by camera)</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="err">$</span><span class="n">__timeGroupAlias</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="p">,</span><span class="w"> </span><span class="err">$</span><span class="n">__interval</span><span class="p">),</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">((</span><span class="k">rule</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;in&#39;</span><span class="p">)::</span><span class="nb">integer</span><span class="p">)</span><span class="w">  </span><span class="k">AS</span><span class="w"> </span><span class="n">entries</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">((</span><span class="k">rule</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;out&#39;</span><span class="p">)::</span><span class="nb">integer</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">exits</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">((</span><span class="k">rule</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;in&#39;</span><span class="p">)::</span><span class="nb">integer</span><span class="p">)</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="k">SUM</span><span class="p">((</span><span class="k">rule</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;out&#39;</span><span class="p">)::</span><span class="nb">integer</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">occupancy_change</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span><span class="w"> </span><span class="n">a</span><span class="p">,</span>
+<span class="w">     </span><span class="n">jsonb_each</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">crossing_counts</span><span class="p">)</span><span class="w"> </span><span class="k">rule</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Counting&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">camera_id</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">camera_name</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+</code></pre></div>
+<h3 id="4-d-people-count-events-list-table">4-D — People count events list — Table<a class="headerlink" href="#4-d-people-count-events-list-table" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Table</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="p">(</span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)</span><span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="n">local_time</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">rule_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">detection_count</span><span class="p">,</span>
+<span class="w">    </span><span class="n">snapshot_message</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Counting&#39;</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">500</span>
+</code></pre></div>
+<hr />
+<h2 id="5-crowd-detection-report">5. Crowd Detection Report<a class="headerlink" href="#5-crowd-detection-report" title="Permanent link">&para;</a></h2>
+<p><strong>alert_category = 'Crowd'</strong></p>
+<h3 id="5-a-daily-crowd-alerts-and-peak-count-time-series">5-A — Daily crowd alerts and peak count — Time series<a class="headerlink" href="#5-a-daily-crowd-alerts-and-peak-count-time-series" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Time series</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="err">$</span><span class="n">__timeGroupAlias</span><span class="p">(</span><span class="k">timestamp</span><span class="p">,</span><span class="w"> </span><span class="err">$</span><span class="n">__interval</span><span class="p">),</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">                       </span><span class="k">AS</span><span class="w"> </span><span class="n">crowd_alerts</span><span class="p">,</span>
+<span class="w">    </span><span class="k">MAX</span><span class="p">(</span><span class="n">crowd_count</span><span class="p">)</span><span class="w">               </span><span class="k">AS</span><span class="w"> </span><span class="n">peak_crowd</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">crowd_count</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">     </span><span class="k">AS</span><span class="w"> </span><span class="n">avg_crowd</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Crowd&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+</code></pre></div>
+<h3 id="5-b-crowd-level-by-camera-bar-chart">5-B — Crowd level by camera — Bar chart<a class="headerlink" href="#5-b-crowd-level-by-camera-bar-chart" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Bar chart (horizontal)</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">                       </span><span class="k">AS</span><span class="w"> </span><span class="n">crowd_alerts</span><span class="p">,</span>
+<span class="w">    </span><span class="k">MAX</span><span class="p">(</span><span class="n">crowd_count</span><span class="p">)</span><span class="w">               </span><span class="k">AS</span><span class="w"> </span><span class="n">peak_crowd</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">crowd_count</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">     </span><span class="k">AS</span><span class="w"> </span><span class="n">avg_crowd</span><span class="p">,</span>
+<span class="w">    </span><span class="k">MIN</span><span class="p">(</span><span class="n">crowd_count</span><span class="p">)</span><span class="w">               </span><span class="k">AS</span><span class="w"> </span><span class="n">min_crowd</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Crowd&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">camera_id</span><span class="p">,</span><span class="w"> </span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="n">edge_name</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">peak_crowd</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+<h3 id="5-c-hourly-crowd-distribution-bar-chart">5-C — Hourly crowd distribution — Bar chart<a class="headerlink" href="#5-c-hourly-crowd-distribution-bar-chart" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Bar chart</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="k">EXTRACT</span><span class="p">(</span><span class="n">HOUR</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)::</span><span class="nb">integer</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">hour</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">crowd_count</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">     </span><span class="k">AS</span><span class="w"> </span><span class="n">avg_crowd_count</span><span class="p">,</span>
+<span class="w">    </span><span class="k">MAX</span><span class="p">(</span><span class="n">crowd_count</span><span class="p">)</span><span class="w">               </span><span class="k">AS</span><span class="w"> </span><span class="n">peak_crowd_count</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">                       </span><span class="k">AS</span><span class="w"> </span><span class="n">alert_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Crowd&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">hour</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">hour</span>
+</code></pre></div>
+<h3 id="5-d-crowd-events-exceeding-threshold-table">5-D — Crowd events exceeding threshold — Table<a class="headerlink" href="#5-d-crowd-events-exceeding-threshold-table" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Table</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="p">(</span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)</span><span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="n">local_time</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">crowd_count</span><span class="p">,</span>
+<span class="w">    </span><span class="n">rule_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">snapshot_message</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Crowd&#39;</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">crowd_count</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">10</span><span class="w">            </span><span class="c1">-- adjust threshold</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">crowd_count</span><span class="w"> </span><span class="k">DESC</span><span class="p">,</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">200</span>
+</code></pre></div>
+<h3 id="5-e-crowd-density-in-15-minute-buckets-time-series">5-E — Crowd density in 15-minute buckets — Time series<a class="headerlink" href="#5-e-crowd-density-in-15-minute-buckets-time-series" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Time series</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">date_trunc</span><span class="p">(</span><span class="s1">&#39;hour&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)</span>
+<span class="w">      </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">FLOOR</span><span class="p">(</span><span class="k">EXTRACT</span><span class="p">(</span><span class="k">MINUTE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">timestamp</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">15</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;15 minutes&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">time</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">crowd_count</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">     </span><span class="k">AS</span><span class="w"> </span><span class="n">avg_crowd</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Crowd&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">camera_id</span><span class="p">,</span><span class="w"> </span><span class="n">camera_name</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+</code></pre></div>
+<blockquote>
+<p>Note: the aliased column must be named <code>time</code> for Grafana time series format.</p>
+</blockquote>
+<hr />
+<h2 id="6-lpr-license-plate-recognition-report">6. LPR (License Plate Recognition) Report<a class="headerlink" href="#6-lpr-license-plate-recognition-report" title="Permanent link">&para;</a></h2>
+<p><strong>alert_category = 'LPR'</strong></p>
+<h3 id="6-a-daily-lpr-detections-time-series">6-A — Daily LPR detections — Time series<a class="headerlink" href="#6-a-daily-lpr-detections-time-series" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Time series</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="err">$</span><span class="n">__timeGroupAlias</span><span class="p">(</span><span class="k">timestamp</span><span class="p">,</span><span class="w"> </span><span class="err">$</span><span class="n">__interval</span><span class="p">),</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">detection_events</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;LPR&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+</code></pre></div>
+<h3 id="6-b-all-detected-plates-table">6-B — All detected plates — Table<a class="headerlink" href="#6-b-all-detected-plates-table" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Table</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)</span><span class="w">  </span><span class="k">AS</span><span class="w"> </span><span class="n">local_time</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="n">a</span><span class="p">.</span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">plate</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;plate_number&#39;</span><span class="w">                   </span><span class="k">AS</span><span class="w"> </span><span class="n">plate_number</span><span class="p">,</span>
+<span class="w">    </span><span class="n">plate</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;plate_expiry&#39;</span><span class="w">                   </span><span class="k">AS</span><span class="w"> </span><span class="n">expiry</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ROUND</span><span class="p">((</span><span class="n">plate</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;plate_confidence&#39;</span><span class="p">)::</span><span class="nb">numeric</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">confidence_pct</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span><span class="w"> </span><span class="n">a</span><span class="p">,</span>
+<span class="w">     </span><span class="n">jsonb_array_elements</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">lpr_plates</span><span class="p">)</span><span class="w"> </span><span class="n">plate</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;LPR&#39;</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">plate</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;plate_number&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">plate</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;plate_number&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s1">&#39;&#39;</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">1000</span>
+</code></pre></div>
+<h3 id="6-c-plate-frequency-most-seen-plates-table">6-C — Plate frequency (most seen plates) — Table<a class="headerlink" href="#6-c-plate-frequency-most-seen-plates-table" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Table</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">plate</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;plate_number&#39;</span><span class="w">                   </span><span class="k">AS</span><span class="w"> </span><span class="n">plate_number</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">                                   </span><span class="k">AS</span><span class="w"> </span><span class="n">appearances</span><span class="p">,</span>
+<span class="w">    </span><span class="k">MIN</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">first_seen</span><span class="p">,</span>
+<span class="w">    </span><span class="k">MAX</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">last_seen</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">camera_id</span><span class="p">)</span><span class="w">                </span><span class="k">AS</span><span class="w"> </span><span class="n">camera_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span><span class="w"> </span><span class="n">a</span><span class="p">,</span>
+<span class="w">     </span><span class="n">jsonb_array_elements</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">lpr_plates</span><span class="p">)</span><span class="w"> </span><span class="n">plate</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;LPR&#39;</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">plate</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;plate_number&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s1">&#39;&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">plate</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;plate_number&#39;</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">appearances</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">50</span>
+</code></pre></div>
+<h3 id="6-d-plates-by-camera-bar-chart">6-D — Plates by camera — Bar chart<a class="headerlink" href="#6-d-plates-by-camera-bar-chart" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Bar chart</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="n">a</span><span class="p">.</span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">plate</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;plate_number&#39;</span><span class="p">)</span><span class="w">   </span><span class="k">AS</span><span class="w"> </span><span class="n">unique_plates</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">                                   </span><span class="k">AS</span><span class="w"> </span><span class="n">total_reads</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span><span class="w"> </span><span class="n">a</span><span class="p">,</span>
+<span class="w">     </span><span class="n">jsonb_array_elements</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">lpr_plates</span><span class="p">)</span><span class="w"> </span><span class="n">plate</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;LPR&#39;</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">plate</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;plate_number&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s1">&#39;&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">camera_id</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">edge_name</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">total_reads</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+<h3 id="6-e-plate-search-uses-plate_search-variable-table">6-E — Plate search (uses <code>$plate_search</code> variable) — Table<a class="headerlink" href="#6-e-plate-search-uses-plate_search-variable-table" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Table</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)</span><span class="w">  </span><span class="k">AS</span><span class="w"> </span><span class="n">local_time</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="n">a</span><span class="p">.</span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">plate</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;plate_number&#39;</span><span class="w">                   </span><span class="k">AS</span><span class="w"> </span><span class="n">plate_number</span><span class="p">,</span>
+<span class="w">    </span><span class="n">plate</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;plate_expiry&#39;</span><span class="w">                   </span><span class="k">AS</span><span class="w"> </span><span class="n">expiry</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ROUND</span><span class="p">((</span><span class="n">plate</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;plate_confidence&#39;</span><span class="p">)::</span><span class="nb">numeric</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">confidence_pct</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span><span class="w"> </span><span class="n">a</span><span class="p">,</span>
+<span class="w">     </span><span class="n">jsonb_array_elements</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">lpr_plates</span><span class="p">)</span><span class="w"> </span><span class="n">plate</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;LPR&#39;</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">plate</span><span class="w"> </span><span class="o">-&gt;&gt;</span><span class="w"> </span><span class="s1">&#39;plate_number&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">ILIKE</span><span class="w"> </span><span class="s1">&#39;%${plate_search}%&#39;</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="k">timestamp</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">200</span>
+</code></pre></div>
+<hr />
+<h2 id="7-cross-category-dashboard-queries">7. Cross-Category Dashboard Queries<a class="headerlink" href="#7-cross-category-dashboard-queries" title="Permanent link">&para;</a></h2>
+<h3 id="7-a-fleet-overview-alerts-today-stat-panels">7-A — Fleet overview — alerts today — Stat panels<a class="headerlink" href="#7-a-fleet-overview-alerts-today-stat-panels" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Stat (one panel per category, or use repeat)</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">alert_category</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">                       </span><span class="k">AS</span><span class="w"> </span><span class="n">today_count</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">camera_id</span><span class="p">)</span><span class="w">      </span><span class="k">AS</span><span class="w"> </span><span class="n">cameras_affected</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">edge_name</span><span class="p">)</span><span class="w">      </span><span class="k">AS</span><span class="w"> </span><span class="n">edges_affected</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">timestamp</span><span class="p">::</span><span class="nb">date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">CURRENT_DATE</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">alert_category</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">today_count</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+<blockquote>
+<p>Use <strong>Panel repeat</strong> with the <code>$category</code> variable to generate one Stat card per category automatically.</p>
+</blockquote>
+<h3 id="7-b-alert-volume-by-edge-and-category-time-series-bar-chart">7-B — Alert volume by edge and category — Time series / Bar chart<a class="headerlink" href="#7-b-alert-volume-by-edge-and-category-time-series-bar-chart" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Bar chart (stacked)</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">alert_category</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">alert_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">edge_name</span><span class="p">,</span><span class="w"> </span><span class="n">alert_category</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">edge_name</span><span class="p">,</span><span class="w"> </span><span class="n">alert_count</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+<h3 id="7-c-top-10-busiest-cameras-bar-chart">7-C — Top 10 busiest cameras — Bar chart<a class="headerlink" href="#7-c-top-10-busiest-cameras-bar-chart" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Bar chart (horizontal)</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">                       </span><span class="k">AS</span><span class="w"> </span><span class="n">total_alerts</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">alert_category</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">category_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">camera_id</span><span class="p">,</span><span class="w"> </span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="n">edge_name</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">total_alerts</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">10</span>
+</code></pre></div>
+<h3 id="7-d-30-minute-alert-heatmap-time-series">7-D — 30-minute alert heatmap — Time series<a class="headerlink" href="#7-d-30-minute-alert-heatmap-time-series" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Time series (or Heatmap)</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">date_trunc</span><span class="p">(</span><span class="s1">&#39;hour&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)</span>
+<span class="w">      </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">FLOOR</span><span class="p">(</span><span class="k">EXTRACT</span><span class="p">(</span><span class="k">MINUTE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">timestamp</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">30</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;30 minutes&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">time</span><span class="p">,</span>
+<span class="w">    </span><span class="n">alert_category</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">alert_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">alert_category</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span>
+</code></pre></div>
+<h3 id="7-e-alerts-this-week-vs-last-week-bar-chart-grouped">7-E — Alerts this week vs last week — Bar chart (grouped)<a class="headerlink" href="#7-e-alerts-this-week-vs-last-week-bar-chart-grouped" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Bar chart</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">alert_category</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">FILTER</span><span class="w"> </span><span class="p">(</span><span class="k">WHERE</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">date_trunc</span><span class="p">(</span><span class="s1">&#39;week&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">NOW</span><span class="p">()))</span><span class="w">             </span><span class="k">AS</span><span class="w"> </span><span class="n">this_week</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">FILTER</span><span class="w"> </span><span class="p">(</span><span class="k">WHERE</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">date_trunc</span><span class="p">(</span><span class="s1">&#39;week&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">NOW</span><span class="p">())</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;7 days&#39;</span>
+<span class="w">                       </span><span class="k">AND</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="o">&lt;</span><span class="w">  </span><span class="n">date_trunc</span><span class="p">(</span><span class="s1">&#39;week&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">NOW</span><span class="p">()))</span><span class="w">             </span><span class="k">AS</span><span class="w"> </span><span class="n">last_week</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">date_trunc</span><span class="p">(</span><span class="s1">&#39;week&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">NOW</span><span class="p">())</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;7 days&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">alert_category</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">this_week</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div>
+<h3 id="7-f-live-alert-feed-table-with-auto-refresh">7-F — Live alert feed — Table with auto-refresh<a class="headerlink" href="#7-f-live-alert-feed-table-with-auto-refresh" title="Permanent link">&para;</a></h3>
+<p><strong>Panel type:</strong> Table (set dashboard refresh to <code>30s</code> or <code>1m</code>)</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="p">(</span><span class="k">timestamp</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Jakarta&#39;</span><span class="p">)</span><span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="n">local_time</span><span class="p">,</span>
+<span class="w">    </span><span class="n">alert_category</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">camera_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span>
+<span class="w">    </span><span class="n">edge_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">rule_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">detection_count</span><span class="p">,</span>
+<span class="w">    </span><span class="n">snapshot_message</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">NOW</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;2 hours&#39;</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">100</span>
+</code></pre></div>
+<hr />
+<h2 id="8-grafana-dashboard-layout-suggestions">8. Grafana Dashboard Layout Suggestions<a class="headerlink" href="#8-grafana-dashboard-layout-suggestions" title="Permanent link">&para;</a></h2>
+<h3 id="dashboard-1-fleet-operations-overview">Dashboard 1: Fleet Operations Overview<a class="headerlink" href="#dashboard-1-fleet-operations-overview" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Panel</th>
+<th>Type</th>
+<th>Query</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total alerts today</td>
+<td>Stat</td>
+<td>Q7-A <code>SUM(today_count)</code></td>
+<td>2×2</td>
+</tr>
+<tr>
+<td>Active cameras</td>
+<td>Stat</td>
+<td><code>COUNT(DISTINCT camera_id) WHERE timestamp::date = CURRENT_DATE</code></td>
+<td>2×2</td>
+</tr>
+<tr>
+<td>Active edges</td>
+<td>Stat</td>
+<td><code>COUNT(DISTINCT edge_name) WHERE timestamp::date = CURRENT_DATE</code></td>
+<td>2×2</td>
+</tr>
+<tr>
+<td>Alert trend (time range)</td>
+<td>Time series</td>
+<td>Q0</td>
+<td>12×6</td>
+</tr>
+<tr>
+<td>Alerts by category today</td>
+<td>Bar chart</td>
+<td>Q7-A</td>
+<td>6×5</td>
+</tr>
+<tr>
+<td>Top cameras</td>
+<td>Bar chart (horizontal)</td>
+<td>Q7-C</td>
+<td>6×5</td>
+</tr>
+<tr>
+<td>Alerts by edge (stacked)</td>
+<td>Bar chart</td>
+<td>Q7-B</td>
+<td>12×5</td>
+</tr>
+<tr>
+<td>30-min heatmap</td>
+<td>Time series</td>
+<td>Q7-D</td>
+<td>12×5</td>
+</tr>
+<tr>
+<td>This week vs last week</td>
+<td>Bar chart</td>
+<td>Q7-E</td>
+<td>8×5</td>
+</tr>
+<tr>
+<td>Live alert feed</td>
+<td>Table</td>
+<td>Q7-F</td>
+<td>12×6</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dashboard-2-object-detection-intrusion">Dashboard 2: Object Detection &amp; Intrusion<a class="headerlink" href="#dashboard-2-object-detection-intrusion" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Panel</th>
+<th>Type</th>
+<th>Query</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Detection trend</td>
+<td>Time series</td>
+<td>Q1-A</td>
+</tr>
+<tr>
+<td>Intrusion trend</td>
+<td>Time series</td>
+<td>Q2-A</td>
+</tr>
+<tr>
+<td>Top detection cameras</td>
+<td>Bar chart</td>
+<td>Q1-B</td>
+</tr>
+<tr>
+<td>Peak intrusion hours</td>
+<td>Bar chart</td>
+<td>Q2-C</td>
+</tr>
+<tr>
+<td>Top detected classes</td>
+<td>Pie chart</td>
+<td>Q1-E</td>
+</tr>
+<tr>
+<td>Hourly detection heatmap</td>
+<td>Heatmap</td>
+<td>Q1-D</td>
+</tr>
+<tr>
+<td>Most triggered cameras</td>
+<td>Bar chart</td>
+<td>Q2-B</td>
+</tr>
+<tr>
+<td>Recent alerts</td>
+<td>Table</td>
+<td>Q1-F</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dashboard-3-people-counting-crowd">Dashboard 3: People Counting &amp; Crowd<a class="headerlink" href="#dashboard-3-people-counting-crowd" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Panel</th>
+<th>Type</th>
+<th>Query</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Crossings IN time series</td>
+<td>Time series</td>
+<td>Q4-B</td>
+</tr>
+<tr>
+<td>Crossings by camera/rule</td>
+<td>Bar chart</td>
+<td>Q4-A</td>
+</tr>
+<tr>
+<td>Daily entry/exit balance</td>
+<td>Time series</td>
+<td>Q4-C</td>
+</tr>
+<tr>
+<td>Daily crowd alerts</td>
+<td>Time series</td>
+<td>Q5-A</td>
+</tr>
+<tr>
+<td>Peak crowd by camera</td>
+<td>Bar chart</td>
+<td>Q5-B</td>
+</tr>
+<tr>
+<td>Hourly crowd distribution</td>
+<td>Bar chart</td>
+<td>Q5-C</td>
+</tr>
+<tr>
+<td>Crowd density (15 min)</td>
+<td>Time series</td>
+<td>Q5-E</td>
+</tr>
+<tr>
+<td>Crowd events &gt; threshold</td>
+<td>Table</td>
+<td>Q5-D</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dashboard-4-ppe-safety-compliance">Dashboard 4: PPE &amp; Safety Compliance<a class="headerlink" href="#dashboard-4-ppe-safety-compliance" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Panel</th>
+<th>Type</th>
+<th>Query</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Daily violations</td>
+<td>Time series</td>
+<td>Q3-A</td>
+</tr>
+<tr>
+<td>Violations by zone</td>
+<td>Bar chart</td>
+<td>Q3-B</td>
+</tr>
+<tr>
+<td>Missing PPE items</td>
+<td>Pie chart</td>
+<td>Q3-C</td>
+</tr>
+<tr>
+<td>Recent violations</td>
+<td>Table</td>
+<td>Q3-D</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dashboard-5-lpr-license-plate">Dashboard 5: LPR — License Plate<a class="headerlink" href="#dashboard-5-lpr-license-plate" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Panel</th>
+<th>Type</th>
+<th>Query</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Daily plate reads</td>
+<td>Time series</td>
+<td>Q6-A</td>
+</tr>
+<tr>
+<td>Plates by camera</td>
+<td>Bar chart</td>
+<td>Q6-D</td>
+</tr>
+<tr>
+<td>Most frequent plates</td>
+<td>Table</td>
+<td>Q6-C</td>
+</tr>
+<tr>
+<td>All plate reads</td>
+<td>Table</td>
+<td>Q6-B</td>
+</tr>
+<tr>
+<td>Plate search</td>
+<td>Table</td>
+<td>Q6-E (uses <code>$plate_search</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-grafana-variables-dashboard-filters">9. Grafana Variables &amp; Dashboard Filters<a class="headerlink" href="#9-grafana-variables-dashboard-filters" title="Permanent link">&para;</a></h2>
+<p>All variables defined above appear as dropdowns at the top of each dashboard.
+Link them to panels by adding <code>AND</code> clauses:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Edge filter (multi-value — wrap in array)</span>
+<span class="k">AND</span><span class="w"> </span><span class="n">edge_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">ANY</span><span class="p">(</span><span class="nb">ARRAY</span><span class="p">[</span><span class="err">$</span><span class="n">edge</span><span class="p">]::</span><span class="nb">text</span><span class="p">[])</span>
+
+<span class="c1">-- Category filter</span>
+<span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">ANY</span><span class="p">(</span><span class="nb">ARRAY</span><span class="p">[</span><span class="err">$</span><span class="n">category</span><span class="p">]::</span><span class="nb">text</span><span class="p">[])</span>
+
+<span class="c1">-- Camera filter (matches camera_name or camera_id)</span>
+<span class="k">AND</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">camera_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">camera_id</span><span class="p">)</span>
+<span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="k">ANY</span><span class="p">(</span><span class="nb">ARRAY</span><span class="p">[</span><span class="err">$</span><span class="n">camera</span><span class="p">]::</span><span class="nb">text</span><span class="p">[])</span>
+<span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>When <strong>Include All</strong> is enabled and <strong>All value</strong> is set to <code>.*</code>, use <code>~ '$edge'</code> (regex match) as an
+alternative. The <code>ANY(ARRAY[...])</code> pattern is more reliable for multi-select.</p>
+</blockquote>
+<hr />
+<h2 id="10-recommended-indexes">10. Recommended Indexes<a class="headerlink" href="#10-recommended-indexes" title="Permanent link">&para;</a></h2>
+<p>Run once in PostgreSQL (same as Metabase — shared database):</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Already created by Django migrations:</span>
+<span class="c1">-- CREATE INDEX app_alert_edge_name_timestamp ON app_alert (edge_name, timestamp DESC);</span>
+<span class="c1">-- CREATE INDEX app_alert_alert_category_timestamp ON app_alert (alert_category, timestamp DESC);</span>
+<span class="c1">-- CREATE INDEX app_alert_camera_id ON app_alert (camera_id);</span>
+
+<span class="c1">-- Additional indexes for time-range queries:</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">idx_alert_ts_date</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">app_alert</span><span class="w"> </span><span class="p">(</span><span class="k">timestamp</span><span class="w"> </span><span class="k">DESC</span><span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">idx_alert_cat_cam_ts</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">app_alert</span><span class="w"> </span><span class="p">(</span><span class="n">alert_category</span><span class="p">,</span><span class="w"> </span><span class="n">camera_id</span><span class="p">,</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">DESC</span><span class="p">);</span>
+
+<span class="c1">-- Partial index for LPR</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">idx_alert_lpr</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">app_alert</span><span class="w"> </span><span class="p">(</span><span class="k">timestamp</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;LPR&#39;</span><span class="p">;</span>
+
+<span class="c1">-- Partial index for crowd_count queries</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">idx_alert_crowd</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">app_alert</span><span class="w"> </span><span class="p">(</span><span class="n">crowd_count</span><span class="w"> </span><span class="k">DESC</span><span class="p">,</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Crowd&#39;</span><span class="p">;</span>
+</code></pre></div>
+<hr />
+<h2 id="11-json-field-notes">11. JSON Field Notes<a class="headerlink" href="#11-json-field-notes" title="Permanent link">&para;</a></h2>
+<p>All JSON columns (<code>cls_name_summary</code>, <code>crossing_counts</code>, <code>lpr_plates</code>) are stored as <strong>JSONB</strong> in PostgreSQL.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Get key value</td>
+<td><code>col -&gt;&gt; 'key'</code> → text</td>
+</tr>
+<tr>
+<td>Get nested object</td>
+<td><code>col -&gt; 'key'</code> → jsonb</td>
+</tr>
+<tr>
+<td>Iterate object keys+values</td>
+<td><code>jsonb_each(col)</code> → <code>(key text, value jsonb)</code></td>
+</tr>
+<tr>
+<td>Iterate array elements</td>
+<td><code>jsonb_array_elements(col)</code> → <code>jsonb</code></td>
+</tr>
+<tr>
+<td>Cast to number</td>
+<td><code>(col -&gt;&gt; 'key')::integer</code> or <code>::numeric</code></td>
+</tr>
+<tr>
+<td>Case-insensitive search</td>
+<td><code>col -&gt;&gt; 'key' ILIKE '%search%'</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="12-grafana-tips">12. Grafana Tips<a class="headerlink" href="#12-grafana-tips" title="Permanent link">&para;</a></h2>
+<h3 id="time-series-panels">Time series panels<a class="headerlink" href="#time-series-panels" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Set <strong>Format as: Time series</strong> in the query options</li>
+<li>Enable <strong>Fill value: 0</strong> so gaps show as zero instead of null (avoids broken lines)</li>
+<li>Use <code>GROUP BY 1</code> (not column name) when the first column is a <code>$__timeGroupAlias</code> macro result</li>
+</ul>
+<h3 id="stat-panels-for-kpis">Stat panels for KPIs<a class="headerlink" href="#stat-panels-for-kpis" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Total alerts in selected time range</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">value</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">app_alert</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="err">$</span><span class="n">__timeFilter</span><span class="p">(</span><span class="k">timestamp</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">alert_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Intrusion&#39;</span>
+</code></pre></div>
+<p>Set <strong>Reduce: Last</strong> and enable <strong>Show: Calculation</strong> in the panel options.</p>
+<h3 id="snapshot-images-in-table-panels">Snapshot images in Table panels<a class="headerlink" href="#snapshot-images-in-table-panels" title="Permanent link">&para;</a></h3>
+<p>Add the <code>snapshot_path</code> column to Table panels. In <strong>Override</strong> settings, apply <strong>Data links</strong>:</p>
+<ul>
+<li>Title: <code>View Snapshot</code></li>
+<li>URL: <code>https://storage.googleapis.com/soca-snapshot-bucket/${__value.text}</code> (for GCS)</li>
+</ul>
+<p>This makes each row clickable to open the snapshot image.</p>
+<h3 id="auto-refresh-for-live-monitoring">Auto-refresh for live monitoring<a class="headerlink" href="#auto-refresh-for-live-monitoring" title="Permanent link">&para;</a></h3>
+<p>In Dashboard Settings → Time options:
+- Set <strong>Auto-refresh</strong> options to include <code>10s</code>, <code>30s</code>, <code>1m</code>
+- Set default refresh on the live feed dashboard to <code>30s</code></p>
+<h3 id="alerting">Alerting<a class="headerlink" href="#alerting" title="Permanent link">&para;</a></h3>
+<p>Grafana supports native alerts on any panel. Recommended alert rules:</p>
+<table>
+<thead>
+<tr>
+<th>Alert</th>
+<th>Query</th>
+<th>Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intrusion spike</td>
+<td>Q2-A</td>
+<td><code>intrusions &gt; 5</code> in last 5 min</td>
+</tr>
+<tr>
+<td>Crowd threshold exceeded</td>
+<td>Q5-A</td>
+<td><code>peak_crowd &gt; 20</code> in last 5 min</td>
+</tr>
+<tr>
+<td>High PPE violation rate</td>
+<td>Q3-A</td>
+<td><code>violations &gt; 10</code> in last 15 min</td>
+</tr>
+<tr>
+<td>LPR camera offline</td>
+<td>Q6-A</td>
+<td><code>detection_events = 0</code> for 30 min</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

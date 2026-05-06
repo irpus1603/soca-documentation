@@ -1,0 +1,2421 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/guides/user-guides/">
+      
+      
+        <link rel="prev" href="./">
+      
+      
+        <link rel="next" href="../../soca-dashboard/design-spec/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Overview - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#soca-platform-user-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Overview
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-logging-in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Logging In
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-dashboard-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Dashboard Home
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-cameras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Cameras
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Cameras">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-add-a-camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Add a Camera
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-edit-or-delete-a-camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Edit or Delete a Camera
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-test-a-snapshot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Test a Snapshot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-schedules-detection-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Schedules (Detection Jobs)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Schedules (Detection Jobs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-create-a-schedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Create a Schedule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-edit-a-schedule-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Edit a Schedule &amp; Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-start-stop-a-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Start / Stop a Job
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-live-streams-monitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Live Streams (Monitor)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-alerts-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Alerts &amp; Snapshots
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Alerts &amp; Snapshots">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics Tab
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alert-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alert Detail
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Settings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-add-a-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Add a User
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-push-config-to-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Push Config to Engine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-purge-old-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Purge Old Snapshots
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-soca-engine-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. SOCA Engine API
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-common-tasks-quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Common Tasks — Quick Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Dashboard (Edge)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SOCA Dashboard (Edge)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-logging-in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Logging In
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-dashboard-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Dashboard Home
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-cameras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Cameras
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Cameras">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-add-a-camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Add a Camera
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-edit-or-delete-a-camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Edit or Delete a Camera
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-test-a-snapshot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Test a Snapshot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-schedules-detection-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Schedules (Detection Jobs)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Schedules (Detection Jobs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-create-a-schedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Create a Schedule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-edit-a-schedule-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Edit a Schedule &amp; Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-start-stop-a-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Start / Stop a Job
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-live-streams-monitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Live Streams (Monitor)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-alerts-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Alerts &amp; Snapshots
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Alerts &amp; Snapshots">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics Tab
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alert-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alert Detail
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Settings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-add-a-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Add a User
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-push-config-to-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Push Config to Engine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-purge-old-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Purge Old Snapshots
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-soca-engine-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. SOCA Engine API
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-common-tasks-quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Common Tasks — Quick Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../soca-dashboard/design-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../soca-dashboard/edge-operations-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Edge Operations Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../soca-dashboard/edge-operations-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Edge Operations Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../soca-dashboard/rule-management-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rule Management Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../soca-dashboard/advanced-rule-management-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Rule Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../soca-control-user-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Control (Fleet)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="soca-platform-user-guide">SOCA Platform — User Guide<a class="headerlink" href="#soca-platform-user-guide" title="Permanent link">&para;</a></h1>
+<p>SOCA (Security Operations Center Automation) is an AI-powered edge video analytics platform. This guide covers everyday operator tasks across two apps:</p>
+<ul>
+<li><strong>SOCA Dashboard</strong> (<code>http://&lt;edge-ip&gt;:8080</code>) — single-edge management: cameras, detection schedules, live streams, alerts.</li>
+<li><strong>SOCA Engine</strong> (<code>http://&lt;edge-ip&gt;:8082</code>) — the AI inference backend; mostly used via API or the Dashboard push action.</li>
+</ul>
+<hr />
+<h2 id="1-logging-in">1. Logging In<a class="headerlink" href="#1-logging-in" title="Permanent link">&para;</a></h2>
+<p>Navigate to the Dashboard URL and sign in with your username and password.</p>
+<p><img alt="Login screen" src="../screenshots/dashboard-00-login.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>What they can do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Admin</strong></td>
+<td>Full access: cameras, schedules, settings, user management</td>
+</tr>
+<tr>
+<td><strong>Operator</strong></td>
+<td>Cameras, schedules, alerts — no user/system settings</td>
+</tr>
+<tr>
+<td><strong>Viewer</strong></td>
+<td>Read-only: dashboard, alerts, live streams</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-dashboard-home">2. Dashboard Home<a class="headerlink" href="#2-dashboard-home" title="Permanent link">&para;</a></h2>
+<p>After login you land on the <strong>Dashboard</strong> overview.</p>
+<p><img alt="Dashboard home" src="../screenshots/dashboard-01-home.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Widget</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Total Cameras</strong></td>
+<td>Number of registered cameras (active/total)</td>
+</tr>
+<tr>
+<td><strong>Active Schedules</strong></td>
+<td>Detection schedules marked Active</td>
+</tr>
+<tr>
+<td><strong>Engine</strong></td>
+<td>Engine health — OK means the inference service is reachable</td>
+</tr>
+<tr>
+<td><strong>Uptime</strong></td>
+<td>Edge host uptime</td>
+</tr>
+<tr>
+<td><strong>System Resources</strong></td>
+<td>Live CPU, Memory, and Storage usage</td>
+</tr>
+<tr>
+<td><strong>Network Interfaces</strong></td>
+<td>Network adapter list (expand to view IPs)</td>
+</tr>
+<tr>
+<td><strong>Running Schedules</strong></td>
+<td>Jobs currently running — click <em>View all</em> to go to Schedules</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-cameras">3. Cameras<a class="headerlink" href="#3-cameras" title="Permanent link">&para;</a></h2>
+<p><strong>Cameras → Camera List</strong> shows every registered RTSP source.</p>
+<p><img alt="Camera list" src="../screenshots/dashboard-02-cameras.png" /></p>
+<h3 id="31-add-a-camera">3.1 Add a Camera<a class="headerlink" href="#31-add-a-camera" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Click <strong>+ Add Camera</strong> (top-right).</li>
+<li>Fill in the form:</li>
+</ol>
+<p><img alt="Add camera form" src="../screenshots/dashboard-07-camera-new.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Camera Name</td>
+<td>Yes</td>
+<td>Unique slug, e.g. <code>lobby-01</code></td>
+</tr>
+<tr>
+<td>Site Name</td>
+<td>No</td>
+<td>Building or site label</td>
+</tr>
+<tr>
+<td>Floor / Location</td>
+<td>No</td>
+<td>Physical location metadata</td>
+</tr>
+<tr>
+<td>RTSP URL</td>
+<td>Yes</td>
+<td>Full stream URL, e.g. <code>rtsp://192.168.1.100:554/stream1</code></td>
+</tr>
+<tr>
+<td>Username / Password</td>
+<td>No</td>
+<td>Injected into the RTSP stream automatically</td>
+</tr>
+<tr>
+<td>Active</td>
+<td>—</td>
+<td>Uncheck to exclude from scheduling</td>
+</tr>
+<tr>
+<td>NX Camera ID (GUID)</td>
+<td>No</td>
+<td>If using NX VMS, click <strong>Fetch from NX</strong> to auto-fill</td>
+</tr>
+<tr>
+<td>NX RTSP URL</td>
+<td>No</td>
+<td>Override URL for the NX relay stream</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Click <strong>Create Camera</strong>.</li>
+</ol>
+<h3 id="32-edit-or-delete-a-camera">3.2 Edit or Delete a Camera<a class="headerlink" href="#32-edit-or-delete-a-camera" title="Permanent link">&para;</a></h3>
+<p>From the Camera List, click <strong>Edit</strong> or <strong>Delete</strong> in the Actions column.</p>
+<blockquote>
+<p>Deleting a camera does <strong>not</strong> stop running jobs — stop any active schedule first.</p>
+</blockquote>
+<h3 id="33-test-a-snapshot">3.3 Test a Snapshot<a class="headerlink" href="#33-test-a-snapshot" title="Permanent link">&para;</a></h3>
+<p>Click the camera name to open its detail page and request a test snapshot to verify the stream is reachable.</p>
+<hr />
+<h2 id="4-schedules-detection-jobs">4. Schedules (Detection Jobs)<a class="headerlink" href="#4-schedules-detection-jobs" title="Permanent link">&para;</a></h2>
+<p>A <strong>Schedule</strong> pairs a camera with an AI model and defines when and how to run inference.</p>
+<p><img alt="Schedule list" src="../screenshots/dashboard-03-schedules.png" /></p>
+<p>Status values:</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Idle</strong></td>
+<td>Configured but not running</td>
+</tr>
+<tr>
+<td><strong>Running</strong></td>
+<td>Active inference job in progress</td>
+</tr>
+<tr>
+<td><strong>error</strong></td>
+<td>Job started but encountered a problem — check engine logs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="41-create-a-schedule">4.1 Create a Schedule<a class="headerlink" href="#41-create-a-schedule" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Click <strong>+ New Schedule</strong>.</li>
+<li>Fill in the form:</li>
+</ol>
+<p><img alt="New schedule form" src="../screenshots/dashboard-08-schedule-new.png" /></p>
+<p><strong>BASIC section</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>Descriptive label, e.g. <code>Lobby PPE Check</code></td>
+</tr>
+<tr>
+<td>Camera</td>
+<td>Select from registered cameras</td>
+</tr>
+<tr>
+<td>Model Path</td>
+<td>AI model file (<code>YOL026 Model.pt</code>, <code>LPR-v1n.pt</code>, etc.)</td>
+</tr>
+<tr>
+<td>Active</td>
+<td>Uncheck to save without enabling</td>
+</tr>
+</tbody>
+</table>
+<p><strong>INFERENCE section</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Confidence ≥</td>
+<td>0.5</td>
+<td>Minimum detection score (0–1). Lower = more detections, more false positives. For PPE try 0.35</td>
+</tr>
+<tr>
+<td>IOU</td>
+<td>0.45</td>
+<td>Overlap threshold for NMS. For PPE try 0.4</td>
+</tr>
+<tr>
+<td>Frame Interval (ms)</td>
+<td>1000</td>
+<td>How often to sample a frame. Lower = higher CPU usage</td>
+</tr>
+<tr>
+<td>Source</td>
+<td>Frame</td>
+<td><code>Frame</code> = per-frame; other modes process video segments</td>
+</tr>
+<tr>
+<td>Agnostic NMS</td>
+<td>off</td>
+<td>Enable for PPE models to merge boxes across classes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>REGION OF INTEREST (ROI)</strong></p>
+<p>Draw the zone where detections should be counted:
+- <strong>Polygon</strong> — click points on the canvas to draw a free-form zone
+- <strong>Rectangle</strong> — drag a rectangular zone
+- <strong>Crossing Line</strong> — for people/vehicle counting across a line (People Counting mode)</p>
+<p>Click <strong>Clear</strong> to reset the drawn zone.</p>
+<p><strong>OUTPUT &amp; NOTIFICATIONS</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Save Snapshots</td>
+<td>Store a cropped image for each detection event</td>
+</tr>
+<tr>
+<td>Enable Monitor</td>
+<td>Push live frames to the Live Streams viewer</td>
+</tr>
+<tr>
+<td>Publish to Queue</td>
+<td>Forward events to the configured Redis stream</td>
+</tr>
+<tr>
+<td>Redis Stream</td>
+<td>Stream name (default: <code>soca:detections</code>)</td>
+</tr>
+<tr>
+<td>Alert Message Template</td>
+<td>Notification text with placeholders (see below)</td>
+</tr>
+<tr>
+<td>LPR Model Path</td>
+<td>Secondary YOLO model for license-plate OCR</td>
+</tr>
+</tbody>
+</table>
+<p>Available template placeholders: <code>{count}</code>, <code>{in_roi_count}</code>, <code>{time}</code>, <code>{camera_id}</code>, <code>{category}</code></p>
+<ol>
+<li>Click <strong>Create Schedule</strong>.</li>
+</ol>
+<h3 id="42-edit-a-schedule-rules">4.2 Edit a Schedule &amp; Rules<a class="headerlink" href="#42-edit-a-schedule-rules" title="Permanent link">&para;</a></h3>
+<p>Click <strong>Edit</strong> on any schedule to open the full edit form.</p>
+<p><img alt="Edit schedule with rules" src="../screenshots/dashboard-09-schedule-edit.png" /></p>
+<p>Scroll past the main form to the <strong>RULES</strong> section. Rules fire conditional alerts on top of the base detection:</p>
+<table>
+<thead>
+<tr>
+<th>Rule field</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rule Name</td>
+<td>Label shown in alerts</td>
+</tr>
+<tr>
+<td>Category</td>
+<td><code>Detection</code>, <code>Violation</code>, <code>Absence</code> etc.</td>
+</tr>
+<tr>
+<td>Mode</td>
+<td><code>Detection (default)</code> or specialised modes</td>
+</tr>
+<tr>
+<td>Class Filter</td>
+<td>Limit to specific YOLO classes (e.g. <code>person</code>, <code>car</code>)</td>
+</tr>
+<tr>
+<td>Processing</td>
+<td><code>In ROI</code> counts only objects inside the drawn zone</td>
+</tr>
+<tr>
+<td>Trigger</td>
+<td>When the rule fires — e.g. <code>absent / missing</code> fires when an object is NOT detected</td>
+</tr>
+<tr>
+<td>Duration</td>
+<td>How long condition must persist before firing</td>
+</tr>
+<tr>
+<td>Cooldown</td>
+<td>Minimum seconds between repeated rule firings</td>
+</tr>
+<tr>
+<td>Cron Schedule</td>
+<td>When the rule is active (<code>* * * * *</code> = always)</td>
+</tr>
+<tr>
+<td>Actions</td>
+<td>Send Telegram, Publish to Queue, Save Snapshot</td>
+</tr>
+<tr>
+<td>Message Template</td>
+<td>Alert body with placeholders</td>
+</tr>
+</tbody>
+</table>
+<p>Click <strong>Save Rule</strong> to persist, <strong>+ Add Rule</strong> to add another rule, or <strong>×</strong> to remove a rule.</p>
+<h3 id="43-start-stop-a-job">4.3 Start / Stop a Job<a class="headerlink" href="#43-start-stop-a-job" title="Permanent link">&para;</a></h3>
+<p>From the Schedule list, click <strong>Start</strong> to launch inference or <strong>Stop</strong> to halt a running job. The status column updates automatically.</p>
+<hr />
+<h2 id="5-live-streams-monitor">5. Live Streams (Monitor)<a class="headerlink" href="#5-live-streams-monitor" title="Permanent link">&para;</a></h2>
+<p><strong>Live Streams</strong> shows real-time video feeds for schedules that have <strong>Enable Monitor</strong> turned on.</p>
+<p><img alt="Live streams" src="../screenshots/dashboard-04-monitor.png" /></p>
+<p>If no streams are shown, make sure at least one schedule is running with <em>Enable Monitor</em> enabled. The page auto-refreshes every 30 seconds.</p>
+<hr />
+<h2 id="6-alerts-snapshots">6. Alerts &amp; Snapshots<a class="headerlink" href="#6-alerts-snapshots" title="Permanent link">&para;</a></h2>
+<p><strong>Alerts &amp; Snapshots</strong> is the event log — every detection event that matched a rule appears here.</p>
+<p><img alt="Alerts and snapshots" src="../screenshots/dashboard-05-alerts.png" /></p>
+<h3 id="filtering">Filtering<a class="headerlink" href="#filtering" title="Permanent link">&para;</a></h3>
+<p>Use the filter bar at the top:</p>
+<table>
+<thead>
+<tr>
+<th>Filter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Camera</td>
+<td>Limit to a specific camera</td>
+</tr>
+<tr>
+<td>From / To Date</td>
+<td>Date range in <code>dd/mm/yyyy</code> format</td>
+</tr>
+<tr>
+<td>Location</td>
+<td>Text search on location field</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Alert category (Detection, Violation, etc.)</td>
+</tr>
+<tr>
+<td>Message</td>
+<td>Free-text search on the alert message</td>
+</tr>
+<tr>
+<td>Plate</td>
+<td>Search for a detected license plate number</td>
+</tr>
+</tbody>
+</table>
+<p>Click <strong>Search</strong> to apply. Pagination controls appear at the bottom.</p>
+<h3 id="statistics-tab">Statistics Tab<a class="headerlink" href="#statistics-tab" title="Permanent link">&para;</a></h3>
+<p>Switch to the <strong>Statistics</strong> tab for aggregated counts and charts grouped by camera or time period.</p>
+<h3 id="alert-detail">Alert Detail<a class="headerlink" href="#alert-detail" title="Permanent link">&para;</a></h3>
+<p>Click any row to open the alert detail, which shows the full snapshot image, bounding boxes, detected labels, and rule that triggered the event.</p>
+<hr />
+<h2 id="7-settings">7. Settings<a class="headerlink" href="#7-settings" title="Permanent link">&para;</a></h2>
+<p><strong>Settings</strong> provides system-level configuration in tabbed sections.</p>
+<p><img alt="Settings" src="../screenshots/dashboard-06-settings.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Tab</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Users</strong></td>
+<td>Add/remove user accounts and assign roles (Admin, Operator, Viewer)</td>
+</tr>
+<tr>
+<td><strong>Branding</strong></td>
+<td>Change the site name and logo</td>
+</tr>
+<tr>
+<td><strong>Edge Config</strong></td>
+<td>Set edge node identity, API key, engine key, and Pub/Sub topic</td>
+</tr>
+<tr>
+<td><strong>Telegram</strong></td>
+<td>Configure Telegram bot token and default chat ID for alert notifications</td>
+</tr>
+<tr>
+<td><strong>Operations</strong></td>
+<td>View schedule job statuses, purge old snapshot data</td>
+</tr>
+<tr>
+<td><strong>AI Models</strong></td>
+<td>Upload or delete <code>.pt</code> / <code>.onnx</code> model files used by the engine</td>
+</tr>
+<tr>
+<td><strong>NX VMS</strong></td>
+<td>Configure NX server URL and credentials for camera GUID resolution</td>
+</tr>
+<tr>
+<td><strong>License</strong></td>
+<td>Activate, refresh or unlink the SOCA platform license</td>
+</tr>
+</tbody>
+</table>
+<h3 id="71-add-a-user">7.1 Add a User<a class="headerlink" href="#71-add-a-user" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go to <strong>Settings → Users</strong>.</li>
+<li>Fill in <strong>Username</strong>, <strong>Password</strong>, select <strong>Role</strong>.</li>
+<li>Click <strong>Create User</strong>.</li>
+</ol>
+<h3 id="72-push-config-to-engine">7.2 Push Config to Engine<a class="headerlink" href="#72-push-config-to-engine" title="Permanent link">&para;</a></h3>
+<p>After changing cameras, schedules, or edge settings, push the latest config to the engine:</p>
+<ol>
+<li>Go to <strong>Settings → Edge Config</strong>.</li>
+<li>Click <strong>Push to Engine</strong> — the dashboard sends the full camera and schedule config to the soca-engine API.</li>
+</ol>
+<h3 id="73-purge-old-snapshots">7.3 Purge Old Snapshots<a class="headerlink" href="#73-purge-old-snapshots" title="Permanent link">&para;</a></h3>
+<p>To free disk space:</p>
+<ol>
+<li>Go to <strong>Settings → Operations</strong>.</li>
+<li>Click <strong>Preview</strong> to see how many files will be removed.</li>
+<li>Click <strong>Execute</strong> to delete snapshots older than the configured retention period.</li>
+</ol>
+<hr />
+<h2 id="8-soca-engine-api">8. SOCA Engine API<a class="headerlink" href="#8-soca-engine-api" title="Permanent link">&para;</a></h2>
+<p>The engine exposes a REST API at <code>http://&lt;edge-ip&gt;:8082</code>. Interactive docs are available at <code>/docs</code>.</p>
+<p><img alt="Engine API docs" src="../screenshots/dashboard-10-engine-api.png" /></p>
+<p>Full endpoint list:</p>
+<p><img alt="Engine API endpoints" src="../screenshots/dashboard-11-engine-docs.png" /></p>
+<p>Key endpoint groups:</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Endpoints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>jobs</strong></td>
+<td>Start job, Stop job, Get job, Monitor job (WebSocket), List jobs</td>
+</tr>
+<tr>
+<td><strong>health</strong></td>
+<td>Health check, CPU info, System info</td>
+</tr>
+<tr>
+<td><strong>models</strong></td>
+<td>List models, Upload model, Delete model, Get model labels</td>
+</tr>
+<tr>
+<td><strong>config</strong></td>
+<td>Apply config (cameras + schedules pushed from Dashboard)</td>
+</tr>
+<tr>
+<td><strong>setup</strong></td>
+<td>Generate engine API key</td>
+</tr>
+</tbody>
+</table>
+<p>Authentication uses an API key header. Generate the key from <strong>Settings → Edge Config → Generate Engine Key</strong> in the Dashboard.</p>
+<hr />
+<h2 id="9-common-tasks-quick-reference">9. Common Tasks — Quick Reference<a class="headerlink" href="#9-common-tasks-quick-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add first camera</td>
+<td>Cameras → + Add Camera</td>
+</tr>
+<tr>
+<td>Run a detection job</td>
+<td>Schedules → Start</td>
+</tr>
+<tr>
+<td>Watch live video</td>
+<td>Live Streams (schedule must have Enable Monitor on)</td>
+</tr>
+<tr>
+<td>Review detection events</td>
+<td>Alerts &amp; Snapshots</td>
+</tr>
+<tr>
+<td>Add a new user</td>
+<td>Settings → Users → Create User</td>
+</tr>
+<tr>
+<td>Upload a new AI model</td>
+<td>Settings → AI Models → Upload</td>
+</tr>
+<tr>
+<td>Connect to NX VMS</td>
+<td>Settings → NX VMS</td>
+</tr>
+<tr>
+<td>Set up Telegram alerts</td>
+<td>Settings → Telegram → configure bot, then add rules to schedules</td>
+</tr>
+<tr>
+<td>Free disk space</td>
+<td>Settings → Operations → Purge</td>
+</tr>
+<tr>
+<td>Push config to engine</td>
+<td>Settings → Edge Config → Push to Engine</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-troubleshooting">10. Troubleshooting<a class="headerlink" href="#10-troubleshooting" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Schedule status shows <strong>error</strong></td>
+<td>Engine unreachable or model path wrong</td>
+<td>Check Engine status on Dashboard home; verify model file exists in Settings → AI Models</td>
+</tr>
+<tr>
+<td>Live stream shows "No live streams available"</td>
+<td>Schedule not running or Enable Monitor is off</td>
+<td>Start a schedule with Enable Monitor checked</td>
+</tr>
+<tr>
+<td>No alerts appearing</td>
+<td>Rule not configured or Confidence too high</td>
+<td>Edit the schedule, add a Rule, lower Confidence threshold</td>
+</tr>
+<tr>
+<td>Camera snapshot fails</td>
+<td>Wrong RTSP URL or credentials</td>
+<td>Edit camera and test URL with VLC or <code>ffprobe</code></td>
+</tr>
+<tr>
+<td>Telegram notifications not arriving</td>
+<td>Bot token or chat ID wrong</td>
+<td>Settings → Telegram → verify token and chat ID</td>
+</tr>
+<tr>
+<td>Engine shows <strong>Not Found</strong> at <code>/</code></td>
+<td>Normal — engine root is not documented</td>
+<td>Use <code>/docs</code> for the API or <code>/health</code> for a health check</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

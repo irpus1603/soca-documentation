@@ -1,0 +1,1597 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/deployment/gcs-snapshot-storage/">
+      
+      
+        <link rel="prev" href="../pubsub-setup-guide/">
+      
+      
+        <link rel="next" href="../metabase-reporting-guide/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>GCS Snapshot Storage - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gcs-snapshot-storage-setup-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              GCS Snapshot Storage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infrastructure
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integrations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Integrations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pubsub-setup-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pub/Sub Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GCS Snapshot Storage
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GCS Snapshot Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-per-edge-path-prefix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Per-Edge Path Prefix?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-create-gcs-bucket" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Create GCS Bucket
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-create-service-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Create Service Account
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-configure-soca-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Configure soca-engine
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3 — Configure soca-engine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#via-soca-dashboard-ui-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Via soca-dashboard UI (recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-env-edit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual (.env edit)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-configure-soca-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Configure soca-control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4 — Configure soca-control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4a-snapshot-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4a — Snapshot Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4b-per-edge-gcs-path-prefix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4b — Per-edge GCS Path Prefix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4c-gcs-credentials-for-soca-control-media-uploads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4c — GCS Credentials (for soca-control media uploads)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-verify-end-to-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Verify End-to-End
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-the-sync-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How the Sync Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-a-new-edge-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding a New Edge Device
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#images-not-showing-thumbnail-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Images not showing (thumbnail blank)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#images-show-403-forbidden" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Images show 403 Forbidden
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#images-show-404-nosuchkey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Images show 404 / NoSuchKey
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#googlecloudexceptionsforbidden-on-upload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        google.cloud.exceptions.Forbidden on upload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sync-not-starting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sync not starting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../metabase-reporting-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporting
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../cython-protection-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="gcs-snapshot-storage-setup-guide">GCS Snapshot Storage Setup Guide<a class="headerlink" href="#gcs-snapshot-storage-setup-guide" title="Permanent link">&para;</a></h1>
+<p>Complete guide to configure Google Cloud Storage as the snapshot image backend for SOCA.</p>
+<hr />
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>soca-engine (edge device)
+    │  rule fires → save_snapshot action → JPG written to local snapshots/
+    │  snapshot_path stored as: {job_id}/{frame_id}.jpg
+    │
+    │  core/gcs_sync.py (async background task, runs every 10s)
+    │  uploads as: {GCS_PATH_PREFIX}/snapshots/{job_id}/{frame_id}.jpg
+    ▼
+Google Cloud Storage
+    Bucket: {GCS_BUCKET}
+    Object key: {GCS_PATH_PREFIX}/snapshots/{job_id}/{frame_id}.jpg
+    e.g.: edge-mac-mini-bekasi/snapshots/abc123/6_20260327_063509.jpg
+    │
+    ▼  (served via soca-control signed URL — bucket can be private)
+soca-control
+    Alert.snapshot_url → /gcs-snapshot/?b={edge-prefix}/snapshots/{job_id}/{frame}.jpg
+    Displayed as thumbnail in Reports → Detail tab
+</code></pre></div>
+<hr />
+<h2 id="why-per-edge-path-prefix">Why Per-Edge Path Prefix?<a class="headerlink" href="#why-per-edge-path-prefix" title="Permanent link">&para;</a></h2>
+<p>Multiple edge devices share a single GCS bucket without collision by using unique path prefixes:</p>
+<div class="highlight"><pre><span></span><code>soca-snapshot-bucket/
+├── edge-jakarta-01/
+│   └── snapshots/{job_id}/{frame}.jpg
+├── edge-mac-mini-bekasi/
+│   └── snapshots/{job_id}/{frame}.jpg
+└── edge-surabaya-02/
+    └── snapshots/{job_id}/{frame}.jpg
+</code></pre></div>
+<p>The prefix defaults to <code>EDGE_NAME</code> when not explicitly set — so a new edge device works without any extra configuration.</p>
+<hr />
+<h2 id="step-1-create-gcs-bucket">Step 1 — Create GCS Bucket<a class="headerlink" href="#step-1-create-gcs-bucket" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Go to <strong>GCP Console → Cloud Storage → Buckets → Create</strong></li>
+<li>Choose a globally unique name (e.g. <code>soca-snapshot-bucket</code>)</li>
+<li>Select region closest to your edge devices</li>
+<li>Leave other settings as default → <strong>Create</strong></li>
+</ol>
+<hr />
+<h2 id="step-2-create-service-account">Step 2 — Create Service Account<a class="headerlink" href="#step-2-create-service-account" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Go to <strong>GCP Console → IAM &amp; Admin → Service Accounts → + Create</strong></li>
+<li>Name: e.g. <code>soca-snapshot-sa</code></li>
+<li>Grant role: <strong>Storage Object Admin</strong> (allows upload + list)</li>
+<li>Click <strong>Done</strong></li>
+<li>Open the service account → <strong>Keys → Add Key → Create new key → JSON</strong></li>
+<li>Save the downloaded JSON file</li>
+</ol>
+<hr />
+<h2 id="step-3-configure-soca-engine">Step 3 — Configure soca-engine<a class="headerlink" href="#step-3-configure-soca-engine" title="Permanent link">&para;</a></h2>
+<h3 id="via-soca-dashboard-ui-recommended">Via soca-dashboard UI (recommended)<a class="headerlink" href="#via-soca-dashboard-ui-recommended" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go to <strong>soca-dashboard → Settings → Edge Config</strong></li>
+<li>Under <strong>Cloud Storage (GCS)</strong>:</li>
+<li>Upload the service account JSON under <strong>GCS Service Account Key</strong></li>
+<li>Fill in <strong>GCS Bucket</strong> name</li>
+<li>Fill in <strong>GCS Path Prefix</strong> (leave blank to use <code>EDGE_NAME</code> automatically)</li>
+<li>Click <strong>Save Edge Config</strong> — this writes <code>GCS_BUCKET</code>, <code>GCS_KEY_PATH</code>, and <code>GCS_PATH_PREFIX</code> to soca-engine's <code>.env</code></li>
+<li>Click <strong>Push Cloud Credentials to soca-engine</strong> — sends the key file to the engine immediately (no restart needed)</li>
+</ol>
+<h3 id="manual-env-edit">Manual (<code>.env</code> edit)<a class="headerlink" href="#manual-env-edit" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>GCS_BUCKET=your-bucket-name
+GCS_KEY_PATH=credentials/gcs.json          # path to your service account JSON
+# GCS_PATH_PREFIX defaults to EDGE_NAME — only set if different
+</code></pre></div>
+<blockquote>
+<p>Restart soca-engine after editing <code>.env</code>. GCS sync starts automatically on boot.</p>
+</blockquote>
+<p><strong>Verify sync is running</strong> — soca-engine startup log should show:
+<div class="highlight"><pre><span></span><code>INFO:core.gcs_sync:GCS sync started — bucket=your-bucket-name dir=.../snapshots
+</code></pre></div></p>
+<p><strong>Verify uploads</strong> — set <code>LOG_LEVEL=DEBUG</code> and watch for:
+<div class="highlight"><pre><span></span><code>DEBUG:core.gcs_sync:GCS sync: uploaded edge-mac-mini-bekasi/snapshots/job123/frame.jpg
+</code></pre></div></p>
+<hr />
+<h2 id="step-4-configure-soca-control">Step 4 — Configure soca-control<a class="headerlink" href="#step-4-configure-soca-control" title="Permanent link">&para;</a></h2>
+<h3 id="4a-snapshot-storage">4a — Snapshot Storage<a class="headerlink" href="#4a-snapshot-storage" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go to <strong>soca-control → Settings → Snapshot Storage</strong></li>
+<li>Select <strong>Google Cloud Storage</strong></li>
+<li>Enter <strong>Bucket name</strong> — must match <code>GCS_BUCKET</code> in soca-engine</li>
+<li><strong>Save</strong></li>
+</ol>
+<blockquote>
+<p>There is no global Path Prefix setting. Path prefix is configured per-edge (see 4b).</p>
+</blockquote>
+<h3 id="4b-per-edge-gcs-path-prefix">4b — Per-edge GCS Path Prefix<a class="headerlink" href="#4b-per-edge-gcs-path-prefix" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go to <strong>soca-control → Settings → Edges → Edit</strong> (for each edge)</li>
+<li>Fill in <strong>GCS Path Prefix</strong> — must exactly match <code>GCS_PATH_PREFIX</code> in that edge's soca-engine <code>.env</code></li>
+<li>Leave blank if it equals the edge name (default behaviour)</li>
+<li><strong>Save</strong></li>
+</ol>
+<h3 id="4c-gcs-credentials-for-soca-control-media-uploads">4c — GCS Credentials (for soca-control media uploads)<a class="headerlink" href="#4c-gcs-credentials-for-soca-control-media-uploads" title="Permanent link">&para;</a></h3>
+<p>soca-control uses GCS to store uploaded logos and media files (separate from snapshot storage).</p>
+<p>Upload via UI: <strong>Settings → Google Cloud Credentials → Browse → select .json file → Save</strong></p>
+<p>This writes <code>GOOGLE_APPLICATION_CREDENTIALS</code> to soca-control's <code>.env</code> and persists across restarts.</p>
+<hr />
+<h2 id="step-5-verify-end-to-end">Step 5 — Verify End-to-End<a class="headerlink" href="#step-5-verify-end-to-end" title="Permanent link">&para;</a></h2>
+<p><strong>Check files exist in GCS:</strong>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">google.cloud</span><span class="w"> </span><span class="kn">import</span> <span class="n">storage</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">storage</span><span class="o">.</span><span class="n">Client</span><span class="o">.</span><span class="n">from_service_account_json</span><span class="p">(</span><span class="s1">&#39;/path/to/key.json&#39;</span><span class="p">)</span>
+<span class="n">blobs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">list_blobs</span><span class="p">(</span><span class="s1">&#39;your-bucket-name&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;your-edge-prefix/snapshots/&#39;</span><span class="p">,</span> <span class="n">max_results</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">blobs</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>Check URL is correct</strong> — Django shell in soca-control:
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">app.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Alert</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Alert</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">snapshot_path__isnull</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">snapshot_url</span><span class="p">)</span>
+<span class="c1"># Should be: /gcs-snapshot/?b=your-edge-prefix/snapshots/...</span>
+</code></pre></div></p>
+<p>Open the resolved URL in a browser — image should load.</p>
+<hr />
+<h2 id="how-the-sync-works">How the Sync Works<a class="headerlink" href="#how-the-sync-works" title="Permanent link">&para;</a></h2>
+<p><code>core/gcs_sync.py</code> runs as an asyncio background task inside the FastAPI lifespan:</p>
+<ul>
+<li>Polls <code>SNAPSHOTS_DIR</code> every 10 seconds using <code>asyncio.to_thread</code> (non-blocking)</li>
+<li>Tracks already-uploaded paths in an in-memory set (no re-uploads per session)</li>
+<li>On restart, existing files are re-uploaded (idempotent — GCS overwrites with same data)</li>
+<li>GCS object key: <code>{GCS_PATH_PREFIX}/snapshots/{job_id}/{frame_id}.jpg</code></li>
+<li>soca-control's <code>Alert.snapshot_url</code> receives <code>snapshot_path</code> as <code>{job_id}/{frame_id}.jpg</code> and prepends <code>snapshots/</code> to reconstruct the full blob path</li>
+</ul>
+<hr />
+<h2 id="adding-a-new-edge-device">Adding a New Edge Device<a class="headerlink" href="#adding-a-new-edge-device" title="Permanent link">&para;</a></h2>
+<p>No manual GCS setup is needed. When a new edge device is configured:</p>
+<ol>
+<li>Set <code>EDGE_NAME</code> — this automatically becomes <code>GCS_PATH_PREFIX</code> if not overridden</li>
+<li>On first detection with <code>save_snapshot</code>, soca-engine uploads the file and the <code>edge-name/snapshots/</code> path is created automatically in GCS (GCS is a flat key store — there are no real folders to pre-create)</li>
+</ol>
+<hr />
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="images-not-showing-thumbnail-blank">Images not showing (thumbnail blank)<a class="headerlink" href="#images-not-showing-thumbnail-blank" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Check <code>GCS_BUCKET</code> is set in soca-engine <code>.env</code></li>
+<li>Check soca-control Snapshot Storage is set to <strong>Google Cloud Storage</strong> with matching bucket name</li>
+<li>Check soca-engine has been restarted (or Push Cloud Credentials clicked) after config change</li>
+<li>Set <code>LOG_LEVEL=DEBUG</code> in soca-engine — look for <code>GCS sync: uploaded ...</code> lines</li>
+</ol>
+<h3 id="images-show-403-forbidden">Images show 403 Forbidden<a class="headerlink" href="#images-show-403-forbidden" title="Permanent link">&para;</a></h3>
+<p>Service account missing <code>storage.objects.get</code> permission. Grant <strong>Storage Object Admin</strong> role, or make the bucket public:
+<div class="highlight"><pre><span></span><code>gsutil<span class="w"> </span>iam<span class="w"> </span>ch<span class="w"> </span>allUsers:objectViewer<span class="w"> </span>gs://your-bucket-name
+</code></pre></div></p>
+<h3 id="images-show-404-nosuchkey">Images show 404 / NoSuchKey<a class="headerlink" href="#images-show-404-nosuchkey" title="Permanent link">&para;</a></h3>
+<p>The GCS blob path does not match what soca-control is requesting. Check:
+1. <strong>GCS Path Prefix</strong> in soca-control Edge settings matches <code>GCS_PATH_PREFIX</code> in soca-engine <code>.env</code>
+2. The snapshot file was actually uploaded — check soca-engine debug logs
+3. Enough time has passed (sync runs every 10s)</p>
+<h3 id="googlecloudexceptionsforbidden-on-upload"><code>google.cloud.exceptions.Forbidden</code> on upload<a class="headerlink" href="#googlecloudexceptionsforbidden-on-upload" title="Permanent link">&para;</a></h3>
+<p>Service account missing <code>storage.objects.create</code> permission. Grant <strong>Storage Object Admin</strong> role.</p>
+<h3 id="sync-not-starting">Sync not starting<a class="headerlink" href="#sync-not-starting" title="Permanent link">&para;</a></h3>
+<p><code>GCS_BUCKET</code> is empty in soca-engine <code>.env</code>. Set it via soca-dashboard or manually, then restart.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

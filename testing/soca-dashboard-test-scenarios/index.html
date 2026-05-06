@@ -1,0 +1,1458 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/testing/soca-dashboard-test-scenarios/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>SOCA Dashboard — Functional Test Scenarios - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#soca-dashboard-functional-test-scenarios" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SOCA Dashboard — Functional Test Scenarios
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="soca-dashboard-functional-test-scenarios">SOCA Dashboard — Functional Test Scenarios<a class="headerlink" href="#soca-dashboard-functional-test-scenarios" title="Permanent link">&para;</a></h1>
+<p><strong>Application:</strong> soca-dashboard<br />
+<strong>Test type:</strong> Functional (browser-based, user perspective)<br />
+<strong>Executed by:</strong> Claude Code with Chrome DevTools connector<br />
+<strong>Base URL:</strong> <code>http://localhost:8000</code></p>
+<hr />
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#1-authentication">Authentication</a></li>
+<li><a href="#2-dashboard">Dashboard</a></li>
+<li><a href="#3-camera-management">Camera Management</a></li>
+<li><a href="#4-schedule-management">Schedule Management</a></li>
+<li><a href="#5-rule-management">Rule Management</a></li>
+<li><a href="#6-monitor-live-stream">Monitor (Live Stream)</a></li>
+<li><a href="#7-alerts--snapshots">Alerts &amp; Snapshots</a></li>
+<li><a href="#8-alert-statistics">Alert Statistics</a></li>
+<li><a href="#9-settings--branding">Settings — Branding</a></li>
+<li><a href="#10-settings--edge-configuration">Settings — Edge Configuration</a></li>
+<li><a href="#11-settings--user-management">Settings — User Management</a></li>
+<li><a href="#12-settings--ai-models">Settings — AI Models</a></li>
+<li><a href="#13-settings--operations-purge--restart">Settings — Operations (Purge &amp; Restart)</a></li>
+</ol>
+<hr />
+<h2 id="1-authentication">1. Authentication<a class="headerlink" href="#1-authentication" title="Permanent link">&para;</a></h2>
+<h3 id="tc-auth-001-login-with-valid-credentials-positive">TC-AUTH-001 — Login with valid credentials (Positive)<a class="headerlink" href="#tc-auth-001-login-with-valid-credentials-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>http://localhost:8000/login/</code>
+2. Enter valid username and password
+3. Click <strong>Login</strong></p>
+<p><strong>Expected:</strong> Redirected to dashboard (<code>/</code>). Navbar shows username and role.</p>
+<hr />
+<h3 id="tc-auth-002-login-with-wrong-password-negative">TC-AUTH-002 — Login with wrong password (Negative)<a class="headerlink" href="#tc-auth-002-login-with-wrong-password-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>http://localhost:8000/login/</code>
+2. Enter valid username, wrong password
+3. Click <strong>Login</strong></p>
+<p><strong>Expected:</strong> Stay on login page. Error message shown ("Please enter a correct username and password").</p>
+<hr />
+<h3 id="tc-auth-003-login-with-empty-fields-negative">TC-AUTH-003 — Login with empty fields (Negative)<a class="headerlink" href="#tc-auth-003-login-with-empty-fields-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>http://localhost:8000/login/</code>
+2. Leave username and password blank
+3. Click <strong>Login</strong></p>
+<p><strong>Expected:</strong> Stay on login page. Validation error shown for required fields.</p>
+<hr />
+<h3 id="tc-auth-004-access-protected-page-without-login-negative">TC-AUTH-004 — Access protected page without login (Negative)<a class="headerlink" href="#tc-auth-004-access-protected-page-without-login-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Without logging in, navigate directly to <code>http://localhost:8000/cameras/</code></p>
+<p><strong>Expected:</strong> Redirected to <code>/login/?next=/cameras/</code>. Dashboard not accessible.</p>
+<hr />
+<h3 id="tc-auth-005-logout-positive">TC-AUTH-005 — Logout (Positive)<a class="headerlink" href="#tc-auth-005-logout-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Log in with valid credentials
+2. Click <strong>Logout</strong> in the navbar</p>
+<p><strong>Expected:</strong> Redirected to login page. Session cleared — navigating to <code>/</code> redirects back to login.</p>
+<hr />
+<h2 id="2-dashboard">2. Dashboard<a class="headerlink" href="#2-dashboard" title="Permanent link">&para;</a></h2>
+<h3 id="tc-dash-001-dashboard-loads-with-engine-connected-positive">TC-DASH-001 — Dashboard loads with engine connected (Positive)<a class="headerlink" href="#tc-dash-001-dashboard-loads-with-engine-connected-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Log in
+2. Navigate to <code>/</code> (dashboard)</p>
+<p><strong>Expected:</strong>
+- Page title shows app name
+- System health section visible (CPU, memory, or engine status)
+- Active cameras count displayed
+- Running schedules count displayed</p>
+<hr />
+<h3 id="tc-dash-002-dashboard-with-engine-unreachable-negative">TC-DASH-002 — Dashboard with engine unreachable (Negative)<a class="headerlink" href="#tc-dash-002-dashboard-with-engine-unreachable-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Log in with soca-engine offline or wrong engine URL configured
+2. Navigate to <code>/</code></p>
+<p><strong>Expected:</strong> Dashboard loads without crashing. Engine health section shows error/unavailable status. No unhandled exception.</p>
+<hr />
+<h3 id="tc-dash-003-viewer-role-cannot-access-settings-negative">TC-DASH-003 — Viewer role cannot access settings (Negative)<a class="headerlink" href="#tc-dash-003-viewer-role-cannot-access-settings-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Log in as a user with <strong>viewer</strong> role
+2. Click <strong>Settings</strong> in the navbar (if visible)</p>
+<p><strong>Expected:</strong> Settings menu not visible, or if accessed directly via URL returns 403 / redirect.</p>
+<hr />
+<h2 id="3-camera-management">3. Camera Management<a class="headerlink" href="#3-camera-management" title="Permanent link">&para;</a></h2>
+<h3 id="tc-cam-001-view-camera-list-positive">TC-CAM-001 — View camera list (Positive)<a class="headerlink" href="#tc-cam-001-view-camera-list-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Log in as admin
+2. Navigate to <code>/cameras/</code></p>
+<p><strong>Expected:</strong> Table lists all cameras with name, site, floor, location, and active status.</p>
+<hr />
+<h3 id="tc-cam-002-create-a-new-camera-positive">TC-CAM-002 — Create a new camera (Positive)<a class="headerlink" href="#tc-cam-002-create-a-new-camera-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/cameras/new/</code>
+2. Fill in:
+   - Name: <code>test-cam-01</code>
+   - RTSP URL: <code>rtsp://192.168.1.100:554/stream</code>
+   - Site Name: <code>HQ</code>
+   - Floor: <code>1</code>
+   - Location: <code>Lobby</code>
+   - Username / Password (optional)
+   - Is Active: checked
+3. Click <strong>Save</strong></p>
+<p><strong>Expected:</strong>
+- Redirected to camera list
+- <code>test-cam-01</code> appears in the table
+- Entry added to <code>mediamtx.yml</code> (if MediaMTX path is configured)</p>
+<hr />
+<h3 id="tc-cam-003-create-camera-with-duplicate-name-negative">TC-CAM-003 — Create camera with duplicate name (Negative)<a class="headerlink" href="#tc-cam-003-create-camera-with-duplicate-name-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Create a camera named <code>test-cam-01</code>
+2. Try to create another camera with the same name <code>test-cam-01</code></p>
+<p><strong>Expected:</strong> Form shows validation error ("Camera with this name already exists"). Second camera not created.</p>
+<hr />
+<h3 id="tc-cam-004-create-camera-with-empty-name-negative">TC-CAM-004 — Create camera with empty name (Negative)<a class="headerlink" href="#tc-cam-004-create-camera-with-empty-name-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/cameras/new/</code>
+2. Leave <strong>Name</strong> blank, fill other fields
+3. Click <strong>Save</strong></p>
+<p><strong>Expected:</strong> Form validation error for required name field. Camera not created.</p>
+<hr />
+<h3 id="tc-cam-005-edit-camera-metadata-only-floor-location-positive">TC-CAM-005 — Edit camera metadata only (floor, location) (Positive)<a class="headerlink" href="#tc-cam-005-edit-camera-metadata-only-floor-location-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Open edit page for <code>test-cam-01</code>
+2. Change <strong>Floor</strong> from <code>1</code> to <code>2</code> and <strong>Location</strong> from <code>Lobby</code> to <code>Entrance</code>
+3. Keep RTSP URL and name unchanged
+4. Click <strong>Save</strong></p>
+<p><strong>Expected:</strong>
+- Redirected to camera list with success message
+- Updated floor/location visible in list
+- <code>mediamtx.yml</code> <strong>NOT modified</strong> (MediaMTX stays running)</p>
+<hr />
+<h3 id="tc-cam-006-edit-camera-rtsp-url-positive">TC-CAM-006 — Edit camera RTSP URL (Positive)<a class="headerlink" href="#tc-cam-006-edit-camera-rtsp-url-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Open edit page for <code>test-cam-01</code>
+2. Change <strong>RTSP URL</strong> to <code>rtsp://192.168.1.101:554/stream</code>
+3. Click <strong>Save</strong></p>
+<p><strong>Expected:</strong>
+- Success message shown
+- <code>mediamtx.yml</code> updated with new source URL
+- Camera list shows updated data</p>
+<hr />
+<h3 id="tc-cam-007-delete-a-camera-positive">TC-CAM-007 — Delete a camera (Positive)<a class="headerlink" href="#tc-cam-007-delete-a-camera-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/cameras/</code>
+2. Click <strong>Delete</strong> for <code>test-cam-01</code>
+3. Confirm deletion</p>
+<p><strong>Expected:</strong>
+- Camera removed from list
+- Entry removed from <code>mediamtx.yml</code>
+- Success message shown</p>
+<hr />
+<h3 id="tc-cam-008-delete-camera-that-has-active-schedules-negative">TC-CAM-008 — Delete camera that has active schedules (Negative)<a class="headerlink" href="#tc-cam-008-delete-camera-that-has-active-schedules-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Create a camera and assign it to a running schedule
+2. Try to delete that camera</p>
+<p><strong>Expected:</strong> Error message shown ("Cannot delete camera with active schedules") or cascading delete handled gracefully. No orphaned schedule records.</p>
+<hr />
+<h3 id="tc-cam-009-grab-live-snapshot-from-camera-positive">TC-CAM-009 — Grab live snapshot from camera (Positive)<a class="headerlink" href="#tc-cam-009-grab-live-snapshot-from-camera-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/cameras/</code>
+2. Click <strong>Snapshot</strong> button for a camera with a reachable RTSP stream</p>
+<p><strong>Expected:</strong> JPEG image returned and displayed in browser or downloaded.</p>
+<hr />
+<h3 id="tc-cam-010-grab-snapshot-from-unreachable-camera-negative">TC-CAM-010 — Grab snapshot from unreachable camera (Negative)<a class="headerlink" href="#tc-cam-010-grab-snapshot-from-unreachable-camera-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Click <strong>Snapshot</strong> for a camera with an unreachable RTSP URL</p>
+<p><strong>Expected:</strong> 404 or error response returned. No crash. Graceful error message shown.</p>
+<hr />
+<h2 id="4-schedule-management">4. Schedule Management<a class="headerlink" href="#4-schedule-management" title="Permanent link">&para;</a></h2>
+<h3 id="tc-sch-001-view-schedule-list-positive">TC-SCH-001 — View schedule list (Positive)<a class="headerlink" href="#tc-sch-001-view-schedule-list-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/schedules/</code></p>
+<p><strong>Expected:</strong> Table lists all schedules with name, camera, model, and current status (running/stopped).</p>
+<hr />
+<h3 id="tc-sch-002-create-a-new-schedule-positive">TC-SCH-002 — Create a new schedule (Positive)<a class="headerlink" href="#tc-sch-002-create-a-new-schedule-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/schedules/new/</code>
+2. Fill in:
+   - Name: <code>schedule-lobby</code>
+   - Camera: select <code>test-cam-01</code>
+   - Model: <code>yolo/yolo11n.pt</code>
+   - Confidence: <code>0.5</code>
+   - Frame Interval: <code>1000</code> ms
+   - Alert Category: <code>Detection</code>
+   - Save Snapshot: checked
+3. Click <strong>Save</strong></p>
+<p><strong>Expected:</strong>
+- Redirected to schedule list
+- <code>schedule-lobby</code> appears with status <strong>Stopped</strong></p>
+<hr />
+<h3 id="tc-sch-003-create-schedule-with-no-camera-selected-negative">TC-SCH-003 — Create schedule with no camera selected (Negative)<a class="headerlink" href="#tc-sch-003-create-schedule-with-no-camera-selected-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/schedules/new/</code>
+2. Leave <strong>Camera</strong> unselected
+3. Fill all other required fields
+4. Click <strong>Save</strong></p>
+<p><strong>Expected:</strong> Validation error for required camera field. Schedule not created.</p>
+<hr />
+<h3 id="tc-sch-004-start-a-schedule-positive">TC-SCH-004 — Start a schedule (Positive)<a class="headerlink" href="#tc-sch-004-start-a-schedule-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/schedules/</code>
+2. Click <strong>Start</strong> for <code>schedule-lobby</code></p>
+<p><strong>Expected:</strong>
+- Status changes to <strong>Running</strong>
+- <code>current_job_id</code> populated
+- soca-engine starts the job</p>
+<hr />
+<h3 id="tc-sch-005-start-a-schedule-with-engine-unreachable-negative">TC-SCH-005 — Start a schedule with engine unreachable (Negative)<a class="headerlink" href="#tc-sch-005-start-a-schedule-with-engine-unreachable-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Set engine URL to an invalid address
+2. Click <strong>Start</strong> for a stopped schedule</p>
+<p><strong>Expected:</strong> Error message shown ("Failed to start job" or connection error). Schedule status remains <strong>Stopped</strong>.</p>
+<hr />
+<h3 id="tc-sch-006-stop-a-running-schedule-positive">TC-SCH-006 — Stop a running schedule (Positive)<a class="headerlink" href="#tc-sch-006-stop-a-running-schedule-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Start a schedule
+2. Click <strong>Stop</strong></p>
+<p><strong>Expected:</strong>
+- Status changes to <strong>Stopped</strong>
+- <code>current_job_id</code> cleared</p>
+<hr />
+<h3 id="tc-sch-007-edit-a-running-schedule-negative">TC-SCH-007 — Edit a running schedule (Negative)<a class="headerlink" href="#tc-sch-007-edit-a-running-schedule-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Start a schedule
+2. Navigate to its edit page
+3. Change the model and save</p>
+<p><strong>Expected:</strong> Warning shown that job is currently running, or schedule stops/updates are handled safely. No engine crash.</p>
+<hr />
+<h3 id="tc-sch-008-delete-a-stopped-schedule-positive">TC-SCH-008 — Delete a stopped schedule (Positive)<a class="headerlink" href="#tc-sch-008-delete-a-stopped-schedule-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Ensure schedule is stopped
+2. Click <strong>Delete</strong>
+3. Confirm</p>
+<p><strong>Expected:</strong> Schedule removed from list. Success message shown.</p>
+<hr />
+<h3 id="tc-sch-009-delete-a-running-schedule-negative">TC-SCH-009 — Delete a running schedule (Negative)<a class="headerlink" href="#tc-sch-009-delete-a-running-schedule-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Start a schedule
+2. Try to delete it</p>
+<p><strong>Expected:</strong> Schedule is stopped first, then deleted. Or error message requiring stop before delete.</p>
+<hr />
+<h3 id="tc-sch-010-create-schedule-with-invalid-confidence-threshold-negative">TC-SCH-010 — Create schedule with invalid confidence threshold (Negative)<a class="headerlink" href="#tc-sch-010-create-schedule-with-invalid-confidence-threshold-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/schedules/new/</code>
+2. Set <strong>Confidence</strong> to <code>1.5</code> (out of 0–1 range)
+3. Click <strong>Save</strong></p>
+<p><strong>Expected:</strong> Validation error shown. Schedule not created.</p>
+<hr />
+<h2 id="5-rule-management">5. Rule Management<a class="headerlink" href="#5-rule-management" title="Permanent link">&para;</a></h2>
+<h3 id="tc-rule-001-add-a-rule-to-a-schedule-positive">TC-RULE-001 — Add a rule to a schedule (Positive)<a class="headerlink" href="#tc-rule-001-add-a-rule-to-a-schedule-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Open edit page for <code>schedule-lobby</code>
+2. Click <strong>Add Rule</strong>
+3. Fill in:
+   - Name: <code>intrusion-rule</code>
+   - Category: <code>Intrusion</code>
+   - Processing: <code>in_roi</code>
+   - Trigger: <code>present</code>
+   - Duration: <code>immediate</code>
+   - Cooldown: <code>60</code> seconds
+   - Actions: Snapshot checked
+4. Click <strong>Save Rule</strong></p>
+<p><strong>Expected:</strong> Rule <code>intrusion-rule</code> appears in the rules list for this schedule.</p>
+<hr />
+<h3 id="tc-rule-002-add-rule-with-empty-name-negative">TC-RULE-002 — Add rule with empty name (Negative)<a class="headerlink" href="#tc-rule-002-add-rule-with-empty-name-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Open schedule edit page
+2. Click <strong>Add Rule</strong>
+3. Leave <strong>Name</strong> blank
+4. Click <strong>Save Rule</strong></p>
+<p><strong>Expected:</strong> Validation error for required name. Rule not created.</p>
+<hr />
+<h3 id="tc-rule-003-edit-existing-rule-positive">TC-RULE-003 — Edit existing rule (Positive)<a class="headerlink" href="#tc-rule-003-edit-existing-rule-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Open rule edit for <code>intrusion-rule</code>
+2. Change cooldown from <code>60</code> to <code>120</code>
+3. Save</p>
+<p><strong>Expected:</strong> Rule updated. Cooldown shows <code>120</code> seconds.</p>
+<hr />
+<h3 id="tc-rule-004-delete-a-rule-positive">TC-RULE-004 — Delete a rule (Positive)<a class="headerlink" href="#tc-rule-004-delete-a-rule-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Click <strong>Delete</strong> on <code>intrusion-rule</code>
+2. Confirm</p>
+<p><strong>Expected:</strong> Rule removed from schedule. Success message shown.</p>
+<hr />
+<h3 id="tc-rule-005-add-people-counting-rule-positive">TC-RULE-005 — Add People Counting rule (Positive)<a class="headerlink" href="#tc-rule-005-add-people-counting-rule-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Add rule with:
+   - Mode: <code>people_count</code>
+   - Direction: <code>left_to_right</code>
+   - Count Threshold: <code>5</code>
+   - Category: <code>Counting</code></p>
+<p><strong>Expected:</strong> Rule saved with crossing direction and count threshold fields.</p>
+<hr />
+<h2 id="6-monitor-live-stream">6. Monitor (Live Stream)<a class="headerlink" href="#6-monitor-live-stream" title="Permanent link">&para;</a></h2>
+<h3 id="tc-mon-001-monitor-page-loads-with-running-jobs-positive">TC-MON-001 — Monitor page loads with running jobs (Positive)<a class="headerlink" href="#tc-mon-001-monitor-page-loads-with-running-jobs-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Start a schedule with <strong>Enable Monitor</strong> checked
+2. Navigate to <code>/monitor/</code></p>
+<p><strong>Expected:</strong> Live MJPEG stream visible for the running job. Camera name displayed above stream.</p>
+<hr />
+<h3 id="tc-mon-002-monitor-page-with-no-running-jobs-negative">TC-MON-002 — Monitor page with no running jobs (Negative)<a class="headerlink" href="#tc-mon-002-monitor-page-with-no-running-jobs-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Stop all running schedules
+2. Navigate to <code>/monitor/</code></p>
+<p><strong>Expected:</strong> Empty state message shown ("No active streams"). Page does not crash.</p>
+<hr />
+<h3 id="tc-mon-003-monitor-page-with-engine-unreachable-negative">TC-MON-003 — Monitor page with engine unreachable (Negative)<a class="headerlink" href="#tc-mon-003-monitor-page-with-engine-unreachable-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Set engine URL to unreachable address
+2. Navigate to <code>/monitor/</code></p>
+<p><strong>Expected:</strong> Error state shown. Page loads without crashing.</p>
+<hr />
+<h2 id="7-alerts-snapshots">7. Alerts &amp; Snapshots<a class="headerlink" href="#7-alerts-snapshots" title="Permanent link">&para;</a></h2>
+<h3 id="tc-alert-001-view-alerts-list-positive">TC-ALERT-001 — View alerts list (Positive)<a class="headerlink" href="#tc-alert-001-view-alerts-list-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/alerts/</code></p>
+<p><strong>Expected:</strong> Paginated table of detection events with timestamp, rule name, camera, count, category, snapshot thumbnail.</p>
+<hr />
+<h3 id="tc-alert-002-filter-alerts-by-camera-positive">TC-ALERT-002 — Filter alerts by camera (Positive)<a class="headerlink" href="#tc-alert-002-filter-alerts-by-camera-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/alerts/</code>
+2. Select a specific camera from the <strong>Camera</strong> filter
+3. Apply filter</p>
+<p><strong>Expected:</strong> Only events from selected camera shown. Pagination recalculates.</p>
+<hr />
+<h3 id="tc-alert-003-filter-alerts-by-date-range-positive">TC-ALERT-003 — Filter alerts by date range (Positive)<a class="headerlink" href="#tc-alert-003-filter-alerts-by-date-range-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Set <strong>Date From</strong> and <strong>Date To</strong> to a valid range
+2. Apply filter</p>
+<p><strong>Expected:</strong> Only events within date range shown. Events outside range excluded.</p>
+<hr />
+<h3 id="tc-alert-004-filter-alerts-by-date-range-where-to-from-negative">TC-ALERT-004 — Filter alerts by date range where To &lt; From (Negative)<a class="headerlink" href="#tc-alert-004-filter-alerts-by-date-range-where-to-from-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Set <strong>Date From</strong> to today, <strong>Date To</strong> to yesterday
+2. Apply filter</p>
+<p><strong>Expected:</strong> Zero results shown, or validation message. No crash.</p>
+<hr />
+<h3 id="tc-alert-005-filter-by-alert-category-positive">TC-ALERT-005 — Filter by alert category (Positive)<a class="headerlink" href="#tc-alert-005-filter-by-alert-category-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Enter <code>Intrusion</code> in the <strong>Category</strong> filter
+2. Apply</p>
+<p><strong>Expected:</strong> Only intrusion alerts shown.</p>
+<hr />
+<h3 id="tc-alert-006-filter-by-lpr-plate-number-positive">TC-ALERT-006 — Filter by LPR plate number (Positive)<a class="headerlink" href="#tc-alert-006-filter-by-lpr-plate-number-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Enter a known plate number in <strong>Plate</strong> filter
+2. Apply</p>
+<p><strong>Expected:</strong> Only alerts matching that plate shown.</p>
+<hr />
+<h3 id="tc-alert-007-view-snapshot-thumbnail-positive">TC-ALERT-007 — View snapshot thumbnail (Positive)<a class="headerlink" href="#tc-alert-007-view-snapshot-thumbnail-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Open <code>/alerts/</code>
+2. Verify snapshot thumbnails load for events with GCS storage configured</p>
+<p><strong>Expected:</strong> Thumbnail images load (<code>/alerts/snapshot/?b=...</code> returns 302 → GCS signed URL → image).</p>
+<hr />
+<h3 id="tc-alert-008-click-thumbnail-to-open-full-image-positive">TC-ALERT-008 — Click thumbnail to open full image (Positive)<a class="headerlink" href="#tc-alert-008-click-thumbnail-to-open-full-image-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Click a thumbnail image</p>
+<p><strong>Expected:</strong> Popup window opens with full-size snapshot image from GCS.</p>
+<hr />
+<h3 id="tc-alert-009-alerts-with-engine-db-not-configured-negative">TC-ALERT-009 — Alerts with engine DB not configured (Negative)<a class="headerlink" href="#tc-alert-009-alerts-with-engine-db-not-configured-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Clear the <strong>Engine DB Path</strong> in settings
+2. Navigate to <code>/alerts/</code></p>
+<p><strong>Expected:</strong> Empty state or info message ("Engine DB not configured"). No exception shown to user.</p>
+<hr />
+<h3 id="tc-alert-010-pagination-works-correctly-positive">TC-ALERT-010 — Pagination works correctly (Positive)<a class="headerlink" href="#tc-alert-010-pagination-works-correctly-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/alerts/</code> with more than 20 events
+2. Click <strong>Next page</strong></p>
+<p><strong>Expected:</strong> Next 20 events loaded. Page number updates. Active filters preserved across pages.</p>
+<hr />
+<h2 id="8-alert-statistics">8. Alert Statistics<a class="headerlink" href="#8-alert-statistics" title="Permanent link">&para;</a></h2>
+<h3 id="tc-stats-001-statistics-page-loads-positive">TC-STATS-001 — Statistics page loads (Positive)<a class="headerlink" href="#tc-stats-001-statistics-page-loads-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/alerts/stats/</code></p>
+<p><strong>Expected:</strong>
+- Daily detection trend chart rendered
+- Hourly distribution chart rendered
+- Top categories chart rendered
+- Top cameras chart rendered
+- Summary counters (today, week, month) visible</p>
+<hr />
+<h3 id="tc-stats-002-statistics-with-camera-filter-positive">TC-STATS-002 — Statistics with camera filter (Positive)<a class="headerlink" href="#tc-stats-002-statistics-with-camera-filter-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/alerts/stats/?camera=test-cam-01</code></p>
+<p><strong>Expected:</strong> All charts filtered to show data only for <code>test-cam-01</code>.</p>
+<hr />
+<h3 id="tc-stats-003-statistics-with-no-data-negative">TC-STATS-003 — Statistics with no data (Negative)<a class="headerlink" href="#tc-stats-003-statistics-with-no-data-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Apply date filter with a range that has no events</p>
+<p><strong>Expected:</strong> Charts render empty (zero data). No crash. Counters show <code>0</code>.</p>
+<hr />
+<h2 id="9-settings-branding">9. Settings — Branding<a class="headerlink" href="#9-settings-branding" title="Permanent link">&para;</a></h2>
+<h3 id="tc-brand-001-update-company-name-positive">TC-BRAND-001 — Update company name (Positive)<a class="headerlink" href="#tc-brand-001-update-company-name-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/settings/</code>
+2. In the <strong>Branding</strong> section, change company name to <code>PT Test Company</code>
+3. Click <strong>Save</strong></p>
+<p><strong>Expected:</strong> Success message shown. Navbar/header reflects new company name on page reload.</p>
+<hr />
+<h3 id="tc-brand-002-upload-company-logo-positive">TC-BRAND-002 — Upload company logo (Positive)<a class="headerlink" href="#tc-brand-002-upload-company-logo-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/settings/</code>
+2. Upload a PNG or JPG file as company logo
+3. Set logo height to <code>50</code>
+4. Click <strong>Save</strong></p>
+<p><strong>Expected:</strong> Logo visible in navbar. Height applied correctly.</p>
+<hr />
+<h3 id="tc-brand-003-upload-non-image-file-as-logo-negative">TC-BRAND-003 — Upload non-image file as logo (Negative)<a class="headerlink" href="#tc-brand-003-upload-non-image-file-as-logo-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Try to upload a <code>.pdf</code> or <code>.txt</code> file as company logo</p>
+<p><strong>Expected:</strong> Validation error shown. Logo not changed.</p>
+<hr />
+<h3 id="tc-brand-004-set-logo-height-below-minimum-negative">TC-BRAND-004 — Set logo height below minimum (Negative)<a class="headerlink" href="#tc-brand-004-set-logo-height-below-minimum-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Set logo height to <code>5</code> (below 16px minimum)
+2. Save</p>
+<p><strong>Expected:</strong> Validation error ("Ensure this value is greater than or equal to 16"). Logo height not changed.</p>
+<hr />
+<h2 id="10-settings-edge-configuration">10. Settings — Edge Configuration<a class="headerlink" href="#10-settings-edge-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="tc-edge-001-save-valid-engine-url-positive">TC-EDGE-001 — Save valid engine URL (Positive)<a class="headerlink" href="#tc-edge-001-save-valid-engine-url-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/settings/</code>
+2. In <strong>Edge</strong> section, set Engine URL to <code>http://localhost:8001</code>
+3. Click <strong>Save</strong></p>
+<p><strong>Expected:</strong> Success message. Engine URL updated.</p>
+<hr />
+<h3 id="tc-edge-002-save-invalid-engine-url-format-negative">TC-EDGE-002 — Save invalid engine URL format (Negative)<a class="headerlink" href="#tc-edge-002-save-invalid-engine-url-format-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Set Engine URL to <code>not-a-url</code>
+2. Click <strong>Save</strong></p>
+<p><strong>Expected:</strong> Validation error shown. URL not saved.</p>
+<hr />
+<h3 id="tc-edge-003-push-config-to-soca-engine-positive">TC-EDGE-003 — Push config to soca-engine (Positive)<a class="headerlink" href="#tc-edge-003-push-config-to-soca-engine-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Ensure soca-engine is running and API key matches
+2. Click <strong>Push to Engine</strong></p>
+<p><strong>Expected:</strong> Success message. Last push timestamp updated. <code>last_engine_push_ok = true</code>.</p>
+<hr />
+<h3 id="tc-edge-004-push-config-to-engine-with-wrong-api-key-negative">TC-EDGE-004 — Push config to engine with wrong API key (Negative)<a class="headerlink" href="#tc-edge-004-push-config-to-engine-with-wrong-api-key-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Set an incorrect engine API key
+2. Click <strong>Push to Engine</strong></p>
+<p><strong>Expected:</strong> Error message ("Push failed" or "401 Unauthorized"). <code>last_engine_push_ok = false</code>.</p>
+<hr />
+<h3 id="tc-edge-005-generate-new-api-key-positive">TC-EDGE-005 — Generate new API key (Positive)<a class="headerlink" href="#tc-edge-005-generate-new-api-key-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/settings/</code>
+2. Click <strong>Generate API Key</strong></p>
+<p><strong>Expected:</strong> New 64-character hex key displayed. Old key replaced.</p>
+<hr />
+<h3 id="tc-edge-006-save-gcs-credentials-file-positive">TC-EDGE-006 — Save GCS credentials file (Positive)<a class="headerlink" href="#tc-edge-006-save-gcs-credentials-file-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Upload a valid GCS service account JSON file
+2. Click <strong>Save</strong></p>
+<p><strong>Expected:</strong> File saved to <code>credentials/</code> folder. Path stored in settings.</p>
+<hr />
+<h3 id="tc-edge-007-save-telegram-credentials-positive">TC-EDGE-007 — Save Telegram credentials (Positive)<a class="headerlink" href="#tc-edge-007-save-telegram-credentials-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Enter a valid Telegram bot token and chat ID
+2. Click <strong>Save</strong></p>
+<p><strong>Expected:</strong> Credentials saved. No error shown.</p>
+<hr />
+<h2 id="11-settings-user-management">11. Settings — User Management<a class="headerlink" href="#11-settings-user-management" title="Permanent link">&para;</a></h2>
+<h3 id="tc-user-001-create-a-new-user-positive">TC-USER-001 — Create a new user (Positive)<a class="headerlink" href="#tc-user-001-create-a-new-user-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/settings/</code>
+2. In <strong>Users</strong> section, fill:
+   - Username: <code>testuser</code>
+   - Password: <code>Test@12345</code>
+   - Role: <code>operator</code>
+3. Click <strong>Create User</strong></p>
+<p><strong>Expected:</strong> <code>testuser</code> appears in the users table with role <code>operator</code>.</p>
+<hr />
+<h3 id="tc-user-002-create-user-with-duplicate-username-negative">TC-USER-002 — Create user with duplicate username (Negative)<a class="headerlink" href="#tc-user-002-create-user-with-duplicate-username-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Try to create a user with the same username as an existing user</p>
+<p><strong>Expected:</strong> Error message ("A user with that username already exists"). User not created.</p>
+<hr />
+<h3 id="tc-user-003-create-user-with-empty-password-negative">TC-USER-003 — Create user with empty password (Negative)<a class="headerlink" href="#tc-user-003-create-user-with-empty-password-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Leave password blank
+2. Click <strong>Create User</strong></p>
+<p><strong>Expected:</strong> Validation error for required password. User not created.</p>
+<hr />
+<h3 id="tc-user-004-delete-a-user-positive">TC-USER-004 — Delete a user (Positive)<a class="headerlink" href="#tc-user-004-delete-a-user-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Click <strong>Delete</strong> for <code>testuser</code>
+2. Confirm</p>
+<p><strong>Expected:</strong> <code>testuser</code> removed from users table.</p>
+<hr />
+<h3 id="tc-user-005-delete-own-account-negative">TC-USER-005 — Delete own account (Negative)<a class="headerlink" href="#tc-user-005-delete-own-account-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Log in as <code>admin</code>
+2. Try to delete your own account from settings</p>
+<p><strong>Expected:</strong> Error message ("Cannot delete your own account"). Admin account not deleted.</p>
+<hr />
+<h3 id="tc-user-006-operator-cannot-access-user-management-negative">TC-USER-006 — Operator cannot access user management (Negative)<a class="headerlink" href="#tc-user-006-operator-cannot-access-user-management-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Log in as operator role user
+2. Navigate to <code>/settings/</code></p>
+<p><strong>Expected:</strong> User management section not visible, or action returns 403.</p>
+<hr />
+<h2 id="12-settings-ai-models">12. Settings — AI Models<a class="headerlink" href="#12-settings-ai-models" title="Permanent link">&para;</a></h2>
+<h3 id="tc-model-001-view-available-models-positive">TC-MODEL-001 — View available models (Positive)<a class="headerlink" href="#tc-model-001-view-available-models-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/settings/</code> → <strong>AI Models</strong> tab</p>
+<p><strong>Expected:</strong> List of model files from soca-engine shown (e.g. <code>yolo11n.pt</code>).</p>
+<hr />
+<h3 id="tc-model-002-upload-a-new-yolo-model-positive">TC-MODEL-002 — Upload a new YOLO model (Positive)<a class="headerlink" href="#tc-model-002-upload-a-new-yolo-model-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Click <strong>Upload Model</strong>
+2. Select a <code>.pt</code> or <code>.onnx</code> file
+3. Confirm upload</p>
+<p><strong>Expected:</strong> New model appears in models list. Success message shown.</p>
+<hr />
+<h3 id="tc-model-003-upload-non-model-file-negative">TC-MODEL-003 — Upload non-model file (Negative)<a class="headerlink" href="#tc-model-003-upload-non-model-file-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Try to upload a <code>.txt</code> or <code>.jpg</code> file as a model</p>
+<p><strong>Expected:</strong> Error message ("Invalid file type"). File not uploaded.</p>
+<hr />
+<h3 id="tc-model-004-delete-a-model-positive">TC-MODEL-004 — Delete a model (Positive)<a class="headerlink" href="#tc-model-004-delete-a-model-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Click <strong>Delete</strong> for an unused model
+2. Confirm</p>
+<p><strong>Expected:</strong> Model removed from list. Success message shown.</p>
+<hr />
+<h3 id="tc-model-005-delete-model-currently-used-by-a-schedule-negative">TC-MODEL-005 — Delete model currently used by a schedule (Negative)<a class="headerlink" href="#tc-model-005-delete-model-currently-used-by-a-schedule-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Create a schedule using <code>yolo11n.pt</code>
+2. Try to delete <code>yolo11n.pt</code> from the models list</p>
+<p><strong>Expected:</strong> Error or warning shown ("Model in use by active schedule"). Model not deleted, or warning displayed.</p>
+<hr />
+<h2 id="13-settings-operations-purge-restart">13. Settings — Operations (Purge &amp; Restart)<a class="headerlink" href="#13-settings-operations-purge-restart" title="Permanent link">&para;</a></h2>
+<h3 id="tc-ops-001-preview-data-purge-positive">TC-OPS-001 — Preview data purge (Positive)<a class="headerlink" href="#tc-ops-001-preview-data-purge-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/settings/</code> → <strong>Operations</strong> tab
+2. Set <strong>Older than</strong> to <code>30</code> days
+3. Click <strong>Preview</strong></p>
+<p><strong>Expected:</strong> Shows count of events and estimated storage to be deleted. No data deleted yet.</p>
+<hr />
+<h3 id="tc-ops-002-execute-data-purge-positive">TC-OPS-002 — Execute data purge (Positive)<a class="headerlink" href="#tc-ops-002-execute-data-purge-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Preview purge for 30 days (verify count &gt; 0)
+2. Click <strong>Execute Purge</strong>
+3. Confirm</p>
+<p><strong>Expected:</strong> Events older than 30 days deleted. Success message with count shown. Snapshot files removed.</p>
+<hr />
+<h3 id="tc-ops-003-purge-with-zero-days-negative">TC-OPS-003 — Purge with zero days (Negative)<a class="headerlink" href="#tc-ops-003-purge-with-zero-days-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Set <strong>Older than</strong> to <code>0</code>
+2. Click <strong>Preview</strong></p>
+<p><strong>Expected:</strong> Error or warning ("Value must be greater than 0"). No purge executed.</p>
+<hr />
+<h3 id="tc-ops-004-restart-soca-dashboard-service-positive">TC-OPS-004 — Restart soca-dashboard service (Positive)<a class="headerlink" href="#tc-ops-004-restart-soca-dashboard-service-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Navigate to <code>/settings/</code> → <strong>Operations</strong> tab
+2. Click <strong>Restart soca-dashboard</strong>
+3. Confirm</p>
+<p><strong>Expected:</strong> Success message ("Restart triggered"). Service restarts in background. After ~5 seconds, page reloads and is accessible again.</p>
+<hr />
+<h3 id="tc-ops-005-restart-soca-engine-service-positive">TC-OPS-005 — Restart soca-engine service (Positive)<a class="headerlink" href="#tc-ops-005-restart-soca-engine-service-positive" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Click <strong>Restart soca-engine</strong>
+2. Confirm</p>
+<p><strong>Expected:</strong> Success message. soca-engine restarts. Running schedules resume after restart.</p>
+<hr />
+<h3 id="tc-ops-006-restart-with-stopsh-not-found-negative">TC-OPS-006 — Restart with stop.sh not found (Negative)<a class="headerlink" href="#tc-ops-006-restart-with-stopsh-not-found-negative" title="Permanent link">&para;</a></h3>
+<p><strong>Steps:</strong>
+1. Configure a service path that does not contain <code>stop.sh</code>
+2. Click <strong>Restart</strong></p>
+<p><strong>Expected:</strong> Error message ("stop.sh / start.sh not found"). Service not restarted. Error details shown.</p>
+<hr />
+<h2 id="test-execution-notes">Test Execution Notes<a class="headerlink" href="#test-execution-notes" title="Permanent link">&para;</a></h2>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
+<ul>
+<li>soca-dashboard running at <code>http://localhost:8000</code></li>
+<li>At least one admin user exists</li>
+<li>soca-engine running at configured URL (for engine-dependent tests)</li>
+<li>GCS bucket configured (for snapshot/thumbnail tests)</li>
+<li>MediaMTX running (for camera relay tests)</li>
+</ul>
+<h3 id="test-accounts-needed">Test Accounts Needed<a class="headerlink" href="#test-accounts-needed" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Username</th>
+<th>Password</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>admin</td>
+<td>(configured)</td>
+<td>admin</td>
+</tr>
+<tr>
+<td>operator</td>
+<td>(configured)</td>
+<td>operator</td>
+</tr>
+<tr>
+<td>viewer</td>
+<td>(configured)</td>
+<td>viewer</td>
+</tr>
+</tbody>
+</table>
+<h3 id="scope-exclusions">Scope Exclusions<a class="headerlink" href="#scope-exclusions" title="Permanent link">&para;</a></h3>
+<ul>
+<li>soca-engine internal detection logic (tested separately)</li>
+<li>GCS bucket permissions (infrastructure level)</li>
+<li>Telegram delivery (external dependency)</li>
+<li>Redis stream consumption (soca-service scope)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

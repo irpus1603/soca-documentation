@@ -1,0 +1,353 @@
+{
+  "id": null,
+  "uid": "soca-fleet-overview",
+  "title": "SOCA — Fleet Operations Overview",
+  "tags": ["soca", "fleet", "overview"],
+  "timezone": "Asia/Jakarta",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "30s",
+  "time": { "from": "now-24h", "to": "now" },
+  "timepicker": {
+    "refresh_intervals": ["10s", "30s", "1m", "5m", "15m", "30m"]
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "datasource",
+        "type": "datasource",
+        "pluginId": "postgres",
+        "label": "Data Source",
+        "hide": 0,
+        "refresh": 1,
+        "current": {}
+      },
+      {
+        "name": "edge",
+        "type": "query",
+        "label": "Edge",
+        "datasource": { "type": "postgres", "uid": "${datasource}" },
+        "query": "SELECT DISTINCT edge_name FROM app_alert WHERE edge_name <> '' ORDER BY 1",
+        "multi": true,
+        "includeAll": true,
+        "allValue": ".*",
+        "refresh": 2,
+        "hide": 0,
+        "current": {}
+      },
+      {
+        "name": "camera",
+        "type": "query",
+        "label": "Camera",
+        "datasource": { "type": "postgres", "uid": "${datasource}" },
+        "query": "SELECT DISTINCT COALESCE(NULLIF(camera_name,''), camera_id) FROM app_alert ORDER BY 1",
+        "multi": true,
+        "includeAll": true,
+        "allValue": ".*",
+        "refresh": 2,
+        "hide": 0,
+        "current": {}
+      },
+      {
+        "name": "category",
+        "type": "query",
+        "label": "Category",
+        "datasource": { "type": "postgres", "uid": "${datasource}" },
+        "query": "SELECT DISTINCT alert_category FROM app_alert ORDER BY 1",
+        "multi": true,
+        "includeAll": true,
+        "allValue": ".*",
+        "refresh": 2,
+        "hide": 0,
+        "current": {}
+      }
+    ]
+  },
+  "annotations": { "list": [] },
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Total Alerts Today",
+      "id": 1,
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 0 },
+      "datasource": { "type": "postgres", "uid": "${datasource}" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "${datasource}" },
+          "rawSql": "SELECT COUNT(*) AS value FROM app_alert WHERE timestamp::date = CURRENT_DATE",
+          "format": "table",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "none"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 50 },
+              { "color": "red", "value": 200 }
+            ]
+          },
+          "color": { "mode": "thresholds" }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Active Cameras Today",
+      "id": 2,
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 0 },
+      "datasource": { "type": "postgres", "uid": "${datasource}" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "${datasource}" },
+          "rawSql": "SELECT COUNT(DISTINCT camera_id) AS value FROM app_alert WHERE timestamp::date = CURRENT_DATE",
+          "format": "table",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "colorMode": "background",
+        "graphMode": "none"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "blue", "value": null }]
+          },
+          "color": { "mode": "thresholds" }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Active Edges Today",
+      "id": 3,
+      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 0 },
+      "datasource": { "type": "postgres", "uid": "${datasource}" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "${datasource}" },
+          "rawSql": "SELECT COUNT(DISTINCT edge_name) AS value FROM app_alert WHERE timestamp::date = CURRENT_DATE",
+          "format": "table",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "colorMode": "background",
+        "graphMode": "none"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "purple", "value": null }]
+          },
+          "color": { "mode": "thresholds" }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Alerts by Category Today",
+      "id": 4,
+      "gridPos": { "h": 4, "w": 12, "x": 12, "y": 0 },
+      "datasource": { "type": "postgres", "uid": "${datasource}" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "${datasource}" },
+          "rawSql": "SELECT alert_category AS metric, COUNT(*) AS value FROM app_alert WHERE timestamp::date = CURRENT_DATE GROUP BY alert_category ORDER BY value DESC",
+          "format": "table",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "orientation": "horizontal",
+        "textMode": "auto",
+        "colorMode": "background",
+        "graphMode": "none"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "semi-dark-orange", "value": null }]
+          },
+          "color": { "mode": "thresholds" }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Alert Trend (All Categories)",
+      "id": 5,
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 4 },
+      "datasource": { "type": "postgres", "uid": "${datasource}" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "${datasource}" },
+          "rawSql": "SELECT\n    $__timeGroupAlias(timestamp, $__interval),\n    alert_category,\n    COUNT(*) AS alert_count\nFROM app_alert\nWHERE $__timeFilter(timestamp)\nGROUP BY 1, alert_category\nORDER BY 1",
+          "format": "time_series",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" },
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 2,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "barchart",
+      "title": "Alerts by Category (Selected Range)",
+      "id": 6,
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 12 },
+      "datasource": { "type": "postgres", "uid": "${datasource}" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "${datasource}" },
+          "rawSql": "SELECT\n    alert_category,\n    COUNT(*) AS today_count,\n    COUNT(DISTINCT camera_id) AS cameras_affected,\n    COUNT(DISTINCT edge_name) AS edges_affected\nFROM app_alert\nWHERE timestamp::date = CURRENT_DATE\nGROUP BY alert_category\nORDER BY today_count DESC",
+          "format": "table",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "orientation": "auto",
+        "xTickLabelRotation": 0,
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      },
+      "fieldConfig": { "defaults": {}, "overrides": [] }
+    },
+    {
+      "type": "barchart",
+      "title": "Top 10 Busiest Cameras",
+      "id": 7,
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 12 },
+      "datasource": { "type": "postgres", "uid": "${datasource}" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "${datasource}" },
+          "rawSql": "SELECT\n    COALESCE(NULLIF(camera_name, ''), camera_id) AS camera,\n    edge_name,\n    COUNT(*) AS total_alerts,\n    COUNT(DISTINCT alert_category) AS category_count\nFROM app_alert\nWHERE $__timeFilter(timestamp)\nGROUP BY camera_id, camera_name, edge_name\nORDER BY total_alerts DESC\nLIMIT 10",
+          "format": "table",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      },
+      "fieldConfig": { "defaults": {}, "overrides": [] }
+    },
+    {
+      "type": "barchart",
+      "title": "Alert Volume by Edge and Category (Stacked)",
+      "id": 8,
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 19 },
+      "datasource": { "type": "postgres", "uid": "${datasource}" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "${datasource}" },
+          "rawSql": "SELECT\n    edge_name,\n    alert_category,\n    COUNT(*) AS alert_count\nFROM app_alert\nWHERE $__timeFilter(timestamp)\nGROUP BY edge_name, alert_category\nORDER BY edge_name, alert_count DESC",
+          "format": "table",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "stacking": "normal",
+        "orientation": "auto",
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      },
+      "fieldConfig": { "defaults": {}, "overrides": [] }
+    },
+    {
+      "type": "timeseries",
+      "title": "30-Minute Alert Heatmap",
+      "id": 9,
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 26 },
+      "datasource": { "type": "postgres", "uid": "${datasource}" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "${datasource}" },
+          "rawSql": "SELECT\n    date_trunc('hour', timestamp AT TIME ZONE 'Asia/Jakarta')\n      + (FLOOR(EXTRACT(MINUTE FROM timestamp) / 30) * INTERVAL '30 minutes') AS time,\n    alert_category,\n    COUNT(*) AS alert_count\nFROM app_alert\nWHERE $__timeFilter(timestamp)\nGROUP BY 1, alert_category\nORDER BY 1",
+          "format": "time_series",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" },
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "fillOpacity": 20, "lineWidth": 1 }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "barchart",
+      "title": "This Week vs Last Week",
+      "id": 10,
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 33 },
+      "datasource": { "type": "postgres", "uid": "${datasource}" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "${datasource}" },
+          "rawSql": "SELECT\n    alert_category,\n    COUNT(*) FILTER (WHERE timestamp >= date_trunc('week', NOW())) AS this_week,\n    COUNT(*) FILTER (WHERE timestamp >= date_trunc('week', NOW()) - INTERVAL '7 days'\n                       AND timestamp <  date_trunc('week', NOW())) AS last_week\nFROM app_alert\nWHERE timestamp >= date_trunc('week', NOW()) - INTERVAL '7 days'\nGROUP BY alert_category\nORDER BY this_week DESC",
+          "format": "table",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "groupWidth": 0.7,
+        "orientation": "auto",
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      },
+      "fieldConfig": { "defaults": {}, "overrides": [] }
+    },
+    {
+      "type": "table",
+      "title": "Live Alert Feed (last 2 hours)",
+      "id": 11,
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 40 },
+      "datasource": { "type": "postgres", "uid": "${datasource}" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "${datasource}" },
+          "rawSql": "SELECT\n    (timestamp AT TIME ZONE 'Asia/Jakarta') AS local_time,\n    alert_category,\n    COALESCE(NULLIF(camera_name, ''), camera_id) AS camera,\n    edge_name,\n    rule_name,\n    detection_count,\n    snapshot_message\nFROM app_alert\nWHERE timestamp >= NOW() - INTERVAL '2 hours'\nORDER BY timestamp DESC\nLIMIT 100",
+          "format": "table",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "sortBy": [{ "displayName": "local_time", "desc": true }]
+      },
+      "fieldConfig": { "defaults": {}, "overrides": [] }
+    }
+  ]
+}

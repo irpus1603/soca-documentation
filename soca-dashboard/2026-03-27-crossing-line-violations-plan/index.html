@@ -1,0 +1,1450 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/soca-dashboard/2026-03-27-crossing-line-violations-plan/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Crossing Line Fix + Violation CLS Summary — Implementation Plan - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#crossing-line-fix-violation-cls-summary-implementation-plan" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Crossing Line Fix + Violation CLS Summary — Implementation Plan
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="crossing-line-fix-violation-cls-summary-implementation-plan">Crossing Line Fix + Violation CLS Summary — Implementation Plan<a class="headerlink" href="#crossing-line-fix-violation-cls-summary-implementation-plan" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (<code>- [ ]</code>) syntax for tracking.</p>
+</blockquote>
+<p><strong>Goal:</strong> Fix crossing line not drawn in live stream/snapshot, and add per-class violation summary (<code>cls_name_summary</code>) recorded in DB, published via queue, and displayed in dashboards.</p>
+<p><strong>Architecture:</strong> Engine computes <code>cls_name_summary</code> (in_roi detections grouped by <code>cls_name</code>) at event time, stores it in SQLite, publishes it in the queue payload. soca-dashboard reads it directly from the engine DB. soca-control stores it on its <code>Alert</code> model via message_parser. <code>{violations}</code> template placeholder formats the summary as a one-line string.</p>
+<p><strong>Tech Stack:</strong> Python/FastAPI (soca-engine), Django (soca-dashboard, soca-control), SQLAlchemy (engine DB), SQLite, DaisyUI/Tailwind (templates).</p>
+<hr />
+<h2 id="file-map">File Map<a class="headerlink" href="#file-map" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>soca-engine/core/monitor_stream.py</code></td>
+<td>Modify <code>_draw_roi()</code> — draw LINE type directly</td>
+</tr>
+<tr>
+<td><code>soca-engine/core/action_dispatcher.py</code></td>
+<td>Add <code>{violations}</code> to <code>_format_message()</code></td>
+</tr>
+<tr>
+<td><code>soca-engine/models/db.py</code></td>
+<td>Add <code>cls_name_summary</code> column + ALTER TABLE migration</td>
+</tr>
+<tr>
+<td><code>soca-engine/workers/detection_worker.py</code></td>
+<td>Build + store <code>cls_name_summary</code> in <code>_write_frame()</code></td>
+</tr>
+<tr>
+<td><code>soca-engine/core/output_publisher.py</code></td>
+<td>Add <code>cls_name_summary</code> to <code>roi_summary</code> in payload</td>
+</tr>
+<tr>
+<td><code>soca-engine/tests/test_action_dispatcher.py</code></td>
+<td>Tests for <code>{violations}</code> placeholder</td>
+</tr>
+<tr>
+<td><code>soca-engine/tests/test_worker_helpers.py</code></td>
+<td>Test for <code>cls_name_summary</code> helper</td>
+</tr>
+<tr>
+<td><code>soca-dashboard/app/views.py</code></td>
+<td>Add <code>cls_name_summary</code> to alerts SQL query + event dict</td>
+</tr>
+<tr>
+<td><code>soca-dashboard/templates/alerts/list.html</code></td>
+<td>Add Violations column</td>
+</tr>
+<tr>
+<td><code>soca-dashboard/templates/schedules/_rule_fields.html</code></td>
+<td>Add <code>{violations}</code> placeholder badge</td>
+</tr>
+<tr>
+<td><code>soca-control/app/models.py</code></td>
+<td>Add <code>cls_name_summary</code> field to Alert</td>
+</tr>
+<tr>
+<td><code>soca-control/app/migrations/0012_add_cls_name_summary.py</code></td>
+<td>Django migration</td>
+</tr>
+<tr>
+<td><code>soca-control/app/management/commands/message_parser.py</code></td>
+<td>Parse <code>cls_name_summary</code> from payload</td>
+</tr>
+<tr>
+<td><code>soca-control/app/templates/reports/ppe.html</code></td>
+<td>Add Violations column to PPE table</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="task-1-fix-crossing-line-not-drawn-in-streamsnapshot">Task 1: Fix Crossing Line Not Drawn in Stream/Snapshot<a class="headerlink" href="#task-1-fix-crossing-line-not-drawn-in-streamsnapshot" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>soca-engine/core/monitor_stream.py:35-52</code></p>
+<p><strong>Root cause:</strong> <code>_draw_roi()</code> returns early for <code>LINE</code> type (line 38-39), deferring to <code>_draw_crossing_lines()</code>. But that function only draws for <code>people_count</code>-mode rules. Any detection-mode rule with a LINE ROI never sees the line rendered.</p>
+<ul>
+<li>[ ] <strong>Step 1: Write the failing test</strong></li>
+</ul>
+<p>Create/add to <code>soca-engine/tests/test_monitor_stream.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.monitor_stream</span><span class="w"> </span><span class="kn">import</span> <span class="n">_draw_roi</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_ROI</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">roi_type</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">roi_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_line_roi_draws_pixels</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LINE ROI must be rendered — pixels must change from zero.&quot;&quot;&quot;</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">360</span><span class="p">,</span> <span class="mi">640</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">roi</span> <span class="o">=</span> <span class="n">_ROI</span><span class="p">(</span><span class="s1">&#39;LINE&#39;</span><span class="p">,</span> <span class="p">[[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]])</span>
+    <span class="n">_draw_roi</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">roi</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">frame</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;LINE ROI drew nothing — crossing line is invisible&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_polygon_roi_still_draws</span><span class="p">():</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">360</span><span class="p">,</span> <span class="mi">640</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">roi</span> <span class="o">=</span> <span class="n">_ROI</span><span class="p">(</span><span class="s1">&#39;POLYGON&#39;</span><span class="p">,</span> <span class="p">[[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]])</span>
+    <span class="n">_draw_roi</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">roi</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">frame</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Run test to verify it fails</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>soca-engine
+pytest<span class="w"> </span>tests/test_monitor_stream.py::test_line_roi_draws_pixels<span class="w"> </span>-v
+</code></pre></div>
+Expected: <strong>FAIL</strong> — <code>AssertionError: LINE ROI drew nothing</code></p>
+<ul>
+<li>[ ] <strong>Step 3: Fix <code>_draw_roi()</code> in <code>monitor_stream.py</code></strong></li>
+</ul>
+<p>Replace lines 38-39:
+<div class="highlight"><pre><span></span><code>    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;LINE&#39;</span><span class="p">:</span>
+        <span class="k">return</span>  <span class="c1"># crossing line drawn separately by _draw_crossing_lines</span>
+</code></pre></div>
+With:
+<div class="highlight"><pre><span></span><code>    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;LINE&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">p1</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">w</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">))</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">w</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">))</span>
+            <span class="n">_draw_dashed_line</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">thickness</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">LINE_AA</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">LINE_AA</span><span class="p">)</span>
+        <span class="k">return</span>
+</code></pre></div></p>
+<p>Note: <code>h, w = frame.shape[:2]</code> is already computed at line 40 — move it above this block.</p>
+<p>Full updated <code>_draw_roi()</code>:
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_draw_roi</span><span class="p">(</span><span class="n">frame</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">roi</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">roi</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">roi</span><span class="o">.</span><span class="n">points</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;LINE&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">p1</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">w</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">))</span>
+            <span class="n">p2</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">w</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">))</span>
+            <span class="n">_draw_dashed_line</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">thickness</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">LINE_AA</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">LINE_AA</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="n">scaled</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">w</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">)]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">roi</span><span class="o">.</span><span class="n">points</span><span class="p">]</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">scaled</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">overlay</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">roi</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;POLYGON&quot;</span><span class="p">:</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">fillPoly</span><span class="p">(</span><span class="n">overlay</span><span class="p">,</span> <span class="p">[</span><span class="n">arr</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">addWeighted</span><span class="p">(</span><span class="n">overlay</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">polylines</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">[</span><span class="n">arr</span><span class="p">],</span> <span class="n">isClosed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">thickness</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">roi</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;RECT&quot;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">overlay</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">addWeighted</span><span class="p">(</span><span class="n">overlay</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 4: Run tests to verify they pass</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>tests/test_monitor_stream.py<span class="w"> </span>-v
+</code></pre></div>
+Expected: <strong>PASS</strong> both tests.</p>
+<ul>
+<li>[ ] <strong>Step 5: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>soca-engine
+git<span class="w"> </span>add<span class="w"> </span>core/monitor_stream.py<span class="w"> </span>tests/test_monitor_stream.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;fix: draw LINE ROI directly in _draw_roi so crossing line is always visible&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-2-add-violations-placeholder-to-message-templates">Task 2: Add <code>{violations}</code> Placeholder to Message Templates<a class="headerlink" href="#task-2-add-violations-placeholder-to-message-templates" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>soca-engine/core/action_dispatcher.py:24-67</code>
+- Modify: <code>soca-engine/tests/test_action_dispatcher.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Write failing tests</strong></li>
+</ul>
+<p>Add to <code>soca-engine/tests/test_action_dispatcher.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">models.schemas</span><span class="w"> </span><span class="kn">import</span> <span class="n">Detection</span><span class="p">,</span> <span class="n">FrameResult</span><span class="p">,</span> <span class="n">RuleResult</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.action_dispatcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">_format_message</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_result</span><span class="p">(</span><span class="n">detections</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">FrameResult</span><span class="p">(</span>
+        <span class="n">frame_id</span><span class="o">=</span><span class="s1">&#39;f1&#39;</span><span class="p">,</span> <span class="n">job_id</span><span class="o">=</span><span class="s1">&#39;j1&#39;</span><span class="p">,</span> <span class="n">camera_id</span><span class="o">=</span><span class="s1">&#39;c1&#39;</span><span class="p">,</span>
+        <span class="n">camera_name</span><span class="o">=</span><span class="s1">&#39;Cam A&#39;</span><span class="p">,</span> <span class="n">edge_name</span><span class="o">=</span><span class="s1">&#39;edge-1&#39;</span><span class="p">,</span>
+        <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">),</span>
+        <span class="n">detections</span><span class="o">=</span><span class="n">detections</span><span class="p">,</span> <span class="n">aging</span><span class="o">=</span><span class="p">{},</span> <span class="n">rule_results</span><span class="o">=</span><span class="p">[],</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_det</span><span class="p">(</span><span class="n">cls_name</span><span class="p">,</span> <span class="n">in_roi</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Detection</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cls_name</span><span class="o">=</span><span class="n">cls_name</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+                     <span class="n">bbox</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">in_roi</span><span class="o">=</span><span class="n">in_roi</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_violations_placeholder_formats_cls_names</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">_make_result</span><span class="p">([</span>
+        <span class="n">_det</span><span class="p">(</span><span class="s1">&#39;no-vest&#39;</span><span class="p">),</span> <span class="n">_det</span><span class="p">(</span><span class="s1">&#39;no-vest&#39;</span><span class="p">),</span> <span class="n">_det</span><span class="p">(</span><span class="s1">&#39;no-vest&#39;</span><span class="p">),</span>
+        <span class="n">_det</span><span class="p">(</span><span class="s1">&#39;no-gloves&#39;</span><span class="p">),</span> <span class="n">_det</span><span class="p">(</span><span class="s1">&#39;no-gloves&#39;</span><span class="p">),</span>
+    <span class="p">])</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">_format_message</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{violations}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s1">&#39;3 no-vest&#39;</span> <span class="ow">in</span> <span class="n">msg</span>
+    <span class="k">assert</span> <span class="s1">&#39;2 no-gloves&#39;</span> <span class="ow">in</span> <span class="n">msg</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_violations_excludes_out_of_roi</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">_make_result</span><span class="p">([</span>
+        <span class="n">_det</span><span class="p">(</span><span class="s1">&#39;no-vest&#39;</span><span class="p">,</span> <span class="n">in_roi</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">_det</span><span class="p">(</span><span class="s1">&#39;no-vest&#39;</span><span class="p">,</span> <span class="n">in_roi</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>   <span class="c1"># should not count</span>
+    <span class="p">])</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">_format_message</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{violations}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s1">&#39;1 no-vest&#39;</span> <span class="ow">in</span> <span class="n">msg</span>
+    <span class="k">assert</span> <span class="s1">&#39;2&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">msg</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_violations_empty_when_no_detections</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">_make_result</span><span class="p">([])</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">_format_message</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{violations}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">msg</span> <span class="o">==</span> <span class="s1">&#39;—&#39;</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Run tests to verify they fail</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>soca-engine
+pytest<span class="w"> </span>tests/test_action_dispatcher.py::test_violations_placeholder_formats_cls_names<span class="w"> </span>-v
+</code></pre></div>
+Expected: <strong>FAIL</strong> — <code>KeyError: 'violations'</code></p>
+<ul>
+<li>[ ] <strong>Step 3: Add <code>{violations}</code> to <code>_format_message()</code></strong></li>
+</ul>
+<p>In <code>action_dispatcher.py</code>, inside <code>_format_message()</code>, add before the <code>try:</code> block (after the existing aggregation lines):</p>
+<div class="highlight"><pre><span></span><code>    <span class="c1"># Violations: in_roi detections grouped by cls_name, sorted by count desc</span>
+    <span class="n">_cls_counts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">detections</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">in_roi</span><span class="p">:</span>
+            <span class="n">_cls_counts</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">cls_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_cls_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">cls_name</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">violations</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">cnt</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_cls_counts</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;—&#39;</span>
+</code></pre></div>
+<p>Then add <code>violations=violations</code> to the <code>template.format(...)</code> call:</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">count</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">detections</span><span class="p">),</span>
+            <span class="n">in_roi_count</span><span class="o">=</span><span class="n">in_roi</span><span class="p">,</span>
+            <span class="n">time</span><span class="o">=</span><span class="n">ts_gmt7</span><span class="p">,</span>
+            <span class="n">camera_name</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">camera_name</span> <span class="ow">or</span> <span class="n">result</span><span class="o">.</span><span class="n">camera_id</span><span class="p">,</span>
+            <span class="n">camera_id</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">camera_id</span><span class="p">,</span>
+            <span class="n">job_id</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">job_id</span><span class="p">,</span>
+            <span class="n">category</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">alert_category</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">crowd_count</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">crowd_count</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="n">crossing_in</span><span class="o">=</span><span class="n">total_in</span><span class="p">,</span>
+            <span class="n">crossing_out</span><span class="o">=</span><span class="n">total_out</span><span class="p">,</span>
+            <span class="n">plate_number</span><span class="o">=</span><span class="n">best_plate</span><span class="p">,</span>
+            <span class="n">plate_expiry</span><span class="o">=</span><span class="n">best_expiry</span><span class="p">,</span>
+            <span class="n">lpr_count</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">lpr_results</span> <span class="ow">or</span> <span class="p">[]),</span>
+            <span class="n">violations</span><span class="o">=</span><span class="n">violations</span><span class="p">,</span>
+        <span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 4: Run tests to verify they pass</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>tests/test_action_dispatcher.py<span class="w"> </span>-v
+</code></pre></div>
+Expected: <strong>PASS</strong> all tests including the new ones.</p>
+<ul>
+<li>[ ] <strong>Step 5: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>core/action_dispatcher.py<span class="w"> </span>tests/test_action_dispatcher.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add {violations} placeholder to message templates&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-3-store-cls_name_summary-in-engine-db">Task 3: Store <code>cls_name_summary</code> in Engine DB<a class="headerlink" href="#task-3-store-cls_name_summary-in-engine-db" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>soca-engine/models/db.py</code>
+- Modify: <code>soca-engine/workers/detection_worker.py:32-84</code>
+- Modify: <code>soca-engine/tests/test_worker_helpers.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Write failing test for the helper</strong></li>
+</ul>
+<p>Add to <code>soca-engine/tests/test_worker_helpers.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_det_named</span><span class="p">(</span><span class="n">cls_name</span><span class="p">,</span> <span class="n">in_roi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cls_id</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Detection</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="n">cls_id</span><span class="p">,</span> <span class="n">cls_name</span><span class="o">=</span><span class="n">cls_name</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+                     <span class="n">bbox</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">in_roi</span><span class="o">=</span><span class="n">in_roi</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_cls_name_summary_counts_in_roi</span><span class="p">():</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">workers.detection_worker</span><span class="w"> </span><span class="kn">import</span> <span class="n">_build_cls_name_summary</span>
+    <span class="n">dets</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">_det_named</span><span class="p">(</span><span class="s1">&#39;no-vest&#39;</span><span class="p">),</span> <span class="n">_det_named</span><span class="p">(</span><span class="s1">&#39;no-vest&#39;</span><span class="p">),</span>
+        <span class="n">_det_named</span><span class="p">(</span><span class="s1">&#39;no-gloves&#39;</span><span class="p">),</span>
+        <span class="n">_det_named</span><span class="p">(</span><span class="s1">&#39;no-vest&#39;</span><span class="p">,</span> <span class="n">in_roi</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>  <span class="c1"># excluded</span>
+    <span class="p">]</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">_build_cls_name_summary</span><span class="p">(</span><span class="n">dets</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;no-vest&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;no-gloves&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_cls_name_summary_empty</span><span class="p">():</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">workers.detection_worker</span><span class="w"> </span><span class="kn">import</span> <span class="n">_build_cls_name_summary</span>
+    <span class="k">assert</span> <span class="n">_build_cls_name_summary</span><span class="p">([])</span> <span class="o">==</span> <span class="p">{}</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Run test to verify it fails</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>tests/test_worker_helpers.py::test_cls_name_summary_counts_in_roi<span class="w"> </span>-v
+</code></pre></div>
+Expected: <strong>FAIL</strong> — <code>ImportError: cannot import name '_build_cls_name_summary'</code></p>
+<ul>
+<li>[ ] <strong>Step 3: Add <code>_build_cls_name_summary</code> to <code>detection_worker.py</code></strong></li>
+</ul>
+<p>Add after the <code>_filter_cls</code> function (around line 143):</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_build_cls_name_summary</span><span class="p">(</span><span class="n">detections</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Count in-ROI detections by cls_name.&quot;&quot;&quot;</span>
+    <span class="n">counts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detections</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">in_roi</span><span class="p">:</span>
+            <span class="n">counts</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">cls_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">cls_name</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">counts</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 4: Add <code>cls_name_summary</code> column to <code>db.py</code></strong></li>
+</ul>
+<p>In <code>DBEvent</code> class, add after <code>cls_summary</code>:
+<div class="highlight"><pre><span></span><code><span class="n">cls_name_summary</span>  <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">JSON</span><span class="p">,</span>     <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+</code></pre></div></p>
+<p>In <code>init_db()</code>, add to the migration list:
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="s2">&quot;cls_name_summary&quot;</span><span class="p">,</span> <span class="s2">&quot;ALTER TABLE detection_events ADD COLUMN cls_name_summary TEXT DEFAULT &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="p">),</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 5: Use <code>_build_cls_name_summary</code> in <code>_write_frame()</code></strong></li>
+</ul>
+<p>In <code>_write_frame()</code>, replace:
+<div class="highlight"><pre><span></span><code>            <span class="n">cls_counts</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">detections</span><span class="p">:</span>
+                <span class="n">cls_counts</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">cls_id</span><span class="p">)]</span> <span class="o">=</span> <span class="n">cls_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">cls_id</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+</code></pre></div>
+With:
+<div class="highlight"><pre><span></span><code>            <span class="n">cls_counts</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">detections</span><span class="p">:</span>
+                <span class="n">cls_counts</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">cls_id</span><span class="p">)]</span> <span class="o">=</span> <span class="n">cls_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">cls_id</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">cls_name_counts</span> <span class="o">=</span> <span class="n">_build_cls_name_summary</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">detections</span><span class="p">)</span>
+</code></pre></div></p>
+<p>And add <code>cls_name_summary=cls_name_counts</code> to the <code>DBEvent(...)</code> constructor:
+<div class="highlight"><pre><span></span><code>            <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">DBEvent</span><span class="p">(</span>
+                <span class="n">job_id</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">job_id</span><span class="p">,</span>
+                <span class="n">frame_id</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">frame_id</span><span class="p">,</span>
+                <span class="n">timestamp</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">timestamp</span><span class="p">,</span>
+                <span class="n">rule_name</span><span class="o">=</span><span class="n">rr</span><span class="o">.</span><span class="n">rule_name</span><span class="p">,</span>
+                <span class="n">actions_fired</span><span class="o">=</span><span class="n">rr</span><span class="o">.</span><span class="n">actions_fired</span><span class="p">,</span>
+                <span class="n">detection_count</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">detections</span><span class="p">),</span>
+                <span class="n">in_roi_count</span><span class="o">=</span><span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">detections</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">in_roi</span><span class="p">),</span>
+                <span class="n">cls_summary</span><span class="o">=</span><span class="n">cls_counts</span><span class="p">,</span>
+                <span class="n">cls_name_summary</span><span class="o">=</span><span class="n">cls_name_counts</span><span class="p">,</span>
+                <span class="n">aging_snapshot</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">aging</span><span class="p">,</span>
+                <span class="n">snapshot_path</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">snapshot_path</span><span class="p">,</span>
+                <span class="n">alert_category</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">alert_category</span><span class="p">,</span>
+                <span class="n">snapshot_message</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">snapshot_message</span><span class="p">,</span>
+                <span class="n">raw_detections</span><span class="o">=</span><span class="p">[</span>
+                    <span class="p">{</span><span class="s2">&quot;cls_id&quot;</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">cls_id</span><span class="p">,</span> <span class="s2">&quot;cls_name&quot;</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">cls_name</span><span class="p">,</span>
+                     <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">confidence</span><span class="p">,</span> <span class="s2">&quot;bbox&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">bbox</span><span class="p">),</span>
+                     <span class="s2">&quot;track_id&quot;</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">track_id</span><span class="p">,</span> <span class="s2">&quot;in_roi&quot;</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">in_roi</span><span class="p">,</span>
+                     <span class="s2">&quot;plate_number&quot;</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">plate_number</span><span class="p">,</span> <span class="s2">&quot;plate_expiry&quot;</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">plate_expiry</span><span class="p">,</span>
+                     <span class="s2">&quot;plate_confidence&quot;</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">plate_confidence</span><span class="p">}</span>
+                    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">detections</span>
+                <span class="p">],</span>
+                <span class="n">crossing_counts</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">crossing_counts</span><span class="p">,</span>
+                <span class="n">crowd_count</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">crowd_count</span><span class="p">,</span>
+                <span class="n">lpr_results</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">lpr_results</span><span class="p">,</span>
+            <span class="p">))</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 6: Run tests</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>tests/test_worker_helpers.py<span class="w"> </span>-v
+</code></pre></div>
+Expected: <strong>PASS</strong> all tests.</p>
+<ul>
+<li>[ ] <strong>Step 7: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>models/db.py<span class="w"> </span>workers/detection_worker.py<span class="w"> </span>tests/test_worker_helpers.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: store cls_name_summary in detection events&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-4-publish-cls_name_summary-in-queue-payload">Task 4: Publish <code>cls_name_summary</code> in Queue Payload<a class="headerlink" href="#task-4-publish-cls_name_summary-in-queue-payload" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>soca-engine/core/output_publisher.py:29-70</code></p>
+<p>No new tests needed — the existing payload structure is well-tested downstream by soca-control's message_parser tests.</p>
+<ul>
+<li>[ ] <strong>Step 1: Add <code>cls_name_summary</code> to <code>_to_dict()</code></strong></li>
+</ul>
+<p>In <code>output_publisher.py</code>, after the <code>cls_counts</code> loop (line 43), add:</p>
+<div class="highlight"><pre><span></span><code>    <span class="n">cls_name_counts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">in_roi</span><span class="p">:</span>
+        <span class="n">cls_name_counts</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">cls_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">cls_name_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">cls_name</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+</code></pre></div>
+<p>Then update <code>roi_summary</code>:
+<div class="highlight"><pre><span></span><code>        <span class="s2">&quot;roi_summary&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;total_count&quot;</span><span class="p">:</span>      <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">detections</span><span class="p">),</span>
+            <span class="s2">&quot;in_roi_count&quot;</span><span class="p">:</span>     <span class="nb">len</span><span class="p">(</span><span class="n">in_roi</span><span class="p">),</span>
+            <span class="s2">&quot;cls_counts&quot;</span><span class="p">:</span>       <span class="n">cls_counts</span><span class="p">,</span>
+            <span class="s2">&quot;cls_name_summary&quot;</span><span class="p">:</span> <span class="n">cls_name_counts</span><span class="p">,</span>
+        <span class="p">},</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 2: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>core/output_publisher.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: include cls_name_summary in queue payload roi_summary&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-5-soca-dashboard-show-violations-in-alerts-list">Task 5: soca-dashboard — Show Violations in Alerts List<a class="headerlink" href="#task-5-soca-dashboard-show-violations-in-alerts-list" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>soca-dashboard/app/views.py:391-442</code>
+- Modify: <code>soca-dashboard/templates/alerts/list.html:91-101</code> and <code>126-146</code>
+- Modify: <code>soca-dashboard/templates/schedules/_rule_fields.html:178-190</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Add <code>cls_name_summary</code> to SQL query in <code>views.py</code></strong></li>
+</ul>
+<p>In the <code>alerts()</code> view, update the SELECT query (around line 391):
+<div class="highlight"><pre><span></span><code>            <span class="n">rows</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;&quot;&quot;SELECT e.id, e.timestamp, e.rule_name, e.detection_count, e.in_roi_count,</span>
+<span class="s2">                           e.snapshot_path, e.alert_category, e.snapshot_message, e.job_id, j.config,</span>
+<span class="s2">                           e.crossing_counts, e.crowd_count, e.lpr_results,</span>
+<span class="s2">                           COALESCE(e.cls_name_summary, &#39;</span><span class="se">{{}}</span><span class="s2">&#39;) as cls_name_summary</span>
+<span class="s2">                    FROM detection_events e</span>
+<span class="s2">                    JOIN detection_jobs j ON e.job_id = j.id</span>
+<span class="s2">                    </span><span class="si">{</span><span class="n">where_sql</span><span class="si">}</span>
+<span class="s2">                    ORDER BY e.timestamp DESC</span>
+<span class="s2">                    LIMIT ? OFFSET ?&quot;&quot;&quot;</span><span class="p">,</span>
+                <span class="n">params</span> <span class="o">+</span> <span class="p">[</span><span class="n">per_page</span><span class="p">,</span> <span class="n">offset</span><span class="p">],</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+</code></pre></div></p>
+<p>In the event-building loop, add after <code>lpr_plates</code>:
+<div class="highlight"><pre><span></span><code>                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">cls_name_summary</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;cls_name_summary&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">cls_name_summary</span> <span class="o">=</span> <span class="p">{}</span>
+
+                <span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">ts_display</span><span class="p">,</span>
+                    <span class="s2">&quot;rule_name&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;rule_name&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;detection_count&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;detection_count&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;in_roi_count&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;in_roi_count&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;snapshot_path&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;snapshot_path&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;alert_category&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;alert_category&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;snapshot_message&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;snapshot_message&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;crossing_counts&quot;</span><span class="p">:</span> <span class="n">crossing_counts</span><span class="p">,</span>
+                    <span class="s2">&quot;crowd_count&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;crowd_count&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s2">&quot;lpr_plates&quot;</span><span class="p">:</span> <span class="n">lpr_plates</span><span class="p">,</span>
+                    <span class="s2">&quot;cls_name_summary&quot;</span><span class="p">:</span> <span class="n">cls_name_summary</span><span class="p">,</span>
+                    <span class="s2">&quot;camera_name&quot;</span><span class="p">:</span> <span class="n">cam_obj</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">cam_obj</span> <span class="k">else</span> <span class="n">camera_id</span><span class="p">,</span>
+                    <span class="s2">&quot;job_id&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;job_id&quot;</span><span class="p">],</span>
+                <span class="p">})</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 2: Add Violations column to <code>alerts/list.html</code></strong></li>
+</ul>
+<p>In the <code>&lt;thead&gt;</code> row, add after <code>&lt;th&gt;In ROI&lt;/th&gt;</code>:
+<div class="highlight"><pre><span></span><code>              <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-xs font-semibold text-base-content/60&quot;</span><span class="p">&gt;</span>Violations<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+</code></pre></div></p>
+<p>In the <code>&lt;tbody&gt;</code> loop, add the matching <code>&lt;td&gt;</code> after the In ROI cell:
+<div class="highlight"><pre><span></span><code>              <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-xs&quot;</span><span class="p">&gt;</span>
+                {% if ev.cls_name_summary %}
+                  {% for cls_name, cnt in ev.cls_name_summary.items %}
+                  <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;inline-block font-mono text-warning mr-1&quot;</span><span class="p">&gt;</span>{{ cnt }} {{ cls_name }}<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+                  {% endfor %}
+                {% else %}
+                  <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-base-content/30&quot;</span><span class="p">&gt;</span>—<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+                {% endif %}
+              <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 3: Add <code>{violations}</code> badge to <code>_rule_fields.html</code></strong></li>
+</ul>
+<p>In the placeholders row (around line 179), add after <code>{crossing_out}</code>:
+<div class="highlight"><pre><span></span><code>        <span class="p">&lt;</span><span class="nt">code</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;msg-ph&quot;</span><span class="p">&gt;</span>{violations}<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 4: Manual smoke test</strong></li>
+</ul>
+<p>Start soca-dashboard locally, trigger a detection event with PPE classes, open Alerts page — verify the Violations column shows e.g. <code>3 no-vest 2 no-gloves</code>.</p>
+<ul>
+<li>[ ] <strong>Step 5: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>soca-dashboard
+git<span class="w"> </span>add<span class="w"> </span>app/views.py<span class="w"> </span>templates/alerts/list.html<span class="w"> </span>templates/schedules/_rule_fields.html
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: show cls_name_summary violations column in alerts list&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-6-soca-control-store-display-cls_name_summary">Task 6: soca-control — Store + Display <code>cls_name_summary</code><a class="headerlink" href="#task-6-soca-control-store-display-cls_name_summary" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>soca-control/app/models.py</code>
+- Create: <code>soca-control/app/migrations/0012_add_cls_name_summary.py</code>
+- Modify: <code>soca-control/app/management/commands/message_parser.py</code>
+- Modify: <code>soca-control/app/templates/reports/ppe.html:218,227</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Add field to <code>Alert</code> model</strong></li>
+</ul>
+<p>In <code>soca-control/app/models.py</code>, add to <code>Alert</code> after <code>cls_summary</code>:
+<div class="highlight"><pre><span></span><code>    <span class="n">cls_name_summary</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">JSONField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 2: Create migration</strong></li>
+</ul>
+<p>Create <code>soca-control/app/migrations/0012_add_cls_name_summary.py</code>:
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">migrations</span><span class="p">,</span> <span class="n">models</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">):</span>
+
+    <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;app&#39;</span><span class="p">,</span> <span class="s1">&#39;0011_edge_pubsub&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="n">operations</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">migrations</span><span class="o">.</span><span class="n">AddField</span><span class="p">(</span>
+            <span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;alert&#39;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;cls_name_summary&#39;</span><span class="p">,</span>
+            <span class="n">field</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">JSONField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">dict</span><span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">]</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 3: Run migration</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>soca-control
+python<span class="w"> </span>manage.py<span class="w"> </span>migrate
+</code></pre></div>
+Expected: <code>Applying app.0012_add_cls_name_summary... OK</code></p>
+<ul>
+<li>[ ] <strong>Step 4: Update <code>message_parser.py</code></strong></li>
+</ul>
+<p>Add <code>cls_name_summary</code> to the return dict (after <code>cls_summary</code>):
+<div class="highlight"><pre><span></span><code>    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;edge_name&#39;</span><span class="p">:</span>        <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;edge_name&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;camera_id&#39;</span><span class="p">:</span>        <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;camera_id&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;camera_name&#39;</span><span class="p">:</span>      <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;camera_name&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;job_id&#39;</span><span class="p">:</span>           <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;frame_id&#39;</span><span class="p">:</span>         <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;frame_id&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;timestamp&#39;</span><span class="p">:</span>        <span class="n">parse_datetime</span><span class="p">(</span><span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+        <span class="s1">&#39;alert_category&#39;</span><span class="p">:</span>   <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;alert_category&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rule_name&#39;</span><span class="p">:</span>        <span class="n">rule_name</span><span class="p">,</span>
+        <span class="s1">&#39;snapshot_message&#39;</span><span class="p">:</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;snapshot_message&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;snapshot_path&#39;</span><span class="p">:</span>    <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;snapshot_path&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;detection_count&#39;</span><span class="p">:</span>  <span class="n">roi</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;total_count&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="s1">&#39;in_roi_count&#39;</span><span class="p">:</span>     <span class="n">roi</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;in_roi_count&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="s1">&#39;cls_summary&#39;</span><span class="p">:</span>      <span class="n">roi</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cls_counts&#39;</span><span class="p">,</span> <span class="p">{}),</span>
+        <span class="s1">&#39;cls_name_summary&#39;</span><span class="p">:</span> <span class="n">roi</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cls_name_summary&#39;</span><span class="p">,</span> <span class="p">{}),</span>
+        <span class="s1">&#39;crossing_counts&#39;</span><span class="p">:</span>  <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;crossing_counts&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{},</span>
+        <span class="s1">&#39;crowd_count&#39;</span><span class="p">:</span>      <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;crowd_count&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;lpr_plates&#39;</span><span class="p">:</span>       <span class="n">lpr_plates</span><span class="p">,</span>
+        <span class="s1">&#39;raw&#39;</span><span class="p">:</span>              <span class="n">payload</span><span class="p">,</span>
+    <span class="p">}</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 5: Add Violations column to PPE report table</strong></li>
+</ul>
+<p>In <code>ppe.html</code>, update the table header row (line 218):
+<div class="highlight"><pre><span></span><code>        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Time<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Site<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Camera<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Rule<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Violations<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Message<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Evidence<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+</code></pre></div></p>
+<p>Add a <code>&lt;td&gt;</code> for violations in the table body row (after <code>&lt;td&gt;</code> for rule, before message):
+<div class="highlight"><pre><span></span><code>          <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-xs&quot;</span><span class="p">&gt;</span>
+            {% if alert.cls_name_summary %}
+              {% for cls_name, cnt in alert.cls_name_summary.items %}
+              <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;inline-block font-mono text-warning mr-1&quot;</span><span class="p">&gt;</span>{{ cnt }} {{ cls_name }}<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+              {% endfor %}
+            {% else %}
+              <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-base-content/30&quot;</span><span class="p">&gt;</span>—<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+            {% endif %}
+          <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 6: Run soca-control tests</strong></li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>soca-control
+python<span class="w"> </span>manage.py<span class="w"> </span><span class="nb">test</span><span class="w"> </span>app.tests<span class="w"> </span>--verbosity<span class="w"> </span><span class="m">2</span>
+</code></pre></div>
+Expected: all tests pass.</p>
+<ul>
+<li>[ ] <strong>Step 7: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>app/models.py<span class="w"> </span>app/migrations/0012_add_cls_name_summary.py<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>app/management/commands/message_parser.py<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>app/templates/reports/ppe.html
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: store and display cls_name_summary violations in soca-control&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="self-review-checklist">Self-Review Checklist<a class="headerlink" href="#self-review-checklist" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[x] <strong>Crossing line fix</strong> — Task 1 covers <code>_draw_roi()</code> change + test</li>
+<li>[x] <strong><code>{violations}</code> placeholder</strong> — Task 2 covers <code>_format_message()</code> + tests</li>
+<li>[x] <strong><code>cls_name_summary</code> in engine DB</strong> — Task 3: <code>db.py</code> column + ALTER migration + <code>_write_frame()</code></li>
+<li>[x] <strong><code>cls_name_summary</code> in pub/sub payload</strong> — Task 4: <code>output_publisher.py</code></li>
+<li>[x] <strong>Dashboard alerts view</strong> — Task 5: SQL query + template Violations column + badge</li>
+<li>[x] <strong>soca-control model + migration</strong> — Task 6: field, migration, parser, PPE template</li>
+<li>[x] <strong>No soca-service changes needed</strong> — service only forwards raw payload unchanged</li>
+<li>[x] <strong>Type consistency</strong> — <code>_build_cls_name_summary</code> defined in Task 3, used in Task 3 only</li>
+<li>[x] <strong>No TBD/placeholder steps</strong> — all steps have complete code</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

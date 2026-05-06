@@ -1,0 +1,3344 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/soca-dashboard/design-spec/">
+      
+      
+        <link rel="prev" href="../../guides/user-guides/">
+      
+      
+        <link rel="next" href="../edge-operations-plan/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Design Spec - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#soca-dashboard-technical-document" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Design Spec
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/user-guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Dashboard (Edge)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SOCA Dashboard (Edge)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/user-guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Spec
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Context
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#soca-engine-api-surface-consumed-by-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-engine API Surface (consumed by dashboard)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mvp-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MVP Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Flow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#django-project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Django Project Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-implementation-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Implementation Rules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#files-created" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Files Created
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sprint-2-added-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 2 — Added Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 2 — Added Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cameras-app-cameras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cameras App (cameras/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schedules-app-schedules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schedules App (schedules/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snapshots-app-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Snapshots App (snapshots/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engine-health-context-processor-monitorcontext_processorspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Engine Health Context Processor (monitor/context_processors.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New Settings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-mvp-backlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Post-MVP Backlog
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sprint-3-full-rebuild-as-administration-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 3 — Full Rebuild as Administration Dashboard
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 3 — Full Rebuild as Administration Dashboard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#architecture-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Changes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture Changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settingspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        settings.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#models-appmodelspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models (app/models.py)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Models (app/models.py)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#userabstractuser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User(AbstractUser)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edgeconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EdgeConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Camera
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schedule
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mediamtxpy-mediamtx-yaml-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mediamtx.py — MediaMTX YAML Manager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engine_clientpy-soca-engine-http-wrapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        engine_client.py — soca-engine HTTP Wrapper
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#viewspy-key-behaviours" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        views.py — Key Behaviours
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="views.py — Key Behaviours">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#path-resolution-helpers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path Resolution Helpers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_write_engine_envengine_env_path-edge_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        _write_engine_env(engine_env_path, edge_name)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#camera_snapshotpk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        camera_snapshot(pk)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schedule_stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        schedule_stop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alerts-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        alerts view
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Templates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Templates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#roi-canvas-editor-schedulesformhtml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROI Canvas Editor (schedules/form.html)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schedule-list-scheduleslisthtml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schedule List (schedules/list.html)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settings-settingsindexhtml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings (settings/index.html)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#url-patterns-appurlspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        URL Patterns (app/urls.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes-applied-during-sprint-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bug Fixes Applied During Sprint 3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies-added" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependencies Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-sprint-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run (Sprint 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sprint-4-alert-categories-message-templates-telegram-redis-schema-22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 4 — Alert Categories, Message Templates, Telegram &amp; Redis Schema 2.2
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 4 — Alert Categories, Message Templates, Telegram &amp; Redis Schema 2.2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-schedule-fields-appmodelspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New Schedule Fields (app/models.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-edgeconfig-fields-appmodelspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New EdgeConfig Fields (app/models.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scheduleto_job_config-telegram-action-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schedule.to_job_config() — Telegram Action Logic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appviewspy-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        app/views.py Changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#template-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template Changes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Template Changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schedulesformhtml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        schedules/form.html
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settingsindexhtml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        settings/index.html
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migrations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-schedule-field-conf_threshold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New Schedule Field — conf_threshold
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alerts-snapshots-template-changes-alertslisthtml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alerts &amp; Snapshots Template Changes (alerts/list.html)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-running-schedules-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard — Running Schedules Only
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-flow-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Flow Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sprint-5-monitor-page-dashboard-refinements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 5 — Monitor Page &amp; Dashboard Refinements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 5 — Monitor Page &amp; Dashboard Refinements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#monitor-page-monitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitor Page (/monitor/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stream-rendering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stream Rendering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#url-pattern-added" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        URL Pattern Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sprint-6-system-resources-theme-toggle-edge-site-info-public-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 6 — System Resources, Theme Toggle, Edge Site Info &amp; Public API
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 6 — System Resources, Theme Toggle, Edge Site Info &amp; Public API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#theme-toggle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Theme Toggle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-resources-on-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System Resources on Dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-apiedge-info-public-edge-identity-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GET /api/edge-info/ — Public Edge Identity API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-edgeconfig-fields-migration-0005" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New EdgeConfig Fields (migration 0005)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settings-page-edge-config-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings Page — Edge Config Tab
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alerts-auto-reload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alerts Auto-Reload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitor-page-fixes-auto-reload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitor Page — Fixes &amp; Auto-Reload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#url-patterns-added" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        URL Patterns Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sprint-7-google-pubsub-publisher-transport-2026-03-25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 7 — Google Pub/Sub Publisher Transport (2026-03-25)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 7 — Google Pub/Sub Publisher Transport (2026-03-25)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-edgeconfig-fields-appmodelspy_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New EdgeConfig Fields (app/models.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_write_engine_env-updated-signature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        _write_engine_env() — Updated Signature
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settings-ui-templatessettingsindexhtml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings UI (templates/settings/index.html)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../edge-operations-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Edge Operations Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../edge-operations-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Edge Operations Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rule-management-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rule Management Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced-rule-management-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Rule Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/soca-control-user-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Control (Fleet)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="soca-dashboard-technical-document">SOCA Dashboard — Technical Document<a class="headerlink" href="#soca-dashboard-technical-document" title="Permanent link">&para;</a></h1>
+<h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
+<p><code>soca-engine</code> is a FastAPI service that runs YOLO-based object detection jobs on RTSP camera streams. It stores results in SQLite and exposes a REST API. There is no visual interface — operators cannot see what the engine is doing, manage jobs, or review detection events without curling the API manually. This dashboard solves that.</p>
+<hr />
+<h2 id="problem-statement">Problem Statement<a class="headerlink" href="#problem-statement" title="Permanent link">&para;</a></h2>
+<p>Operators running soca-engine on edge devices need a web UI to:
+- Know if the engine is healthy and what it is doing right now
+- Start/stop detection jobs on cameras
+- Watch a live annotated stream from a running job
+- Review detection events and snapshots after the fact</p>
+<hr />
+<h2 id="soca-engine-api-surface-consumed-by-dashboard">soca-engine API Surface (consumed by dashboard)<a class="headerlink" href="#soca-engine-api-surface-consumed-by-dashboard" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Endpoint</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/health</code></td>
+<td><code>{status, redis, active_jobs, uptime_seconds}</code></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/models</code></td>
+<td><code>{models: [{name, path}]}</code></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/jobs/</code></td>
+<td>list of last 50 jobs</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/jobs/start</code></td>
+<td>start job with <code>JobConfig</code> body</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/jobs/{id}/stop</code></td>
+<td>stop running job</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/jobs/{id}</code></td>
+<td>job status + counters</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/jobs/{id}/monitor</code></td>
+<td>MJPEG stream (requires <code>monitor=true</code> at start)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>JobConfig required fields</strong>: <code>camera_id</code>, <code>rtsp_url</code>, <code>model_path</code>, <code>cls_ids</code>
+<strong>Optional</strong>: <code>roi</code>, <code>frame_interval_ms</code>, <code>aging</code>, <code>rules</code>, <code>output.redis_url</code>, <code>monitor</code> (bool)</p>
+<p><strong>No events/frames API yet</strong> — the engine stores <code>DBEvent</code> and <code>DBFrame</code> in SQLite but does not expose them via HTTP. Dashboard reads what's available from job status counters only (MVP scope).</p>
+<hr />
+<h2 id="mvp-features">MVP Features<a class="headerlink" href="#mvp-features" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Health bar</strong> — always-visible strip: engine status, redis, active jobs, uptime</li>
+<li><strong>Job list</strong> — table of last 50 jobs with status badge and stop button</li>
+<li><strong>Start job form</strong> — minimal form: camera_id, rtsp_url, model selector (from <code>/models</code>), cls_ids, frame_interval, enable monitor toggle</li>
+<li><strong>Job detail page</strong> — job counters (frames, events, last_frame_at) + live MJPEG viewer (if monitor enabled)</li>
+<li><strong>Model list</strong> — sidebar or simple page showing available YOLO models on the engine</li>
+</ol>
+<p><strong>Out of MVP</strong>: ROI drawing, rule builder, event log (no API endpoint yet), multi-engine support, auth</p>
+<hr />
+<h2 id="user-flow">User Flow<a class="headerlink" href="#user-flow" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>[Open dashboard]
+    → GET /health displayed in header
+    → GET /jobs/ displayed as table
+
+[Start a job]
+    → Click &quot;New Job&quot; → form page
+    → Fill: camera_id, rtsp_url, pick model from dropdown, cls_ids, interval
+    → Toggle &quot;Enable live monitor&quot;
+    → Submit → POST /jobs/start → redirect to job detail
+
+[Monitor live]
+    → Job detail page: &lt;img src=&quot;/jobs/{id}/stream/&quot;&gt;
+    → Django proxy view pipes MJPEG from engine to browser
+
+[Stop a job]
+    → Click &quot;Stop&quot; in job list or job detail → POST /jobs/{id}/stop/ → redirect
+
+[Inspect a job]
+    → Job detail: status, frames_processed, events_triggered, last_frame_at, error_msg
+</code></pre></div>
+<hr />
+<h2 id="django-project-structure">Django Project Structure<a class="headerlink" href="#django-project-structure" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>soca-dashboard/
+├── manage.py
+├── requirements.txt
+├── dashboard/               # project config
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+└── monitor/                 # single app, one file per concern
+    ├── client.py            # thin wrapper around soca-engine HTTP calls
+    ├── forms.py             # StartJobForm (no model, just form fields)
+    ├── views.py             # all views (index, job list, job detail, start, stop, proxy)
+    ├── urls.py
+    └── templates/monitor/
+        ├── base.html        # nav + health bar
+        ├── index.html       # dashboard home (health + job table)
+        ├── job_form.html    # start job form
+        └── job_detail.html  # counters + live stream img tag
+</code></pre></div>
+<p><strong>No Django models</strong> — no local DB. The engine owns all data.
+<strong>No DRF</strong> — dashboard is a consumer, not an API provider.
+<strong>No JS framework</strong> — vanilla HTML forms + one <code>&lt;img&gt;</code> tag for MJPEG. Auto-refresh via <code>&lt;meta http-equiv="refresh"&gt;</code> on list page.</p>
+<hr />
+<h2 id="key-implementation-rules">Key Implementation Rules<a class="headerlink" href="#key-implementation-rules" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>client.py</code>: all <code>requests</code> calls in one file, each function maps 1:1 to an API endpoint, raises on HTTP error</li>
+<li><code>views.py</code>: one view per page, thin — call client, pass data to template, done</li>
+<li><code>forms.py</code>: single <code>StartJobForm</code> with clean validation only</li>
+<li>Templates: extend <code>base.html</code>, no inline JS, semantic HTML</li>
+<li>MJPEG proxy: streaming <code>HttpResponse</code> that reads chunks from engine and yields them — no buffering</li>
+<li>Engine base URL from <code>settings.ENGINE_BASE_URL</code> (env var <code>ENGINE_BASE_URL</code>, default <code>http://localhost:8001</code>)</li>
+<li><code>requests.Session</code> reused in <code>client.py</code> (module-level singleton)</li>
+</ul>
+<hr />
+<h2 id="files-created">Files Created<a class="headerlink" href="#files-created" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requirements.txt</code></td>
+<td>django, requests, python-dotenv</td>
+</tr>
+<tr>
+<td><code>dashboard/settings.py</code></td>
+<td>standard django settings + ENGINE_BASE_URL</td>
+</tr>
+<tr>
+<td><code>dashboard/urls.py</code></td>
+<td>include monitor.urls</td>
+</tr>
+<tr>
+<td><code>monitor/client.py</code></td>
+<td><code>health()</code>, <code>list_jobs()</code>, <code>get_job()</code>, <code>list_models()</code>, <code>start_job()</code>, <code>stop_job()</code>, <code>stream_monitor()</code></td>
+</tr>
+<tr>
+<td><code>monitor/forms.py</code></td>
+<td><code>StartJobForm</code></td>
+</tr>
+<tr>
+<td><code>monitor/views.py</code></td>
+<td><code>index</code>, <code>job_detail</code>, <code>start_job_view</code>, <code>stop_job_view</code>, <code>monitor_proxy</code></td>
+</tr>
+<tr>
+<td><code>monitor/urls.py</code></td>
+<td>URL patterns</td>
+</tr>
+<tr>
+<td><code>monitor/templates/monitor/base.html</code></td>
+<td>layout + health bar</td>
+</tr>
+<tr>
+<td><code>monitor/templates/monitor/index.html</code></td>
+<td>job table (auto-refresh 10s)</td>
+</tr>
+<tr>
+<td><code>monitor/templates/monitor/job_form.html</code></td>
+<td>start form</td>
+</tr>
+<tr>
+<td><code>monitor/templates/monitor/job_detail.html</code></td>
+<td>detail + stream (auto-refresh 5s when running)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="verification">Verification<a class="headerlink" href="#verification" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Start engine (in soca-engine/)</span>
+uvicorn<span class="w"> </span>main:app<span class="w"> </span>--port<span class="w"> </span><span class="m">8001</span>
+
+<span class="c1"># 2. Start dashboard (in soca-dashboard/)</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+python<span class="w"> </span>manage.py<span class="w"> </span>runserver<span class="w"> </span><span class="m">8000</span>
+
+<span class="c1"># 3. Visit http://localhost:8000</span>
+<span class="c1">#    - Health bar shows engine status</span>
+<span class="c1">#    - Start a job with monitor=true</span>
+<span class="c1">#    - Navigate to job detail — MJPEG stream renders</span>
+<span class="c1">#    - Stop job — status changes to stopped</span>
+</code></pre></div>
+<hr />
+<hr />
+<h2 id="sprint-2-added-features">Sprint 2 — Added Features<a class="headerlink" href="#sprint-2-added-features" title="Permanent link">&para;</a></h2>
+<h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Django built-in <code>LoginView</code> / <code>LogoutView</code></li>
+<li>All views protected with <code>@login_required</code></li>
+<li>Custom login page: <code>templates/registration/login.html</code></li>
+<li>Create user: <code>python manage.py createsuperuser</code></li>
+<li>Settings: <code>LOGIN_URL</code>, <code>LOGIN_REDIRECT_URL</code>, <code>LOGOUT_REDIRECT_URL</code></li>
+</ul>
+<h3 id="cameras-app-cameras">Cameras App (<code>cameras/</code>)<a class="headerlink" href="#cameras-app-cameras" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Model</strong>: <code>Camera</code> — name, site_name, floor, location, rtsp_url, username, password, camera_source, is_active</li>
+<li><strong>Views</strong>: list, create, edit, delete (all <code>@login_required</code>)</li>
+<li><strong>URLs</strong>: <code>/cameras/</code>, <code>/cameras/new/</code>, <code>/cameras/&lt;pk&gt;/edit/</code>, <code>/cameras/&lt;pk&gt;/delete/</code></li>
+<li><strong>DB</strong>: stored in <code>dashboard.db</code> (Django SQLite)</li>
+</ul>
+<h3 id="schedules-app-schedules">Schedules App (<code>schedules/</code>)<a class="headerlink" href="#schedules-app-schedules" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Model</strong>: <code>DetectionSchedule</code> — FK to Camera, model_path, cls_ids (JSON), frame_interval_ms, monitor, is_active, current_job_id</li>
+<li><strong>Views</strong>: list (filterable by camera), create, edit, delete, start, stop</li>
+<li><strong>Start</strong> → calls <code>client.start_job()</code> with camera's rtsp_url + schedule config, stores <code>current_job_id</code></li>
+<li><strong>Stop</strong> → calls <code>client.stop_job(current_job_id)</code>, clears <code>current_job_id</code></li>
+<li><strong>URLs</strong>: <code>/schedules/</code>, <code>/schedules/new/</code>, <code>/schedules/&lt;pk&gt;/edit/</code>, <code>/schedules/&lt;pk&gt;/start/</code>, <code>/schedules/&lt;pk&gt;/stop/</code></li>
+</ul>
+<h3 id="snapshots-app-snapshots">Snapshots App (<code>snapshots/</code>)<a class="headerlink" href="#snapshots-app-snapshots" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Source</strong>: reads directly from <code>ENGINE_DB_PATH</code> (<code>soca-engine/soca_engine.db</code>) via <code>sqlite3</code> stdlib</li>
+<li><strong>View</strong>: paginated grid (30/page), filterable by job_id</li>
+<li><strong>Image serving</strong>: <code>/snapshots/img/&lt;path&gt;</code> — reads file from <code>ENGINE_SNAPSHOTS_DIR</code>, prevents path traversal</li>
+<li><strong>No model</strong> — read-only access to engine DB</li>
+</ul>
+<h3 id="engine-health-context-processor-monitorcontext_processorspy">Engine Health Context Processor (<code>monitor/context_processors.py</code>)<a class="headerlink" href="#engine-health-context-processor-monitorcontext_processorspy" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>engine_health(request)</code> — called on every request, injects <code>health</code> dict into all templates</li>
+<li>Registered in <code>settings.TEMPLATES.context_processors</code></li>
+</ul>
+<h3 id="new-settings">New Settings<a class="headerlink" href="#new-settings" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ENGINE_DB_PATH          # path to soca-engine/soca_engine.db
+ENGINE_SNAPSHOTS_DIR    # path to soca-engine/snapshots/
+</code></pre></div>
+<h3 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>manage.py<span class="w"> </span>migrate
+python<span class="w"> </span>manage.py<span class="w"> </span>createsuperuser
+<span class="nv">ENGINE_BASE_URL</span><span class="o">=</span>http://localhost:8001<span class="w"> </span>python<span class="w"> </span>manage.py<span class="w"> </span>runserver<span class="w"> </span><span class="m">8000</span>
+</code></pre></div>
+<hr />
+<h2 id="post-mvp-backlog">Post-MVP Backlog<a class="headerlink" href="#post-mvp-backlog" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Event log page</strong> — requires soca-engine to expose <code>/jobs/{id}/events</code> endpoint</li>
+<li><strong>ROI drawing</strong> — canvas-based polygon editor posted with job config</li>
+<li><strong>Rule builder</strong> — form UI for <code>when_all</code>/<code>when_any</code> conditions</li>
+<li><strong>Snapshot gallery</strong> — browse <code>snapshots/</code> directory served by engine</li>
+<li><strong>Multi-engine</strong> — ENGINE_BASE_URL as a per-session setting</li>
+<li><strong>Auth</strong> — Django sessions + basic login</li>
+</ul>
+<hr />
+<h2 id="sprint-3-full-rebuild-as-administration-dashboard">Sprint 3 — Full Rebuild as Administration Dashboard<a class="headerlink" href="#sprint-3-full-rebuild-as-administration-dashboard" title="Permanent link">&para;</a></h2>
+<p>Sprint 3 is a complete rewrite of soca-dashboard into a production-grade administration UI for soca-engine. The old <code>monitor/</code>, <code>cameras/</code>, and <code>schedules/</code> multi-app structure is replaced by a single <code>app/</code> Django application with a 5-item left sidebar.</p>
+<h3 id="architecture-changes">Architecture Changes<a class="headerlink" href="#architecture-changes" title="Permanent link">&para;</a></h3>
+<h4 id="project-layout">Project Layout<a class="headerlink" href="#project-layout" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>soca-dashboard/
+├── manage.py
+├── requirements.txt          # added ruamel.yaml&gt;=0.18
+├── mediamtx.py               # NEW: MediaMTX YAML management module
+├── engine_client.py          # NEW: thin soca-engine HTTP wrapper
+├── dashboard/
+│   ├── settings.py           # rewritten (see below)
+│   └── urls.py               # simplified to single include(&quot;app.urls&quot;)
+└── app/                      # single app replacing monitor/cameras/schedules
+    ├── models.py             # User, EdgeConfig, Camera, Schedule
+    ├── views.py              # all views in one file
+    ├── urls.py               # 19 URL patterns
+    └── templates/
+        ├── base.html
+        ├── dashboard/index.html
+        ├── cameras/list.html, form.html
+        ├── schedules/list.html, form.html
+        ├── alerts/list.html
+        └── settings/index.html
+</code></pre></div>
+<h4 id="settingspy">settings.py<a class="headerlink" href="#settingspy" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>AUTH_USER_MODEL = "app.User"</code> — custom user model required from the start</li>
+<li><code>LOGIN_URL = "/login/"</code>, <code>LOGIN_REDIRECT_URL = "/"</code>, <code>LOGOUT_REDIRECT_URL = "/login/"</code></li>
+<li>New settings:
+  <div class="highlight"><pre><span></span><code><span class="n">ENGINE_BASE_URL</span>      <span class="c1"># default &quot;http://localhost:8001&quot;</span>
+<span class="n">ENGINE_DB_PATH</span>       <span class="c1"># path to soca-engine/soca_engine.db</span>
+<span class="n">ENGINE_SNAPSHOTS_DIR</span> <span class="c1"># path to soca-engine/snapshots/</span>
+<span class="n">MEDIAMTX_YML_PATH</span>    <span class="c1"># kept for legacy; overridden by EdgeConfig.mediamtx_yml_path</span>
+</code></pre></div></li>
+<li>Removed old <code>monitor</code>, <code>cameras</code>, <code>schedules</code> from <code>INSTALLED_APPS</code>; added <code>app</code></li>
+</ul>
+<hr />
+<h3 id="models-appmodelspy">Models (<code>app/models.py</code>)<a class="headerlink" href="#models-appmodelspy" title="Permanent link">&para;</a></h3>
+<h4 id="userabstractuser"><code>User(AbstractUser)</code><a class="headerlink" href="#userabstractuser" title="Permanent link">&para;</a></h4>
+<p>Plain custom user model for future extensibility.</p>
+<h4 id="edgeconfig"><code>EdgeConfig</code><a class="headerlink" href="#edgeconfig" title="Permanent link">&para;</a></h4>
+<p>Stores edge-device connection config. One row is expected.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>edge_name</code></td>
+<td><code>"edge-1"</code></td>
+<td>Written to <code>EDGE_NAME</code> in soca-engine <code>.env</code> on save</td>
+</tr>
+<tr>
+<td><code>engine_url</code></td>
+<td><code>"http://localhost:8001"</code></td>
+<td>soca-engine FastAPI base URL</td>
+</tr>
+<tr>
+<td><code>mediamtx_url</code></td>
+<td><code>"http://localhost:8888"</code></td>
+<td>MediaMTX HTTP API URL</td>
+</tr>
+<tr>
+<td><code>mediamtx_yml_path</code></td>
+<td><code>"../soca-engine/MediaMTX/mediamtx.yml"</code></td>
+<td>Relative to <code>BASE_DIR</code></td>
+</tr>
+<tr>
+<td><code>engine_env_path</code></td>
+<td><code>"../soca-engine/.env"</code></td>
+<td>Relative to <code>BASE_DIR</code>; EDGE_NAME written here</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td>auto</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h4 id="camera"><code>Camera</code><a class="headerlink" href="#camera" title="Permanent link">&para;</a></h4>
+<p>Stores camera connection details.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>unique, used as MediaMTX path key</td>
+</tr>
+<tr>
+<td><code>rtsp_url</code></td>
+<td>base URL without credentials</td>
+</tr>
+<tr>
+<td><code>username</code>, <code>password</code></td>
+<td>stored separately, never embedded in rtsp_url</td>
+</tr>
+<tr>
+<td><code>full_rtsp_url</code> (property)</td>
+<td>builds <code>rtsp://user:pass@host:port/path</code> at access time using <code>urllib.parse</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>full_rtsp_url</code> property</strong> — injects credentials only when <code>username</code> is non-empty:
+<div class="highlight"><pre><span></span><code><span class="nd">@property</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">full_rtsp_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rtsp_url</span>
+    <span class="n">parsed</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rtsp_url</span><span class="p">)</span>
+    <span class="n">netloc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">quote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">safe</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">quote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span><span class="w"> </span><span class="n">safe</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">parsed</span><span class="o">.</span><span class="n">hostname</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">parsed</span><span class="o">.</span><span class="n">port</span><span class="p">:</span>
+        <span class="n">netloc</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;:</span><span class="si">{</span><span class="n">parsed</span><span class="o">.</span><span class="n">port</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">urlunparse</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">_replace</span><span class="p">(</span><span class="n">netloc</span><span class="o">=</span><span class="n">netloc</span><span class="p">))</span>
+</code></pre></div></p>
+<p>This property is used in two places:
+- <code>Schedule.to_job_config()</code> — sends credentialed URL to soca-engine
+- <code>camera_snapshot()</code> view — grabs a single frame for the ROI editor background</p>
+<h4 id="schedule"><code>Schedule</code><a class="headerlink" href="#schedule" title="Permanent link">&para;</a></h4>
+<p>One schedule = one detection job configuration. Start/stop maps directly to soca-engine job lifecycle.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>camera</code></td>
+<td>FK to Camera</td>
+</tr>
+<tr>
+<td><code>model_path</code></td>
+<td>relative to soca-engine MODELS_DIR, e.g. <code>"yolo/yolo11n.pt"</code></td>
+</tr>
+<tr>
+<td><code>cls_ids</code></td>
+<td>JSON list of YOLO class IDs to track</td>
+</tr>
+<tr>
+<td><code>frame_interval_ms</code></td>
+<td>sampling rate</td>
+</tr>
+<tr>
+<td><code>roi_type</code></td>
+<td><code>"POLYGON"</code> or <code>"RECT"</code></td>
+</tr>
+<tr>
+<td><code>roi_points</code></td>
+<td>JSON list of normalized <code>[x, y]</code> pairs (0.0–1.0 range)</td>
+</tr>
+<tr>
+<td><code>aging_window</code>, <code>aging_cooldown</code></td>
+<td>StateTracker config</td>
+</tr>
+<tr>
+<td><code>min_count</code></td>
+<td>minimum in-ROI detections to trigger rule</td>
+</tr>
+<tr>
+<td><code>save_snapshot</code>, <code>publish_redis</code>, <code>telegram_webhook_url</code></td>
+<td>output action toggles</td>
+</tr>
+<tr>
+<td><code>redis_url</code>, <code>redis_stream</code></td>
+<td>Redis connection for publish_queue action</td>
+</tr>
+<tr>
+<td><code>enable_monitor</code></td>
+<td>enables MJPEG stream on running job</td>
+</tr>
+<tr>
+<td><code>current_job_id</code></td>
+<td>populated on start, cleared on stop</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>to_job_config()</code></strong> builds the <code>JobConfig</code> dict for <code>POST /jobs/start</code>:
+- Uses <code>self.camera.full_rtsp_url</code> (credentialed)
+- ROI condition path: <code>"detections.in_roi_count"</code> (dot-path resolution in rule_engine)
+- Rule <code>when_all</code>: <code>[{"path": "detections.in_roi_count", "op": "gte", "value": self.min_count}]</code></p>
+<hr />
+<h3 id="mediamtxpy-mediamtx-yaml-manager"><code>mediamtx.py</code> — MediaMTX YAML Manager<a class="headerlink" href="#mediamtxpy-mediamtx-yaml-manager" title="Permanent link">&para;</a></h3>
+<p>Standalone module (not a Django app). Manages the <code>paths:</code> section of <code>mediamtx.yml</code> using <code>ruamel.yaml</code> to preserve comments and formatting.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add_source(yml_path, camera_name, rtsp_url, username, password)</code></td>
+<td>Adds a new path entry</td>
+</tr>
+<tr>
+<td><code>update_source(yml_path, old_name, new_name, rtsp_url, username, password)</code></td>
+<td>Renames + updates existing entry</td>
+</tr>
+<tr>
+<td><code>remove_source(yml_path, camera_name)</code></td>
+<td>Deletes path entry</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Credential injection</strong> (<code>_build_rtsp_url</code>):
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_build_rtsp_url</span><span class="p">(</span><span class="n">rtsp_url</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">username</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">rtsp_url</span>
+    <span class="n">parsed</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">rtsp_url</span><span class="p">)</span>
+    <span class="n">netloc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">quote</span><span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">safe</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">quote</span><span class="p">(</span><span class="n">password</span><span class="p">,</span><span class="w"> </span><span class="n">safe</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">parsed</span><span class="o">.</span><span class="n">hostname</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">parsed</span><span class="o">.</span><span class="n">port</span><span class="p">:</span>
+        <span class="n">netloc</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;:</span><span class="si">{</span><span class="n">parsed</span><span class="o">.</span><span class="n">port</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">urlunparse</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">_replace</span><span class="p">(</span><span class="n">netloc</span><span class="o">=</span><span class="n">netloc</span><span class="p">))</span>
+</code></pre></div></p>
+<p>Credentials are injected inside <code>mediamtx.py</code>, not in views. Views pass <code>username</code> and <code>password</code> as separate arguments.</p>
+<p><strong>Dependency</strong>: <code>ruamel.yaml&gt;=0.18</code> — must be installed in the same virtualenv as soca-dashboard.</p>
+<hr />
+<h3 id="engine_clientpy-soca-engine-http-wrapper"><code>engine_client.py</code> — soca-engine HTTP Wrapper<a class="headerlink" href="#engine_clientpy-soca-engine-http-wrapper" title="Permanent link">&para;</a></h3>
+<p>Thin HTTP client. Engine base URL is read from <code>EdgeConfig</code> first, falls back to <code>settings.ENGINE_BASE_URL</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Maps to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>health()</code></td>
+<td><code>GET /health</code></td>
+</tr>
+<tr>
+<td><code>list_jobs()</code></td>
+<td><code>GET /jobs/</code></td>
+</tr>
+<tr>
+<td><code>get_job(job_id)</code></td>
+<td><code>GET /jobs/{id}</code></td>
+</tr>
+<tr>
+<td><code>start_job(config)</code></td>
+<td><code>POST /jobs/start</code></td>
+</tr>
+<tr>
+<td><code>stop_job(job_id)</code></td>
+<td><code>POST /jobs/{id}/stop</code></td>
+</tr>
+<tr>
+<td><code>list_models()</code></td>
+<td><code>GET /models</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="viewspy-key-behaviours"><code>views.py</code> — Key Behaviours<a class="headerlink" href="#viewspy-key-behaviours" title="Permanent link">&para;</a></h3>
+<h4 id="path-resolution-helpers">Path Resolution Helpers<a class="headerlink" href="#path-resolution-helpers" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_yml_path</span><span class="p">(</span><span class="n">cfg</span><span class="p">):</span>   <span class="c1"># mediamtx_yml_path → absolute, anchored to BASE_DIR</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_env_path</span><span class="p">(</span><span class="n">cfg</span><span class="p">):</span>   <span class="c1"># engine_env_path → absolute, anchored to BASE_DIR</span>
+</code></pre></div>
+<p>Both resolve relative paths against <code>settings.BASE_DIR</code> (the <code>soca-dashboard/</code> directory). This makes paths CWD-independent regardless of where <code>manage.py runserver</code> is invoked from.</p>
+<h4 id="_write_engine_envengine_env_path-edge_name"><code>_write_engine_env(engine_env_path, edge_name)</code><a class="headerlink" href="#_write_engine_envengine_env_path-edge_name" title="Permanent link">&para;</a></h4>
+<p>Reads the soca-engine <code>.env</code> file, updates or appends <code>EDGE_NAME=&lt;value&gt;</code>, writes back. Called on every EdgeConfig save.</p>
+<h4 id="camera_snapshotpk"><code>camera_snapshot(pk)</code><a class="headerlink" href="#camera_snapshotpk" title="Permanent link">&para;</a></h4>
+<p>Grabs a single OpenCV frame from <code>camera.full_rtsp_url</code>, returns JPEG <code>HttpResponse</code>. Used as the ROI canvas background in the schedule form.</p>
+<h4 id="schedule_stop"><code>schedule_stop</code><a class="headerlink" href="#schedule_stop" title="Permanent link">&para;</a></h4>
+<p>Calls <code>engine_client.stop_job()</code>. If the engine returns 404 (job already dead), the error is ignored and <code>current_job_id</code> is cleared anyway. This prevents schedules from getting stuck in "running" state after an engine restart.</p>
+<h4 id="alerts-view"><code>alerts</code> view<a class="headerlink" href="#alerts-view" title="Permanent link">&para;</a></h4>
+<p>Reads soca-engine SQLite directly via <code>sqlite3</code> stdlib (no ORM). Queries <code>detection_events</code> joined to <code>detection_jobs</code> for camera name. Paginated, filterable by camera and date.</p>
+<hr />
+<h3 id="templates">Templates<a class="headerlink" href="#templates" title="Permanent link">&para;</a></h3>
+<h4 id="roi-canvas-editor-schedulesformhtml">ROI Canvas Editor (<code>schedules/form.html</code>)<a class="headerlink" href="#roi-canvas-editor-schedulesformhtml" title="Permanent link">&para;</a></h4>
+<ul>
+<li>HTML5 <code>&lt;canvas&gt;</code> at 640×360 pixels</li>
+<li>On camera dropdown change: <code>loadSnapshot(cameraId)</code> → fetches <code>/cameras/{id}/snapshot/</code> → draws as canvas background</li>
+<li>Points are stored as <strong>normalized coordinates</strong> (0.0–1.0):</li>
+<li>On click: pixel coords divided by canvas width/height before appending to <code>points[]</code></li>
+<li>On page load: existing normalized points multiplied by canvas dimensions for display</li>
+<li>On form submit: <code>storeNormalized()</code> writes JSON to hidden <code>&lt;input&gt;</code></li>
+<li>Init sequence: calls <code>draw()</code> directly — does <strong>not</strong> call <code>setRoiMode()</code> (which would reset <code>points[]</code>)</li>
+<li>Supports both POLYGON (click to place vertices) and RECT (drag rectangle) modes</li>
+</ul>
+<h4 id="schedule-list-scheduleslisthtml">Schedule List (<code>schedules/list.html</code>)<a class="headerlink" href="#schedule-list-scheduleslisthtml" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Monitor link is conditionally rendered:
+  <div class="highlight"><pre><span></span><code><span class="cp">{%</span> <span class="k">if</span> <span class="nv">s.job_status</span> <span class="o">==</span> <span class="s2">&quot;running&quot;</span> <span class="k">and</span> <span class="nv">s.enable_monitor</span> <span class="cp">%}</span>
+<span class="x">  &lt;a href=&quot;</span><span class="cp">{{</span> <span class="nv">engine_url</span> <span class="cp">}}</span><span class="x">/jobs/</span><span class="cp">{{</span> <span class="nv">s.current_job_id</span> <span class="cp">}}</span><span class="x">/monitor&quot;&gt;Live&lt;/a&gt;</span>
+<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+</code></pre></div></li>
+<li><code>engine_url</code> is passed from <code>schedule_list</code> view via <code>EdgeConfig.engine_url</code></li>
+</ul>
+<h4 id="settings-settingsindexhtml">Settings (<code>settings/index.html</code>)<a class="headerlink" href="#settings-settingsindexhtml" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Edge Config form includes <code>engine_env_path</code> field with hint: "EDGE_NAME will be written here when you save"</li>
+<li>User management section: create/delete users</li>
+</ul>
+<hr />
+<h3 id="url-patterns-appurlspy">URL Patterns (<code>app/urls.py</code>)<a class="headerlink" href="#url-patterns-appurlspy" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>URL</th>
+<th>View</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/</code></td>
+<td><code>dashboard</code></td>
+<td>system overview</td>
+</tr>
+<tr>
+<td><code>/login/</code>, <code>/logout/</code></td>
+<td>built-in auth</td>
+<td></td>
+</tr>
+<tr>
+<td><code>/cameras/</code></td>
+<td><code>camera_list</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>/cameras/new/</code>, <code>/cameras/&lt;pk&gt;/edit/</code>, <code>/cameras/&lt;pk&gt;/delete/</code></td>
+<td>CRUD</td>
+<td></td>
+</tr>
+<tr>
+<td><code>/cameras/&lt;pk&gt;/snapshot/</code></td>
+<td><code>camera_snapshot</code></td>
+<td>returns JPEG</td>
+</tr>
+<tr>
+<td><code>/schedules/</code></td>
+<td><code>schedule_list</code></td>
+<td>enriched with job status</td>
+</tr>
+<tr>
+<td><code>/schedules/new/</code>, <code>/schedules/&lt;pk&gt;/edit/</code>, <code>/schedules/&lt;pk&gt;/delete/</code></td>
+<td>CRUD</td>
+<td></td>
+</tr>
+<tr>
+<td><code>/schedules/&lt;pk&gt;/start/</code>, <code>/schedules/&lt;pk&gt;/stop/</code></td>
+<td>job lifecycle</td>
+<td></td>
+</tr>
+<tr>
+<td><code>/schedules/&lt;pk&gt;/status/</code></td>
+<td><code>schedule_status</code></td>
+<td>JSON, for polling</td>
+</tr>
+<tr>
+<td><code>/alerts/</code></td>
+<td><code>alerts</code></td>
+<td>reads engine SQLite directly</td>
+</tr>
+<tr>
+<td><code>/alerts/snapshot/&lt;path&gt;/</code></td>
+<td><code>alert_snapshot</code></td>
+<td>serves snapshot image</td>
+</tr>
+<tr>
+<td><code>/settings/</code></td>
+<td><code>settings_index</code></td>
+<td>edge config + users</td>
+</tr>
+<tr>
+<td><code>/settings/users/new/</code>, <code>/settings/users/&lt;pk&gt;/delete/</code></td>
+<td>user CRUD</td>
+<td></td>
+</tr>
+<tr>
+<td><code>/settings/edge/</code></td>
+<td><code>edge_settings</code></td>
+<td>saves EdgeConfig, writes .env</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="bug-fixes-applied-during-sprint-3">Bug Fixes Applied During Sprint 3<a class="headerlink" href="#bug-fixes-applied-during-sprint-3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Bug</th>
+<th>Root Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dashboard <code>VariableDoesNotExist</code> on <code>job.id</code></td>
+<td>Template used <code>job.id</code> but API returns flat <code>job_id</code> key</td>
+<td>Updated template to use <code>job.job_id</code> and <code>job.camera_id</code></td>
+</tr>
+<tr>
+<td>Camera not written to <code>mediamtx.yml</code></td>
+<td><code>mediamtx_yml_path</code> seeded to wrong directory; <code>_yml_path()</code> not anchored</td>
+<td>Seeded correct path; anchored resolution to <code>BASE_DIR</code></td>
+</tr>
+<tr>
+<td><code>no such column: app_edgeconfig.engine_env_path</code></td>
+<td>Server still running before migration applied</td>
+<td>Restart server after migration</td>
+</tr>
+<tr>
+<td><code>ruamel.yaml</code> not found</td>
+<td>Installed in base Python, not in <code>soca</code> virtualenv</td>
+<td><code>pip install ruamel.yaml</code> inside active venv</td>
+</tr>
+<tr>
+<td>RTSP 401 Unauthorized</td>
+<td><code>to_job_config()</code> used bare <code>rtsp_url</code> without credentials</td>
+<td>Switched to <code>camera.full_rtsp_url</code> property</td>
+</tr>
+<tr>
+<td>Model path sending full dict</td>
+<td>Template <code>value="{{ m }}"</code> serialized entire dict object</td>
+<td>Changed to <code>value="{{ m.path }}"</code></td>
+</tr>
+<tr>
+<td>ROI not saved on form submit</td>
+<td><code>setRoiMode()</code> called during init reset <code>points[]</code> after loading</td>
+<td>Replace init call with direct <code>draw()</code></td>
+</tr>
+<tr>
+<td>No snapshots captured</td>
+<td><code>OutputConfig.snapshot_dir</code> defaulted to relative <code>"snapshots/"</code></td>
+<td>Fixed in soca-engine <code>schemas.py</code> via <code>config.SNAPSHOTS_DIR</code></td>
+</tr>
+<tr>
+<td>Stop job stuck in running state</td>
+<td>404 from engine not handled; <code>current_job_id</code> not cleared</td>
+<td>Ignore 404, always clear <code>current_job_id</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="dependencies-added">Dependencies Added<a class="headerlink" href="#dependencies-added" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Version</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ruamel.yaml</code></td>
+<td><code>&gt;=0.18</code></td>
+<td>MediaMTX YAML editing preserving comments</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="run-sprint-3">Run (Sprint 3)<a class="headerlink" href="#run-sprint-3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install dependencies (in soca-dashboard venv)</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+
+<span class="c1"># Apply migrations</span>
+python<span class="w"> </span>manage.py<span class="w"> </span>migrate
+
+<span class="c1"># Create superuser</span>
+python<span class="w"> </span>manage.py<span class="w"> </span>createsuperuser
+
+<span class="c1"># Start dashboard</span>
+python<span class="w"> </span>manage.py<span class="w"> </span>runserver<span class="w"> </span><span class="m">8000</span>
+
+<span class="c1"># Verify edge config at http://localhost:8000/settings/edge/</span>
+<span class="c1"># Set engine_url, mediamtx_yml_path, engine_env_path to correct absolute/relative paths</span>
+</code></pre></div>
+<hr />
+<h2 id="sprint-4-alert-categories-message-templates-telegram-redis-schema-22">Sprint 4 — Alert Categories, Message Templates, Telegram &amp; Redis Schema 2.2<a class="headerlink" href="#sprint-4-alert-categories-message-templates-telegram-redis-schema-22" title="Permanent link">&para;</a></h2>
+<h3 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h3>
+<p>Sprint 4 adds per-schedule alert enrichment (category label, message template), a global Telegram Bot configuration, and ensures all new metadata flows through to the Redis stream payload.</p>
+<hr />
+<h3 id="new-schedule-fields-appmodelspy">New <code>Schedule</code> Fields (<code>app/models.py</code>)<a class="headerlink" href="#new-schedule-fields-appmodelspy" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>alert_category</code></td>
+<td><code>CharField(max_length=255)</code></td>
+<td><code>""</code></td>
+<td>Label attached to every alert from this schedule</td>
+</tr>
+<tr>
+<td><code>snapshot_message</code></td>
+<td><code>TextField</code></td>
+<td><code>"{in_roi_count} object(s) detected at {time}"</code></td>
+<td>Message template sent via Telegram or webhook</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>snapshot_message</code> template placeholders:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Placeholder</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{count}</code></td>
+<td>Total detections in frame</td>
+</tr>
+<tr>
+<td><code>{in_roi_count}</code></td>
+<td>Detections inside ROI</td>
+</tr>
+<tr>
+<td><code>{time}</code></td>
+<td>Timestamp in GMT+7 (<code>YYYY-MM-DD HH:MM:SS GMT+7</code>)</td>
+</tr>
+<tr>
+<td><code>{camera_id}</code></td>
+<td>Camera ID</td>
+</tr>
+<tr>
+<td><code>{job_id}</code></td>
+<td>Job ID</td>
+</tr>
+<tr>
+<td><code>{category}</code></td>
+<td>Alert category from this schedule</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="new-edgeconfig-fields-appmodelspy">New <code>EdgeConfig</code> Fields (<code>app/models.py</code>)<a class="headerlink" href="#new-edgeconfig-fields-appmodelspy" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>telegram_bot_token</code></td>
+<td><code>CharField(max_length=200)</code></td>
+<td><code>""</code></td>
+<td>Bot token from @BotFather</td>
+</tr>
+<tr>
+<td><code>telegram_chat_id</code></td>
+<td><code>CharField(max_length=100)</code></td>
+<td><code>""</code></td>
+<td>Group/channel (negative) or personal ID</td>
+</tr>
+</tbody>
+</table>
+<p>These serve as the <strong>global Telegram config</strong> shared by all schedules that don't set a per-schedule <code>telegram_webhook_url</code>.</p>
+<hr />
+<h3 id="scheduleto_job_config-telegram-action-logic"><code>Schedule.to_job_config()</code> — Telegram Action Logic<a class="headerlink" href="#scheduleto_job_config-telegram-action-logic" title="Permanent link">&para;</a></h3>
+<p>Priority order for outbound Telegram notifications:</p>
+<ol>
+<li>If <code>schedule.telegram_webhook_url</code> is set → add <code>webhook</code> action with the URL and <code>message_template</code></li>
+<li>Else if <code>EdgeConfig.telegram_bot_token</code> and <code>telegram_chat_id</code> are set → add <code>telegram</code> action with global credentials and <code>message_template</code></li>
+<li>Neither → no Telegram notification</li>
+</ol>
+<p>The <code>telegram</code> action in <code>JobConfig</code> triggers the engine's <code>_fire_telegram()</code> which calls <code>https://api.telegram.org/bot{token}/sendMessage</code> directly with the formatted text.</p>
+<p>The <code>alert_category</code> is passed as <code>rule.category</code> in the generated job config.</p>
+<hr />
+<h3 id="appviewspy-changes"><code>app/views.py</code> Changes<a class="headerlink" href="#appviewspy-changes" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>schedule_form</code></strong>: saves <code>alert_category</code> (truncated to 255 chars) and <code>snapshot_message</code></li>
+<li><strong><code>edge_settings</code></strong>: saves <code>telegram_bot_token</code> and <code>telegram_chat_id</code></li>
+<li><strong><code>alerts</code> view</strong>: timestamps from <code>detection_events</code> (stored UTC) are converted to <strong>GMT+7</strong> before rendering:
+  <div class="highlight"><pre><span></span><code><span class="n">dt</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">7</span><span class="p">)))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
+</code></pre></div></li>
+</ul>
+<hr />
+<h3 id="template-changes">Template Changes<a class="headerlink" href="#template-changes" title="Permanent link">&para;</a></h3>
+<h4 id="schedulesformhtml"><code>schedules/form.html</code><a class="headerlink" href="#schedulesformhtml" title="Permanent link">&para;</a></h4>
+<p><strong>Section 4 — Aging &amp; Alert Rules</strong> updated:
+- Aging Window and Cooldown labels now include <code>seconds</code> unit badge and clarifying hints: "How long a detection stays active" / "Minimum gap between consecutive alerts"
+- New <strong>Alert Category</strong> text input (max 255 chars, placeholder: <code>e.g. Intrusion, Crowd, Vehicle</code>)</p>
+<p><strong>Section 5 — Output &amp; Notifications</strong> updated:
+- Telegram Webhook URL hint updated to explain relationship with global config
+- New <strong>Alert Message Template</strong> <code>&lt;textarea&gt;</code> with inline placeholder reference:
+  - <code>{count}</code> · <code>{in_roi_count}</code> · <code>{time}</code> · <code>{camera_id}</code> · <code>{category}</code></p>
+<h4 id="settingsindexhtml"><code>settings/index.html</code><a class="headerlink" href="#settingsindexhtml" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Added <strong>Telegram</strong> tab (third tab alongside Users and Edge Config)</li>
+<li>Telegram tab form posts to <code>{% url 'edge_settings' %}</code> with hidden fields preserving existing EdgeConfig values</li>
+<li>Two new fields: <strong>Bot Token</strong> and <strong>Chat ID</strong> with descriptive hints</li>
+<li>Note explaining that per-schedule webhook URL takes priority over this global config</li>
+</ul>
+<hr />
+<h3 id="migrations">Migrations<a class="headerlink" href="#migrations" title="Permanent link">&para;</a></h3>
+<p>Migration <code>0003_edgeconfig_telegram_bot_token_and_more.py</code> adds:
+- <code>telegram_bot_token</code> to <code>EdgeConfig</code>
+- <code>telegram_chat_id</code> to <code>EdgeConfig</code>
+- <code>alert_category</code> to <code>Schedule</code>
+- <code>snapshot_message</code> to <code>Schedule</code></p>
+<hr />
+<h3 id="new-schedule-field-conf_threshold">New <code>Schedule</code> Field — <code>conf_threshold</code><a class="headerlink" href="#new-schedule-field-conf_threshold" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>conf_threshold</code></td>
+<td><code>FloatField</code></td>
+<td><code>0.5</code></td>
+<td>YOLO detection confidence threshold passed to soca-engine</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Rendered in <code>schedules/form.html</code> as a number input (min 0.01, max 1.0, step 0.05)</li>
+<li>Passed to <code>JobConfig.conf_threshold</code> in <code>to_job_config()</code></li>
+<li>Clamped to <code>0.01–1.0</code> range in <code>schedule_form</code> view before saving</li>
+</ul>
+<hr />
+<h3 id="alerts-snapshots-template-changes-alertslisthtml">Alerts &amp; Snapshots Template Changes (<code>alerts/list.html</code>)<a class="headerlink" href="#alerts-snapshots-template-changes-alertslisthtml" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Removed columns</strong>: Rule, Job ID</li>
+<li><strong>Added columns</strong>: Category (badge), Message</li>
+<li><strong>Category</strong> displayed as <code>badge-info</code> badge</li>
+<li><strong>Message</strong> column shows <code>snapshot_message</code> text</li>
+<li><strong>Snapshot thumbnail</strong> has <code>title="{{ ev.snapshot_message }}"</code> tooltip for quick preview</li>
+<li>Column header updated to <strong>Timestamp (GMT+7)</strong></li>
+</ul>
+<hr />
+<h3 id="dashboard-running-schedules-only">Dashboard — Running Schedules Only<a class="headerlink" href="#dashboard-running-schedules-only" title="Permanent link">&para;</a></h3>
+<p><code>dashboard</code> view filters job list to running state only:
+<div class="highlight"><pre><span></span><code><span class="n">jobs</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">engine_client</span><span class="o">.</span><span class="n">list_jobs</span><span class="p">()</span> <span class="k">if</span> <span class="n">j</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;running&quot;</span><span class="p">]</span>
+</code></pre></div>
+- Section renamed from "Active Jobs" to "Running Schedules"
+- Shows 0 rows when no jobs are running rather than completed/stopped history</p>
+<hr />
+<h3 id="data-flow-summary">Data Flow Summary<a class="headerlink" href="#data-flow-summary" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Schedule form saved
+  → alert_category, snapshot_message, conf_threshold stored in Schedule
+  → EdgeConfig holds global telegram_bot_token + telegram_chat_id
+
+Schedule.to_job_config() called at job start
+  → rule.category = schedule.alert_category
+  → JobConfig.conf_threshold = schedule.conf_threshold
+  → rule.actions includes:
+       save_snapshot
+       publish_queue         (if enabled)
+       telegram / webhook    (with message_template = schedule.snapshot_message)
+
+soca-engine ActionDispatcher:
+  → result.alert_category ← rule.category
+  → _format_message(template, result) → fills placeholders → result.snapshot_message
+  → snapshot JPEG annotated with ROI overlay + detection bboxes
+  → _fire_telegram(token, chat_id, text, snapshot_path) → sendPhoto if file exists
+  → output_publisher._to_dict() → includes alert_category + snapshot_message in Redis payload
+
+Alerts view:
+  → UTC timestamp from detection_events → converted to GMT+7 for display
+  → alert_category shown as badge, snapshot_message shown as column text
+</code></pre></div>
+<hr />
+<h2 id="sprint-5-monitor-page-dashboard-refinements">Sprint 5 — Monitor Page &amp; Dashboard Refinements<a class="headerlink" href="#sprint-5-monitor-page-dashboard-refinements" title="Permanent link">&para;</a></h2>
+<h3 id="monitor-page-monitor">Monitor Page (<code>/monitor/</code>)<a class="headerlink" href="#monitor-page-monitor" title="Permanent link">&para;</a></h3>
+<p>New page showing all running MJPEG streams in a responsive grid.</p>
+<p><strong>View (<code>monitor_view</code> in <code>app/views.py</code>):</strong>
+1. Queries all <code>Schedule</code> objects where <code>current_job_id</code> is non-empty and <code>enable_monitor=True</code>
+2. For each, calls <code>engine_client.get_job(job_id)</code> to verify status is still <code>"running"</code>
+3. Builds stream URL as <code>{engine_url}/jobs/{job_id}/monitor</code>
+4. Passes list of stream info dicts to template</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">monitor_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">EdgeConfig</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+    <span class="n">engine_url</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">engine_url</span> <span class="k">if</span> <span class="n">cfg</span> <span class="k">else</span> <span class="n">settings</span><span class="o">.</span><span class="n">ENGINE_BASE_URL</span>
+    <span class="n">streams</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">Schedule</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">current_job_id__isnull</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">enable_monitor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">exclude</span><span class="p">(</span><span class="n">current_job_id</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">job</span> <span class="o">=</span> <span class="n">engine_client</span><span class="o">.</span><span class="n">get_job</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">current_job_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">job</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;running&quot;</span><span class="p">:</span>
+                <span class="n">streams</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s2">&quot;schedule_name&quot;</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="s2">&quot;camera_name&quot;</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="s2">&quot;job_id&quot;</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">current_job_id</span><span class="p">,</span>
+                    <span class="s2">&quot;stream_url&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">engine_url</span><span class="si">}</span><span class="s2">/jobs/</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">current_job_id</span><span class="si">}</span><span class="s2">/monitor&quot;</span><span class="p">,</span>
+                <span class="p">})</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">continue</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;monitor.html&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;streams&quot;</span><span class="p">:</span> <span class="n">streams</span><span class="p">})</span>
+</code></pre></div>
+<p><strong>Template (<code>templates/monitor.html</code>):</strong>
+- Responsive grid: 1 col → 2 col (md) → 3 col (xl)
+- Each card shows: schedule name, camera name, LIVE badge (animated pulse), <code>&lt;img src="stream_url"&gt;</code> (MJPEG consumed directly), fullscreen link
+- Empty state when no streams are running</p>
+<p><strong>URL:</strong> <code>path("monitor/", views.monitor_view, name="monitor")</code></p>
+<p><strong>Sidebar:</strong> Monitor menu item added between Schedules and Alerts &amp; Snapshots in <code>templates/base.html</code>, with monitor icon (desktop/screen SVG), active class on <code>monitor</code> URL name.</p>
+<hr />
+<h3 id="stream-rendering">Stream Rendering<a class="headerlink" href="#stream-rendering" title="Permanent link">&para;</a></h3>
+<p>The <code>&lt;img&gt;</code> tag consuming the MJPEG stream:
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;{{ s.stream_url }}&quot;</span>
+     <span class="na">class</span><span class="o">=</span><span class="s">&quot;w-full rounded-lg border border-base-300 bg-black&quot;</span>
+     <span class="na">style</span><span class="o">=</span><span class="s">&quot;aspect-ratio:16/9; object-fit:contain;&quot;</span>
+     <span class="na">onerror</span><span class="o">=</span><span class="s">&quot;...&quot;</span> <span class="p">/&gt;</span>
+</code></pre></div>
+- Browser requests the MJPEG endpoint directly from soca-engine (no Django proxy needed)
+- <code>onerror</code> handler replaces broken img with "Stream unavailable" text
+- No JavaScript polling — MJPEG is a continuous HTTP response the browser handles natively</p>
+<hr />
+<h3 id="url-pattern-added">URL Pattern Added<a class="headerlink" href="#url-pattern-added" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>URL</th>
+<th>View</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/monitor/</code></td>
+<td><code>monitor_view</code></td>
+<td>Grid of live MJPEG stream cards</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="sprint-6-system-resources-theme-toggle-edge-site-info-public-api">Sprint 6 — System Resources, Theme Toggle, Edge Site Info &amp; Public API<a class="headerlink" href="#sprint-6-system-resources-theme-toggle-edge-site-info-public-api" title="Permanent link">&para;</a></h2>
+<h3 id="theme-toggle">Theme Toggle<a class="headerlink" href="#theme-toggle" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Sun/moon icon button added to the navbar (next to username)</li>
+<li>Clicking toggles between <code>data-theme="dark"</code> and <code>data-theme="light"</code> on <code>&lt;html&gt;</code></li>
+<li>Preference persisted in <code>localStorage</code> and restored on every page load</li>
+<li>No server-side state — pure client JS in <code>base.html</code></li>
+</ul>
+<hr />
+<h3 id="system-resources-on-dashboard">System Resources on Dashboard<a class="headerlink" href="#system-resources-on-dashboard" title="Permanent link">&para;</a></h3>
+<p><code>engine_client.py</code> gained two new functions:</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Endpoint</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>system_info()</code></td>
+<td><code>GET /system</code></td>
+<td>CPU %, memory, storage, network interfaces</td>
+</tr>
+<tr>
+<td><code>cpu_info()</code></td>
+<td><code>GET /cpu</code></td>
+<td>CPU model, core count, frequency, per-core usage</td>
+</tr>
+</tbody>
+</table>
+<p><code>dashboard</code> view calls both and passes <code>system</code> and <code>cpu</code> to the template.</p>
+<p><strong>Dashboard layout</strong> (collapsible <code>&lt;details&gt;</code> sections):
+- <strong>Stat cards row</strong> — Total Cameras, Active Schedules, Engine status, Uptime. Redundant "Engine Health Detail" card removed.
+- <strong>System Resources</strong> (open by default) — 3-column panel with dividers: CPU / Memory / Storage. Each shows large bold % + progress bar + detail text. CPU includes model, core info, frequency, per-core bars.
+- <strong>Network Interfaces</strong> (collapsed by default) — table: interface name, IP, UP/DOWN badge, speed, sent MB, received MB. Only interfaces with an IPv4 address shown.
+- <strong>Running Schedules</strong> (open by default) — collapsible table of running jobs.</p>
+<p>Progress bar colour thresholds: green &lt; 60%, yellow 60–80%, red &gt; 80%.</p>
+<hr />
+<h3 id="get-apiedge-info-public-edge-identity-api"><code>GET /api/edge-info/</code> — Public Edge Identity API<a class="headerlink" href="#get-apiedge-info-public-edge-identity-api" title="Permanent link">&para;</a></h3>
+<p>No authentication required. Intended for consumption by a central management server.</p>
+<p><strong>URL:</strong> <code>GET /api/edge-info/</code></p>
+<p><strong>Response:</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;edge_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;edge-bardi-home&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;engine_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:8001&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;latitude&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-6.2088</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;longitude&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">106.8456</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Jl. Sudirman No. 1, Jakarta&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;building&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Gedung A&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;floor&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lantai 3&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;notes&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;cameras&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;active&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;updated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-21T10:00:00+00:00&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>Data is sourced from <code>EdgeConfig</code> (single row) and live <code>Camera</code> queryset counts.</p>
+<hr />
+<h3 id="new-edgeconfig-fields-migration-0005">New <code>EdgeConfig</code> Fields (migration <code>0005</code>)<a class="headerlink" href="#new-edgeconfig-fields-migration-0005" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>latitude</code></td>
+<td><code>FloatField(null=True)</code></td>
+<td>GPS latitude</td>
+</tr>
+<tr>
+<td><code>longitude</code></td>
+<td><code>FloatField(null=True)</code></td>
+<td>GPS longitude</td>
+</tr>
+<tr>
+<td><code>address</code></td>
+<td><code>CharField(500)</code></td>
+<td>Street address</td>
+</tr>
+<tr>
+<td><code>building</code></td>
+<td><code>CharField(200)</code></td>
+<td>Building name</td>
+</tr>
+<tr>
+<td><code>floor</code></td>
+<td><code>CharField(50)</code></td>
+<td>Floor identifier</td>
+</tr>
+<tr>
+<td><code>site_notes</code></td>
+<td><code>TextField</code></td>
+<td>Free-form notes</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="settings-page-edge-config-tab">Settings Page — Edge Config Tab<a class="headerlink" href="#settings-page-edge-config-tab" title="Permanent link">&para;</a></h3>
+<p>Reorganised into two sections:</p>
+<p><strong>Connection</strong> (existing fields): Edge Name, Engine URL, MediaMTX URL, MediaMTX Config Path, Engine .env Path</p>
+<p><strong>Site Information</strong> (new fields): Address, Building, Floor, Latitude, Longitude, Notes. Section header notes the <code>/api/edge-info/</code> URL so operators know where the data is exposed.</p>
+<p>Telegram tab hidden fields updated to preserve new location fields when saving from that tab.</p>
+<hr />
+<h3 id="alerts-auto-reload">Alerts Auto-Reload<a class="headerlink" href="#alerts-auto-reload" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Toggle switch added to Alerts &amp; Snapshots header (off by default)</li>
+<li>When enabled: 30-second countdown shown inline, page reloads at 0</li>
+<li>Dead empty <code>{% for %}</code> loop in pagination removed</li>
+</ul>
+<hr />
+<h3 id="monitor-page-fixes-auto-reload">Monitor Page — Fixes &amp; Auto-Reload<a class="headerlink" href="#monitor-page-fixes-auto-reload" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Stream <code>&lt;img&gt;</code> gets <code>?t={timestamp}</code> cache-buster on page load — forces fresh MJPEG connection when navigating back to the page</li>
+<li><code>onerror</code> retries every 3 seconds with new timestamp</li>
+<li>Page auto-reloads every 30 seconds with visible countdown (<code>Refreshing in Ns</code>) to pick up newly started/stopped streams</li>
+</ul>
+<hr />
+<h3 id="url-patterns-added">URL Patterns Added<a class="headerlink" href="#url-patterns-added" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>URL</th>
+<th>View</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/api/edge-info/</code></td>
+<td><code>edge_info</code></td>
+<td>Public — no auth, for main server</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="sprint-7-google-pubsub-publisher-transport-2026-03-25">Sprint 7 — Google Pub/Sub Publisher Transport (2026-03-25)<a class="headerlink" href="#sprint-7-google-pubsub-publisher-transport-2026-03-25" title="Permanent link">&para;</a></h2>
+<h3 id="overview_1">Overview<a class="headerlink" href="#overview_1" title="Permanent link">&para;</a></h3>
+<p>Added Pub/Sub as an alternative to Redis for publishing detection events from soca-engine. The transport is configurable per-edge via the Edge Config settings tab, and the choice is written directly to <code>soca-engine/.env</code>.</p>
+<hr />
+<h3 id="new-edgeconfig-fields-appmodelspy_1">New <code>EdgeConfig</code> Fields (<code>app/models.py</code>)<a class="headerlink" href="#new-edgeconfig-fields-appmodelspy_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>publisher_type</code></td>
+<td><code>CharField(10)</code></td>
+<td><code>'redis'</code></td>
+<td><code>'redis'</code> or <code>'pubsub'</code></td>
+</tr>
+<tr>
+<td><code>pubsub_project_id</code></td>
+<td><code>CharField(200)</code></td>
+<td><code>''</code></td>
+<td>GCP project ID</td>
+</tr>
+<tr>
+<td><code>pubsub_topic</code></td>
+<td><code>CharField(200)</code></td>
+<td><code>'soca-detections'</code></td>
+<td>Topic name only (not full path)</td>
+</tr>
+</tbody>
+</table>
+<p>Migration: <code>app/migrations/0017_edgeconfig_pubsub.py</code></p>
+<hr />
+<h3 id="_write_engine_env-updated-signature"><code>_write_engine_env()</code> — Updated Signature<a class="headerlink" href="#_write_engine_env-updated-signature" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_write_engine_env</span><span class="p">(</span><span class="n">engine_env_path</span><span class="p">,</span> <span class="n">edge_name</span><span class="p">,</span> <span class="n">publisher_type</span><span class="o">=</span><span class="s2">&quot;redis&quot;</span><span class="p">,</span>
+                      <span class="n">pubsub_project_id</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">pubsub_topic</span><span class="o">=</span><span class="s2">&quot;soca-detections&quot;</span><span class="p">):</span>
+</code></pre></div>
+<p>Now writes four vars to soca-engine <code>.env</code>: <code>EDGE_NAME</code>, <code>PUBLISHER_TYPE</code>, <code>PUBSUB_PROJECT_ID</code>, <code>PUBSUB_TOPIC</code>. Uses a dict-based loop to update-or-append each key, preserving all other existing <code>.env</code> lines.</p>
+<hr />
+<h3 id="settings-ui-templatessettingsindexhtml">Settings UI (<code>templates/settings/index.html</code>)<a class="headerlink" href="#settings-ui-templatessettingsindexhtml" title="Permanent link">&para;</a></h3>
+<p><strong>Edge Config tab additions:</strong></p>
+<ul>
+<li><strong>Publisher Transport</strong> <code>&lt;select&gt;</code> (Redis Stream / Google Pub/Sub) — calls <code>togglePubSubFields(val)</code> on change</li>
+<li><strong>Pub/Sub fields</strong> (shown only when Pub/Sub selected): GCP Project ID input, Pub/Sub Topic input</li>
+<li>Both wrapped in <code>id="pubsub-fields"</code> div with <code>display:none</code> default when Redis is selected</li>
+</ul>
+<p><strong>Telegram tab</strong> — added three hidden inputs to preserve new values when saving from that tab:
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;publisher_type&quot;</span> <span class="err">...</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;pubsub_project_id&quot;</span> <span class="err">...</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;pubsub_topic&quot;</span> <span class="err">...</span><span class="p">&gt;</span>
+</code></pre></div></p>
+<p><strong>JS function added:</strong>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">togglePubSubFields</span><span class="p">(</span><span class="nx">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;pubsub-fields&#39;</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">val</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;pubsub&#39;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;none&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

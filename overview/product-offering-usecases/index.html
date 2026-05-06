@@ -1,0 +1,2107 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/overview/product-offering-usecases/">
+      
+      
+        <link rel="prev" href="../../guides/docs-deployment/">
+      
+      
+        <link rel="next" href="../../architecture/system-overview/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Use Cases - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#soca-video-analytics-platform" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Use Cases
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Product
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use Cases
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use Cases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#product-offering-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Product Offering &amp; Use Cases
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#executive-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Executive Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Executive Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-capabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Capabilities
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-product-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Product Modules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Product Modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-intrusion-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Intrusion Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-ppe-compliance-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. PPE Compliance Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-objectperson-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Object/Person Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-people-counting-flow-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. People Counting &amp; Flow Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-crowd-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Crowd Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-license-plate-recognition-lpr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. License Plate Recognition (LPR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-cases-by-industry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Cases by Industry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-security-access-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. SECURITY &amp; ACCESS CONTROL
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. SECURITY &amp; ACCESS CONTROL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-case-11-perimeter-intrusion-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Case 1.1: Perimeter Intrusion Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-case-12-after-hours-facility-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Case 1.2: After-Hours Facility Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-workplace-safety-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. WORKPLACE SAFETY &amp; COMPLIANCE
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. WORKPLACE SAFETY &amp; COMPLIANCE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-case-21-ppe-personal-protective-equipment-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Case 2.1: PPE (Personal Protective Equipment) Compliance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-case-22-restricted-area-access-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Case 2.2: Restricted Area Access Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-retail-customer-analytics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. RETAIL &amp; CUSTOMER ANALYTICS
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. RETAIL &amp; CUSTOMER ANALYTICS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-case-31-store-traffic-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Case 3.1: Store Traffic Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-case-32-queue-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Case 3.2: Queue Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-smart-city-public-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. SMART CITY &amp; PUBLIC SAFETY
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. SMART CITY &amp; PUBLIC SAFETY">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-case-41-public-space-crowd-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Case 4.1: Public Space Crowd Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-case-42-vehicle-access-parking-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Case 4.2: Vehicle Access &amp; Parking Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-industrial-manufacturing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. INDUSTRIAL &amp; MANUFACTURING
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. INDUSTRIAL &amp; MANUFACTURING">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-case-51-production-line-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Case 5.1: Production Line Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-case-52-hazardous-area-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Case 5.2: Hazardous Area Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-transportation-logistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. TRANSPORTATION &amp; LOGISTICS
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. TRANSPORTATION &amp; LOGISTICS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-case-61-loading-dock-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Case 6.1: Loading Dock Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-case-62-fleet-vehicle-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Case 6.2: Fleet Vehicle Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-healthcare-elderly-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. HEALTHCARE &amp; ELDERLY CARE
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. HEALTHCARE &amp; ELDERLY CARE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-case-71-patient-safety-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Case 7.1: Patient Safety Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-education" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. EDUCATION
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. EDUCATION">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-case-81-campus-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Case 8.1: Campus Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-differentiators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Differentiators
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technical Differentiators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#edge-computing-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge Computing Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#centralized-management-soca-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Centralized Management (SOCA Control)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flexible-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flexible Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-analytics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Analytics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#target-customer-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Target Customer Profiles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Target Customer Profiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ideal-customer-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ideal Customer Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decision-maker-personas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decision Maker Personas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#competitive-advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Competitive Advantages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pricing-strategy-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pricing Strategy Recommendations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pricing Strategy Recommendations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tier-1-starter-1-5-edges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 1: Starter (1-5 Edges)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-2-professional-6-20-edges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 2: Professional (6-20 Edges)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-3-enterprise-21-edges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 3: Enterprise (21+ Edges)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#go-to-market-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Go-to-Market Recommendations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Go-to-Market Recommendations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#channel-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Channel Strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#marketing-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Marketing Messages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proof-of-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Proof of Value
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#product-roadmap-suggestions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Product Roadmap Suggestions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Product Roadmap Suggestions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#near-term-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Near-Term Enhancements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#medium-term-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Medium-Term Enhancements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-term-vision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Long-Term Vision
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#success-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Success Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#customer-kpis-to-track" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Customer KPIs to Track
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soca-business-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SOCA Business Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="soca-video-analytics-platform">SOCA Video Analytics Platform<a class="headerlink" href="#soca-video-analytics-platform" title="Permanent link">&para;</a></h1>
+<h2 id="product-offering-use-cases">Product Offering &amp; Use Cases<a class="headerlink" href="#product-offering-use-cases" title="Permanent link">&para;</a></h2>
+<p><strong>Product Name:</strong> SOCA (Security Operations &amp; Camera Analytics)<br />
+<strong>Technology:</strong> YOLO-based Real-time Video Analytics<br />
+<strong>Deployment:</strong> Edge Computing with Centralized Management  </p>
+<hr />
+<h2 id="executive-summary">Executive Summary<a class="headerlink" href="#executive-summary" title="Permanent link">&para;</a></h2>
+<p>SOCA is an enterprise-grade video analytics platform that transforms existing CCTV infrastructure into intelligent, AI-powered monitoring systems. Leveraging state-of-the-art YOLO (You Only Look Once) deep learning models, SOCA delivers real-time detection, alerting, and comprehensive reporting across multiple security and operational use cases.</p>
+<h3 id="key-capabilities">Key Capabilities<a class="headerlink" href="#key-capabilities" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Real-time Detection:</strong> Sub-second analysis of video streams using YOLO models</li>
+<li><strong>Edge Computing:</strong> Distributed processing at the edge for low latency and bandwidth efficiency</li>
+<li><strong>Multi-Edge Management:</strong> Centralized dashboard for managing multiple deployment sites</li>
+<li><strong>Configurable Rules:</strong> Customizable detection zones, thresholds, and alert conditions</li>
+<li><strong>Comprehensive Reporting:</strong> Statistical analysis, trend tracking, and export capabilities (CSV/PDF)</li>
+<li><strong>Live Monitoring:</strong> Real-time video stream monitoring with overlay annotations</li>
+<li><strong>Snapshot Storage:</strong> Cloud (GCS) or local storage for incident evidence</li>
+</ul>
+<hr />
+<h2 id="core-product-modules">Core Product Modules<a class="headerlink" href="#core-product-modules" title="Permanent link">&para;</a></h2>
+<h3 id="1-intrusion-detection">1. Intrusion Detection<a class="headerlink" href="#1-intrusion-detection" title="Permanent link">&para;</a></h3>
+<h3 id="2-ppe-compliance-monitoring">2. PPE Compliance Monitoring<a class="headerlink" href="#2-ppe-compliance-monitoring" title="Permanent link">&para;</a></h3>
+<h3 id="3-objectperson-detection">3. Object/Person Detection<a class="headerlink" href="#3-objectperson-detection" title="Permanent link">&para;</a></h3>
+<h3 id="4-people-counting-flow-analysis">4. People Counting &amp; Flow Analysis<a class="headerlink" href="#4-people-counting-flow-analysis" title="Permanent link">&para;</a></h3>
+<h3 id="5-crowd-detection">5. Crowd Detection<a class="headerlink" href="#5-crowd-detection" title="Permanent link">&para;</a></h3>
+<h3 id="6-license-plate-recognition-lpr">6. License Plate Recognition (LPR)<a class="headerlink" href="#6-license-plate-recognition-lpr" title="Permanent link">&para;</a></h3>
+<hr />
+<h2 id="use-cases-by-industry">Use Cases by Industry<a class="headerlink" href="#use-cases-by-industry" title="Permanent link">&para;</a></h2>
+<h2 id="1-security-access-control">1. SECURITY &amp; ACCESS CONTROL<a class="headerlink" href="#1-security-access-control" title="Permanent link">&para;</a></h2>
+<h3 id="use-case-11-perimeter-intrusion-detection">Use Case 1.1: Perimeter Intrusion Detection<a class="headerlink" href="#use-case-11-perimeter-intrusion-detection" title="Permanent link">&para;</a></h3>
+<p><strong>Industry:</strong> Corporate Campuses, Warehouses, Residential Complexes, Critical Infrastructure</p>
+<p><strong>Problem:</strong>
+- Unauthorized personnel entering restricted areas
+- Manual monitoring is labor-intensive and prone to human error
+- Delayed response to security breaches
+- No automated evidence collection</p>
+<p><strong>How SOCA Solves It:</strong>
+- <strong>Zone-Based Detection:</strong> Define virtual boundaries (ROI - Region of Interest) around perimeters, fences, and restricted zones
+- <strong>Instant Alerts:</strong> Real-time notifications when persons are detected in unauthorized areas
+- <strong>Severity Classification:</strong> Automatic severity rating based on number of intruders (single, medium group, high-risk crowd)
+- <strong>Snapshot Evidence:</strong> Automatic capture and storage of intrusion events with timestamps
+- <strong>Heatmap Analytics:</strong> Identify high-risk time periods (day/hour patterns) for proactive security deployment
+- <strong>Multi-Camera Coverage:</strong> Correlate intrusions across multiple cameras for tracking movement patterns</p>
+<p><strong>Business Value:</strong>
+- 24/7 automated surveillance without fatigue
+- Faster incident response times
+- Reduced security personnel costs
+- Auditable incident records for investigations</p>
+<hr />
+<h3 id="use-case-12-after-hours-facility-security">Use Case 1.2: After-Hours Facility Security<a class="headerlink" href="#use-case-12-after-hours-facility-security" title="Permanent link">&para;</a></h3>
+<p><strong>Industry:</strong> Offices, Retail Stores, Banks, Museums</p>
+<p><strong>Problem:</strong>
+- Break-ins and theft during non-business hours
+- False alarms from traditional motion sensors
+- Limited visibility into actual security events</p>
+<p><strong>How SOCA Solves It:</strong>
+- <strong>Time-Based Rules:</strong> Activate intrusion detection only during specified hours
+- <strong>Person Detection:</strong> Distinguish actual human intruders from animals, shadows, or environmental changes
+- <strong>Multi-Person Alerts:</strong> Escalate alerts when multiple intruders detected (potential organized crime)
+- <strong>Integration Ready:</strong> Redis stream output for integration with alarm systems and access control</p>
+<hr />
+<h2 id="2-workplace-safety-compliance">2. WORKPLACE SAFETY &amp; COMPLIANCE<a class="headerlink" href="#2-workplace-safety-compliance" title="Permanent link">&para;</a></h2>
+<h3 id="use-case-21-ppe-personal-protective-equipment-compliance">Use Case 2.1: PPE (Personal Protective Equipment) Compliance<a class="headerlink" href="#use-case-21-ppe-personal-protective-equipment-compliance" title="Permanent link">&para;</a></h3>
+<p><strong>Industry:</strong> Construction Sites, Manufacturing Plants, Oil &amp; Gas, Mining, Laboratories</p>
+<p><strong>Problem:</strong>
+- Workers not wearing required safety equipment (helmets, vests, masks, goggles)
+- Regulatory compliance violations and fines
+- Increased risk of workplace injuries
+- Manual compliance checks are inconsistent</p>
+<p><strong>How SOCA Solves It:</strong>
+- <strong>Automated PPE Detection:</strong> YOLO models trained to detect missing or improper PPE usage
+- <strong>Shift-Based Analytics:</strong> Track compliance across morning, afternoon, and night shifts
+- <strong>Repeat Offender Identification:</strong> Cameras/locations with chronic non-compliance
+- <strong>Trend Reporting:</strong> 30-day compliance trends to measure safety program effectiveness
+- <strong>Peak Hour Analysis:</strong> Identify times of day when violations are most common</p>
+<p><strong>Business Value:</strong>
+- Reduce workplace accidents and injuries
+- Maintain regulatory compliance (OSHA, local safety regulations)
+- Data-driven safety training programs
+- Lower insurance premiums through improved safety records</p>
+<hr />
+<h3 id="use-case-22-restricted-area-access-monitoring">Use Case 2.2: Restricted Area Access Monitoring<a class="headerlink" href="#use-case-22-restricted-area-access-monitoring" title="Permanent link">&para;</a></h3>
+<p><strong>Industry:</strong> Data Centers, Pharmaceutical Labs, Government Facilities, R&amp;D Centers</p>
+<p><strong>Problem:</strong>
+- Unauthorized access to sensitive areas
+- Tailgating (unauthorized person following authorized entrant)
+- Compliance requirements for access logging</p>
+<p><strong>How SOCA Solves It:</strong>
+- <strong>ROI-Based Monitoring:</strong> Define exact entry points and restricted zones
+- <strong>Crossing Detection:</strong> Track IN/OUT movements through doorways and gates
+- <strong>People Counting:</strong> Verify occupancy limits in sensitive areas
+- <strong>Audit Trail:</strong> Complete timestamped log of all entries/exits with visual evidence</p>
+<hr />
+<h2 id="3-retail-customer-analytics">3. RETAIL &amp; CUSTOMER ANALYTICS<a class="headerlink" href="#3-retail-customer-analytics" title="Permanent link">&para;</a></h2>
+<h3 id="use-case-31-store-traffic-analysis">Use Case 3.1: Store Traffic Analysis<a class="headerlink" href="#use-case-31-store-traffic-analysis" title="Permanent link">&para;</a></h3>
+<p><strong>Industry:</strong> Retail Stores, Shopping Malls, Supermarkets, Banks</p>
+<p><strong>Problem:</strong>
+- No visibility into customer foot traffic patterns
+- Inefficient staff scheduling
+- Unable to measure marketing campaign effectiveness
+- Queue management challenges</p>
+<p><strong>How SOCA Solves It:</strong>
+- <strong>Entrance/Exit Counting:</strong> Accurate people counting at store entrances
+- <strong>Hourly/Daily Trends:</strong> Identify peak shopping hours and slow periods
+- <strong>Staff Optimization:</strong> Schedule staff based on actual traffic patterns
+- <strong>Campaign Measurement:</strong> Correlate promotional events with traffic increases
+- <strong>Dwell Time Analysis:</strong> Understand how long customers spend in store</p>
+<p><strong>Business Value:</strong>
+- Optimized labor costs through data-driven scheduling
+- Improved customer experience during peak hours
+- Measurable ROI on marketing investments
+- Better store layout decisions based on traffic flow</p>
+<hr />
+<h3 id="use-case-32-queue-management">Use Case 3.2: Queue Management<a class="headerlink" href="#use-case-32-queue-management" title="Permanent link">&para;</a></h3>
+<p><strong>Industry:</strong> Banks, Hospitals, Government Offices, Theme Parks</p>
+<p><strong>Problem:</strong>
+- Long wait times causing customer dissatisfaction
+- No real-time visibility into queue lengths
+- Inefficient resource allocation</p>
+<p><strong>How SOCA Solves It:</strong>
+- <strong>Crowd Detection:</strong> Monitor queue areas and detect excessive crowding
+- <strong>Threshold Alerts:</strong> Notify managers when queue exceeds acceptable length
+- <strong>Historical Analysis:</strong> Identify patterns to improve staffing and service windows</p>
+<hr />
+<h2 id="4-smart-city-public-safety">4. SMART CITY &amp; PUBLIC SAFETY<a class="headerlink" href="#4-smart-city-public-safety" title="Permanent link">&para;</a></h2>
+<h3 id="use-case-41-public-space-crowd-management">Use Case 4.1: Public Space Crowd Management<a class="headerlink" href="#use-case-41-public-space-crowd-management" title="Permanent link">&para;</a></h3>
+<p><strong>Industry:</strong> City Centers, Parks, Event Venues, Transportation Hubs</p>
+<p><strong>Problem:</strong>
+- Overcrowding leading to safety hazards
+- Inability to respond proactively to crowd buildup
+- Event capacity compliance</p>
+<p><strong>How SOCA Solves It:</strong>
+- <strong>Crowd Density Detection:</strong> Monitor public spaces for dangerous crowd levels
+- <strong>Real-Time Alerts:</strong> Notify authorities when crowd thresholds exceeded
+- <strong>Heatmap Visualization:</strong> Understand which areas attract most foot traffic
+- <strong>Day/Week Patterns:</strong> Plan resource allocation based on historical patterns</p>
+<p><strong>Business Value:</strong>
+- Prevent stampedes and crowd-related incidents
+- Optimize security and cleaning staff deployment
+- Data-driven urban planning decisions</p>
+<hr />
+<h3 id="use-case-42-vehicle-access-parking-management">Use Case 4.2: Vehicle Access &amp; Parking Management<a class="headerlink" href="#use-case-42-vehicle-access-parking-management" title="Permanent link">&para;</a></h3>
+<p><strong>Industry:</strong> Municipal Parking, Gated Communities, Corporate Campuses</p>
+<p><strong>Problem:</strong>
+- Unauthorized vehicle access
+- Parking violation enforcement
+- No automated vehicle logging</p>
+<p><strong>How SOCA Solves It:</strong>
+- <strong>License Plate Recognition (LPR):</strong> Automatic plate number capture and logging
+- <strong>Plate Expiry Tracking:</strong> Monitor vehicle registration validity (where data available)
+- <strong>Confidence Scoring:</strong> Quality metrics on plate reads for enforcement decisions
+- <strong>Searchable Database:</strong> Query historical plate data for investigations</p>
+<hr />
+<h2 id="5-industrial-manufacturing">5. INDUSTRIAL &amp; MANUFACTURING<a class="headerlink" href="#5-industrial-manufacturing" title="Permanent link">&para;</a></h2>
+<h3 id="use-case-51-production-line-monitoring">Use Case 5.1: Production Line Monitoring<a class="headerlink" href="#use-case-51-production-line-monitoring" title="Permanent link">&para;</a></h3>
+<p><strong>Industry:</strong> Manufacturing, Assembly Plants, Packaging Facilities</p>
+<p><strong>Problem:</strong>
+- Unplanned downtime due to operator absence
+- Quality control gaps
+- No visibility into production floor activity</p>
+<p><strong>How SOCA Solves It:</strong>
+- <strong>Object Detection:</strong> Monitor presence of products, materials, or tools at workstations
+- <strong>Absent/Present Tracking:</strong> Detect when expected objects are missing from designated areas
+- <strong>Rule-Based Alerts:</strong> Configure alerts for specific detection conditions
+- <strong>Location Matrix:</strong> Track which stations have most frequent anomalies</p>
+<p><strong>Business Value:</strong>
+- Reduced production downtime
+- Improved quality control
+- Data-driven process optimization</p>
+<hr />
+<h3 id="use-case-52-hazardous-area-monitoring">Use Case 5.2: Hazardous Area Monitoring<a class="headerlink" href="#use-case-52-hazardous-area-monitoring" title="Permanent link">&para;</a></h3>
+<p><strong>Industry:</strong> Chemical Plants, Refineries, Power Plants</p>
+<p><strong>Problem:</strong>
+- Workers entering dangerous zones without authorization
+- Emergency response delays
+- Compliance with safety regulations</p>
+<p><strong>How SOCA Solves It:</strong>
+- <strong>Intrusion Detection:</strong> Immediate alerts when personnel enter hazardous zones
+- <strong>Severity Classification:</strong> Higher alerts for multiple persons in danger zones
+- <strong>Snapshot Evidence:</strong> Visual documentation for incident investigation
+- <strong>24/7 Monitoring:</strong> Continuous surveillance without operator fatigue</p>
+<hr />
+<h2 id="6-transportation-logistics">6. TRANSPORTATION &amp; LOGISTICS<a class="headerlink" href="#6-transportation-logistics" title="Permanent link">&para;</a></h2>
+<h3 id="use-case-61-loading-dock-security">Use Case 6.1: Loading Dock Security<a class="headerlink" href="#use-case-61-loading-dock-security" title="Permanent link">&para;</a></h3>
+<p><strong>Industry:</strong> Warehouses, Distribution Centers, Manufacturing</p>
+<p><strong>Problem:</strong>
+- Unauthorized access to loading areas
+- Theft during loading/unloading operations
+- No visibility into dock activity</p>
+<p><strong>How SOCA Solves It:</strong>
+- <strong>Intrusion Detection:</strong> Alert on unauthorized personnel during non-operational hours
+- <strong>Object Detection:</strong> Monitor presence of cargo, pallets, or equipment
+- <strong>Time-Based Rules:</strong> Different rules for operational vs. non-operational periods
+- <strong>Multi-Camera Coverage:</strong> Coordinate across multiple dock doors</p>
+<hr />
+<h3 id="use-case-62-fleet-vehicle-monitoring">Use Case 6.2: Fleet Vehicle Monitoring<a class="headerlink" href="#use-case-62-fleet-vehicle-monitoring" title="Permanent link">&para;</a></h3>
+<p><strong>Industry:</strong> Logistics Companies, Rental Car Facilities, Dealerships</p>
+<p><strong>Problem:</strong>
+- Vehicle theft and unauthorized use
+- Damage documentation
+- Compliance with parking assignments</p>
+<p><strong>How SOCA Solves It:</strong>
+- <strong>LPR Integration:</strong> Log all vehicle movements with plate recognition
+- <strong>Object Detection:</strong> Detect vehicles in restricted areas
+- <strong>Audit Trail:</strong> Complete vehicle movement history with timestamps and images</p>
+<hr />
+<h2 id="7-healthcare-elderly-care">7. HEALTHCARE &amp; ELDERLY CARE<a class="headerlink" href="#7-healthcare-elderly-care" title="Permanent link">&para;</a></h2>
+<h3 id="use-case-71-patient-safety-monitoring">Use Case 7.1: Patient Safety Monitoring<a class="headerlink" href="#use-case-71-patient-safety-monitoring" title="Permanent link">&para;</a></h3>
+<p><strong>Industry:</strong> Hospitals, Nursing Homes, Mental Health Facilities</p>
+<p><strong>Problem:</strong>
+- Patient wandering/elopement risks
+- Fall detection in common areas
+- Staff response times</p>
+<p><strong>How SOCA Solves It:</strong>
+- <strong>Intrusion Detection:</strong> Alert when patients enter restricted or dangerous areas
+- <strong>Crowd Detection:</strong> Monitor common areas for unusual gatherings
+- <strong>Time-Based Patterns:</strong> Identify when incidents most commonly occur</p>
+<hr />
+<h2 id="8-education">8. EDUCATION<a class="headerlink" href="#8-education" title="Permanent link">&para;</a></h2>
+<h3 id="use-case-81-campus-security">Use Case 8.1: Campus Security<a class="headerlink" href="#use-case-81-campus-security" title="Permanent link">&para;</a></h3>
+<p><strong>Industry:</strong> Schools, Universities, Daycare Centers</p>
+<p><strong>Problem:</strong>
+- Unauthorized access to school grounds
+- Student safety in restricted areas (rooftops, mechanical rooms)
+- After-hours security</p>
+<p><strong>How SOCA Solves It:</strong>
+- <strong>Perimeter Intrusion:</strong> Detect unauthorized entry to school grounds
+- <strong>Restricted Area Monitoring:</strong> Alert when students enter dangerous zones
+- <strong>After-Hours Protection:</strong> Automated surveillance during nights and weekends
+- <strong>Multi-Site Management:</strong> Centralized monitoring across multiple campuses</p>
+<hr />
+<h2 id="technical-differentiators">Technical Differentiators<a class="headerlink" href="#technical-differentiators" title="Permanent link">&para;</a></h2>
+<h3 id="edge-computing-architecture">Edge Computing Architecture<a class="headerlink" href="#edge-computing-architecture" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Low Latency:</strong> Processing happens at the edge, not in the cloud</li>
+<li><strong>Bandwidth Efficient:</strong> Only alerts and snapshots transmitted, not full video streams</li>
+<li><strong>Offline Resilience:</strong> Continues operating even if central server connectivity lost</li>
+<li><strong>Scalable:</strong> Add edges without central bottleneck</li>
+</ul>
+<h3 id="centralized-management-soca-control">Centralized Management (SOCA Control)<a class="headerlink" href="#centralized-management-soca-control" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Fleet Dashboard:</strong> Single pane of glass for all deployment sites</li>
+<li><strong>Health Monitoring:</strong> CPU, memory, disk, and job status across all edges</li>
+<li><strong>Unified Reporting:</strong> Aggregate analytics across all locations</li>
+<li><strong>Role-Based Access:</strong> Admin, Operator, and Viewer roles</li>
+</ul>
+<h3 id="flexible-deployment">Flexible Deployment<a class="headerlink" href="#flexible-deployment" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Cloud Storage:</strong> Google Cloud Storage integration for snapshots</li>
+<li><strong>Local Storage:</strong> On-premises storage option for air-gapped environments</li>
+<li><strong>API Integration:</strong> Redis streams for real-time integration with third-party systems</li>
+<li><strong>Export Options:</strong> CSV and PDF reports for compliance and analysis</li>
+</ul>
+<h3 id="advanced-analytics">Advanced Analytics<a class="headerlink" href="#advanced-analytics" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Heatmap Visualization:</strong> Day-of-week × hour-of-day patterns</li>
+<li><strong>Trend Analysis:</strong> 7-day and 30-day rolling analytics</li>
+<li><strong>Repeat Offender Tracking:</strong> Cameras and locations with chronic issues</li>
+<li><strong>Severity Classification:</strong> Configurable thresholds for alert prioritization</li>
+</ul>
+<hr />
+<h2 id="target-customer-profiles">Target Customer Profiles<a class="headerlink" href="#target-customer-profiles" title="Permanent link">&para;</a></h2>
+<h3 id="ideal-customer-characteristics">Ideal Customer Characteristics<a class="headerlink" href="#ideal-customer-characteristics" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Existing CCTV Investment:</strong> 10+ cameras already deployed</li>
+<li><strong>Multiple Locations:</strong> 2+ sites requiring centralized monitoring</li>
+<li><strong>Compliance Requirements:</strong> Subject to safety, security, or privacy regulations</li>
+<li><strong>Labor Cost Pressure:</strong> Seeking to optimize security/safety staffing costs</li>
+<li><strong>Technology Forward:</strong> Comfortable with AI/ML-based solutions</li>
+</ul>
+<h3 id="decision-maker-personas">Decision Maker Personas<a class="headerlink" href="#decision-maker-personas" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Security Director:</strong> Focused on intrusion detection and incident response</li>
+<li><strong>Safety Manager:</strong> Focused on PPE compliance and workplace safety</li>
+<li><strong>Operations Manager:</strong> Focused on efficiency and process optimization</li>
+<li><strong>Facility Manager:</strong> Focused on multi-site oversight and cost control</li>
+<li><strong>IT Director:</strong> Focused on integration, scalability, and data security</li>
+</ul>
+<hr />
+<h2 id="competitive-advantages">Competitive Advantages<a class="headerlink" href="#competitive-advantages" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>SOCA</th>
+<th>Traditional VMS</th>
+<th>Cloud-Only AI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edge Processing</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>Real-Time Alerts</td>
+<td>✓</td>
+<td>Limited</td>
+<td>Latency</td>
+</tr>
+<tr>
+<td>Bandwidth Efficient</td>
+<td>✓</td>
+<td>✗ (full streams)</td>
+<td>✗ (full streams)</td>
+</tr>
+<tr>
+<td>Offline Operation</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>Centralized Multi-Site</td>
+<td>✓</td>
+<td>Expensive</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>Custom ROI Zones</td>
+<td>✓</td>
+<td>Limited</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>PPE Detection</td>
+<td>✓</td>
+<td>✗</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>LPR Integration</td>
+<td>✓</td>
+<td>Add-on</td>
+<td>Add-on</td>
+</tr>
+<tr>
+<td>Open API (Redis)</td>
+<td>✓</td>
+<td>Proprietary</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>Self-Hosted Option</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="pricing-strategy-recommendations">Pricing Strategy Recommendations<a class="headerlink" href="#pricing-strategy-recommendations" title="Permanent link">&para;</a></h2>
+<h3 id="tier-1-starter-1-5-edges">Tier 1: Starter (1-5 Edges)<a class="headerlink" href="#tier-1-starter-1-5-edges" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Core intrusion detection</li>
+<li>Basic reporting</li>
+<li>Local snapshot storage</li>
+<li>Email support</li>
+</ul>
+<h3 id="tier-2-professional-6-20-edges">Tier 2: Professional (6-20 Edges)<a class="headerlink" href="#tier-2-professional-6-20-edges" title="Permanent link">&para;</a></h3>
+<ul>
+<li>All detection modules</li>
+<li>Advanced analytics &amp; heatmaps</li>
+<li>GCS cloud storage</li>
+<li>CSV/PDF exports</li>
+<li>Priority support</li>
+</ul>
+<h3 id="tier-3-enterprise-21-edges">Tier 3: Enterprise (21+ Edges)<a class="headerlink" href="#tier-3-enterprise-21-edges" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Unlimited edges</li>
+<li>Custom integrations (Redis streams)</li>
+<li>Dedicated support</li>
+<li>SLA guarantees</li>
+<li>Custom model training (industry-specific)</li>
+</ul>
+<hr />
+<h2 id="go-to-market-recommendations">Go-to-Market Recommendations<a class="headerlink" href="#go-to-market-recommendations" title="Permanent link">&para;</a></h2>
+<h3 id="channel-strategy">Channel Strategy<a class="headerlink" href="#channel-strategy" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Security System Integrators:</strong> Partner with existing CCTV installers</li>
+<li><strong>Safety Equipment Distributors:</strong> Bundle with PPE suppliers</li>
+<li><strong>Cloud Providers:</strong> GCP Marketplace listing for cloud storage integration</li>
+<li><strong>Direct Sales:</strong> Target enterprise customers with 10+ locations</li>
+</ol>
+<h3 id="marketing-messages">Marketing Messages<a class="headerlink" href="#marketing-messages" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Security:</strong> "Turn Your CCTV Into 24/7 Intelligent Guards"</li>
+<li><strong>Safety:</strong> "Automate PPE Compliance. Reduce Workplace Injuries."</li>
+<li><strong>Retail:</strong> "Know Your Customers. Optimize Your Operations."</li>
+<li><strong>Industrial:</strong> "Zero Downtime Through AI-Powered Monitoring"</li>
+</ul>
+<h3 id="proof-of-value">Proof of Value<a class="headerlink" href="#proof-of-value" title="Permanent link">&para;</a></h3>
+<ul>
+<li>30-day pilot program at single site</li>
+<li>Baseline measurement (current incident rates, compliance levels)</li>
+<li>Quantified improvement report at pilot conclusion</li>
+<li>ROI calculator showing payback period</li>
+</ul>
+<hr />
+<h2 id="product-roadmap-suggestions">Product Roadmap Suggestions<a class="headerlink" href="#product-roadmap-suggestions" title="Permanent link">&para;</a></h2>
+<h3 id="near-term-enhancements">Near-Term Enhancements<a class="headerlink" href="#near-term-enhancements" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Mobile App:</strong> Push notifications and live view on iOS/Android</li>
+<li><strong>Email/SMS Alerts:</strong> Direct alerting without third-party integration</li>
+<li><strong>Pre-Built Models:</strong> Industry-specific YOLO models (retail, construction, etc.)</li>
+<li><strong>Dashboard Widgets:</strong> Customizable dashboard for different user roles</li>
+</ol>
+<h3 id="medium-term-enhancements">Medium-Term Enhancements<a class="headerlink" href="#medium-term-enhancements" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Behavioral Analytics:</strong> Loitering detection, wrong-way detection, fall detection</li>
+<li><strong>Two-Way Audio Integration:</strong> Trigger announcements on intrusion</li>
+<li><strong>Access Control Integration:</strong> Lock/unlock doors based on detection events</li>
+<li><strong>Predictive Analytics:</strong> ML-based forecasting of incident patterns</li>
+</ol>
+<h3 id="long-term-vision">Long-Term Vision<a class="headerlink" href="#long-term-vision" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Multi-Object Tracking:</strong> Follow individuals across camera views</li>
+<li><strong>Anomaly Detection:</strong> Unsupervised learning for unknown threat patterns</li>
+<li><strong>Video Search:</strong> Natural language search ("show me all red shirts yesterday")</li>
+<li><strong>Edge-to-Edge Coordination:</strong> Automated handoff of tracking between edges</li>
+</ol>
+<hr />
+<h2 id="success-metrics">Success Metrics<a class="headerlink" href="#success-metrics" title="Permanent link">&para;</a></h2>
+<h3 id="customer-kpis-to-track">Customer KPIs to Track<a class="headerlink" href="#customer-kpis-to-track" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Security:</strong> Reduction in unauthorized access incidents</li>
+<li><strong>Safety:</strong> PPE compliance rate improvement</li>
+<li><strong>Operations:</strong> Staff optimization (labor cost reduction)</li>
+<li><strong>Retail:</strong> Customer traffic growth, conversion rate improvement</li>
+<li><strong>Compliance:</strong> Audit preparation time reduction</li>
+</ul>
+<h3 id="soca-business-metrics">SOCA Business Metrics<a class="headerlink" href="#soca-business-metrics" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Edges deployed per customer</li>
+<li>Detection modules activated per edge</li>
+<li>Alert volume trends (indicates engagement)</li>
+<li>Export activity (indicates compliance use)</li>
+<li>Customer expansion rate (additional edges/sites)</li>
+</ul>
+<hr />
+<p><strong>Document Version:</strong> 1.0<br />
+<strong>Prepared By:</strong> Product Marketing<br />
+<strong>Date:</strong> March 2026<br />
+<strong>Confidentiality:</strong> Internal Use Only</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

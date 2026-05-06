@@ -1,0 +1,1815 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/soca-engine/api-testing/">
+      
+      
+        <link rel="prev" href="../../soca-control/pubsub-transport-plan/">
+      
+      
+        <link rel="next" href="../object-detection-processor/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>API Testing - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api-testing-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API Testing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Engine & Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Engine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Testing
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-health-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Health Check
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-list-available-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. List Available Models
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-start-a-job-basic-no-roi-no-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Start a Job — Basic (no ROI, no rules)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-start-a-job-with-monitor-live-stream-analytics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Start a Job — With Monitor (live stream analytics)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-start-a-job-with-roi-polygon-monitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Start a Job — With ROI Polygon + Monitor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-start-a-job-with-roi-rectangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Start a Job — With ROI Rectangle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-start-a-job-with-rules-person-count-threshold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Start a Job — With Rules (person count threshold)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-start-a-job-with-aging-rule-person-present-30-seconds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Start a Job — With Aging Rule (person present &gt; 30 seconds)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-start-a-job-with-webhook-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Start a Job — With Webhook Action
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-start-a-job-full-example-all-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Start a Job — Full Example (all options)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-view-live-monitor-stream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. View Live Monitor Stream
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-get-job-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Get Job Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-list-all-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. List All Jobs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-stop-a-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Stop a Job
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rule-condition-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rule Condition Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operators-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operators Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publisher-transport-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publisher Transport Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitor-attribute-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        monitor Attribute Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cls_id-reference-yolo11n-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cls_id Reference (yolo11n default)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../object-detection-processor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Detection Processor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rule-management-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rule Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../soca-service/overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="api-testing-guide">API Testing Guide<a class="headerlink" href="#api-testing-guide" title="Permanent link">&para;</a></h1>
+<p>Base URL: <code>http://localhost:8001</code></p>
+<p><strong>Test Camera:</strong> Bardi-Stairs-Front — <code>rtsp://localhost:8554/Bardi-Stairs-Front</code></p>
+<hr />
+<h2 id="1-health-check">1. Health Check<a class="headerlink" href="#1-health-check" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8001/health
+</code></pre></div>
+<p>Expected:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;redis&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;connected&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;active_jobs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;uptime_seconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h2 id="2-list-available-models">2. List Available Models<a class="headerlink" href="#2-list-available-models" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8001/models
+</code></pre></div>
+<p>Expected:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;models&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;yolo11n.pt&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;yolo/yolo11n.pt&quot;</span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h2 id="3-start-a-job-basic-no-roi-no-rules">3. Start a Job — Basic (no ROI, no rules)<a class="headerlink" href="#3-start-a-job-basic-no-roi-no-rules" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
+<span class="s1">    &quot;cls_ids&quot;: [0],</span>
+<span class="s1">    &quot;frame_interval_ms&quot;: 1000</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+<p>Expected:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;job_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;550e8400-e29b-41d4-a716&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;started&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;started_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-20T10:00:00Z&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h2 id="4-start-a-job-with-monitor-live-stream-analytics">4. Start a Job — With Monitor (live stream analytics)<a class="headerlink" href="#4-start-a-job-with-monitor-live-stream-analytics" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;job_id&quot;: &quot;job-stairs-monitor&quot;,</span>
+<span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
+<span class="s1">    &quot;cls_ids&quot;: [0],</span>
+<span class="s1">    &quot;frame_interval_ms&quot;: 1000,</span>
+<span class="s1">    &quot;monitor&quot;: true</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+<p>Then open in browser:
+<div class="highlight"><pre><span></span><code>http://localhost:8001/jobs/job-stairs-monitor/monitor
+</code></pre></div></p>
+<p>Stream shows:
+- Bounding boxes — green (inside ROI) / gray (outside ROI)
+- Top bar: job id, camera, detection count, ROI count, rule status
+- Bottom bar: aging duration per detected class</p>
+<hr />
+<h2 id="5-start-a-job-with-roi-polygon-monitor">5. Start a Job — With ROI Polygon + Monitor<a class="headerlink" href="#5-start-a-job-with-roi-polygon-monitor" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;job_id&quot;: &quot;job-stairs-roi&quot;,</span>
+<span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
+<span class="s1">    &quot;cls_ids&quot;: [0, 1, 2],</span>
+<span class="s1">    &quot;frame_interval_ms&quot;: 2000,</span>
+<span class="s1">    &quot;roi&quot;: {</span>
+<span class="s1">      &quot;type&quot;: &quot;POLYGON&quot;,</span>
+<span class="s1">      &quot;points&quot;: [[100, 200], [600, 200], [600, 500], [100, 500]]</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;monitor&quot;: true</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+<p>Monitor URL:
+<div class="highlight"><pre><span></span><code>http://localhost:8001/jobs/job-stairs-roi/monitor
+</code></pre></div></p>
+<hr />
+<h2 id="6-start-a-job-with-roi-rectangle">6. Start a Job — With ROI Rectangle<a class="headerlink" href="#6-start-a-job-with-roi-rectangle" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
+<span class="s1">    &quot;cls_ids&quot;: [0],</span>
+<span class="s1">    &quot;frame_interval_ms&quot;: 1000,</span>
+<span class="s1">    &quot;roi&quot;: {</span>
+<span class="s1">      &quot;type&quot;: &quot;RECT&quot;,</span>
+<span class="s1">      &quot;points&quot;: [[50, 100], [700, 500]]</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;monitor&quot;: true</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+<hr />
+<h2 id="7-start-a-job-with-rules-person-count-threshold">7. Start a Job — With Rules (person count threshold)<a class="headerlink" href="#7-start-a-job-with-rules-person-count-threshold" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;job_id&quot;: &quot;job-stairs-rules&quot;,</span>
+<span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
+<span class="s1">    &quot;cls_ids&quot;: [0],</span>
+<span class="s1">    &quot;frame_interval_ms&quot;: 1000,</span>
+<span class="s1">    &quot;roi&quot;: {</span>
+<span class="s1">      &quot;type&quot;: &quot;POLYGON&quot;,</span>
+<span class="s1">      &quot;points&quot;: [[100, 200], [600, 200], [600, 500], [100, 500]]</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;rules&quot;: [</span>
+<span class="s1">      {</span>
+<span class="s1">        &quot;name&quot;: &quot;too_many_people&quot;,</span>
+<span class="s1">        &quot;priority&quot;: 10,</span>
+<span class="s1">        &quot;when_all&quot;: [</span>
+<span class="s1">          {&quot;path&quot;: &quot;detections.in_roi_count&quot;, &quot;op&quot;: &quot;gte&quot;, &quot;value&quot;: 3}</span>
+<span class="s1">        ],</span>
+<span class="s1">        &quot;actions&quot;: [</span>
+<span class="s1">          {&quot;type&quot;: &quot;save_snapshot&quot;},</span>
+<span class="s1">          {&quot;type&quot;: &quot;publish_queue&quot;},</span>
+<span class="s1">          {&quot;type&quot;: &quot;log&quot;, &quot;level&quot;: &quot;warning&quot;}</span>
+<span class="s1">        ]</span>
+<span class="s1">      }</span>
+<span class="s1">    ],</span>
+<span class="s1">    &quot;monitor&quot;: true</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+<hr />
+<h2 id="8-start-a-job-with-aging-rule-person-present-30-seconds">8. Start a Job — With Aging Rule (person present &gt; 30 seconds)<a class="headerlink" href="#8-start-a-job-with-aging-rule-person-present-30-seconds" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;job_id&quot;: &quot;job-stairs-aging&quot;,</span>
+<span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
+<span class="s1">    &quot;cls_ids&quot;: [0],</span>
+<span class="s1">    &quot;frame_interval_ms&quot;: 1000,</span>
+<span class="s1">    &quot;aging&quot;: {</span>
+<span class="s1">      &quot;window_seconds&quot;: 120,</span>
+<span class="s1">      &quot;cooldown_seconds&quot;: 60</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;rules&quot;: [</span>
+<span class="s1">      {</span>
+<span class="s1">        &quot;name&quot;: &quot;person_loitering&quot;,</span>
+<span class="s1">        &quot;priority&quot;: 10,</span>
+<span class="s1">        &quot;when_all&quot;: [</span>
+<span class="s1">          {&quot;path&quot;: &quot;detections.in_roi_count&quot;,       &quot;op&quot;: &quot;gte&quot;, &quot;value&quot;: 1},</span>
+<span class="s1">          {&quot;path&quot;: &quot;aging.cls_0.duration_seconds&quot;,  &quot;op&quot;: &quot;gte&quot;, &quot;value&quot;: 30},</span>
+<span class="s1">          {&quot;path&quot;: &quot;aging.cls_0.in_cooldown&quot;,       &quot;op&quot;: &quot;eq&quot;,  &quot;value&quot;: false}</span>
+<span class="s1">        ],</span>
+<span class="s1">        &quot;actions&quot;: [</span>
+<span class="s1">          {&quot;type&quot;: &quot;save_snapshot&quot;},</span>
+<span class="s1">          {&quot;type&quot;: &quot;publish_queue&quot;},</span>
+<span class="s1">          {&quot;type&quot;: &quot;log&quot;, &quot;level&quot;: &quot;warning&quot;}</span>
+<span class="s1">        ]</span>
+<span class="s1">      }</span>
+<span class="s1">    ],</span>
+<span class="s1">    &quot;monitor&quot;: true</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+<hr />
+<h2 id="9-start-a-job-with-webhook-action">9. Start a Job — With Webhook Action<a class="headerlink" href="#9-start-a-job-with-webhook-action" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
+<span class="s1">    &quot;cls_ids&quot;: [0, 2, 3],</span>
+<span class="s1">    &quot;frame_interval_ms&quot;: 2000,</span>
+<span class="s1">    &quot;rules&quot;: [</span>
+<span class="s1">      {</span>
+<span class="s1">        &quot;name&quot;: &quot;intruder_detected&quot;,</span>
+<span class="s1">        &quot;priority&quot;: 1,</span>
+<span class="s1">        &quot;when_all&quot;: [</span>
+<span class="s1">          {&quot;path&quot;: &quot;detections.in_roi_count&quot;, &quot;op&quot;: &quot;gte&quot;, &quot;value&quot;: 1}</span>
+<span class="s1">        ],</span>
+<span class="s1">        &quot;actions&quot;: [</span>
+<span class="s1">          {&quot;type&quot;: &quot;save_snapshot&quot;},</span>
+<span class="s1">          {&quot;type&quot;: &quot;webhook&quot;, &quot;url&quot;: &quot;http://localhost:8000/api/alerts/receive/&quot;},</span>
+<span class="s1">          {&quot;type&quot;: &quot;log&quot;, &quot;level&quot;: &quot;error&quot;}</span>
+<span class="s1">        ]</span>
+<span class="s1">      }</span>
+<span class="s1">    ],</span>
+<span class="s1">    &quot;output&quot;: {</span>
+<span class="s1">      &quot;redis_url&quot;: &quot;redis://localhost:6379&quot;,</span>
+<span class="s1">      &quot;stream_name&quot;: &quot;soca:detections&quot;,</span>
+<span class="s1">      &quot;max_snapshot_per_minute&quot;: 10,</span>
+<span class="s1">      &quot;snapshot_dir&quot;: &quot;snapshots/&quot;</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;monitor&quot;: true</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+<hr />
+<h2 id="10-start-a-job-full-example-all-options">10. Start a Job — Full Example (all options)<a class="headerlink" href="#10-start-a-job-full-example-all-options" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/start<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;job_id&quot;: &quot;job-stairs-01&quot;,</span>
+<span class="s1">    &quot;camera_id&quot;: &quot;bardi-stairs-front&quot;,</span>
+<span class="s1">    &quot;rtsp_url&quot;: &quot;rtsp://localhost:8554/Bardi-Stairs-Front&quot;,</span>
+<span class="s1">    &quot;model_path&quot;: &quot;yolo/yolo11n.pt&quot;,</span>
+<span class="s1">    &quot;cls_ids&quot;: [0, 1, 2],</span>
+<span class="s1">    &quot;frame_interval_ms&quot;: 1500,</span>
+<span class="s1">    &quot;roi&quot;: {</span>
+<span class="s1">      &quot;type&quot;: &quot;POLYGON&quot;,</span>
+<span class="s1">      &quot;points&quot;: [[50, 50], [800, 50], [800, 600], [50, 600]]</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;aging&quot;: {</span>
+<span class="s1">      &quot;window_seconds&quot;: 60,</span>
+<span class="s1">      &quot;cooldown_seconds&quot;: 30</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;rules&quot;: [</span>
+<span class="s1">      {</span>
+<span class="s1">        &quot;name&quot;: &quot;person_detected&quot;,</span>
+<span class="s1">        &quot;priority&quot;: 10,</span>
+<span class="s1">        &quot;when_all&quot;: [</span>
+<span class="s1">          {&quot;path&quot;: &quot;detections.in_roi_count&quot;, &quot;op&quot;: &quot;gte&quot;, &quot;value&quot;: 1}</span>
+<span class="s1">        ],</span>
+<span class="s1">        &quot;actions&quot;: [</span>
+<span class="s1">          {&quot;type&quot;: &quot;publish_queue&quot;},</span>
+<span class="s1">          {&quot;type&quot;: &quot;log&quot;, &quot;level&quot;: &quot;info&quot;}</span>
+<span class="s1">        ]</span>
+<span class="s1">      },</span>
+<span class="s1">      {</span>
+<span class="s1">        &quot;name&quot;: &quot;crowding_alert&quot;,</span>
+<span class="s1">        &quot;priority&quot;: 5,</span>
+<span class="s1">        &quot;when_all&quot;: [</span>
+<span class="s1">          {&quot;path&quot;: &quot;detections.in_roi_count&quot;, &quot;op&quot;: &quot;gte&quot;, &quot;value&quot;: 5}</span>
+<span class="s1">        ],</span>
+<span class="s1">        &quot;actions&quot;: [</span>
+<span class="s1">          {&quot;type&quot;: &quot;save_snapshot&quot;},</span>
+<span class="s1">          {&quot;type&quot;: &quot;publish_queue&quot;},</span>
+<span class="s1">          {&quot;type&quot;: &quot;webhook&quot;, &quot;url&quot;: &quot;http://localhost:8000/api/alerts/receive/&quot;},</span>
+<span class="s1">          {&quot;type&quot;: &quot;log&quot;, &quot;level&quot;: &quot;error&quot;}</span>
+<span class="s1">        ]</span>
+<span class="s1">      }</span>
+<span class="s1">    ],</span>
+<span class="s1">    &quot;output&quot;: {</span>
+<span class="s1">      &quot;redis_url&quot;: &quot;redis://localhost:6379&quot;,</span>
+<span class="s1">      &quot;stream_name&quot;: &quot;soca:detections&quot;,</span>
+<span class="s1">      &quot;max_snapshot_per_minute&quot;: 5,</span>
+<span class="s1">      &quot;snapshot_dir&quot;: &quot;snapshots/&quot;</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;monitor&quot;: true</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+<p>Monitor URL:
+<div class="highlight"><pre><span></span><code>http://localhost:8001/jobs/job-stairs-01/monitor
+</code></pre></div></p>
+<hr />
+<h2 id="11-view-live-monitor-stream">11. View Live Monitor Stream<a class="headerlink" href="#11-view-live-monitor-stream" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Open in browser — shows annotated video with detection overlays</span>
+http://localhost:8001/jobs/JOB_ID/monitor
+</code></pre></div>
+<p>Returns <code>400</code> if job was started without <code>monitor: true</code>.
+Returns <code>404</code> if job is not running.</p>
+<hr />
+<h2 id="12-get-job-status">12. Get Job Status<a class="headerlink" href="#12-get-job-status" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8001/jobs/JOB_ID
+</code></pre></div>
+<p>Expected:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;job_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;job-stairs-01&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;running&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;started_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-20T10:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;frames_processed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">240</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;events_triggered&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;last_frame_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-20T10:04:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;error_msg&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h2 id="13-list-all-jobs">13. List All Jobs<a class="headerlink" href="#13-list-all-jobs" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8001/jobs/
+</code></pre></div>
+<hr />
+<h2 id="14-stop-a-job">14. Stop a Job<a class="headerlink" href="#14-stop-a-job" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8001/jobs/JOB_ID/stop
+</code></pre></div>
+<p>Expected:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;job_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;job-stairs-01&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stopped&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h2 id="rule-condition-reference">Rule Condition Reference<a class="headerlink" href="#rule-condition-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>path</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>detections.count</code></td>
+<td>int</td>
+<td>total detections in frame</td>
+</tr>
+<tr>
+<td><code>detections.in_roi_count</code></td>
+<td>int</td>
+<td>detections inside ROI</td>
+</tr>
+<tr>
+<td><code>detections.cls_ids</code></td>
+<td>list</td>
+<td>list of all detected cls_ids</td>
+</tr>
+<tr>
+<td><code>detections.cls_counts.0</code></td>
+<td>int</td>
+<td>count of cls_id 0</td>
+</tr>
+<tr>
+<td><code>detections.cls_counts.1</code></td>
+<td>int</td>
+<td>count of cls_id 1</td>
+</tr>
+<tr>
+<td><code>aging.cls_0.duration_seconds</code></td>
+<td>float</td>
+<td>seconds cls_id 0 has been present continuously</td>
+</tr>
+<tr>
+<td><code>aging.cls_0.in_cooldown</code></td>
+<td>bool</td>
+<td>true if cls_id 0 is in cooldown</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operators-reference">Operators Reference<a class="headerlink" href="#operators-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>op</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>eq</code></td>
+<td>==</td>
+</tr>
+<tr>
+<td><code>neq</code></td>
+<td>!=</td>
+</tr>
+<tr>
+<td><code>gte</code></td>
+<td>&gt;=</td>
+</tr>
+<tr>
+<td><code>lte</code></td>
+<td>&lt;=</td>
+</tr>
+<tr>
+<td><code>gt</code></td>
+<td>&gt;</td>
+</tr>
+<tr>
+<td><code>lt</code></td>
+<td>&lt;</td>
+</tr>
+<tr>
+<td><code>contains</code></td>
+<td>value in list</td>
+</tr>
+<tr>
+<td><code>not_contains</code></td>
+<td>value not in list</td>
+</tr>
+<tr>
+<td><code>exists</code></td>
+<td>path is not null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="publisher-transport-reference">Publisher Transport Reference<a class="headerlink" href="#publisher-transport-reference" title="Permanent link">&para;</a></h2>
+<p>Set in <code>soca-engine/.env</code> (or via soca-dashboard Settings → Edge Config → Publisher Transport).</p>
+<table>
+<thead>
+<tr>
+<th>Var</th>
+<th>Value</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PUBLISHER_TYPE</code></td>
+<td><code>redis</code> (default)</td>
+<td>XADD to Redis stream via <code>REDIS_STREAM_NAME</code></td>
+</tr>
+<tr>
+<td><code>PUBLISHER_TYPE</code></td>
+<td><code>pubsub</code></td>
+<td>Publish to Pub/Sub topic; also set <code>PUBSUB_PROJECT_ID</code> and <code>PUBSUB_TOPIC</code></td>
+</tr>
+<tr>
+<td><code>PUBSUB_PROJECT_ID</code></td>
+<td>e.g. <code>my-gcp-project</code></td>
+<td>Required when <code>PUBLISHER_TYPE=pubsub</code></td>
+</tr>
+<tr>
+<td><code>PUBSUB_TOPIC</code></td>
+<td>e.g. <code>soca-detections</code></td>
+<td>Topic name only (not full path)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>When <code>PUBLISHER_TYPE=pubsub</code> and credentials/topic are missing, events fall back to the DLQ directory.</p>
+</blockquote>
+<hr />
+<h2 id="monitor-attribute-reference"><code>monitor</code> Attribute Reference<a class="headerlink" href="#monitor-attribute-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>value</th>
+<th>behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>false</code> (default)</td>
+<td>No live stream, detection runs headless</td>
+</tr>
+<tr>
+<td><code>true</code></td>
+<td>Annotated MJPEG stream available at <code>/jobs/{job_id}/monitor</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="cls_id-reference-yolo11n-default">cls_id Reference (yolo11n default)<a class="headerlink" href="#cls_id-reference-yolo11n-default" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>cls_id</th>
+<th>label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>person</td>
+</tr>
+<tr>
+<td>1</td>
+<td>bicycle</td>
+</tr>
+<tr>
+<td>2</td>
+<td>car</td>
+</tr>
+<tr>
+<td>3</td>
+<td>motorcycle</td>
+</tr>
+<tr>
+<td>5</td>
+<td>bus</td>
+</tr>
+<tr>
+<td>7</td>
+<td>truck</td>
+</tr>
+<tr>
+<td>15</td>
+<td>cat</td>
+</tr>
+<tr>
+<td>16</td>
+<td>dog</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

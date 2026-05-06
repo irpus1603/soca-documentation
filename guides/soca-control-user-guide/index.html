@@ -1,0 +1,2132 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/guides/soca-control-user-guide/">
+      
+      
+        <link rel="prev" href="../../soca-dashboard/advanced-rule-management-design/">
+      
+      
+        <link rel="next" href="../../soca-control/design-spec/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>User Guide - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#soca-control-user-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              User Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Dashboard (Edge)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Control (Fleet)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SOCA Control (Fleet)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-logging-in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Logging In
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Dashboard
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Dashboard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#top-bar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Top Bar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary-widgets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary Widgets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#right-panel-quick-alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Right Panel — Quick Alerts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#charts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Charts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#time-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-live-stream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Live Stream
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Live Stream">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filtering-by-edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtering by Edge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stream-cards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stream Cards
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Assets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-detection-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Detection Log
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Reports
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Reports">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-intrusion-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Intrusion Report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-ppe-compliance-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 PPE Compliance Report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-crowd-detection-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Crowd Detection Report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-license-plate-recognition-lpr-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 License Plate Recognition (LPR) Report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-people-counting-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 People Counting Report
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Settings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-configure-snapshot-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Configure Snapshot Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-register-a-new-edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Register a New Edge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-remote-edge-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Remote Edge Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Users
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Users">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-add-a-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Add a User
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-edit-a-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Edit a User
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-common-tasks-quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Common Tasks — Quick Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../soca-control/design-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../soca-control/edge-operations-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Edge Operations Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../soca-control/implementation-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../soca-control/pubsub-transport-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pub/Sub Transport
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="soca-control-user-guide">SOCA Control — User Guide<a class="headerlink" href="#soca-control-user-guide" title="Permanent link">&para;</a></h1>
+<p><strong>soca-control</strong> is the Central Fleet Dashboard. It aggregates detection events, alerts, and live streams from all edge nodes (soca-dashboard instances) into one central view. Use it for fleet-wide monitoring, compliance reporting, and system administration across multiple sites.</p>
+<p>URL: <code>http://&lt;control-server&gt;:8000</code></p>
+<hr />
+<h2 id="1-logging-in">1. Logging In<a class="headerlink" href="#1-logging-in" title="Permanent link">&para;</a></h2>
+<p><img alt="Login screen" src="../screenshots/control-00-login.png" /></p>
+<p>Enter your username and password, then click <strong>Login</strong>. The system supports two roles:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Access</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Admin</strong></td>
+<td>Full access — dashboard, live streams, assets, reports, settings, users</td>
+</tr>
+<tr>
+<td><strong>Viewer</strong></td>
+<td>Read-only — dashboard, live streams, assets, reports</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-dashboard">2. Dashboard<a class="headerlink" href="#2-dashboard" title="Permanent link">&para;</a></h2>
+<p>After login you land on the <strong>Dashboard</strong> — the command centre for all edge nodes.</p>
+<p><img alt="Dashboard" src="../screenshots/control-01-dashboard.png" /></p>
+<h3 id="top-bar">Top Bar<a class="headerlink" href="#top-bar" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Status dot (green/red)</td>
+<td>Real-time connection to soca-service backend</td>
+</tr>
+<tr>
+<td>Clock</td>
+<td>Current server time</td>
+</tr>
+<tr>
+<td>Bell icon</td>
+<td>Alert notification count — click to view recent alerts</td>
+</tr>
+</tbody>
+</table>
+<h3 id="summary-widgets">Summary Widgets<a class="headerlink" href="#summary-widgets" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Widget</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PPE Compliance</strong></td>
+<td>Compliance rate as a percentage with period violation count</td>
+</tr>
+<tr>
+<td><strong>Active Violations</strong></td>
+<td>Total violations broken down by severity: Critical, High, Medium, Low</td>
+</tr>
+<tr>
+<td><strong>Edge Status</strong></td>
+<td>Number of online / offline edges and total active jobs</td>
+</tr>
+<tr>
+<td><strong>System Health</strong></td>
+<td>Aggregate health percentage across all edges</td>
+</tr>
+</tbody>
+</table>
+<h3 id="right-panel-quick-alerts">Right Panel — Quick Alerts<a class="headerlink" href="#right-panel-quick-alerts" title="Permanent link">&para;</a></h3>
+<p>A live feed of the latest detection events across all edges. Each entry shows a snapshot thumbnail, rule name, camera, edge, severity badge, and timestamp.</p>
+<h3 id="charts">Charts<a class="headerlink" href="#charts" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Chart</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Violations Trend</strong></td>
+<td>Hourly violation counts by category (Intrusion, PPE, Crowd, Detection)</td>
+</tr>
+<tr>
+<td><strong>By Category</strong></td>
+<td>Donut chart — proportion of each violation type</td>
+</tr>
+<tr>
+<td><strong>Top Violations &amp; Locations</strong></td>
+<td>Ranked list of violation types and most-affected edge locations</td>
+</tr>
+<tr>
+<td><strong>Area Distribution (by Edge)</strong></td>
+<td>Stacked bar chart — violation volume per edge, split by category</td>
+</tr>
+<tr>
+<td><strong>Heatmap: Edge × Hour</strong></td>
+<td>Colour-coded grid — when each edge generates the most events</td>
+</tr>
+<tr>
+<td><strong>Top Cameras — Last 7 Days</strong></td>
+<td>Bar chart of cameras ranked by total detection events</td>
+</tr>
+</tbody>
+</table>
+<h3 id="time-filter">Time Filter<a class="headerlink" href="#time-filter" title="Permanent link">&para;</a></h3>
+<p>Switch between <strong>Today</strong>, <strong>Weekly</strong>, and <strong>Monthly</strong> views using the tabs at the top of the chart area.</p>
+<blockquote>
+<p><strong>⚠ Edge offline banner</strong> — if an edge goes offline, a warning banner appears at the top of the dashboard.</p>
+</blockquote>
+<hr />
+<h2 id="3-live-stream">3. Live Stream<a class="headerlink" href="#3-live-stream" title="Permanent link">&para;</a></h2>
+<p><strong>Live Stream</strong> shows real-time video feeds aggregated from all connected edge nodes.</p>
+<p><img alt="Live Stream" src="../screenshots/control-02-monitor.png" /></p>
+<h3 id="filtering-by-edge">Filtering by Edge<a class="headerlink" href="#filtering-by-edge" title="Permanent link">&para;</a></h3>
+<p>Use the <strong>Edge Devices</strong> checkboxes at the top to show or hide streams from specific edges. Click <strong>Apply</strong> to filter, <strong>Reset</strong> to show all.</p>
+<h3 id="stream-cards">Stream Cards<a class="headerlink" href="#stream-cards" title="Permanent link">&para;</a></h3>
+<p>Each card shows:
+- Camera name and edge label
+- Live video frame with detection overlays (ROI polygon, bounding boxes)
+- Green dot = stream is active</p>
+<p>Click the <strong>expand icon</strong> (⤢) on any card to open the stream in full-screen view.</p>
+<p>Edges with no active streams show a "No active streams on this edge" message.</p>
+<hr />
+<h2 id="4-assets">4. Assets<a class="headerlink" href="#4-assets" title="Permanent link">&para;</a></h2>
+<p><strong>Assets</strong> provides a fleet-wide inventory of all cameras across all edge nodes.</p>
+<p><img alt="Assets" src="../screenshots/control-03-assets.png" /></p>
+<p>For each edge the list shows:
+- Edge name and URL
+- Online/Offline status (green/red dot)
+- For each camera: Name, Site, Floor, Location, Status, Scheduler state, Stream type</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Status</strong></td>
+<td>Active / Inactive — pulled live from the edge</td>
+</tr>
+<tr>
+<td><strong>Scheduler</strong></td>
+<td>Whether a detection job is running (<code>• Live</code> = active job)</td>
+</tr>
+<tr>
+<td><strong>Stream</strong></td>
+<td>Relay = streamed via mediamtx relay; click the ⓘ icon for the stream URL</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Offline edges display "Edge offline — cannot fetch cameras" and cannot be managed until reconnected.</p>
+</blockquote>
+<hr />
+<h2 id="5-detection-log">5. Detection Log<a class="headerlink" href="#5-detection-log" title="Permanent link">&para;</a></h2>
+<p><strong>Detection Log</strong> is the unified event log for all edges — every detection event from every camera in one place.</p>
+<p>Access via the sidebar: <strong>Detection Log</strong></p>
+<p>Columns include: Timestamp, Edge, Camera, Rule, Category, Message, Violation labels, Count, and a Snapshot thumbnail.</p>
+<p>Filter controls at the top allow narrowing by edge, camera, date range, category, and free-text search.</p>
+<hr />
+<h2 id="6-reports">6. Reports<a class="headerlink" href="#6-reports" title="Permanent link">&para;</a></h2>
+<p>The <strong>Report</strong> section provides dedicated analytics pages per detection category. All reports support CSV export and can be filtered by edge, camera, and date range.</p>
+<h3 id="61-intrusion-report">6.1 Intrusion Report<a class="headerlink" href="#61-intrusion-report" title="Permanent link">&para;</a></h3>
+<p><img alt="Intrusion Report" src="../screenshots/control-04-report-intrusion.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Widget</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>High Severity</strong></td>
+<td>Events where ≥3 persons were detected simultaneously in the restricted zone</td>
+</tr>
+<tr>
+<td><strong>Today / This Week</strong></td>
+<td>Rolling counts with week-on-week comparison</td>
+</tr>
+<tr>
+<td><strong>Worst Camera</strong></td>
+<td>Camera with the highest alert count</td>
+</tr>
+<tr>
+<td><strong>Attack Pattern — Day × Hour</strong></td>
+<td>Heatmap identifying recurring intrusion windows — use to schedule patrols</td>
+</tr>
+<tr>
+<td><strong>30-Day Trend</strong></td>
+<td>Rising line = escalating threat; falling = contained</td>
+</tr>
+<tr>
+<td><strong>Incident Severity</strong></td>
+<td>Donut — breakdown by 1, 2–2, and ≥3 persons per incident</td>
+</tr>
+<tr>
+<td><strong>Top Cameras by Alerts</strong></td>
+<td>Ranked list</td>
+</tr>
+<tr>
+<td><strong>Persistent Vulnerabilities</strong></td>
+<td>Cameras active on most distinct days — structural weaknesses</td>
+</tr>
+<tr>
+<td><strong>Top Triggered Rules</strong></td>
+<td>Which detection rules fire most often</td>
+</tr>
+</tbody>
+</table>
+<p>Export options: <strong>↓ CSV</strong> and <strong>↓ PDF</strong> (top-right).</p>
+<h3 id="62-ppe-compliance-report">6.2 PPE Compliance Report<a class="headerlink" href="#62-ppe-compliance-report" title="Permanent link">&para;</a></h3>
+<p><img alt="PPE Compliance" src="../screenshots/control-05-report-ppe.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Widget</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Violations Today / This Week / This Month</strong></td>
+<td>Rolling counts</td>
+</tr>
+<tr>
+<td><strong>Peak Hour</strong></td>
+<td>Hour of day with the most PPE violations</td>
+</tr>
+<tr>
+<td><strong>Violations by Shift</strong></td>
+<td>Morning (06–14), Afternoon (14–22), Night (22–06) — target toolbox talks accordingly</td>
+</tr>
+<tr>
+<td><strong>Violation Pattern — Day × Hour</strong></td>
+<td>Heatmap of recurring non-compliance windows</td>
+</tr>
+<tr>
+<td><strong>30-Day Violation Trend</strong></td>
+<td>Rising = compliance worsening</td>
+</tr>
+<tr>
+<td><strong>Problem Locations</strong></td>
+<td>Cameras with chronic violations — persistent offenders</td>
+</tr>
+<tr>
+<td><strong>Daily Summary</strong></td>
+<td>Per-day count with recommended action (Monitor / Corrective action)</td>
+</tr>
+<tr>
+<td><strong>Violation Log</strong></td>
+<td>Paginated event log with site, camera, rule, violation label, message, and evidence thumbnail</td>
+</tr>
+</tbody>
+</table>
+<h3 id="63-crowd-detection-report">6.3 Crowd Detection Report<a class="headerlink" href="#63-crowd-detection-report" title="Permanent link">&para;</a></h3>
+<p><img alt="Crowd Detection" src="../screenshots/control-06-report-crowd.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Widget</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Total Events</strong></td>
+<td>All crowd detection events in the period</td>
+</tr>
+<tr>
+<td><strong>Avg Crowd</strong></td>
+<td>Average people per detection event</td>
+</tr>
+<tr>
+<td><strong>Peak Count</strong></td>
+<td>Maximum simultaneous people detected in ROI</td>
+</tr>
+<tr>
+<td><strong>High Severity</strong></td>
+<td>Events with ≥10 people</td>
+</tr>
+<tr>
+<td><strong>30-Day Trend</strong></td>
+<td>Bar chart of daily crowd events</td>
+</tr>
+<tr>
+<td><strong>Severity Breakdown</strong></td>
+<td>Donut — Low (1–4), Medium (5–9), High (≥10)</td>
+</tr>
+<tr>
+<td><strong>Top Cameras</strong></td>
+<td>Ranked by event count with peak count</td>
+</tr>
+<tr>
+<td><strong>Hourly Distribution</strong></td>
+<td>Bar chart — when crowd events peak during the day</td>
+</tr>
+<tr>
+<td><strong>Event Log</strong></td>
+<td>Time, Edge, Camera, Rule, Crowd Count, Message, Snapshot</td>
+</tr>
+</tbody>
+</table>
+<h3 id="64-license-plate-recognition-lpr-report">6.4 License Plate Recognition (LPR) Report<a class="headerlink" href="#64-license-plate-recognition-lpr-report" title="Permanent link">&para;</a></h3>
+<p><img alt="LPR Report" src="../screenshots/control-07-report-lpr.png" /></p>
+<p>Displays all captured license plate events. Filter by edge, camera, date range, or search for a specific plate number.</p>
+<blockquote>
+<p>If no LPR events are shown, ensure a schedule has an <strong>LPR Model Path</strong> configured and the job is running.</p>
+</blockquote>
+<p>Export: <strong>↓ CSV</strong></p>
+<h3 id="65-people-counting-report">6.5 People Counting Report<a class="headerlink" href="#65-people-counting-report" title="Permanent link">&para;</a></h3>
+<p><img alt="People Counting" src="../screenshots/control-08-report-people-counting.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Widget</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Total Events</strong></td>
+<td>Number of crossing-line events</td>
+</tr>
+<tr>
+<td><strong>Total IN / OUT</strong></td>
+<td>Cumulative people counted entering and leaving</td>
+</tr>
+<tr>
+<td><strong>Net Flow</strong></td>
+<td>IN minus OUT — net occupancy change</td>
+</tr>
+<tr>
+<td><strong>30-Day Trend</strong></td>
+<td>Daily event bar chart</td>
+</tr>
+<tr>
+<td><strong>Hourly Distribution</strong></td>
+<td>When foot traffic peaks</td>
+</tr>
+<tr>
+<td><strong>Top Cameras by Events</strong></td>
+<td>Ranked list</td>
+</tr>
+<tr>
+<td><strong>Event Log</strong></td>
+<td>Time, Edge, Camera, Rule, IN count, OUT count, Snapshot</td>
+</tr>
+</tbody>
+</table>
+<p>Export: <strong>↓ CSV</strong></p>
+<hr />
+<h2 id="7-settings">7. Settings<a class="headerlink" href="#7-settings" title="Permanent link">&para;</a></h2>
+<p><strong>Settings — CV Control Plane</strong> provides system-level configuration for the control server.</p>
+<p><img alt="Settings" src="../screenshots/control-09-settings.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Branding</strong></td>
+<td>Change company name, application name, and logo</td>
+</tr>
+<tr>
+<td><strong>Snapshot Storage</strong></td>
+<td>Choose where alert snapshots are stored: Edge Local (served through each soca-dashboard) or Google Cloud Storage (GCS bucket, always accessible even when edge is offline)</td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td>Switch between SQLite (dev/small deployments) and PostgreSQL (production/Cloud Run). Changes require a service restart</td>
+</tr>
+<tr>
+<td><strong>Pub/Sub</strong></td>
+<td>Configure Google Cloud Pub/Sub subscription details for receiving detection events from edges</td>
+</tr>
+<tr>
+<td><strong>Ingest Key</strong></td>
+<td>Generate and push the ingest API key used by soca-ingest to authenticate event delivery</td>
+</tr>
+<tr>
+<td><strong>Edge Nodes</strong></td>
+<td>List of registered edge nodes — edit URL, name, GCS prefix, or delete an edge</td>
+</tr>
+<tr>
+<td><strong>Edge Operations</strong></td>
+<td>Per-edge: start/stop individual schedules remotely, trigger local or remote snapshot purges</td>
+</tr>
+<tr>
+<td><strong>soca-service</strong></td>
+<td>Configure the path and URL to the soca-service microservice (used for detection log aggregation)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="71-configure-snapshot-storage">7.1 Configure Snapshot Storage<a class="headerlink" href="#71-configure-snapshot-storage" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go to <strong>Settings</strong>.</li>
+<li>Under <strong>Snapshot Storage</strong>, select <strong>Google Cloud Storage</strong> for cloud deployments.</li>
+<li>Enter the <strong>Bucket Name</strong> (without <code>gs://</code> prefix).</li>
+<li>Click <strong>Save Storage</strong>.</li>
+</ol>
+<h3 id="72-register-a-new-edge">7.2 Register a New Edge<a class="headerlink" href="#72-register-a-new-edge" title="Permanent link">&para;</a></h3>
+<ol>
+<li>In <strong>Settings</strong>, scroll to <strong>Edge Nodes</strong>.</li>
+<li>Click <strong>Add Edge</strong> and fill in the edge name and dashboard URL (e.g. <code>http://10.49.225.166:8080</code>).</li>
+<li>Configure the GCS snapshot prefix for that edge.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+<h3 id="73-remote-edge-operations">7.3 Remote Edge Operations<a class="headerlink" href="#73-remote-edge-operations" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go to <strong>Settings → Edge Operations</strong> (or click the operations icon next to an edge).</li>
+<li>View all schedules on that edge with their current status.</li>
+<li>Click <strong>Start</strong> or <strong>Stop</strong> next to any schedule to control it remotely.</li>
+<li>Use <strong>Purge Remote</strong> to delete snapshots from the edge's local storage, or <strong>Purge Local</strong> to remove data from the control database.</li>
+</ol>
+<hr />
+<h2 id="8-users">8. Users<a class="headerlink" href="#8-users" title="Permanent link">&para;</a></h2>
+<p><strong>Users</strong> manages who can access soca-control.</p>
+<p><img alt="Users" src="../screenshots/control-10-users.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Username</td>
+<td>Login name</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>Contact email</td>
+</tr>
+<tr>
+<td>Role</td>
+<td>Admin or Viewer</td>
+</tr>
+<tr>
+<td>Last Login</td>
+<td>Timestamp of most recent session</td>
+</tr>
+<tr>
+<td>Actions</td>
+<td>Edit user details</td>
+</tr>
+</tbody>
+</table>
+<h3 id="81-add-a-user">8.1 Add a User<a class="headerlink" href="#81-add-a-user" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go to <strong>Users</strong>.</li>
+<li>Click <strong>Add User</strong> (top-right).</li>
+<li>Fill in username, email, password, and role.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+<h3 id="82-edit-a-user">8.2 Edit a User<a class="headerlink" href="#82-edit-a-user" title="Permanent link">&para;</a></h3>
+<p>Click <strong>Edit</strong> next to any user to update their email, password, or role.</p>
+<hr />
+<h2 id="9-common-tasks-quick-reference">9. Common Tasks — Quick Reference<a class="headerlink" href="#9-common-tasks-quick-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>View fleet-wide violation summary</td>
+<td>Dashboard</td>
+</tr>
+<tr>
+<td>Watch live cameras across all edges</td>
+<td>Live Stream</td>
+</tr>
+<tr>
+<td>See which cameras are online</td>
+<td>Assets</td>
+</tr>
+<tr>
+<td>Search all detection events</td>
+<td>Detection Log</td>
+</tr>
+<tr>
+<td>Export intrusion incidents to PDF</td>
+<td>Report → Intrusion → ↓ PDF</td>
+</tr>
+<tr>
+<td>Check PPE compliance by shift</td>
+<td>Report → PPE Compliance → Violations by Shift</td>
+</tr>
+<tr>
+<td>Find peak crowd hours</td>
+<td>Report → Crowd Detection → Hourly Distribution</td>
+</tr>
+<tr>
+<td>Search for a license plate</td>
+<td>Report → LPR → Search plate field</td>
+</tr>
+<tr>
+<td>Measure foot traffic net flow</td>
+<td>Report → People Counting</td>
+</tr>
+<tr>
+<td>Add a new edge node</td>
+<td>Settings → Edge Nodes → Add Edge</td>
+</tr>
+<tr>
+<td>Stop a schedule on a remote edge</td>
+<td>Settings → Edge Operations → Stop</td>
+</tr>
+<tr>
+<td>Change snapshot storage to GCS</td>
+<td>Settings → Snapshot Storage → Google Cloud Storage</td>
+</tr>
+<tr>
+<td>Add a new control user</td>
+<td>Users → Add User</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-troubleshooting">10. Troubleshooting<a class="headerlink" href="#10-troubleshooting" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edge shows <strong>offline</strong> in Assets</td>
+<td>Edge dashboard unreachable</td>
+<td>Check network connectivity to edge URL; verify soca-dashboard is running</td>
+</tr>
+<tr>
+<td>No events in Detection Log</td>
+<td>soca-ingest not delivering events</td>
+<td>Check Settings → Ingest Key is correct; verify Pub/Sub subscription is active</td>
+</tr>
+<tr>
+<td>Live stream shows no video</td>
+<td>Edge schedule not running or Enable Monitor is off</td>
+<td>Go to that edge's soca-dashboard and start a schedule with Enable Monitor enabled</td>
+</tr>
+<tr>
+<td>Snapshots not loading in reports</td>
+<td>GCS bucket misconfigured</td>
+<td>Check Settings → Snapshot Storage bucket name and service account permissions</td>
+</tr>
+<tr>
+<td>LPR report empty</td>
+<td>No LPR-enabled schedules running</td>
+<td>Edit a schedule on the edge, set an LPR Model Path, and start the job</td>
+</tr>
+<tr>
+<td>PPE compliance % seems wrong</td>
+<td>Date filter includes periods with no data</td>
+<td>Reset the filter or adjust the date range</td>
+</tr>
+<tr>
+<td>Dashboard shows degraded health</td>
+<td>One or more edges are offline or have high error rates</td>
+<td>Check Edge Status widget and investigate offline edges in Assets</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

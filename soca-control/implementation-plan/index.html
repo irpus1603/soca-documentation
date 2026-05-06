@@ -1,0 +1,1607 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/soca-control/implementation-plan/">
+      
+      
+        <link rel="prev" href="../edge-operations-plan/">
+      
+      
+        <link rel="next" href="../pubsub-transport-plan/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Implementation Plan - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#soca-control-implementation-plan" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Implementation Plan
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/user-guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Dashboard (Edge)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Control (Fleet)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SOCA Control (Fleet)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/soca-control-user-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../edge-operations-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Edge Operations Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Plan
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#file-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-1-project-scaffold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 1: Project Scaffold ✅
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-2-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 2: Models ✅
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-3-edge_clientpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 3: edge_client.py ✅
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-4-consume_streams-management-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 4: consume_streams (management command) ✅
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-5-backfill_camera_names-management-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 5: backfill_camera_names (management command) ✅
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-6-viewspy-urlspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 6: views.py + urls.py ✅
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-7-reportspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 7: reports.py ✅
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-8-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 8: Templates ✅
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-9-settings-migrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 9: Settings &amp; Migrations ✅
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#soca-dashboard-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-dashboard Changes ✅
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#soca-engine-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-engine Changes ✅
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pubsub-transport-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pub/Sub Transport
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="soca-control-implementation-plan">soca-control Implementation Plan<a class="headerlink" href="#soca-control-implementation-plan" title="Permanent link">&para;</a></h1>
+<p><strong>Status: COMPLETE</strong> (as of 2026-03-21)</p>
+<blockquote>
+<p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (<code>- [ ]</code>) syntax for tracking.</p>
+</blockquote>
+<p><strong>Goal:</strong> Build soca-control, a Django web app that aggregates CCTV detection events from multiple edge devices and provides a central fleet dashboard, live monitor, filterable reports, and user management.</p>
+<p><strong>Architecture:</strong> Edge devices (soca-engine + soca-dashboard) publish detection events to Redis Streams. soca-control polls those streams via a background management command (<code>consume_streams</code>), persists alerts locally in SQLite, and serves Django views for the dashboard UI. Video streams are direct MJPEG links to each edge — no proxying.</p>
+<p><strong>Tech Stack:</strong> Django 6.0.x, SQLite, redis-py, requests, reportlab, DaisyUI 4 (Tailwind CSS via CDN), Chart.js 4 (via CDN), Python stdlib <code>csv</code></p>
+<hr />
+<h2 id="file-map">File Map<a class="headerlink" href="#file-map" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>manage.py</code></td>
+<td>Django entry point</td>
+</tr>
+<tr>
+<td><code>requirements.txt</code></td>
+<td>Python dependencies</td>
+</tr>
+<tr>
+<td><code>soca_control/settings.py</code></td>
+<td>Django config (DB, auth, installed apps, ENGINE_TIMEOUT, TIME_ZONE=Asia/Jakarta)</td>
+</tr>
+<tr>
+<td><code>soca_control/urls.py</code></td>
+<td>Root URL routing → app.urls</td>
+</tr>
+<tr>
+<td><code>app/models.py</code></td>
+<td><code>Edge</code> and <code>Alert</code> Django models</td>
+</tr>
+<tr>
+<td><code>app/views.py</code></td>
+<td>All page views (dashboard, monitor, reports, settings, users)</td>
+</tr>
+<tr>
+<td><code>app/urls.py</code></td>
+<td>All URL patterns</td>
+</tr>
+<tr>
+<td><code>app/edge_client.py</code></td>
+<td>HTTP wrapper: fetch_edge_info, fetch_health, fetch_system, fetch_jobs, fetch_cameras, fetch_edge_data_parallel</td>
+</tr>
+<tr>
+<td><code>app/management/commands/consume_streams.py</code></td>
+<td>Long-running Redis stream consumer → saves Alerts</td>
+</tr>
+<tr>
+<td><code>app/management/commands/backfill_camera_names.py</code></td>
+<td>One-time backfill of camera_name on existing alerts</td>
+</tr>
+<tr>
+<td><code>app/reports.py</code></td>
+<td>export_csv and export_pdf functions</td>
+</tr>
+<tr>
+<td><code>app/templates/base.html</code></td>
+<td>Sidebar nav, DaisyUI layout, font-size overrides</td>
+</tr>
+<tr>
+<td><code>app/templates/dashboard/index.html</code></td>
+<td>Fleet summary cards + edge cards + top cameras chart + activity feed</td>
+</tr>
+<tr>
+<td><code>app/templates/monitor/index.html</code></td>
+<td>MJPEG grid with camera name labels</td>
+</tr>
+<tr>
+<td><code>app/templates/reports/intrusion.html</code></td>
+<td>Intrusion report (Stats/Detail tabs)</td>
+</tr>
+<tr>
+<td><code>app/templates/reports/ppe.html</code></td>
+<td>PPE report (Stats/Detail tabs)</td>
+</tr>
+<tr>
+<td><code>app/templates/reports/object_detection.html</code></td>
+<td>Object detection report (Stats/Detail tabs)</td>
+</tr>
+<tr>
+<td><code>app/templates/reports/_stats.html</code></td>
+<td>Shared statistics tab partial</td>
+</tr>
+<tr>
+<td><code>app/templates/reports/_detail_chart.html</code></td>
+<td>Chart.js bar charts (by camera + by edge)</td>
+</tr>
+<tr>
+<td><code>app/templates/reports/_filters.html</code></td>
+<td>Shared filter bar partial</td>
+</tr>
+<tr>
+<td><code>app/templates/settings/index.html</code></td>
+<td>Edge CRUD</td>
+</tr>
+<tr>
+<td><code>app/templates/users/list.html</code></td>
+<td>User list</td>
+</tr>
+<tr>
+<td><code>app/templates/users/form.html</code></td>
+<td>Create/edit user (shared)</td>
+</tr>
+<tr>
+<td><code>app/migrations/0001_initial.py</code></td>
+<td>Edge + Alert initial schema</td>
+</tr>
+<tr>
+<td><code>app/migrations/0002_*.py</code></td>
+<td>Additional fields</td>
+</tr>
+<tr>
+<td><code>app/migrations/0003_add_camera_name_to_alert.py</code></td>
+<td>Add camera_name to Alert</td>
+</tr>
+<tr>
+<td><code>app/migrations/0004_fix_camera_name_default.py</code></td>
+<td>Fix NOT NULL default for camera_name</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="task-1-project-scaffold">Task 1: Project Scaffold ✅<a class="headerlink" href="#task-1-project-scaffold" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[x] Create Django project: <code>django-admin startproject soca_control .</code></li>
+<li>[x] Create app: <code>python manage.py startapp app</code></li>
+<li>[x] Write <code>requirements.txt</code> (django, requests, redis, reportlab)</li>
+<li>[x] Configure <code>settings.py</code>: INSTALLED_APPS, LOGIN_URL, ENGINE_TIMEOUT, TIME_ZONE='Asia/Jakarta'</li>
+<li>[x] Wire <code>soca_control/urls.py</code> → auth views + <code>include('app.urls')</code></li>
+</ul>
+<hr />
+<h2 id="task-2-models">Task 2: Models ✅<a class="headerlink" href="#task-2-models" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[x] Write <code>Edge</code> model (name, url, engine_url, redis_url, redis_stream, location, active, last_seen)</li>
+<li>[x] Write <code>Alert</code> model (edge FK, edge_name, camera_id, camera_name, job_id, frame_id, timestamp, alert_category, rule_name, snapshot_message, snapshot_path, detection_count, in_roi_count, cls_summary, raw)</li>
+<li>[x] Add <code>snapshot_url</code> property to Alert (builds <code>{edge.url}/alerts/snapshot/{rel_path}</code>)</li>
+<li>[x] Add <code>display_camera()</code> method to Alert (returns camera_name or camera_id)</li>
+<li>[x] Run <code>makemigrations &amp;&amp; migrate</code></li>
+</ul>
+<hr />
+<h2 id="task-3-edge_clientpy">Task 3: edge_client.py ✅<a class="headerlink" href="#task-3-edge_clientpy" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[x] <code>_get(url, timeout)</code> — safe GET wrapper, returns None on failure</li>
+<li>[x] <code>fetch_edge_info(edge)</code> → <code>GET {edge.url}/api/edge-info/</code></li>
+<li>[x] <code>fetch_health(edge)</code> → <code>GET {edge.engine_url}/health</code></li>
+<li>[x] <code>fetch_system(edge)</code> → <code>GET {edge.engine_url}/system</code></li>
+<li>[x] <code>fetch_jobs(edge)</code> → <code>GET {edge.engine_url}/jobs/</code></li>
+<li>[x] <code>fetch_cameras(edge)</code> → <code>GET {edge.url}/api/cameras/</code> (returns <code>{camera_id: camera_name}</code>)</li>
+<li>[x] <code>fetch_edge_data_parallel(edges)</code> → ThreadPoolExecutor, DASHBOARD_TIMEOUT=2s</li>
+</ul>
+<hr />
+<h2 id="task-4-consume_streams-management-command">Task 4: consume_streams (management command) ✅<a class="headerlink" href="#task-4-consume_streams-management-command" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[x] <code>app/management/commands/consume_streams.py</code></li>
+<li>[x] XREAD BLOCK 5000 per edge, cursor tracked in memory, starts at <code>$</code></li>
+<li>[x] <code>parse_message</code> extracts all Alert fields including <code>camera_name</code></li>
+<li>[x] All string fields use <code>or ''</code> to handle explicit JSON nulls</li>
+<li>[x] Reloads edge list every 60s</li>
+<li>[x] Retry on Redis connection error after 30s</li>
+</ul>
+<hr />
+<h2 id="task-5-backfill_camera_names-management-command">Task 5: backfill_camera_names (management command) ✅<a class="headerlink" href="#task-5-backfill_camera_names-management-command" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[x] <code>app/management/commands/backfill_camera_names.py</code></li>
+<li>[x] For each active edge: calls <code>fetch_cameras()</code>, updates matching Alert records by camera_id</li>
+<li>[x] Run once to populate camera_name on 94 existing alerts</li>
+</ul>
+<hr />
+<h2 id="task-6-viewspy-urlspy">Task 6: views.py + urls.py ✅<a class="headerlink" href="#task-6-viewspy-urlspy" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[x] <code>dashboard</code> — parallel edge fetch, fleet stats, top cameras, recent activity</li>
+<li>[x] <code>monitor</code> — active jobs grid with camera name labels</li>
+<li>[x] <code>_apply_alert_filters</code> — edge/camera/date_from/date_to/rule/q params</li>
+<li>[x] <code>_compute_stats</code> — hourly distribution, 14-day trend, top cameras/rules/edges, avg ROI</li>
+<li>[x] <code>_report_view</code> — tabbed Stats/Detail, chart_data, base_qs for tab switching</li>
+<li>[x] <code>report_intrusion</code>, <code>report_ppe</code>, <code>report_object_detection</code></li>
+<li>[x] <code>settings_page</code> — Edge CRUD with fetch_edge_info on add</li>
+<li>[x] <code>edge_delete</code></li>
+<li>[x] <code>user_list</code>, <code>user_create</code>, <code>user_edit</code>, <code>user_delete</code></li>
+</ul>
+<hr />
+<h2 id="task-7-reportspy">Task 7: reports.py ✅<a class="headerlink" href="#task-7-reportspy" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[x] <code>export_csv(queryset, filename)</code> → StreamingHttpResponse</li>
+<li>[x] <code>export_pdf(queryset, title)</code> → HttpResponse with reportlab</li>
+</ul>
+<hr />
+<h2 id="task-8-templates">Task 8: Templates ✅<a class="headerlink" href="#task-8-templates" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[x] <code>base.html</code> — sidebar nav (Dashboard, Monitor, Reports dropdown, Settings, Users), font-size overrides</li>
+<li>[x] <code>dashboard/index.html</code> — 4 fleet stat cards, compact edge cards (CPU/MEM bars, 3-col alert counts), top cameras Chart.js bar chart, recent activity feed</li>
+<li>[x] <code>monitor/index.html</code> — MJPEG grid with camera name, placeholder cards, 60s auto-refresh</li>
+<li>[x] <code>reports/_filters.html</code> — filter bar with camera dropdown (name/id tuples), hidden tab input</li>
+<li>[x] <code>reports/_stats.html</code> — summary cards, hourly CSS bars, 14-day CSS bars, top tables</li>
+<li>[x] <code>reports/_detail_chart.html</code> — two Chart.js bar charts (by camera + by edge)</li>
+<li>[x] <code>reports/intrusion.html</code>, <code>ppe.html</code>, <code>object_detection.html</code> — tabbed layout extending base</li>
+<li>[x] <code>settings/index.html</code> — edge list + add/toggle/delete form</li>
+<li>[x] <code>users/list.html</code>, <code>users/form.html</code></li>
+</ul>
+<hr />
+<h2 id="task-9-settings-migrations">Task 9: Settings &amp; Migrations ✅<a class="headerlink" href="#task-9-settings-migrations" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[x] <code>TIME_ZONE = 'Asia/Jakarta'</code> in both soca-control and soca-dashboard</li>
+<li>[x] Migration 0003: add <code>camera_name</code> to Alert</li>
+<li>[x] Migration 0004: fix <code>default=''</code> for camera_name NOT NULL constraint</li>
+</ul>
+<hr />
+<h2 id="soca-dashboard-changes">soca-dashboard Changes ✅<a class="headerlink" href="#soca-dashboard-changes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[x] Added <code>/api/cameras/</code> endpoint (public, returns <code>{camera_id_str: camera_name}</code>)</li>
+<li>[x] Removed <code>@login_required</code> from <code>snapshot_image</code> view (needed for <code>&lt;img&gt;</code> tags)</li>
+<li>[x] Changed <code>alert_category</code> field in schedule form from text input to dropdown (Intrusion/Detection/PPE)</li>
+<li>[x] <code>to_job_config()</code> includes <code>camera_name</code> and <code>message_template</code> in <code>publish_queue</code> action</li>
+<li>[x] <code>publish_redis</code> default changed to <code>True</code></li>
+</ul>
+<hr />
+<h2 id="soca-engine-changes">soca-engine Changes ✅<a class="headerlink" href="#soca-engine-changes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[x] <code>JobConfig</code> — added <code>camera_name: str = ""</code></li>
+<li>[x] <code>FrameResult</code> — added <code>camera_name: str</code> field</li>
+<li>[x] <code>detection_worker</code> — passes <code>camera_name=cfg.camera_name</code> to FrameResult</li>
+<li>[x] <code>action_dispatcher</code> — <code>publish_queue</code> sets <code>result.snapshot_message</code> from <code>message_template</code></li>
+<li>[x] <code>output_publisher</code> — includes <code>"camera_name"</code> in Redis payload</li>
+<li>[x] <code>/jobs/</code> API — job list includes <code>camera_id</code> and <code>camera_name</code></li>
+</ul>
+<hr />
+<h2 id="verification">Verification<a class="headerlink" href="#verification" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>pip install -r requirements.txt &amp;&amp; python manage.py migrate</code></li>
+<li><code>python manage.py createsuperuser</code></li>
+<li>Register an edge in Settings → verify location auto-populates</li>
+<li><code>python manage.py consume_streams</code> in second terminal</li>
+<li>Trigger alert on edge → verify in dashboard + report with camera name + snapshot thumbnail</li>
+<li>Test Statistics tab: hourly chart, 14-day trend, top cameras/rules/edges, Chart.js charts</li>
+<li>Test <code>?export=csv</code> and <code>?export=pdf</code> on Detail tab</li>
+<li>Verify live monitor loads with camera names</li>
+<li>Disconnect edge → verify dashboard loads without hanging</li>
+<li><code>python manage.py backfill_camera_names</code> for existing alerts</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

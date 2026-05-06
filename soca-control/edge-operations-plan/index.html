@@ -1,0 +1,1945 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/soca-control/edge-operations-plan/">
+      
+      
+        <link rel="prev" href="../design-spec/">
+      
+      
+        <link rel="next" href="../implementation-plan/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Edge Operations Plan - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#edge-operations-soca-control-implementation-plan" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Edge Operations Plan
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/user-guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Dashboard (Edge)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Control (Fleet)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SOCA Control (Fleet)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/soca-control-user-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Edge Operations Plan
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Edge Operations Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#file-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-1-model-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 1: Model Migration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-2-edge_client-new-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 2: edge_client New Functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-3-operations-views" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 3: Operations Views
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-4-url-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 4: URL Patterns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-5-operations-page-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 5: Operations Page Template
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-6-settings-template-api-key-field-operations-link" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 6: Settings Template — API Key Field + Operations Link
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-7-manual-end-to-end-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 7: Manual End-to-End Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../implementation-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pubsub-transport-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pub/Sub Transport
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="edge-operations-soca-control-implementation-plan">Edge Operations — soca-control Implementation Plan<a class="headerlink" href="#edge-operations-soca-control-implementation-plan" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (<code>- [ ]</code>) syntax for tracking.</p>
+</blockquote>
+<p><strong>Goal:</strong> Add remote schedule control, remote purge trigger, and local Alert purge to soca-control, consuming soca-dashboard's new <code>/api/v1/</code> endpoints.</p>
+<p><strong>Architecture:</strong> <code>Edge</code> model gains an <code>api_key</code> field. <code>edge_client.py</code> gains five new functions using <code>Authorization: Api-Key</code> headers. A new Operations page per edge (<code>/edges/&lt;id&gt;/operations/</code>) shows schedule control, remote purge, and local Alert purge. The Settings page edge table gains an "Operations" link per row and an API Key field in the add-edge form.</p>
+<p><strong>Tech Stack:</strong> Django 6.x, requests, DaisyUI 4, vanilla JS fetch API</p>
+<p><strong>Spec:</strong> (in soca-dashboard repo) <code>docs/superpowers/specs/2026-03-22-edge-operations-design.md</code></p>
+<p><strong>Prerequisite:</strong> soca-dashboard Plan 1 must be complete and running — the <code>/api/v1/</code> endpoints must exist on each target edge.</p>
+<hr />
+<h2 id="file-map">File Map<a class="headerlink" href="#file-map" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app/models.py</code></td>
+<td>Add <code>api_key</code> to <code>Edge</code></td>
+</tr>
+<tr>
+<td><code>app/migrations/XXXX_edge_api_key.py</code></td>
+<td>Migration (auto-generated)</td>
+</tr>
+<tr>
+<td><code>app/edge_client.py</code></td>
+<td>Add 5 new functions: fetch_schedules, start_schedule, stop_schedule, purge_preview, purge_execute</td>
+</tr>
+<tr>
+<td><code>app/views.py</code></td>
+<td>Add: <code>edge_operations</code>, <code>edge_schedule_start</code>, <code>edge_schedule_stop</code>, <code>edge_purge_remote</code>, <code>edge_purge_local</code></td>
+</tr>
+<tr>
+<td><code>app/urls.py</code></td>
+<td>Add edges operations URLs</td>
+</tr>
+<tr>
+<td><code>app/templates/edges/operations.html</code></td>
+<td>New: Operations page template</td>
+</tr>
+<tr>
+<td><code>app/templates/settings/index.html</code></td>
+<td>Add API Key field to add-edge form + Operations link in table</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="task-1-model-migration">Task 1: Model Migration<a class="headerlink" href="#task-1-model-migration" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>app/models.py</code>
+- Create: migration (auto-generated)</p>
+<ul>
+<li>[ ] <strong>Step 1: Add <code>api_key</code> to <code>Edge</code> model in <code>app/models.py</code></strong></li>
+</ul>
+<p>After <code>active = models.BooleanField(default=True)</code> (line 12), add:</p>
+<div class="highlight"><pre><span></span><code>    <span class="n">api_key</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;API key from soca-dashboard Settings &gt; Operations&#39;</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Generate and run migration</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;/Users/mac-mini-home/Supriyadi/Projects/soca client-server/soca-control&quot;</span>
+python<span class="w"> </span>manage.py<span class="w"> </span>makemigrations<span class="w"> </span>app<span class="w"> </span>--name<span class="w"> </span>edge_api_key
+python<span class="w"> </span>manage.py<span class="w"> </span>migrate
+</code></pre></div>
+<p>Expected: migration created, <code>OK</code> on migrate.</p>
+<ul>
+<li>[ ] <strong>Step 3: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>app/models.py<span class="w"> </span>app/migrations/
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add api_key field to Edge model&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-2-edge_client-new-functions">Task 2: edge_client New Functions<a class="headerlink" href="#task-2-edge_client-new-functions" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>app/edge_client.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Append five new functions to <code>app/edge_client.py</code></strong></li>
+</ul>
+<p>After the existing <code>fetch_cameras</code> function (end of file), add:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_api_key_headers</span><span class="p">(</span><span class="n">edge</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return Authorization header dict for API v1 calls.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Api-Key </span><span class="si">{</span><span class="n">edge</span><span class="o">.</span><span class="n">api_key</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">}</span> <span class="k">if</span> <span class="n">edge</span><span class="o">.</span><span class="n">api_key</span> <span class="k">else</span> <span class="p">{}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">fetch_schedules</span><span class="p">(</span><span class="n">edge</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;GET /api/v1/schedules/ — returns list of schedule dicts or None on failure.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">edge</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">/api/v1/schedules/&#39;</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">_api_key_headers</span><span class="p">(</span><span class="n">edge</span><span class="p">),</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;fetch_schedules </span><span class="si">%s</span><span class="s1"> failed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">start_schedule</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="n">sched_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;POST /api/v1/schedules/&lt;id&gt;/start/ — returns dict or None on failure.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">edge</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">/api/v1/schedules/</span><span class="si">{</span><span class="n">sched_id</span><span class="si">}</span><span class="s1">/start/&#39;</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">_api_key_headers</span><span class="p">(</span><span class="n">edge</span><span class="p">),</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;start_schedule </span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1"> failed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">sched_id</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">stop_schedule</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="n">sched_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;POST /api/v1/schedules/&lt;id&gt;/stop/ — returns dict or None on failure.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">edge</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">/api/v1/schedules/</span><span class="si">{</span><span class="n">sched_id</span><span class="si">}</span><span class="s1">/stop/&#39;</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">_api_key_headers</span><span class="p">(</span><span class="n">edge</span><span class="p">),</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;stop_schedule </span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1"> failed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">sched_id</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">purge_preview</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="n">older_than</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;GET /api/v1/purge/preview/?older_than=&lt;days&gt; — returns dict or None on failure.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">edge</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">/api/v1/purge/preview/&#39;</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;older_than&#39;</span><span class="p">:</span> <span class="n">older_than</span><span class="p">},</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">_api_key_headers</span><span class="p">(</span><span class="n">edge</span><span class="p">),</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;purge_preview </span><span class="si">%s</span><span class="s1"> failed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">purge_execute</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="n">older_than</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;POST /api/v1/purge/execute/ — returns dict or None on failure.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">edge</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">/api/v1/purge/execute/&#39;</span><span class="p">,</span>
+            <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;older_than&#39;</span><span class="p">:</span> <span class="n">older_than</span><span class="p">},</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">_api_key_headers</span><span class="p">(</span><span class="n">edge</span><span class="p">),</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">TIMEOUT</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;purge_execute </span><span class="si">%s</span><span class="s1"> failed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Verify import</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;/Users/mac-mini-home/Supriyadi/Projects/soca client-server/soca-control&quot;</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from app.edge_client import fetch_schedules, start_schedule, stop_schedule, purge_preview, purge_execute; print(&#39;ok&#39;)&quot;</span>
+</code></pre></div>
+<p>Expected: <code>ok</code></p>
+<ul>
+<li>[ ] <strong>Step 3: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>app/edge_client.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add API v1 functions to edge_client (schedules, purge)&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-3-operations-views">Task 3: Operations Views<a class="headerlink" href="#task-3-operations-views" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>app/views.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Update imports in <code>app/views.py</code></strong></li>
+</ul>
+<p><strong>a)</strong> On line 8, <code>from django.http import FileResponse, Http404, JsonResponse</code> — <code>JsonResponse</code> must be present. Check the existing import; if it doesn't include <code>JsonResponse</code>, add it:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileResponse</span><span class="p">,</span> <span class="n">Http404</span><span class="p">,</span> <span class="n">JsonResponse</span>
+</code></pre></div>
+<p><strong>b)</strong> Update the <code>from .edge_client import ...</code> line (line 12) to include new functions:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">.edge_client</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">fetch_edge_info</span><span class="p">,</span> <span class="n">fetch_health</span><span class="p">,</span> <span class="n">fetch_system</span><span class="p">,</span> <span class="n">fetch_jobs</span><span class="p">,</span>
+    <span class="n">fetch_edge_data_parallel</span><span class="p">,</span>
+    <span class="n">fetch_schedules</span><span class="p">,</span> <span class="n">start_schedule</span><span class="p">,</span> <span class="n">stop_schedule</span><span class="p">,</span> <span class="n">purge_preview</span><span class="p">,</span> <span class="n">purge_execute</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Append new views to end of <code>app/views.py</code></strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1"># ── Edge Operations ────────────────────────────────────────────────────────────</span>
+
+<span class="nd">@login_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">edge_operations</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">edge_id</span><span class="p">):</span>
+    <span class="n">edge</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Edge</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">edge_id</span><span class="p">)</span>
+    <span class="n">schedules</span> <span class="o">=</span> <span class="n">fetch_schedules</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;edges/operations.html&#39;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s1">&#39;edge&#39;</span><span class="p">:</span> <span class="n">edge</span><span class="p">,</span>
+        <span class="s1">&#39;schedules&#39;</span><span class="p">:</span> <span class="n">schedules</span><span class="p">,</span>
+    <span class="p">})</span>
+
+
+<span class="nd">@login_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">edge_schedule_start</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">edge_id</span><span class="p">,</span> <span class="n">sched_id</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">!=</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;edge_operations&#39;</span><span class="p">,</span> <span class="n">edge_id</span><span class="o">=</span><span class="n">edge_id</span><span class="p">)</span>
+    <span class="n">edge</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Edge</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">edge_id</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">start_schedule</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="n">sched_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Schedule started: job </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;job_id&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Failed to start schedule. Check edge connectivity and API key.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;edge_operations&#39;</span><span class="p">,</span> <span class="n">edge_id</span><span class="o">=</span><span class="n">edge_id</span><span class="p">)</span>
+
+
+<span class="nd">@login_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">edge_schedule_stop</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">edge_id</span><span class="p">,</span> <span class="n">sched_id</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">!=</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;edge_operations&#39;</span><span class="p">,</span> <span class="n">edge_id</span><span class="o">=</span><span class="n">edge_id</span><span class="p">)</span>
+    <span class="n">edge</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Edge</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">edge_id</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">stop_schedule</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="n">sched_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Schedule stopped.&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Failed to stop schedule. Check edge connectivity and API key.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;edge_operations&#39;</span><span class="p">,</span> <span class="n">edge_id</span><span class="o">=</span><span class="n">edge_id</span><span class="p">)</span>
+
+
+<span class="nd">@login_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">edge_purge_remote</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">edge_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Proxy purge preview/execute to the remote edge&#39;s API v1.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">!=</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;edge_operations&#39;</span><span class="p">,</span> <span class="n">edge_id</span><span class="o">=</span><span class="n">edge_id</span><span class="p">)</span>
+    <span class="n">edge</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Edge</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">edge_id</span><span class="p">)</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">json</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">_json</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="n">_json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+        <span class="n">older_than</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">body</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;older_than&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">body</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="s1">&#39;execute&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Invalid request body&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;preview&#39;</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">purge_preview</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="n">older_than</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">purge_execute</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="n">older_than</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Edge unreachable or invalid API key&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">502</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+
+<span class="nd">@login_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">edge_purge_local</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">edge_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Purge soca-control&#39;s own Alert records for this edge.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">!=</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;edge_operations&#39;</span><span class="p">,</span> <span class="n">edge_id</span><span class="o">=</span><span class="n">edge_id</span><span class="p">)</span>
+    <span class="n">edge</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Edge</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">edge_id</span><span class="p">)</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">json</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">_json</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">timedelta</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Alert</span>
+
+    <span class="n">VALID_DAYS</span> <span class="o">=</span> <span class="p">{</span><span class="mi">30</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">365</span><span class="p">}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="n">_json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+        <span class="n">older_than</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">body</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;older_than&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">body</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="s1">&#39;execute&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Invalid request body&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">older_than</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VALID_DAYS</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Invalid older_than value&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+
+    <span class="n">cutoff</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">tz</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">older_than</span><span class="p">)</span>
+    <span class="n">qs</span> <span class="o">=</span> <span class="n">Alert</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">edge</span><span class="o">=</span><span class="n">edge</span><span class="p">,</span> <span class="n">created_at__lt</span><span class="o">=</span><span class="n">cutoff</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;preview&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span>
+            <span class="s1">&#39;older_than_days&#39;</span><span class="p">:</span> <span class="n">older_than</span><span class="p">,</span>
+            <span class="s1">&#39;cutoff_date&#39;</span><span class="p">:</span> <span class="n">cutoff</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;record_count&#39;</span><span class="p">:</span> <span class="n">qs</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span>
+        <span class="p">})</span>
+
+    <span class="n">deleted</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">qs</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;deleted_records&#39;</span><span class="p">:</span> <span class="n">deleted</span><span class="p">})</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 3: Verify</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;/Users/mac-mini-home/Supriyadi/Projects/soca client-server/soca-control&quot;</span>
+python<span class="w"> </span>manage.py<span class="w"> </span>check
+</code></pre></div>
+<p>Expected: <code>System check identified no issues</code></p>
+<ul>
+<li>[ ] <strong>Step 4: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>app/views.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add edge operations views (schedule control, remote/local purge)&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-4-url-patterns">Task 4: URL Patterns<a class="headerlink" href="#task-4-url-patterns" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>app/urls.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Add new URL patterns</strong></li>
+</ul>
+<p>After the existing <code>path('settings/&lt;int:edge_id&gt;/delete/', ...)</code> line (line 11), add:</p>
+<div class="highlight"><pre><span></span><code>    <span class="c1"># Edge Operations</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;edges/&lt;int:edge_id&gt;/operations/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">edge_operations</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;edge_operations&#39;</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;edges/&lt;int:edge_id&gt;/operations/schedules/&lt;int:sched_id&gt;/start/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">edge_schedule_start</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;edge_schedule_start&#39;</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;edges/&lt;int:edge_id&gt;/operations/schedules/&lt;int:sched_id&gt;/stop/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">edge_schedule_stop</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;edge_schedule_stop&#39;</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;edges/&lt;int:edge_id&gt;/operations/purge/remote/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">edge_purge_remote</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;edge_purge_remote&#39;</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;edges/&lt;int:edge_id&gt;/operations/purge/local/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">edge_purge_local</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;edge_purge_local&#39;</span><span class="p">),</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Verify</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>manage.py<span class="w"> </span>check
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 3: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>app/urls.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add edge operations URL patterns&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-5-operations-page-template">Task 5: Operations Page Template<a class="headerlink" href="#task-5-operations-page-template" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Create: <code>app/templates/edges/operations.html</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Create templates directory and file</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;/Users/mac-mini-home/Supriyadi/Projects/soca client-server/soca-control/app/templates/edges&quot;</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Create <code>app/templates/edges/operations.html</code></strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>{% extends &#39;base.html&#39; %}
+{% block title %}Operations — {{ edge.name }} — soca-control{% endblock %}
+{% block content %}
+
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;flex items-center gap-3 mb-6&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{% url &#39;settings&#39; %}&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-ghost btn-sm&quot;</span><span class="p">&gt;</span>← Settings<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-2xl font-bold&quot;</span><span class="p">&gt;</span>{{ edge.name }} — Operations<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6&quot;</span><span class="p">&gt;</span>
+
+  {# ── Schedule Control ── #}
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bg-base-100 rounded-box shadow p-4 lg:col-span-2&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h2</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;font-semibold text-lg mb-4&quot;</span><span class="p">&gt;</span>Schedule Control<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+    {% if schedules is None %}
+      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;alert alert-warning&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>Cannot reach edge API. Check connectivity and API key in Settings.<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    {% elif not schedules %}
+      <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-sm text-base-content/40&quot;</span><span class="p">&gt;</span>No schedules configured on this edge.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    {% else %}
+      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;overflow-x-auto&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">table</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;table table-sm&quot;</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Schedule<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Camera<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Category<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Status<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Actions<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+          <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">tbody</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;schedule-tbody&quot;</span><span class="p">&gt;</span>
+            {% for s in schedules %}
+            <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;font-medium&quot;</span><span class="p">&gt;</span>{{ s.name }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-base-content/70&quot;</span><span class="p">&gt;</span>{{ s.camera_name }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>
+                {% if s.alert_category %}
+                  <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;badge badge-sm badge-outline&quot;</span><span class="p">&gt;</span>{{ s.alert_category }}<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+                {% else %}
+                  <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;opacity-30 text-xs&quot;</span><span class="p">&gt;</span>—<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+                {% endif %}
+              <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>
+                {% if s.status == &#39;running&#39; %}
+                  <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;badge badge-success badge-sm&quot;</span><span class="p">&gt;</span>Running<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+                {% elif s.status == &#39;unknown&#39; %}
+                  <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;badge badge-warning badge-sm&quot;</span><span class="p">&gt;</span>Unknown<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+                {% else %}
+                  <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;badge badge-ghost badge-sm&quot;</span><span class="p">&gt;</span>Stopped<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+                {% endif %}
+              <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;flex gap-1&quot;</span><span class="p">&gt;</span>
+                  <span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;{% url &#39;edge_schedule_start&#39; edge.id s.id %}&quot;</span><span class="p">&gt;</span>
+                    {% csrf_token %}
+                    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-xs btn-success&quot;</span>
+                      <span class="err">{%</span> <span class="na">if</span> <span class="na">s</span><span class="err">.</span><span class="na">status </span><span class="o">=</span><span class="s">=</span> <span class="err">&#39;</span><span class="na">running</span><span class="err">&#39;</span> <span class="err">%}</span><span class="na">disabled</span><span class="err">{%</span> <span class="na">endif</span> <span class="err">%}</span><span class="p">&gt;</span>Start<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+                  <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+                  <span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;{% url &#39;edge_schedule_stop&#39; edge.id s.id %}&quot;</span><span class="p">&gt;</span>
+                    {% csrf_token %}
+                    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-xs btn-error&quot;</span>
+                      <span class="err">{%</span> <span class="na">if</span> <span class="na">s</span><span class="err">.</span><span class="na">status</span> <span class="err">!=</span> <span class="err">&#39;</span><span class="na">running</span><span class="err">&#39;</span> <span class="err">%}</span><span class="na">disabled</span><span class="err">{%</span> <span class="na">endif</span> <span class="err">%}</span><span class="p">&gt;</span>Stop<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+                  <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+              <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+            {% endfor %}
+          <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-xs text-base-content/40 mt-2&quot;</span><span class="p">&gt;</span>Auto-refreshes every 10s<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    {% endif %}
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+  {# ── Purge Edge Data (remote) ── #}
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bg-base-100 rounded-box shadow p-4&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h2</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;font-semibold text-lg mb-1&quot;</span><span class="p">&gt;</span>Purge Edge Data<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-sm text-base-content/50 mb-4&quot;</span><span class="p">&gt;</span>
+      Delete old detection records and snapshot files from <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>{{ edge.name }}<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>&#39;s soca-engine database.
+    <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;flex items-center gap-3 flex-wrap mb-3&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">select</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;remote-purge-age&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;select select-bordered select-sm&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;30&quot;</span><span class="p">&gt;</span>Older than 1 month<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;90&quot;</span><span class="p">&gt;</span>Older than 3 months<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;180&quot;</span><span class="p">&gt;</span>Older than 6 months<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;365&quot;</span><span class="p">&gt;</span>Older than 1 year<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;previewPurge(&#39;remote&#39;)&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-sm btn-outline&quot;</span><span class="p">&gt;</span>Preview<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;remote-purge-btn&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;document.getElementById(&#39;modal-remote-purge&#39;).showModal()&quot;</span>
+        <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-sm btn-error&quot;</span> <span class="na">disabled</span><span class="p">&gt;</span>Purge Now<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;remote-purge-result&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-sm text-base-content/60&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+  {# ── Purge soca-control Records (local) ── #}
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;bg-base-100 rounded-box shadow p-4&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h2</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;font-semibold text-lg mb-1&quot;</span><span class="p">&gt;</span>Purge Local Alert Records<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-sm text-base-content/50 mb-4&quot;</span><span class="p">&gt;</span>
+      Delete old <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>soca-control<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span> Alert records for this edge (does not affect the edge itself).
+    <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;flex items-center gap-3 flex-wrap mb-3&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">select</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;local-purge-age&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;select select-bordered select-sm&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;30&quot;</span><span class="p">&gt;</span>Older than 1 month<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;90&quot;</span><span class="p">&gt;</span>Older than 3 months<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;180&quot;</span><span class="p">&gt;</span>Older than 6 months<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;365&quot;</span><span class="p">&gt;</span>Older than 1 year<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;previewPurge(&#39;local&#39;)&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-sm btn-outline&quot;</span><span class="p">&gt;</span>Preview<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;local-purge-btn&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;document.getElementById(&#39;modal-local-purge&#39;).showModal()&quot;</span>
+        <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-sm btn-error&quot;</span> <span class="na">disabled</span><span class="p">&gt;</span>Purge Now<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;local-purge-result&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;text-sm text-base-content/60&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+{# Confirmation modals #}
+<span class="p">&lt;</span><span class="nt">dialog</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;modal-remote-purge&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal-box&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h3</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;font-bold text-lg text-error&quot;</span><span class="p">&gt;</span>Confirm Remote Purge<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;modal-remote-purge-text&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;py-4 text-sm&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal-action&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;dialog&quot;</span><span class="p">&gt;&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-ghost&quot;</span><span class="p">&gt;</span>Cancel<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;executePurge(&#39;remote&#39;)&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-error&quot;</span><span class="p">&gt;</span>Confirm Purge<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;dialog&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal-backdrop&quot;</span><span class="p">&gt;&lt;</span><span class="nt">button</span><span class="p">&gt;</span>close<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">dialog</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">dialog</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;modal-local-purge&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal-box&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h3</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;font-bold text-lg text-error&quot;</span><span class="p">&gt;</span>Confirm Local Purge<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;modal-local-purge-text&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;py-4 text-sm&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal-action&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;dialog&quot;</span><span class="p">&gt;&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-ghost&quot;</span><span class="p">&gt;</span>Cancel<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;executePurge(&#39;local&#39;)&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-error&quot;</span><span class="p">&gt;</span>Confirm Purge<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;dialog&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal-backdrop&quot;</span><span class="p">&gt;&lt;</span><span class="nt">button</span><span class="p">&gt;</span>close<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">dialog</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">EDGE_ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="nx">edge</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="p">}};</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">CSRF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;{{ csrf_token }}&#39;</span><span class="p">;</span>
+
+<span class="c1">// Schedule table auto-refresh via AJAX (avoids wiping purge UI state)</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">refreshSchedules</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">visibilityState</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;hidden&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">fetch</span><span class="p">(</span><span class="sb">`/edges/</span><span class="si">${</span><span class="nx">EDGE_ID</span><span class="si">}</span><span class="sb">/operations/`</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">html</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">parser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">DOMParser</span><span class="p">();</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">doc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parser</span><span class="p">.</span><span class="nx">parseFromString</span><span class="p">(</span><span class="nx">html</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;text/html&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">newTbody</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">doc</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;schedule-tbody&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">curTbody</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;schedule-tbody&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">newTbody</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">curTbody</span><span class="p">)</span><span class="w"> </span><span class="nx">curTbody</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">newTbody</span><span class="p">.</span><span class="nx">innerHTML</span><span class="p">;</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="w">    </span><span class="p">.</span><span class="k">catch</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{});</span>
+<span class="p">}</span>
+<span class="nx">setInterval</span><span class="p">(</span><span class="nx">refreshSchedules</span><span class="p">,</span><span class="w"> </span><span class="mf">10000</span><span class="p">);</span>
+
+<span class="c1">// Purge</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">purgeState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="nx">remote</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="nx">local</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">};</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">previewPurge</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">days</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">type</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;-purge-age&#39;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">resultEl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">type</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;-purge-result&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">btn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">type</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;-purge-btn&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">resultEl</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Loading...&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">btn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">purgeState</span><span class="p">[</span><span class="nx">type</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`/edges/</span><span class="si">${</span><span class="nx">EDGE_ID</span><span class="si">}</span><span class="sb">/operations/purge/</span><span class="si">${</span><span class="nx">type</span><span class="si">}</span><span class="sb">/`</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/json&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X-CSRFToken&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">CSRF</span><span class="p">},</span>
+<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nx">older_than</span><span class="o">:</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">days</span><span class="p">),</span><span class="w"> </span><span class="nx">action</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;preview&#39;</span><span class="p">}),</span>
+<span class="w">  </span><span class="p">})</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">resultEl</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Error: &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">error</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">      </span><span class="nx">purgeState</span><span class="p">[</span><span class="nx">type</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="nx">days</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">};</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">type</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;remote&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">mb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">disk_bytes</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1048576</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">resultEl</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">data</span><span class="p">.</span><span class="nx">record_count</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">()</span><span class="si">}</span><span class="sb"> records · </span><span class="si">${</span><span class="nx">data</span><span class="p">.</span><span class="nx">file_count</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">()</span><span class="si">}</span><span class="sb"> files · </span><span class="si">${</span><span class="nx">mb</span><span class="si">}</span><span class="sb"> MB`</span><span class="p">;</span>
+<span class="w">        </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;modal-remote-purge-text&#39;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">resultEl</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39; will be freed.&#39;</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">resultEl</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">data</span><span class="p">.</span><span class="nx">record_count</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">()</span><span class="si">}</span><span class="sb"> Alert records will be deleted`</span><span class="p">;</span>
+<span class="w">        </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;modal-local-purge-text&#39;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">resultEl</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;.&#39;</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="nx">btn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="w">    </span><span class="p">.</span><span class="k">catch</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">resultEl</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Request failed.&#39;</span><span class="p">;</span><span class="w"> </span><span class="p">});</span>
+<span class="p">}</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">executePurge</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;modal-&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">type</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;-purge&#39;</span><span class="p">).</span><span class="nx">close</span><span class="p">();</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">purgeState</span><span class="p">[</span><span class="nx">type</span><span class="p">])</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="nx">days</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">purgeState</span><span class="p">[</span><span class="nx">type</span><span class="p">];</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">resultEl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">type</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;-purge-result&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">btn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">type</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;-purge-btn&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">resultEl</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Purging...&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">btn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nx">fetch</span><span class="p">(</span><span class="sb">`/edges/</span><span class="si">${</span><span class="nx">EDGE_ID</span><span class="si">}</span><span class="sb">/operations/purge/</span><span class="si">${</span><span class="nx">type</span><span class="si">}</span><span class="sb">/`</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/json&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X-CSRFToken&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">CSRF</span><span class="p">},</span>
+<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nx">older_than</span><span class="o">:</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">days</span><span class="p">),</span><span class="w"> </span><span class="nx">action</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;execute&#39;</span><span class="p">}),</span>
+<span class="w">  </span><span class="p">})</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">resultEl</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Error: &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">error</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">type</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;remote&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">mb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">freed_bytes</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1048576</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">resultEl</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`Done: </span><span class="si">${</span><span class="nx">data</span><span class="p">.</span><span class="nx">deleted_records</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">()</span><span class="si">}</span><span class="sb"> records, </span><span class="si">${</span><span class="nx">data</span><span class="p">.</span><span class="nx">deleted_files</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">()</span><span class="si">}</span><span class="sb"> files, </span><span class="si">${</span><span class="nx">mb</span><span class="si">}</span><span class="sb"> MB freed`</span><span class="w"> </span><span class="o">+</span>
+<span class="w">          </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">skipped_files</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="sb">` (</span><span class="si">${</span><span class="nx">data</span><span class="p">.</span><span class="nx">skipped_files</span><span class="si">}</span><span class="sb"> skipped)`</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">resultEl</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`Done: </span><span class="si">${</span><span class="nx">data</span><span class="p">.</span><span class="nx">deleted_records</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">()</span><span class="si">}</span><span class="sb"> records deleted`</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="nx">purgeState</span><span class="p">[</span><span class="nx">type</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="w">    </span><span class="p">.</span><span class="k">catch</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">resultEl</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Request failed.&#39;</span><span class="p">;</span><span class="w"> </span><span class="p">});</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+{% endblock %}
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 3: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>app/templates/edges/
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add edge operations page template&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-6-settings-template-api-key-field-operations-link">Task 6: Settings Template — API Key Field + Operations Link<a class="headerlink" href="#task-6-settings-template-api-key-field-operations-link" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>app/templates/settings/index.html</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Add API Key field to "Register New Edge" form</strong></li>
+</ul>
+<p>In the form grid, after the <code>redis_stream</code> field block (after line 35), add before <code>&lt;/div&gt;</code> of the form grid:</p>
+<div class="highlight"><pre><span></span><code>      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;form-control sm:col-span-2&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label label-text text-sm&quot;</span><span class="p">&gt;</span>API Key <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;opacity-40 text-xs font-normal&quot;</span><span class="p">&gt;</span>(from edge Settings &gt; Operations)<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;api_key&quot;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;Paste API key from soca-dashboard&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;input input-bordered input-sm font-mono&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Update <code>settings_page</code> view to save <code>api_key</code> on add</strong></li>
+</ul>
+<p>In <code>app/views.py</code>, in the <code>settings_page</code> view, after <code>redis_stream = request.POST.get(...)</code> (around line 235), add:</p>
+<div class="highlight"><pre><span></span><code>            <span class="n">api_key</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;api_key&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</code></pre></div>
+<p>And when creating the edge (after <code>edge = Edge(...)</code>), add <code>api_key=api_key</code> to the constructor:</p>
+<div class="highlight"><pre><span></span><code>                <span class="n">edge</span> <span class="o">=</span> <span class="n">Edge</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">engine_url</span><span class="o">=</span><span class="n">engine_url</span><span class="p">,</span>
+                            <span class="n">redis_url</span><span class="o">=</span><span class="n">redis_url</span><span class="p">,</span> <span class="n">redis_stream</span><span class="o">=</span><span class="n">redis_stream</span><span class="p">,</span>
+                            <span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 3: Add "Operations" link to the edge table</strong></li>
+</ul>
+<p>In <code>app/templates/settings/index.html</code>, in the <code>&lt;td&gt;</code> actions column (after the Delete form, around line 77), add:</p>
+<div class="highlight"><pre><span></span><code>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{% url &#39;edge_operations&#39; edge.id %}&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-xs btn-outline btn-info&quot;</span><span class="p">&gt;</span>Operations<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 4: Verify page loads</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;/Users/mac-mini-home/Supriyadi/Projects/soca client-server/soca-control&quot;</span>
+python<span class="w"> </span>manage.py<span class="w"> </span>check
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 5: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>app/templates/settings/index.html<span class="w"> </span>app/views.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add API key field to edge registration + Operations link in settings&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-7-manual-end-to-end-verification">Task 7: Manual End-to-End Verification<a class="headerlink" href="#task-7-manual-end-to-end-verification" title="Permanent link">&para;</a></h2>
+<p>Prerequisites: soca-dashboard Plan 1 is complete and running.</p>
+<ul>
+<li>[ ] Open soca-control Settings → add or edit an edge → paste API key from soca-dashboard Settings &gt; Operations</li>
+<li>[ ] Click "Operations" link for that edge → <code>/edges/&lt;id&gt;/operations/</code> loads</li>
+<li>[ ] Schedule Control table shows schedules with correct status badges</li>
+<li>[ ] Click "Start" on a stopped schedule → page reloads → schedule shows Running</li>
+<li>[ ] Click "Stop" → schedule shows Stopped</li>
+<li>[ ] Select age, click "Preview" on "Purge Edge Data" → counts appear</li>
+<li>[ ] Confirm purge → deleted counts shown</li>
+<li>[ ] Select age, click "Preview" on "Purge Local Alert Records" → count of local Alert rows appears</li>
+<li>[ ] Confirm purge → local records deleted</li>
+<li>
+<p>[ ] Remove API key from edge → reload Operations → "Cannot reach edge API" warning shown</p>
+</li>
+<li>
+<p>[ ] <strong>Final commit</strong></p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;/Users/mac-mini-home/Supriyadi/Projects/soca client-server/soca-control&quot;</span>
+git<span class="w"> </span>add<span class="w"> </span>-A
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: edge operations complete (remote schedule control, purge, local alert purge)&quot;</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

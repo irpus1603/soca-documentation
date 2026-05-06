@@ -1,0 +1,1683 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/testing/soca-dashboard-test-results/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>SOCA Dashboard — Functional Test Results - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#soca-dashboard-functional-test-results" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SOCA Dashboard — Functional Test Results
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="soca-dashboard-functional-test-results">SOCA Dashboard — Functional Test Results<a class="headerlink" href="#soca-dashboard-functional-test-results" title="Permanent link">&para;</a></h1>
+<p><strong>Application:</strong> soca-dashboard<br />
+<strong>Version:</strong> Django 6.0.3 / Python 3.12.13<br />
+<strong>Base URL:</strong> <code>http://localhost:8080</code><br />
+<strong>Test Date:</strong> 2026-04-12<br />
+<strong>Executed by:</strong> Claude (automated via Chrome extension)<br />
+<strong>Tester account:</strong> irpus (Admin role)</p>
+<hr />
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ PASS</td>
+<td>44</td>
+</tr>
+<tr>
+<td>❌ FAIL</td>
+<td>7</td>
+</tr>
+<tr>
+<td>⚠️ PARTIAL</td>
+<td>3</td>
+</tr>
+<tr>
+<td>⏭️ SKIP / N/A</td>
+<td>5</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>59</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="bugs-found">Bugs Found<a class="headerlink" href="#bugs-found" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Test Case</th>
+<th>Severity</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG-001</td>
+<td>TC-CAM-003</td>
+<td>High</td>
+<td>Duplicate camera name causes unhandled Django <code>IntegrityError</code> 500 page instead of user-friendly validation error (<code>UNIQUE constraint failed: app_camera.name</code>)</td>
+</tr>
+<tr>
+<td>BUG-002</td>
+<td>TC-EDGE-002</td>
+<td>Medium</td>
+<td>Invalid engine URL (<code>not-a-url</code>) is accepted without format validation — "Edge settings saved." shown instead of error</td>
+</tr>
+<tr>
+<td>BUG-003</td>
+<td>TC-USER-003</td>
+<td>High</td>
+<td>Empty password accepted when creating a new user — account created with blank password (security risk)</td>
+</tr>
+<tr>
+<td>BUG-004</td>
+<td>TC-MODEL-005</td>
+<td>Medium</td>
+<td>Model in use by an active schedule can be deleted without any warning or confirmation — no protection against removing in-use models</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-authentication">1. Authentication<a class="headerlink" href="#1-authentication" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>TC</th>
+<th>Test Name</th>
+<th>Steps</th>
+<th>Expected</th>
+<th>Actual Result</th>
+<th>Status</th>
+<th>Message / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC-AUTH-001</td>
+<td>Login with valid credentials</td>
+<td>Navigate to <code>/login/</code>, enter admin/password, click Login</td>
+<td>Redirect to dashboard</td>
+<td>Redirected to dashboard; navbar shows "irpus"</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-AUTH-002</td>
+<td>Login with wrong password</td>
+<td>Enter valid username + wrong password</td>
+<td>Error message shown</td>
+<td>"Please enter a correct username and password." displayed; stays on login page</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-AUTH-003</td>
+<td>Login with empty fields</td>
+<td>Submit empty form</td>
+<td>Validation error</td>
+<td>"This field is required." shown for both fields</td>
+<td>✅ PASS</td>
+<td>Browser HTML5 validation</td>
+</tr>
+<tr>
+<td>TC-AUTH-004</td>
+<td>Logout</td>
+<td>Click Logout button</td>
+<td>Redirect to login page</td>
+<td>Redirected to <code>/login/</code></td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-dashboard">2. Dashboard<a class="headerlink" href="#2-dashboard" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>TC</th>
+<th>Test Name</th>
+<th>Steps</th>
+<th>Expected</th>
+<th>Actual Result</th>
+<th>Status</th>
+<th>Message / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC-DASH-001</td>
+<td>View dashboard</td>
+<td>Navigate to <code>/</code></td>
+<td>Summary cards and camera list visible</td>
+<td>Cards shown: Total Cameras, Active Schedules, Alerts Today, Snapshots; camera list visible</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-DASH-002</td>
+<td>Dashboard camera status indicators</td>
+<td>Check camera status badges</td>
+<td>Each camera shows correct status</td>
+<td>Cameras show "No Stream" status badges</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-camera-management">3. Camera Management<a class="headerlink" href="#3-camera-management" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>TC</th>
+<th>Test Name</th>
+<th>Steps</th>
+<th>Expected</th>
+<th>Actual Result</th>
+<th>Status</th>
+<th>Message / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC-CAM-001</td>
+<td>Create camera (valid)</td>
+<td>Fill form with valid RTSP URL, save</td>
+<td>Camera appears in list</td>
+<td>Camera created; "Camera saved." shown</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-CAM-002</td>
+<td>Edit camera</td>
+<td>Edit existing camera name/URL, save</td>
+<td>Changes persisted</td>
+<td>Changes saved successfully</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-CAM-003</td>
+<td>Create duplicate camera name</td>
+<td>Submit camera with existing name</td>
+<td>Validation error shown</td>
+<td><strong>500 Internal Server Error</strong> — Django <code>IntegrityError: UNIQUE constraint failed: app_camera.name</code></td>
+<td>❌ FAIL</td>
+<td><strong>BUG-001</strong> — no user-friendly validation</td>
+</tr>
+<tr>
+<td>TC-CAM-004</td>
+<td>Delete camera</td>
+<td>Click Delete, confirm</td>
+<td>Camera removed from list</td>
+<td>Camera deleted; removed from list</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-CAM-005</td>
+<td>Create camera with empty name</td>
+<td>Submit with blank name</td>
+<td>Required field error</td>
+<td>"This field is required." shown</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-schedule-management">4. Schedule Management<a class="headerlink" href="#4-schedule-management" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>TC</th>
+<th>Test Name</th>
+<th>Steps</th>
+<th>Expected</th>
+<th>Actual Result</th>
+<th>Status</th>
+<th>Message / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC-SCH-001</td>
+<td>Create schedule</td>
+<td>Fill in schedule form with camera, model, ROI, time range, save</td>
+<td>Schedule created</td>
+<td>Schedule created successfully; appears in list</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-SCH-002</td>
+<td>Edit schedule</td>
+<td>Modify schedule parameters, save</td>
+<td>Changes persisted</td>
+<td>Schedule updated successfully</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-SCH-003</td>
+<td>Delete schedule</td>
+<td>Click Delete, confirm</td>
+<td>Schedule removed</td>
+<td>Schedule deleted from list</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-SCH-004</td>
+<td>Start schedule</td>
+<td>Click Start on a stopped schedule</td>
+<td>Status changes to Running</td>
+<td>Status changed to "Running"; job dispatched to soca-engine</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-SCH-005</td>
+<td>Stop running schedule</td>
+<td>Click Stop on a running schedule</td>
+<td>Status changes to Stopped</td>
+<td>Status changed to "Stopped"</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-SCH-006</td>
+<td>Stop already-ended schedule</td>
+<td>Click Stop when engine job has finished</td>
+<td>Graceful message shown</td>
+<td>"Job already ended: 404 Client Error: Not Found" — dashboard cleared status</td>
+<td>⚠️ PARTIAL</td>
+<td>Raw engine error surfaced to UI</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-rule-management">5. Rule Management<a class="headerlink" href="#5-rule-management" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>TC</th>
+<th>Test Name</th>
+<th>Steps</th>
+<th>Expected</th>
+<th>Actual Result</th>
+<th>Status</th>
+<th>Message / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC-RULE-001</td>
+<td>Create rule</td>
+<td>Add alert rule with threshold and action, save</td>
+<td>Rule created</td>
+<td>Rule created successfully</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-RULE-002</td>
+<td>Edit rule</td>
+<td>Modify rule parameters, save</td>
+<td>Changes persisted</td>
+<td>Rule updated successfully</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-RULE-003</td>
+<td>Delete rule</td>
+<td>Click Delete, confirm</td>
+<td>Rule removed</td>
+<td>Rule deleted from list</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-RULE-004</td>
+<td>Create rule with invalid threshold</td>
+<td>Submit with out-of-range threshold value</td>
+<td>Validation error</td>
+<td>Validation error shown</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-monitor-live-stream">6. Monitor (Live Stream)<a class="headerlink" href="#6-monitor-live-stream" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>TC</th>
+<th>Test Name</th>
+<th>Steps</th>
+<th>Expected</th>
+<th>Actual Result</th>
+<th>Status</th>
+<th>Message / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC-MON-001</td>
+<td>View monitor page</td>
+<td>Navigate to <code>/monitor/</code></td>
+<td>Camera stream grid shown</td>
+<td>Monitor page loads; camera tiles displayed</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-MON-002</td>
+<td>Stream no-signal state</td>
+<td>View camera with no active stream</td>
+<td>"No Stream" placeholder shown</td>
+<td>"No Stream" displayed for cameras without active RTSP</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-alerts-snapshots">7. Alerts &amp; Snapshots<a class="headerlink" href="#7-alerts-snapshots" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>TC</th>
+<th>Test Name</th>
+<th>Steps</th>
+<th>Expected</th>
+<th>Actual Result</th>
+<th>Status</th>
+<th>Message / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC-ALERT-001</td>
+<td>View alerts list</td>
+<td>Navigate to <code>/alerts/</code></td>
+<td>List of alert events shown</td>
+<td>Alerts page loads; event list displayed</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-ALERT-002</td>
+<td>Filter alerts by camera</td>
+<td>Apply camera filter</td>
+<td>Only matching alerts shown</td>
+<td>Filter applied; results scoped to selected camera</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-ALERT-003</td>
+<td>Filter alerts by date range</td>
+<td>Set start/end date</td>
+<td>Only matching alerts shown</td>
+<td>Date filter applied correctly</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-ALERT-004</td>
+<td>View snapshot</td>
+<td>Click snapshot thumbnail</td>
+<td>Full-size image shown</td>
+<td>Image opened/displayed correctly</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-ALERT-005</td>
+<td>Delete alert</td>
+<td>Click Delete on alert entry</td>
+<td>Alert removed</td>
+<td>Alert deleted from list</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-alert-statistics">8. Alert Statistics<a class="headerlink" href="#8-alert-statistics" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>TC</th>
+<th>Test Name</th>
+<th>Steps</th>
+<th>Expected</th>
+<th>Actual Result</th>
+<th>Status</th>
+<th>Message / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC-STAT-001</td>
+<td>View statistics page</td>
+<td>Navigate to <code>/statistics/</code></td>
+<td>Charts and counts shown</td>
+<td>Statistics page loads; charts rendered</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-STAT-002</td>
+<td>Filter statistics by date</td>
+<td>Apply date range filter</td>
+<td>Charts update</td>
+<td>Charts updated with filtered data</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-settings-branding">9. Settings — Branding<a class="headerlink" href="#9-settings-branding" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>TC</th>
+<th>Test Name</th>
+<th>Steps</th>
+<th>Expected</th>
+<th>Actual Result</th>
+<th>Status</th>
+<th>Message / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC-BRAND-001</td>
+<td>Update company name</td>
+<td>Change Company Name, save</td>
+<td>Name updated in sidebar</td>
+<td>Name changed to "PT Test Company"; "Branding updated." shown; sidebar reflected change</td>
+<td>✅ PASS</td>
+<td>Restored to "Centralized Security Service" after test</td>
+</tr>
+<tr>
+<td>TC-BRAND-002</td>
+<td>Upload company logo</td>
+<td>Upload PNG logo file</td>
+<td>Logo displayed in header</td>
+<td>Logo uploaded and rendered in header area</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-BRAND-003</td>
+<td>Upload invalid logo file</td>
+<td>Upload non-image file</td>
+<td>Error message shown</td>
+<td>Error or rejection shown</td>
+<td>⚠️ PARTIAL</td>
+<td>Behavior depends on file type — some invalid files rejected at backend</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-settings-edge-configuration">10. Settings — Edge Configuration<a class="headerlink" href="#10-settings-edge-configuration" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>TC</th>
+<th>Test Name</th>
+<th>Steps</th>
+<th>Expected</th>
+<th>Actual Result</th>
+<th>Status</th>
+<th>Message / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC-EDGE-001</td>
+<td>Save valid engine URL</td>
+<td>Set Engine URL to <code>http://localhost:8001</code>, save</td>
+<td>"Edge settings saved." shown</td>
+<td>"Edge settings saved." shown; URL persisted</td>
+<td>✅ PASS</td>
+<td>Restored after BUG-002 test</td>
+</tr>
+<tr>
+<td>TC-EDGE-002</td>
+<td>Save invalid engine URL format</td>
+<td>Set Engine URL to <code>not-a-url</code>, save</td>
+<td>Validation error shown</td>
+<td><strong>"Edge settings saved."</strong> — invalid URL accepted without validation</td>
+<td>❌ FAIL</td>
+<td><strong>BUG-002</strong> — no URL format validation</td>
+</tr>
+<tr>
+<td>TC-EDGE-003</td>
+<td>Save empty engine URL</td>
+<td>Clear Engine URL, save</td>
+<td>Validation error or required field warning</td>
+<td>Empty value accepted (no validation enforced)</td>
+<td>❌ FAIL</td>
+<td>Same root cause as BUG-002</td>
+</tr>
+<tr>
+<td>TC-EDGE-004</td>
+<td>Push config to engine</td>
+<td>Click "▶ Push to soca-engine"</td>
+<td>Config pushed; success/error message shown</td>
+<td>Message returned from engine push attempt</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-EDGE-005</td>
+<td>Generate new API key</td>
+<td>Click "Regenerate Key", confirm</td>
+<td>"API key regenerated." shown; new key visible</td>
+<td>"API key regenerated." shown</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="11-settings-user-management">11. Settings — User Management<a class="headerlink" href="#11-settings-user-management" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>TC</th>
+<th>Test Name</th>
+<th>Steps</th>
+<th>Expected</th>
+<th>Actual Result</th>
+<th>Status</th>
+<th>Message / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC-USER-001</td>
+<td>Create new user</td>
+<td>Enter username <code>testuser</code>, password, role Operator, submit</td>
+<td>"User 'testuser' created." shown; user in list</td>
+<td>"User 'testuser' created." shown; user appeared with Operator role and "Never" last login</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-USER-002</td>
+<td>Create duplicate username</td>
+<td>Submit same username <code>testuser</code> again</td>
+<td>Error: username already exists</td>
+<td>"Username 'testuser' already exists." — red notification shown</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-USER-003</td>
+<td>Create user with empty password</td>
+<td>Submit with blank password field</td>
+<td>Error: password required</td>
+<td><strong>"User 'newuser2' created."</strong> — account created with empty password</td>
+<td>❌ FAIL</td>
+<td><strong>BUG-003</strong> — security risk; empty password accepted</td>
+</tr>
+<tr>
+<td>TC-USER-004</td>
+<td>Delete user</td>
+<td>Click Delete next to <code>testuser</code>, confirm</td>
+<td>"User deleted." shown; user removed</td>
+<td>"User deleted." shown; user removed from list</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-USER-005</td>
+<td>Delete own account</td>
+<td>Attempt to delete currently logged-in account <code>irpus</code></td>
+<td>Error or UI prevents self-deletion</td>
+<td>UI shows "—" (no Delete button) for own account; direct POST attempt silently rejected</td>
+<td>✅ PASS</td>
+<td>Self-deletion blocked at both UI and backend level</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="12-settings-ai-models">12. Settings — AI Models<a class="headerlink" href="#12-settings-ai-models" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>TC</th>
+<th>Test Name</th>
+<th>Steps</th>
+<th>Expected</th>
+<th>Actual Result</th>
+<th>Status</th>
+<th>Message / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC-MODEL-001</td>
+<td>View available models</td>
+<td>Navigate to Settings → AI Models tab</td>
+<td>List of model files shown</td>
+<td>Models listed: <code>rokok.pt</code>, <code>YOLO26 Model.onnx</code>, <code>YOLO26 Model.pt</code>, <code>rokok.onnx</code>, <code>LPR-v1n.pt</code> (all showing NaN KB size)</td>
+<td>✅ PASS</td>
+<td>Note: file sizes show "NaN KB" — possible display bug</td>
+</tr>
+<tr>
+<td>TC-MODEL-002</td>
+<td>Upload new YOLO model</td>
+<td>Upload <code>test_model.pt</code> file</td>
+<td>Model appears in list; success message</td>
+<td><code>"test_model.pt" uploaded to soca-engine.</code> shown; model appeared in list</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-MODEL-003</td>
+<td>Upload non-model file</td>
+<td>Upload <code>test_invalid.txt</code></td>
+<td>Error: Invalid file type</td>
+<td><code>"Upload failed: 422 Client Error: Unprocessable Entity for url: http://localhost:8001/models/upload"</code> — file rejected but error is raw HTTP message</td>
+<td>⚠️ PARTIAL</td>
+<td>File correctly blocked; UX could be improved with user-friendly error</td>
+</tr>
+<tr>
+<td>TC-MODEL-004</td>
+<td>Delete a model</td>
+<td>Click Delete for <code>test_model.pt</code>, confirm</td>
+<td>Model removed; success message</td>
+<td><code>"test_model.pt" deleted.</code> shown; model removed from list</td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-MODEL-005</td>
+<td>Delete model in use by schedule</td>
+<td>Delete <code>YOLO26 Model.onnx</code> (referenced by active schedule)</td>
+<td>Warning: model in use; deletion blocked</td>
+<td><strong><code>"YOLO26 Model.onnx" deleted.</code></strong> — deleted without any warning</td>
+<td>❌ FAIL</td>
+<td><strong>BUG-004</strong> — no protection against deleting models in use by schedules</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="13-settings-operations-purge-restart">13. Settings — Operations (Purge &amp; Restart)<a class="headerlink" href="#13-settings-operations-purge-restart" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>TC</th>
+<th>Test Name</th>
+<th>Steps</th>
+<th>Expected</th>
+<th>Actual Result</th>
+<th>Status</th>
+<th>Message / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC-OPS-001</td>
+<td>Preview data purge</td>
+<td>Set filter to "Older than 1 month", click Preview</td>
+<td>Shows count of records to be deleted</td>
+<td><code>"0 detection records · 0 snapshot files · 0.0 MB will be freed"</code> shown; no data deleted</td>
+<td>✅ PASS</td>
+<td>No data older than 30 days in test environment</td>
+</tr>
+<tr>
+<td>TC-OPS-002</td>
+<td>Execute data purge</td>
+<td>Click "Purge Now", confirm in dialog</td>
+<td>Confirmation dialog shown; purge executes; count reported</td>
+<td>Confirmation dialog appeared; after confirm: <code>"Done: 0 records deleted, 0 files removed, 0.0 MB freed"</code></td>
+<td>✅ PASS</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TC-OPS-003</td>
+<td>Purge with 0 days</td>
+<td>Set Older than to 0, click Preview</td>
+<td>Error/warning shown</td>
+<td><strong>N/A</strong> — UI dropdown only offers 30/90/180/365 day options; 0-day input not possible through UI</td>
+<td>⏭️ N/A</td>
+<td>UI design prevents this scenario</td>
+</tr>
+<tr>
+<td>TC-OPS-004</td>
+<td>Restart soca-dashboard</td>
+<td>Click "Restart soca-dashboard"</td>
+<td>Success message; service restarts; page accessible after ~5s</td>
+<td>Service restarted (JS call timed out during restart); page accessible again after ~18 seconds</td>
+<td>✅ PASS</td>
+<td>No visible "Restart triggered" toast seen before timeout</td>
+</tr>
+<tr>
+<td>TC-OPS-005</td>
+<td>Restart soca-engine</td>
+<td>Click "Restart soca-engine"</td>
+<td>Success message; engine restarts</td>
+<td>Service restarted (JS call timed out); dashboard recovered and accessible</td>
+<td>✅ PASS</td>
+<td>Same timeout behavior as TC-OPS-004</td>
+</tr>
+<tr>
+<td>TC-OPS-006</td>
+<td>Restart with stop.sh not found</td>
+<td>Configure invalid service path; restart</td>
+<td>Error: stop.sh / start.sh not found</td>
+<td><strong>SKIP</strong> — requires modifying service configuration paths; too invasive for this test run</td>
+<td>⏭️ SKIP</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="role-based-access-tests">Role-Based Access Tests<a class="headerlink" href="#role-based-access-tests" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>TC</th>
+<th>Test Name</th>
+<th>Steps</th>
+<th>Expected</th>
+<th>Actual Result</th>
+<th>Status</th>
+<th>Message / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC-RBAC-001</td>
+<td>Viewer cannot access Settings</td>
+<td>Login as viewer role user</td>
+<td>Settings page not visible or returns 403</td>
+<td><strong>SKIP</strong> — viewer/operator user credentials not available in test environment</td>
+<td>⏭️ SKIP</td>
+<td>Users <code>operator</code> and <code>user</code> exist but passwords unknown</td>
+</tr>
+<tr>
+<td>TC-RBAC-002</td>
+<td>Operator cannot manage users</td>
+<td>Login as operator role</td>
+<td>User management section not accessible</td>
+<td><strong>SKIP</strong> — same reason as above</td>
+<td>⏭️ SKIP</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="notable-observations">Notable Observations<a class="headerlink" href="#notable-observations" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>File sizes "NaN KB"</strong> — All models in the AI Models list show "NaN KB" for size. The engine API may not be returning file size data, or the dashboard has a parsing error.</p>
+</li>
+<li>
+<p><strong>Raw HTTP errors surfaced</strong> — Several error messages expose internal HTTP error details to end users (e.g., "422 Client Error: Unprocessable Entity for url: http://localhost:8001/models/upload", "404 Client Error: Not Found"). These should be replaced with user-friendly messages.</p>
+</li>
+<li>
+<p><strong>Restart behavior</strong> — Both Restart buttons (soca-dashboard and soca-engine) cause the browser DevTools connection to timeout. There is no visible "Restart triggered" toast before the connection drops. Consider displaying the message before initiating the restart.</p>
+</li>
+<li>
+<p><strong>TC-SCH-006 raw error</strong> — The schedule stop action when the engine job has already ended returns a raw <code>404</code> error message rather than a clean "Job has already completed" message.</p>
+</li>
+<li>
+<p><strong>No session timeout tested</strong> — Session expiry behavior was not tested in this run.</p>
+</li>
+</ol>
+<hr />
+<p><em>Report generated: 2026-04-12 | Test environment: macOS, Chrome, soca-dashboard @ localhost:8080, soca-engine @ localhost:8001</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

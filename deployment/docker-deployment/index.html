@@ -1,0 +1,2480 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/deployment/docker-deployment/">
+      
+      
+        <link rel="prev" href="../../architecture/system-overview/">
+      
+      
+        <link rel="next" href="../bare-metal-rhel-guide/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Docker - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#soca-platform-docker-deployment-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Docker
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infrastructure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Infrastructure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#repository-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repository Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Repository Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-this-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this split?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment Topology
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment Topology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repo-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repo Contents
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Repo Contents">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#soca-edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-edge/
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soca-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-control/
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soca-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-service/
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soca-deploy-orchestration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-deploy/ (orchestration)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#splitting-the-git-repos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Splitting the Git Repos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-stack-deployment-soca-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full-Stack Deployment (soca-deploy)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Full-Stack Deployment (soca-deploy)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-clone-all-repos-side-by-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Clone all repos side by side
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-configure-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Configure environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-build-and-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Build and start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-create-admin-accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Create admin accounts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-verify-health" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Verify health
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#standalone-deployment-per-repo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Standalone Deployment (per-repo)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Standalone Deployment (per-repo)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#soca-edge-standalone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-edge standalone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soca-control-standalone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-control standalone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soca-service-standalone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-service standalone
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-deployment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Post-Deployment Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Post-Deployment Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configure-soca-dashboard-edge-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure soca-dashboard Edge Settings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-soca-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure soca-control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upload-yolo-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upload YOLO Models
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment Variables Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment Variables Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#soca-edge_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-edge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soca-control_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soca-service_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-service
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Volumes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#networking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Networking
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Networking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#firewall-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Firewall Recommendations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updating Services
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpu-support-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPU Support (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#useful-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Useful Commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-exits-immediately" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container exits immediately
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soca-control-csrf-403-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-control CSRF / 403 errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#models-not-showing-in-ai-models-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models not showing in AI Models tab
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soca-service-not-consuming-alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-service not consuming alerts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-fails-missing-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build fails (missing library)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bare-metal-rhel-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bare Metal RHEL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gcp-cloud-run-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GCP Cloud Run
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../pubsub-setup-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integrations
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../metabase-reporting-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporting
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../cython-protection-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="soca-platform-docker-deployment-guide">SOCA Platform — Docker Deployment Guide<a class="headerlink" href="#soca-platform-docker-deployment-guide" title="Permanent link">&para;</a></h1>
+<h2 id="repository-structure">Repository Structure<a class="headerlink" href="#repository-structure" title="Permanent link">&para;</a></h2>
+<p>The platform is split into <strong>3 independent repos</strong> aligned with deployment units,
+plus <strong>1 ops repo</strong> that orchestrates them all on a single server.</p>
+<div class="highlight"><pre><span></span><code>~/projects/
+├── soca-edge/          ← Repo 1: edge device  (soca-engine + soca-dashboard)
+├── soca-control/       ← Repo 2: cloud server (fleet management dashboard)
+├── soca-service/       ← Repo 3: cloud server (alert ingestion microservice)
+└── soca-deploy/        ← Repo 4: full-stack orchestration (this server)
+</code></pre></div>
+<h3 id="why-this-split">Why this split?<a class="headerlink" href="#why-this-split" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Benefit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Different deployment targets</td>
+<td>Edge device vs cloud server — independent CI/CD</td>
+</tr>
+<tr>
+<td>Different release cadence</td>
+<td>Edge firmware updates are independent of backend releases</td>
+</tr>
+<tr>
+<td>Dependency isolation</td>
+<td>soca-edge has heavy deps (PyTorch, OpenCV, EasyOCR) — no reason to pull them into backend CI</td>
+</tr>
+<tr>
+<td>Independent scaling</td>
+<td>soca-service can be scaled separately from soca-control</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="deployment-topology">Deployment Topology<a class="headerlink" href="#deployment-topology" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>┌──────────────────────────────────────────────────────────────┐
+│                        YOUR SERVER                           │
+│                                                              │
+│  ┌────────────────────────────┐   ┌──────────────────────┐  │
+│  │  soca-edge  (Repo 1)       │   │  soca-control        │  │
+│  │  ┌──────────────────────┐  │   │  (Repo 2)            │  │
+│  │  │ soca-dashboard       │  │   │  Django · port 8000  │  │
+│  │  │ Django · port 8080   │  │   └──────────┬───────────┘  │
+│  │  └──────────────────────┘  │              │ receives      │
+│  │  ┌──────────────────────┐  │   ┌──────────┴───────────┐  │
+│  │  │ soca-engine          │  │   │  soca-service        │  │
+│  │  │ FastAPI · port 8001  │  │   │  (Repo 3)            │  │
+│  │  └──────────────────────┘  │   │  FastAPI · port 8010 │  │
+│  └─────────────┬──────────────┘   └──────────┬───────────┘  │
+│                │ publishes detections          │ consumes     │
+│  ┌─────────────┴──────────────────────────────┴───────────┐  │
+│  │                   Redis · port 6379                    │  │
+│  └────────────────────────────────────────────────────────┘  │
+│                                                              │
+│  Orchestrated by: soca-deploy/ (Repo 4)                     │
+└──────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<h3 id="container-summary">Container Summary<a class="headerlink" href="#container-summary" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Repo</th>
+<th>Ports</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>soca-edge</code></td>
+<td>soca-edge</td>
+<td>8080, 8001</td>
+<td>Edge management + YOLO inference</td>
+</tr>
+<tr>
+<td><code>soca-control</code></td>
+<td>soca-control</td>
+<td>8000</td>
+<td>Fleet dashboard &amp; alert storage</td>
+</tr>
+<tr>
+<td><code>soca-service</code></td>
+<td>soca-service</td>
+<td>8010</td>
+<td>Alert ingestion from Redis/Pub/Sub</td>
+</tr>
+<tr>
+<td><code>redis</code></td>
+<td>(image)</td>
+<td>6379</td>
+<td>Detection stream transport</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Docker ≥ 24.0 and Docker Compose v2 (<code>docker compose</code>)</li>
+<li>~4 GB RAM for <code>soca-edge</code> (YOLO/PyTorch is memory-intensive)</li>
+<li>Git access to all 4 repos</li>
+</ul>
+<hr />
+<h2 id="repo-contents">Repo Contents<a class="headerlink" href="#repo-contents" title="Permanent link">&para;</a></h2>
+<h3 id="soca-edge">soca-edge/<a class="headerlink" href="#soca-edge" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>soca-edge/
+├── soca-engine/              ← FastAPI inference service
+├── soca-dashboard/           ← Django edge management UI
+├── docker/
+│   └── edge/
+│       ├── Dockerfile        ← combined image (supervisord)
+│       ├── supervisord.conf  ← manages engine + dashboard processes
+│       └── entrypoint.sh     ← runs migrations → starts supervisord
+├── docker-compose.yml        ← standalone: edge + redis only
+└── .env.example
+</code></pre></div>
+<h3 id="soca-control">soca-control/<a class="headerlink" href="#soca-control" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>soca-control/
+├── app/                      ← Django app
+├── soca_control/             ← Django project settings
+├── Dockerfile
+├── docker-compose.yml        ← standalone: control only
+└── .env.example
+</code></pre></div>
+<h3 id="soca-service">soca-service/<a class="headerlink" href="#soca-service" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>soca-service/
+├── consumers/                ← Redis + Pub/Sub consumers
+├── main.py                   ← FastAPI app
+├── Dockerfile
+├── docker-compose.yml        ← standalone: service + redis
+└── .env.example
+</code></pre></div>
+<h3 id="soca-deploy-orchestration">soca-deploy/ (orchestration)<a class="headerlink" href="#soca-deploy-orchestration" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>soca-deploy/
+├── docker-compose.yml        ← full-stack (all 3 repos built from ../sibling-dirs)
+└── .env.example
+</code></pre></div>
+<hr />
+<h2 id="splitting-the-git-repos">Splitting the Git Repos<a class="headerlink" href="#splitting-the-git-repos" title="Permanent link">&para;</a></h2>
+<p>If you're starting from the original monorepo (<code>soca-client-server/</code>), run this
+once to split into separate repos:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Create the soca-edge repo (contains soca-engine + soca-dashboard + docker/)</span>
+mkdir<span class="w"> </span>~/projects/soca-edge
+cp<span class="w"> </span>-r<span class="w"> </span>soca-client-server/soca-engine<span class="w">   </span>~/projects/soca-edge/
+cp<span class="w"> </span>-r<span class="w"> </span>soca-client-server/soca-dashboard<span class="w"> </span>~/projects/soca-edge/
+cp<span class="w"> </span>-r<span class="w"> </span>soca-client-server/docker<span class="w">         </span>~/projects/soca-edge/
+cp<span class="w">    </span>soca-client-server/docker-compose.yml<span class="w">  </span>~/projects/soca-edge/
+cp<span class="w">    </span>soca-client-server/.env.example<span class="w">        </span>~/projects/soca-edge/
+
+<span class="nb">cd</span><span class="w"> </span>~/projects/soca-edge<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>init<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;init: soca-edge repo&quot;</span>
+
+<span class="c1"># 2. Promote soca-control to its own repo root</span>
+cp<span class="w"> </span>-r<span class="w"> </span>soca-client-server/soca-control<span class="w"> </span>~/projects/soca-control
+<span class="nb">cd</span><span class="w"> </span>~/projects/soca-control<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>init<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;init: soca-control repo&quot;</span>
+
+<span class="c1"># 3. Promote soca-service to its own repo root</span>
+cp<span class="w"> </span>-r<span class="w"> </span>soca-client-server/soca-service<span class="w"> </span>~/projects/soca-service
+<span class="nb">cd</span><span class="w"> </span>~/projects/soca-service<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>init<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;init: soca-service repo&quot;</span>
+
+<span class="c1"># 4. Create soca-deploy repo</span>
+cp<span class="w"> </span>-r<span class="w"> </span>soca-client-server/soca-deploy<span class="w"> </span>~/projects/soca-deploy
+<span class="nb">cd</span><span class="w"> </span>~/projects/soca-deploy<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>init<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;init: soca-deploy repo&quot;</span>
+</code></pre></div>
+<p>After splitting, push each repo to your Git hosting (GitHub/GitLab):</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/projects/soca-edge
+git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>origin<span class="w"> </span>git@github.com:your-org/soca-edge.git
+git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>main
+
+<span class="c1"># Repeat for soca-control, soca-service, soca-deploy</span>
+</code></pre></div>
+<hr />
+<h2 id="full-stack-deployment-soca-deploy">Full-Stack Deployment (soca-deploy)<a class="headerlink" href="#full-stack-deployment-soca-deploy" title="Permanent link">&para;</a></h2>
+<p>Use <code>soca-deploy/</code> to run all services together on one server.</p>
+<h3 id="1-clone-all-repos-side-by-side">1. Clone all repos side by side<a class="headerlink" href="#1-clone-all-repos-side-by-side" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>~/projects<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/projects
+git<span class="w"> </span>clone<span class="w"> </span>git@github.com:your-org/soca-edge.git
+git<span class="w"> </span>clone<span class="w"> </span>git@github.com:your-org/soca-control.git
+git<span class="w"> </span>clone<span class="w"> </span>git@github.com:your-org/soca-service.git
+git<span class="w"> </span>clone<span class="w"> </span>git@github.com:your-org/soca-deploy.git
+</code></pre></div>
+<h3 id="2-configure-environment">2. Configure environment<a class="headerlink" href="#2-configure-environment" title="Permanent link">&para;</a></h3>
+<p>Each repo ships its own <code>.env.example</code> — copy it to <code>.env</code> inside that repo:</p>
+<table>
+<thead>
+<tr>
+<th>Repo</th>
+<th><code>.env.example</code> covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>soca-deploy/</code></td>
+<td>All services (edge + control + service) — <strong>use this one</strong></td>
+</tr>
+<tr>
+<td><code>soca-edge/</code></td>
+<td>Edge variables only (engine + dashboard)</td>
+</tr>
+<tr>
+<td><code>soca-control/</code></td>
+<td>soca-control variables only</td>
+</tr>
+<tr>
+<td><code>soca-service/</code></td>
+<td>soca-service variables only</td>
+</tr>
+</tbody>
+</table>
+<p>For full-stack deployment, you only need one <code>.env</code> in <code>soca-deploy/</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/projects/soca-deploy
+cp<span class="w"> </span>.env.example<span class="w"> </span>.env
+nano<span class="w"> </span>.env<span class="w">    </span><span class="c1"># fill in all required values</span>
+</code></pre></div>
+<p>Required values:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Generate with</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EDGE_NAME</code></td>
+<td>Unique edge identifier</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>ENGINE_API_KEY</code></td>
+<td>soca-engine API key</td>
+<td><code>python -c "import secrets; print(secrets.token_hex(16))"</code></td>
+</tr>
+<tr>
+<td><code>DASHBOARD_SECRET_KEY</code></td>
+<td>Django secret (soca-dashboard)</td>
+<td><code>python -c "import secrets; print(secrets.token_urlsafe(50))"</code></td>
+</tr>
+<tr>
+<td><code>CONTROL_SECRET_KEY</code></td>
+<td>Django secret (soca-control)</td>
+<td>same as above</td>
+</tr>
+<tr>
+<td><code>SOCA_CONTROL_INGEST_KEY</code></td>
+<td>Shared secret (control ↔ service)</td>
+<td><code>python -c "import secrets; print(secrets.token_hex(16))"</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-build-and-start">3. Build and start<a class="headerlink" href="#3-build-and-start" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/projects/soca-deploy
+
+docker<span class="w"> </span>compose<span class="w"> </span>build
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+
+<span class="c1"># Verify all containers are running</span>
+docker<span class="w"> </span>compose<span class="w"> </span>ps
+</code></pre></div>
+<p>Expected:
+<div class="highlight"><pre><span></span><code>NAME             STATUS    PORTS
+soca-edge        Up        0.0.0.0:8001-&gt;8001, 0.0.0.0:8080-&gt;8080
+soca-control     Up        0.0.0.0:8000-&gt;8000
+soca-service     Up        0.0.0.0:8010-&gt;8010
+soca-redis       Up        0.0.0.0:6379-&gt;6379
+</code></pre></div></p>
+<h3 id="4-create-admin-accounts">4. Create admin accounts<a class="headerlink" href="#4-create-admin-accounts" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># soca-dashboard admin</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>soca-edge<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;cd /app/soca-dashboard &amp;&amp; python manage.py createsuperuser&quot;</span>
+
+<span class="c1"># soca-control admin</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>soca-control<span class="w"> </span>python<span class="w"> </span>manage.py<span class="w"> </span>createsuperuser
+</code></pre></div>
+<h3 id="5-verify-health">5. Verify health<a class="headerlink" href="#5-verify-health" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8001/health<span class="w">    </span><span class="c1"># soca-engine</span>
+curl<span class="w"> </span>http://localhost:8010/health<span class="w">    </span><span class="c1"># soca-service</span>
+curl<span class="w"> </span>-I<span class="w"> </span>http://localhost:8080/<span class="w">       </span><span class="c1"># soca-dashboard</span>
+curl<span class="w"> </span>-I<span class="w"> </span>http://localhost:8000/<span class="w">       </span><span class="c1"># soca-control</span>
+</code></pre></div>
+<hr />
+<h2 id="standalone-deployment-per-repo">Standalone Deployment (per-repo)<a class="headerlink" href="#standalone-deployment-per-repo" title="Permanent link">&para;</a></h2>
+<p>Each repo can also be deployed independently. Useful for running only one service,
+or when soca-control and soca-edge are on different machines.</p>
+<h3 id="soca-edge-standalone">soca-edge standalone<a class="headerlink" href="#soca-edge-standalone" title="Permanent link">&para;</a></h3>
+<p>Uses <code>soca-edge/.env.example</code> (edge variables only: EDGE_NAME, ENGINE_API_KEY,
+PUBLISHER_TYPE, GCS settings, inference settings, DASHBOARD_SECRET_KEY).</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/projects/soca-edge
+cp<span class="w"> </span>.env.example<span class="w"> </span>.env<span class="w">    </span><span class="c1"># source: soca-edge/.env.example</span>
+nano<span class="w"> </span>.env
+docker<span class="w"> </span>compose<span class="w"> </span>build
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</code></pre></div>
+<p>Starts: soca-edge (8080, 8001) + redis (6379)</p>
+<h3 id="soca-control-standalone">soca-control standalone<a class="headerlink" href="#soca-control-standalone" title="Permanent link">&para;</a></h3>
+<p>Uses <code>soca-control/.env.example</code> (Django secret, DATABASE_URL, ALLOWED_HOSTS, etc.).</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/projects/soca-control
+cp<span class="w"> </span>.env.example<span class="w"> </span>.env<span class="w">    </span><span class="c1"># source: soca-control/.env.example</span>
+nano<span class="w"> </span>.env
+docker<span class="w"> </span>compose<span class="w"> </span>build
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</code></pre></div>
+<p>Starts: soca-control (8000) only. Set <code>SOCA_CONTROL_URL</code> in soca-service .env to
+point at this server's IP/domain.</p>
+<h3 id="soca-service-standalone">soca-service standalone<a class="headerlink" href="#soca-service-standalone" title="Permanent link">&para;</a></h3>
+<p>Uses <code>soca-service/.env.example</code> (SOCA_CONTROL_URL, SOCA_CONTROL_INGEST_KEY).</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/projects/soca-service
+cp<span class="w"> </span>.env.example<span class="w"> </span>.env<span class="w">    </span><span class="c1"># source: soca-service/.env.example</span>
+<span class="c1"># Set SOCA_CONTROL_URL to your soca-control address, e.g.:</span>
+<span class="c1"># SOCA_CONTROL_URL=http://your-server-ip:8000</span>
+nano<span class="w"> </span>.env
+docker<span class="w"> </span>compose<span class="w"> </span>build
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</code></pre></div>
+<p>Starts: soca-service (8010) + redis (6379)</p>
+<hr />
+<h2 id="post-deployment-configuration">Post-Deployment Configuration<a class="headerlink" href="#post-deployment-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="configure-soca-dashboard-edge-settings">Configure soca-dashboard Edge Settings<a class="headerlink" href="#configure-soca-dashboard-edge-settings" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Open <code>http://&lt;server&gt;:8080</code> → log in</li>
+<li>Go to <strong>Settings → Edge</strong></li>
+<li>Set these paths (inside the container):</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Engine URL</td>
+<td><code>http://localhost:8001</code></td>
+</tr>
+<tr>
+<td>Engine API Key</td>
+<td>your <code>ENGINE_API_KEY</code></td>
+</tr>
+<tr>
+<td>Engine DB path</td>
+<td><code>/app/data/soca_engine.db</code></td>
+</tr>
+<tr>
+<td>Snapshots dir</td>
+<td><code>/app/soca-engine/snapshots</code></td>
+</tr>
+<tr>
+<td>Engine .env path</td>
+<td><code>/app/soca-engine/.env</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="configure-soca-control">Configure soca-control<a class="headerlink" href="#configure-soca-control" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Open <code>http://&lt;server&gt;:8000</code> → log in</li>
+<li>Go to <strong>Settings → Edges</strong> → Add edge with:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edge URL</td>
+<td><code>http://soca-edge:8080</code> (Docker network)</td>
+</tr>
+<tr>
+<td>Engine URL</td>
+<td><code>http://soca-edge:8001</code> (Docker network)</td>
+</tr>
+<tr>
+<td>Engine API Key</td>
+<td>your <code>ENGINE_API_KEY</code></td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Go to <strong>Settings → Service Ingest Key</strong> → click <strong>Push to soca-service</strong>
+   (this sends <code>SOCA_CONTROL_INGEST_KEY</code> to soca-service via bootstrap API)</li>
+</ol>
+<hr />
+<h2 id="upload-yolo-models">Upload YOLO Models<a class="headerlink" href="#upload-yolo-models" title="Permanent link">&para;</a></h2>
+<p>Models persist in the <code>edge-models</code> Docker volume (<code>/app/soca-engine/yolo/</code>).</p>
+<p><strong>Via soca-dashboard UI:</strong>
+→ <code>http://&lt;server&gt;:8080</code> → <strong>Settings → AI Models</strong> → Upload <code>.pt</code>, <code>.onnx</code>, <code>.yaml</code></p>
+<p><strong>Via CLI (copy from host):</strong>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>cp<span class="w"> </span>your-model.pt<span class="w"> </span>soca-edge:/app/soca-engine/yolo/
+</code></pre></div></p>
+<hr />
+<h2 id="environment-variables-reference">Environment Variables Reference<a class="headerlink" href="#environment-variables-reference" title="Permanent link">&para;</a></h2>
+<h3 id="soca-edge_1">soca-edge<a class="headerlink" href="#soca-edge_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EDGE_NAME</code></td>
+<td><em>(required)</em></td>
+<td>Unique edge identifier</td>
+</tr>
+<tr>
+<td><code>ENGINE_API_KEY</code></td>
+<td><em>(required)</em></td>
+<td>soca-engine API key</td>
+</tr>
+<tr>
+<td><code>REDIS_URL</code></td>
+<td><code>redis://redis:6379</code></td>
+<td>Set automatically in compose</td>
+</tr>
+<tr>
+<td><code>PUBLISHER_TYPE</code></td>
+<td><code>redis</code></td>
+<td><code>redis</code> or <code>pubsub</code></td>
+</tr>
+<tr>
+<td><code>GCS_BUCKET</code></td>
+<td>—</td>
+<td>GCS bucket (blank = no upload)</td>
+</tr>
+<tr>
+<td><code>GCS_KEY_PATH</code></td>
+<td>—</td>
+<td>GCS service account JSON path</td>
+</tr>
+<tr>
+<td><code>PUBSUB_PROJECT_ID</code></td>
+<td>—</td>
+<td>GCP project (Pub/Sub only)</td>
+</tr>
+<tr>
+<td><code>PUBSUB_TOPIC</code></td>
+<td><code>soca-detections</code></td>
+<td>Pub/Sub topic</td>
+</tr>
+<tr>
+<td><code>INFER_DEVICE</code></td>
+<td><code>cpu</code></td>
+<td><code>cpu</code> or <code>cuda:0</code></td>
+</tr>
+<tr>
+<td><code>MAX_CONCURRENT_JOBS</code></td>
+<td><code>4</code></td>
+<td>Parallel inference jobs</td>
+</tr>
+<tr>
+<td><code>DB_PATH</code></td>
+<td><code>/app/data/soca_engine.db</code></td>
+<td>Engine SQLite path</td>
+</tr>
+<tr>
+<td><code>SECRET_KEY</code></td>
+<td><em>(required)</em></td>
+<td>Django secret (soca-dashboard)</td>
+</tr>
+<tr>
+<td><code>DEBUG</code></td>
+<td><code>false</code></td>
+<td>Django debug mode</td>
+</tr>
+</tbody>
+</table>
+<h3 id="soca-control_1">soca-control<a class="headerlink" href="#soca-control_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DJANGO_SECRET_KEY</code></td>
+<td><em>(required)</em></td>
+<td>Django secret key</td>
+</tr>
+<tr>
+<td><code>DEBUG</code></td>
+<td><code>false</code></td>
+<td>Django debug mode</td>
+</tr>
+<tr>
+<td><code>DATABASE_URL</code></td>
+<td>SQLite</td>
+<td>PostgreSQL URL (production)</td>
+</tr>
+<tr>
+<td><code>CSRF_TRUSTED_ORIGINS</code></td>
+<td><code>http://localhost:8000</code></td>
+<td>CSRF trusted origins</td>
+</tr>
+</tbody>
+</table>
+<h3 id="soca-service_1">soca-service<a class="headerlink" href="#soca-service_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SOCA_CONTROL_URL</code></td>
+<td><code>http://soca-control:8000</code></td>
+<td>Auto-set in compose</td>
+</tr>
+<tr>
+<td><code>SOCA_CONTROL_INGEST_KEY</code></td>
+<td><em>(required)</em></td>
+<td>Shared auth secret</td>
+</tr>
+<tr>
+<td><code>REDIS_URL</code></td>
+<td><code>redis://redis:6379</code></td>
+<td>Auto-set in compose</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="volumes">Volumes<a class="headerlink" href="#volumes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Volume</th>
+<th>Mount point</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>edge-models</code></td>
+<td><code>/app/soca-engine/yolo</code></td>
+<td>YOLO models — <strong>persistent</strong></td>
+</tr>
+<tr>
+<td><code>edge-snapshots</code></td>
+<td><code>/app/soca-engine/snapshots</code></td>
+<td>Detection snapshots</td>
+</tr>
+<tr>
+<td><code>edge-dlq</code></td>
+<td><code>/app/soca-engine/dlq</code></td>
+<td>Failed upload queue</td>
+</tr>
+<tr>
+<td><code>edge-data</code></td>
+<td><code>/app/data</code></td>
+<td>Engine SQLite DB, config.json</td>
+</tr>
+<tr>
+<td><code>redis-data</code></td>
+<td><code>/data</code></td>
+<td>Redis persistence</td>
+</tr>
+<tr>
+<td><code>control-db</code></td>
+<td><code>/app/db</code></td>
+<td>soca-control SQLite (dev only)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="networking">Networking<a class="headerlink" href="#networking" title="Permanent link">&para;</a></h2>
+<p>All containers share <code>soca-net</code>. Internal Docker hostnames:</p>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Hostname</th>
+<th>Ports</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>soca-edge</td>
+<td><code>soca-edge</code></td>
+<td>8001, 8080</td>
+</tr>
+<tr>
+<td>soca-control</td>
+<td><code>soca-control</code></td>
+<td>8000</td>
+</tr>
+<tr>
+<td>soca-service</td>
+<td><code>soca-service</code></td>
+<td>8010</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td><code>redis</code></td>
+<td>6379</td>
+</tr>
+</tbody>
+</table>
+<p>Cross-container calls:
+- soca-dashboard → soca-engine: <code>http://localhost:8001</code> (same container)
+- soca-control → soca-engine: <code>http://soca-edge:8001</code>
+- soca-service → soca-control: <code>http://soca-control:8000</code></p>
+<h3 id="firewall-recommendations">Firewall Recommendations<a class="headerlink" href="#firewall-recommendations" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Expose publicly?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8080 (soca-dashboard)</td>
+<td>Yes — edge operators</td>
+</tr>
+<tr>
+<td>8000 (soca-control)</td>
+<td>Yes — fleet admins</td>
+</tr>
+<tr>
+<td>8001 (soca-engine API)</td>
+<td>Internal only</td>
+</tr>
+<tr>
+<td>8010 (soca-service)</td>
+<td>Internal only</td>
+</tr>
+<tr>
+<td>6379 (Redis)</td>
+<td>Internal only</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="updating-services">Updating Services<a class="headerlink" href="#updating-services" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/projects/soca-deploy
+
+<span class="c1"># Pull latest code for each service</span>
+<span class="nb">cd</span><span class="w"> </span>../soca-edge<span class="w">     </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>../soca-deploy
+<span class="nb">cd</span><span class="w"> </span>../soca-control<span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>../soca-deploy
+<span class="nb">cd</span><span class="w"> </span>../soca-service<span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>../soca-deploy
+
+<span class="c1"># Rebuild changed images and restart (zero-downtime for unchanged services)</span>
+docker<span class="w"> </span>compose<span class="w"> </span>build
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+
+<span class="c1"># Run migrations after soca-control update</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soca-control<span class="w"> </span>python<span class="w"> </span>manage.py<span class="w"> </span>migrate<span class="w"> </span>--noinput
+
+<span class="c1"># Run migrations after soca-dashboard update</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soca-edge<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;cd /app/soca-dashboard &amp;&amp; python manage.py migrate --noinput&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="gpu-support-optional">GPU Support (Optional)<a class="headerlink" href="#gpu-support-optional" title="Permanent link">&para;</a></h2>
+<p>To enable GPU inference on soca-edge, add to <code>soca-deploy/docker-compose.yml</code>
+under the <code>soca-edge</code> service:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">soca-edge</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">deploy</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">reservations</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">devices</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvidia</span>
+<span class="w">            </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">            </span><span class="nt">capabilities</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">gpu</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">INFER_DEVICE</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cuda:0</span>
+</code></pre></div>
+<p>Requires <a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html">NVIDIA Container Toolkit</a> on the host.</p>
+<hr />
+<h2 id="useful-commands">Useful Commands<a class="headerlink" href="#useful-commands" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># View logs (all services)</span>
+docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f
+
+<span class="c1"># View logs for a specific service</span>
+docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>soca-edge
+docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>soca-control
+
+<span class="c1"># View process logs inside soca-edge</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soca-edge<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>/var/log/supervisor/soca-engine.log
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>soca-edge<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>/var/log/supervisor/soca-dashboard.log
+
+<span class="c1"># Restart a single service</span>
+docker<span class="w"> </span>compose<span class="w"> </span>restart<span class="w"> </span>soca-edge
+
+<span class="c1"># Rebuild only one service (after code change)</span>
+docker<span class="w"> </span>compose<span class="w"> </span>build<span class="w"> </span>soca-control
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--no-deps<span class="w"> </span>soca-control
+
+<span class="c1"># Open a shell</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>soca-edge<span class="w"> </span>bash
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>soca-control<span class="w"> </span>bash
+
+<span class="c1"># Django management</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>soca-control<span class="w"> </span>python<span class="w"> </span>manage.py<span class="w"> </span>shell
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>soca-edge<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;cd /app/soca-dashboard &amp;&amp; python manage.py shell&quot;</span>
+
+<span class="c1"># Back up the engine SQLite database</span>
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span>soca-deploy_edge-data:/data<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/backup<span class="w"> </span>alpine<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>cp<span class="w"> </span>/data/soca_engine.db<span class="w"> </span>/backup/soca_engine_<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d<span class="k">)</span>.db
+</code></pre></div>
+<hr />
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="container-exits-immediately">Container exits immediately<a class="headerlink" href="#container-exits-immediately" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>soca-edge<span class="w">    </span><span class="c1"># check error output</span>
+</code></pre></div>
+<p>Common causes:
+- <code>EDGE_NAME</code> not set → engine raises <code>RuntimeError</code>
+- <code>ENGINE_API_KEY</code> not set → engine starts but returns 503 on API calls
+- <code>DASHBOARD_SECRET_KEY</code> or <code>CONTROL_SECRET_KEY</code> not set → Django refuses to start</p>
+<h3 id="soca-control-csrf-403-errors">soca-control CSRF / 403 errors<a class="headerlink" href="#soca-control-csrf-403-errors" title="Permanent link">&para;</a></h3>
+<p>Add your domain to <code>.env</code>:
+<div class="highlight"><pre><span></span><code>CSRF_TRUSTED_ORIGINS=https://yourdomain.com,http://localhost:8000
+</code></pre></div>
+Then <code>docker compose up -d</code> to apply.</p>
+<h3 id="models-not-showing-in-ai-models-tab">Models not showing in AI Models tab<a class="headerlink" href="#models-not-showing-in-ai-models-tab" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Verify <code>ENGINE_API_KEY</code> matches between soca-dashboard settings and <code>.env</code></li>
+<li>Test directly: <code>curl -H "Authorization: Bearer &lt;key&gt;" http://localhost:8001/models</code></li>
+<li>Restart soca-edge after any engine code change: <code>docker compose restart soca-edge</code></li>
+</ol>
+<h3 id="soca-service-not-consuming-alerts">soca-service not consuming alerts<a class="headerlink" href="#soca-service-not-consuming-alerts" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Ensure <code>SOCA_CONTROL_INGEST_KEY</code> is set and matches soca-control</li>
+<li>Push the key: soca-control UI → <strong>Settings → Service Ingest Key → Push</strong></li>
+<li>Check: <code>docker compose logs soca-service</code></li>
+</ol>
+<h3 id="build-fails-missing-library">Build fails (missing library)<a class="headerlink" href="#build-fails-missing-library" title="Permanent link">&para;</a></h3>
+<p>soca-edge requires system libraries for OpenCV. If the build fails:
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>build<span class="w"> </span>--no-cache<span class="w"> </span>soca-edge
+</code></pre></div></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

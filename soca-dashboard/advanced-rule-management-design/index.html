@@ -1,0 +1,2126 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/soca-dashboard/advanced-rule-management-design/">
+      
+      
+        <link rel="prev" href="../rule-management-plan/">
+      
+      
+        <link rel="next" href="../../guides/soca-control-user-guide/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Advanced Rule Management - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#advanced-rule-management-design" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Advanced Rule Management
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/user-guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Dashboard (Edge)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SOCA Dashboard (Edge)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/user-guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../edge-operations-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Edge Operations Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../edge-operations-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Edge Operations Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rule-management-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rule Management Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Rule Management
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Rule Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tech-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tech Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schedule-additions-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schedule (additions only)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rule-new-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rule (new model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edgeconfig-addition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EdgeConfig (addition)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schedule-form-sections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schedule Form — Sections
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Schedule Form — Sections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings-edge-additions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings → Edge (additions)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-endpoint-new-engine-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Endpoint (new, engine-side)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-config-updated-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Job Config — Updated Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#soca-engine-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-engine Changes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="soca-engine Changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-iou_threshold-in-jobconfig-and-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. iou_threshold in JobConfig and inference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-dwell-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Dwell Tracking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-processing-mode-in_roi-vs-detected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Processing Mode (in_roi vs detected)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-cls_operator-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. cls_operator Filtering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-per-rule-cooldown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Per-rule Cooldown
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-new-rules-evaluation-loop-in-detection_worker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. New-Rules Evaluation Loop in detection_worker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-ruleaction-schema-and-action_dispatcher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. RuleAction schema and action_dispatcher
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-cls_ids-at-job-level-infer-call" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. cls_ids at job level (infer call)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-cron-rule-gating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Cron Rule Gating
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-labels-endpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Labels Endpoint
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#files-changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Files Changed
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Files Changed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#soca-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soca-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-engine
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/soca-control-user-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOCA Control (Fleet)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="advanced-rule-management-design">Advanced Rule Management Design<a class="headerlink" href="#advanced-rule-management-design" title="Permanent link">&para;</a></h1>
+<h2 id="goal">Goal<a class="headerlink" href="#goal" title="Permanent link">&para;</a></h2>
+<p>Replace the hardcoded single-rule system in soca-dashboard with a flexible, per-schedule rule management UI that lets operators configure multi-condition detection rules with time-based scheduling, class filtering, dwell duration, and per-rule notification actions.</p>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
+<p>Rules are stored in a new <code>Rule</code> model (FK → Schedule). The existing <code>Schedule.to_job_config()</code> iterates all active rules to build the engine payload instead of generating one hardcoded rule. The engine gains three new capabilities: dwell tracking per track_id, per-rule cron-based activation, and cls_operator filtering. All notification destinations (Telegram, Redis) are configured globally in EdgeConfig and referenced by per-rule action flags.</p>
+<h2 id="tech-stack">Tech Stack<a class="headerlink" href="#tech-stack" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Django 4.x, SQLite — new Rule model, migration</li>
+<li><code>croniter</code> — cron expression parsing (new dependency, dashboard + engine)</li>
+<li>DaisyUI 4 + Tailwind CSS — collapsible rule cards, inline form</li>
+<li>Vanilla JS — card expand/collapse, label fetch, cron preview, dynamic form fields</li>
+<li>soca-engine — dwell tracking, cron rule gating, cls_operator filtering, labels endpoint</li>
+</ul>
+<hr />
+<h2 id="data-models">Data Models<a class="headerlink" href="#data-models" title="Permanent link">&para;</a></h2>
+<h3 id="schedule-additions-only">Schedule (additions only)<a class="headerlink" href="#schedule-additions-only" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">iou_threshold</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.45</span><span class="p">)</span>
+</code></pre></div>
+<p>Existing fields (<code>aging_window</code>, <code>aging_cooldown</code>, <code>min_count</code>, <code>alert_category</code>, <code>cls_ids</code>, <code>redis_stream</code>) are kept but no longer shown in the form when rules exist. They serve as fallback for schedules with no Rule objects. <strong><code>Schedule.redis_stream</code> is kept in the model but hidden in the form</strong> — the global <code>EdgeConfig.redis_stream</code> takes precedence at runtime; <code>Schedule.redis_stream</code> is the fallback for legacy schedules.</p>
+<h3 id="rule-new-model">Rule (new model)<a class="headerlink" href="#rule-new-model" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Rule</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">schedule</span>          <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Schedule</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;rules&#39;</span><span class="p">)</span>
+    <span class="n">name</span>              <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">category</span>          <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;Intrusion&#39;</span><span class="p">)</span>  <span class="c1"># alert_category for engine</span>
+    <span class="n">cls_operator</span>      <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>          <span class="c1"># eq | in | not_in</span>
+    <span class="n">cls_ids</span>           <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">JSONField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>                          <span class="c1"># [0, 2, 7]</span>
+    <span class="n">processing</span>        <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;in_roi&#39;</span><span class="p">)</span>      <span class="c1"># in_roi | detected</span>
+    <span class="n">duration_op</span>       <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;immediate&#39;</span><span class="p">)</span>   <span class="c1"># immediate | gte | lte | eq</span>
+    <span class="n">duration_seconds</span>  <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">cooldown_seconds</span>  <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+    <span class="n">cron_schedule</span>     <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;* * * * *&#39;</span><span class="p">)</span>
+    <span class="n">message_template</span>  <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>               <span class="c1"># empty = engine default</span>
+    <span class="n">action_telegram</span>   <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">action_redis</span>      <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">action_snapshot</span>   <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">priority</span>          <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>                       <span class="c1"># matches engine sort key</span>
+    <span class="n">is_active</span>         <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">]</span>
+</code></pre></div>
+<h3 id="edgeconfig-addition">EdgeConfig (addition)<a class="headerlink" href="#edgeconfig-addition" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">redis_stream</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;soca:detections&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Migration note: add <code>redis_stream</code> to EdgeConfig first, pre-populate with <code>'soca:detections'</code> as default. Keep <code>Schedule.redis_stream</code> intact (do not drop it).</p>
+<hr />
+<h2 id="schedule-form-sections">Schedule Form — Sections<a class="headerlink" href="#schedule-form-sections" title="Permanent link">&para;</a></h2>
+<h3 id="basic">Basic<a class="headerlink" href="#basic" title="Permanent link">&para;</a></h3>
+<p>Fields: <code>name</code>, <code>camera</code> (FK select), <code>model_path</code> (text), <code>is_active</code> (checkbox)</p>
+<h3 id="inference">Inference<a class="headerlink" href="#inference" title="Permanent link">&para;</a></h3>
+<p>Fields: <code>conf_threshold</code>, <code>iou_threshold</code> (new), <code>frame_interval_ms</code></p>
+<h3 id="roi">ROI<a class="headerlink" href="#roi" title="Permanent link">&para;</a></h3>
+<p>Unchanged — polygon/rect canvas with normalized coordinates.</p>
+<h3 id="rules">Rules<a class="headerlink" href="#rules" title="Permanent link">&para;</a></h3>
+<p>Flat list of collapsible rule cards. Each card:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Input</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>text</td>
+<td>free label</td>
+</tr>
+<tr>
+<td>category</td>
+<td>text</td>
+<td>alert category (Intrusion, PPE, etc.)</td>
+</tr>
+<tr>
+<td>cls_operator</td>
+<td>select</td>
+<td>IN / NOT IN / =</td>
+</tr>
+<tr>
+<td>cls_ids</td>
+<td>checkboxes</td>
+<td>populated from <code>/api/models/labels/?path=&lt;model&gt;</code></td>
+</tr>
+<tr>
+<td>processing</td>
+<td>select</td>
+<td>in ROI / detected (all)</td>
+</tr>
+<tr>
+<td>duration_op</td>
+<td>select</td>
+<td>immediate / ≥ / ≤ / =</td>
+</tr>
+<tr>
+<td>duration_seconds</td>
+<td>number</td>
+<td>hidden when <code>immediate</code></td>
+</tr>
+<tr>
+<td>cooldown_seconds</td>
+<td>number</td>
+<td>seconds between repeat alerts for this rule</td>
+</tr>
+<tr>
+<td>cron_schedule</td>
+<td>text</td>
+<td><code>* 8-18 * * 1-5</code> (standard cron: min hour dom month dow)</td>
+</tr>
+<tr>
+<td>cron_preview</td>
+<td>read-only</td>
+<td>JS live preview e.g. "Mon–Fri 08:00–18:00"</td>
+</tr>
+<tr>
+<td>message_template</td>
+<td>text</td>
+<td>optional; placeholders: <code>{count}</code>, <code>{camera_id}</code>, <code>{time}</code></td>
+</tr>
+<tr>
+<td>action_telegram</td>
+<td>checkbox</td>
+<td></td>
+</tr>
+<tr>
+<td>action_redis</td>
+<td>checkbox</td>
+<td></td>
+</tr>
+<tr>
+<td>action_snapshot</td>
+<td>checkbox</td>
+<td></td>
+</tr>
+<tr>
+<td>is_active</td>
+<td>checkbox</td>
+<td>shown in card header</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Per-field defaults when left blank:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Default</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>—</td>
+<td><strong>Required</strong> — form validation blocks save</td>
+</tr>
+<tr>
+<td><code>category</code></td>
+<td><code>"Intrusion"</code></td>
+<td>Most common use case</td>
+</tr>
+<tr>
+<td><code>cls_operator</code></td>
+<td><code>in</code></td>
+<td>Inclusive filter</td>
+</tr>
+<tr>
+<td><code>cls_ids</code></td>
+<td><code>[]</code> (empty)</td>
+<td>Empty = no class filter — any detected object qualifies</td>
+</tr>
+<tr>
+<td><code>processing</code></td>
+<td><code>in_roi</code></td>
+<td>ROI-aware default</td>
+</tr>
+<tr>
+<td><code>duration_op</code></td>
+<td><code>immediate</code></td>
+<td>Fire on first detection, no dwell wait</td>
+</tr>
+<tr>
+<td><code>duration_seconds</code></td>
+<td><code>0</code></td>
+<td>Hidden in UI when <code>immediate</code></td>
+</tr>
+<tr>
+<td><code>cooldown_seconds</code></td>
+<td><code>60</code></td>
+<td>1 minute between repeat alerts</td>
+</tr>
+<tr>
+<td><code>cron_schedule</code></td>
+<td><code>* * * * *</code></td>
+<td>Always active; validated on save</td>
+</tr>
+<tr>
+<td><code>message_template</code></td>
+<td><code>""</code></td>
+<td>Engine uses its built-in default message</td>
+</tr>
+<tr>
+<td><code>action_telegram</code></td>
+<td><code>false</code></td>
+<td>Opt-in</td>
+</tr>
+<tr>
+<td><code>action_redis</code></td>
+<td><code>false</code></td>
+<td>Opt-in</td>
+</tr>
+<tr>
+<td><code>action_snapshot</code></td>
+<td><code>true</code></td>
+<td>Always save snapshot unless unchecked</td>
+</tr>
+</tbody>
+</table>
+<p><strong>JS behaviors:</strong>
+- "Load Camera Frame" fetches snapshot → sets canvas background
+- Changing <code>model_path</code> triggers label fetch → rebuilds cls_id checkboxes
+- <code>duration_seconds</code> field hidden/shown based on <code>duration_op</code> value
+- <code>cron_schedule</code> input → live human-readable preview (JS pattern parse)
+- "Add Rule" appends a blank card with <code>data-index</code> incremented
+- Card header click toggles expand/collapse
+- Collapsed header shows: rule name + active badge</p>
+<h3 id="output">Output<a class="headerlink" href="#output" title="Permanent link">&para;</a></h3>
+<p>Checkboxes: <code>save_snapshot</code>, <code>enable_monitor</code>
+Status row: shows Telegram ● ready / ● not configured, Redis ● ready / ● not configured (derived from EdgeConfig).</p>
+<hr />
+<h2 id="settings-edge-additions">Settings → Edge (additions)<a class="headerlink" href="#settings-edge-additions" title="Permanent link">&para;</a></h2>
+<p>Form sections:
+1. <strong>Engine</strong> — edge name, engine URL, MediaMTX URL
+2. <strong>Telegram</strong> — bot token, chat ID(s) (comma-separated for multiple recipients)
+3. <strong>Redis</strong> — stream name (global, used by all rules that publish to Redis)</p>
+<p><code>EdgeConfig.redis_stream</code> takes precedence over <code>Schedule.redis_stream</code> at job config build time.</p>
+<hr />
+<h2 id="api-endpoint-new-engine-side">API Endpoint (new, engine-side)<a class="headerlink" href="#api-endpoint-new-engine-side" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>GET /models/labels/?path=yolo/yolov8n.pt
+</code></pre></div>
+<p>Returns:
+<div class="highlight"><pre><span></span><code><span class="p">[{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;person&quot;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;car&quot;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;truck&quot;</span><span class="p">}]</span>
+</code></pre></div></p>
+<p>Engine reads the <code>.names</code> list or <code>data.yaml</code> adjacent to the model file. Dashboard calls this via <code>engine_client.get_model_labels(model_path)</code> → JS populates cls_id checkboxes.</p>
+<hr />
+<h2 id="job-config-updated-structure">Job Config — Updated Structure<a class="headerlink" href="#job-config-updated-structure" title="Permanent link">&para;</a></h2>
+<p><code>Schedule.to_job_config()</code> is rewritten to iterate <code>self.rules.filter(is_active=True).order_by('priority')</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;camera_id&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;rtsp_url&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;model_path&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;conf_threshold&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+  <span class="s2">&quot;iou_threshold&quot;</span><span class="p">:</span> <span class="mf">0.45</span><span class="p">,</span>        <span class="c1"># new — passed to model.track(iou=...)</span>
+  <span class="s2">&quot;frame_interval_ms&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+  <span class="s2">&quot;roi&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;POLYGON&quot;</span><span class="p">,</span> <span class="s2">&quot;points&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">]},</span>
+  <span class="s2">&quot;rules&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Person in North Zone&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Intrusion&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;cls_ids&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+      <span class="s2">&quot;cls_operator&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span>       <span class="c1"># in | not_in | eq</span>
+      <span class="s2">&quot;processing&quot;</span><span class="p">:</span> <span class="s2">&quot;in_roi&quot;</span><span class="p">,</span>     <span class="c1"># in_roi | detected</span>
+      <span class="s2">&quot;duration_op&quot;</span><span class="p">:</span> <span class="s2">&quot;gte&quot;</span><span class="p">,</span>       <span class="c1"># immediate | gte | lte | eq</span>
+      <span class="s2">&quot;duration_seconds&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+      <span class="s2">&quot;cooldown_seconds&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>     <span class="c1"># per-rule cooldown; replaces global aging in new-rules path</span>
+      <span class="s2">&quot;cron_schedule&quot;</span><span class="p">:</span> <span class="s2">&quot;* 8-18 * * 1-5&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;message_template&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>     <span class="c1"># empty = engine default</span>
+      <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+      <span class="s2">&quot;actions&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;telegram&quot;</span><span class="p">,</span> <span class="s2">&quot;bot_token&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;publish_queue&quot;</span><span class="p">,</span> <span class="s2">&quot;stream&quot;</span><span class="p">:</span> <span class="s2">&quot;soca:detections&quot;</span><span class="p">,</span> <span class="s2">&quot;message_template&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;save_snapshot&quot;</span><span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;monitor&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Fallback:</strong> if <code>self.rules.count() == 0</code>, use legacy single-rule generation (backward compatible, uses global aging/cooldown).</p>
+<hr />
+<h2 id="soca-engine-changes">soca-engine Changes<a class="headerlink" href="#soca-engine-changes" title="Permanent link">&para;</a></h2>
+<h3 id="1-iou_threshold-in-jobconfig-and-inference">1. <code>iou_threshold</code> in JobConfig and inference<a class="headerlink" href="#1-iou_threshold-in-jobconfig-and-inference" title="Permanent link">&para;</a></h3>
+<p>Add to <code>JobConfig</code> schema in <code>models/schemas.py</code>:
+<div class="highlight"><pre><span></span><code><span class="n">iou_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.45</span>
+</code></pre></div></p>
+<p>Change <code>yolo_inference.infer()</code> signature to accept <code>iou_threshold</code>:
+<div class="highlight"><pre><span></span><code><span class="c1"># Before: def infer(frame, model_path, cls_ids, conf):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">infer</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">cls_ids</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.45</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">track</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">conf</span><span class="o">=</span><span class="n">conf</span><span class="p">,</span> <span class="n">iou</span><span class="o">=</span><span class="n">iou_threshold</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</code></pre></div></p>
+<p>Update the call site in <code>detection_worker._run()</code>:
+<div class="highlight"><pre><span></span><code><span class="n">detections</span> <span class="o">=</span> <span class="n">infer</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">model_path</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">cls_ids</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">conf_threshold</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">iou_threshold</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="2-dwell-tracking">2. Dwell Tracking<a class="headerlink" href="#2-dwell-tracking" title="Permanent link">&para;</a></h3>
+<p>Per active job, maintain <code>dwell_tracker: dict[str, float]</code> — <code>{track_id: first_seen_timestamp}</code>.</p>
+<p>Add <code>dwell_seconds: float = 0.0</code> to the <code>Detection</code> dataclass in <code>models/schemas.py</code>.</p>
+<p>Each frame:
+<div class="highlight"><pre><span></span><code><span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">detections</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">det</span><span class="o">.</span><span class="n">track_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dwell_tracker</span><span class="p">:</span>
+        <span class="n">dwell_tracker</span><span class="p">[</span><span class="n">det</span><span class="o">.</span><span class="n">track_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">now</span>
+    <span class="n">det</span><span class="o">.</span><span class="n">dwell_seconds</span> <span class="o">=</span> <span class="n">now</span> <span class="o">-</span> <span class="n">dwell_tracker</span><span class="p">[</span><span class="n">det</span><span class="o">.</span><span class="n">track_id</span><span class="p">]</span>
+
+<span class="c1"># Evict track_ids not seen this frame</span>
+<span class="n">seen_ids</span> <span class="o">=</span> <span class="p">{</span><span class="n">d</span><span class="o">.</span><span class="n">track_id</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detections</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">tid</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">dwell_tracker</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">tid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen_ids</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">dwell_tracker</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span>
+</code></pre></div></p>
+<p><strong>Duration evaluation per rule (first-class, not via <code>when_all</code>):</strong>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_passes_duration</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">detections</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">rule</span><span class="p">[</span><span class="s1">&#39;duration_op&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;immediate&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="n">op</span> <span class="o">=</span> <span class="n">rule</span><span class="p">[</span><span class="s1">&#39;duration_op&#39;</span><span class="p">]</span>   <span class="c1"># gte | lte | eq</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="n">rule</span><span class="p">[</span><span class="s1">&#39;duration_seconds&#39;</span><span class="p">]</span>
+    <span class="c1"># Pass if any qualifying detection meets dwell threshold</span>
+    <span class="n">max_dwell</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="n">d</span><span class="o">.</span><span class="n">dwell_seconds</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detections</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;gte&#39;</span><span class="p">:</span> <span class="n">max_dwell</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">,</span>
+            <span class="s1">&#39;lte&#39;</span><span class="p">:</span> <span class="n">max_dwell</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">,</span>
+            <span class="s1">&#39;eq&#39;</span><span class="p">:</span>  <span class="n">max_dwell</span> <span class="o">==</span> <span class="n">threshold</span><span class="p">}[</span><span class="n">op</span><span class="p">]</span>
+</code></pre></div></p>
+<h3 id="3-processing-mode-in_roi-vs-detected">3. Processing Mode (in_roi vs detected)<a class="headerlink" href="#3-processing-mode-in_roi-vs-detected" title="Permanent link">&para;</a></h3>
+<p>When evaluating a rule:
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">rule</span><span class="p">[</span><span class="s1">&#39;processing&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;in_roi&#39;</span><span class="p">:</span>
+    <span class="n">relevant</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detections</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">in_roi</span><span class="p">]</span>
+<span class="k">elif</span> <span class="n">rule</span><span class="p">[</span><span class="s1">&#39;processing&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;detected&#39;</span><span class="p">:</span>
+    <span class="n">relevant</span> <span class="o">=</span> <span class="n">detections</span>   <span class="c1"># all detections, ignoring ROI</span>
+</code></pre></div></p>
+<p>Subsequent cls_operator filtering and duration check apply to <code>relevant</code>.</p>
+<h3 id="4-cls_operator-filtering">4. cls_operator Filtering<a class="headerlink" href="#4-cls_operator-filtering" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">op</span> <span class="o">=</span> <span class="n">rule</span><span class="p">[</span><span class="s1">&#39;cls_operator&#39;</span><span class="p">]</span>
+<span class="n">ids</span> <span class="o">=</span> <span class="n">rule</span><span class="p">[</span><span class="s1">&#39;cls_ids&#39;</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;in&#39;</span><span class="p">:</span>
+    <span class="n">relevant</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">relevant</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">cls_id</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">]</span>
+<span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;not_in&#39;</span><span class="p">:</span>
+    <span class="n">relevant</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">relevant</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">cls_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">]</span>
+<span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;eq&#39;</span><span class="p">:</span>
+    <span class="n">relevant</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">relevant</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">cls_id</span> <span class="o">==</span> <span class="n">ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+</code></pre></div>
+<h3 id="5-per-rule-cooldown">5. Per-rule Cooldown<a class="headerlink" href="#5-per-rule-cooldown" title="Permanent link">&para;</a></h3>
+<p>When the new-rules path is active (job config has <code>rules</code> array), each rule tracks its own last-fire timestamp:
+<div class="highlight"><pre><span></span><code><span class="n">rule_last_fired</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># keyed by rule name</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_in_cooldown</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">rule_last_fired</span><span class="p">):</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="n">rule_last_fired</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">last</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">rule</span><span class="p">[</span><span class="s1">&#39;cooldown_seconds&#39;</span><span class="p">]</span>
+</code></pre></div></p>
+<p>The global <code>StateTracker</code> cooldown is <strong>bypassed</strong> in the new-rules path. The fallback (zero-rule) path continues using the global StateTracker as before.</p>
+<h3 id="6-new-rules-evaluation-loop-in-detection_worker">6. New-Rules Evaluation Loop in detection_worker<a class="headerlink" href="#6-new-rules-evaluation-loop-in-detection_worker" title="Permanent link">&para;</a></h3>
+<p>In <code>detection_worker._run()</code>, branch on whether the job config has rules:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Initialized once per job start:</span>
+<span class="n">dwell_tracker</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">rule_last_fired</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>   <span class="c1"># keyed by rule[&#39;name&#39;]</span>
+
+<span class="c1"># Per-frame evaluation (new-rules path):</span>
+<span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">rules</span><span class="p">:</span>
+    <span class="n">_update_dwell</span><span class="p">(</span><span class="n">detections</span><span class="p">,</span> <span class="n">dwell_tracker</span><span class="p">)</span>   <span class="c1"># updates det.dwell_seconds in-place</span>
+    <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">rules</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_cron_active</span><span class="p">(</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;cron_schedule&#39;</span><span class="p">]):</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">_in_cooldown</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">rule_last_fired</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="n">relevant</span> <span class="o">=</span> <span class="n">_filter_processing</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">detections</span><span class="p">)</span>    <span class="c1"># in_roi or detected</span>
+        <span class="n">relevant</span> <span class="o">=</span> <span class="n">_filter_cls</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">relevant</span><span class="p">)</span>             <span class="c1"># cls_operator + cls_ids</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">relevant</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_passes_duration</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">relevant</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="c1"># Rule fires — build synthetic RuleResult + dispatch via existing action_dispatcher</span>
+        <span class="n">rule_result</span> <span class="o">=</span> <span class="n">RuleResult</span><span class="p">(</span>
+            <span class="n">rule_name</span><span class="o">=</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="n">category</span><span class="o">=</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">],</span>
+            <span class="n">triggered</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">in_roi_count</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">relevant</span><span class="p">),</span>
+            <span class="n">detection_count</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">detections</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">frame_result</span><span class="o">.</span><span class="n">rule_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rule_result</span><span class="p">)</span>
+        <span class="n">action_dispatcher</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;actions&#39;</span><span class="p">],</span> <span class="n">frame_result</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span>
+        <span class="n">rule_last_fired</span><span class="p">[</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Legacy path — use existing rule_engine.evaluate() + StateTracker</span>
+    <span class="n">rule_engine</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">frame_result</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
+</code></pre></div>
+<p><code>_dispatch_rule_actions</code> is <strong>not</strong> a separate function — the dispatch call is inlined in the loop as shown above. It constructs a <code>RuleResult</code> using existing Pydantic schema, appends it to <code>frame_result.rule_results</code>, then calls the existing <code>action_dispatcher.dispatch()</code>. This reuses all existing notification infrastructure (telegram, redis, snapshot) without duplication.</p>
+<p>Each helper function (<code>_update_dwell</code>, <code>_cron_active</code>, <code>_in_cooldown</code>, <code>_filter_processing</code>, <code>_filter_cls</code>, <code>_passes_duration</code>) lives in <code>detection_worker.py</code> as a module-level function — one function per responsibility.</p>
+<h3 id="7-ruleaction-schema-and-action_dispatcher">7. RuleAction schema and action_dispatcher<a class="headerlink" href="#7-ruleaction-schema-and-action_dispatcher" title="Permanent link">&para;</a></h3>
+<p>Add <code>stream</code> field to <code>RuleAction</code> in <code>models/schemas.py</code>:
+<div class="highlight"><pre><span></span><code><span class="n">stream</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># used by publish_queue action</span>
+</code></pre></div></p>
+<p><code>action_dispatcher.dispatch()</code> reads <code>action.stream</code> for <code>publish_queue</code> actions:
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;publish_queue&#39;</span><span class="p">:</span>
+    <span class="n">stream_name</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">stream</span> <span class="ow">or</span> <span class="n">cfg</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">stream_name</span>   <span class="c1"># action overrides global</span>
+    <span class="n">output_publisher</span><span class="o">.</span><span class="n">publish_to_queue</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">stream_name</span><span class="p">)</span>
+</code></pre></div></p>
+<p><code>JobConfig.output</code> is <strong>retained</strong> for the legacy path. In the new-rules path, <code>output.stream_name</code> is the fallback only.</p>
+<h3 id="8-cls_ids-at-job-level-infer-call">8. cls_ids at job level (infer call)<a class="headerlink" href="#8-cls_ids-at-job-level-infer-call" title="Permanent link">&para;</a></h3>
+<p><code>to_job_config()</code> sets the top-level <code>cls_ids</code> (used by <code>infer()</code> to pre-filter) to the <strong>union of all active rule cls_ids</strong>:
+<div class="highlight"><pre><span></span><code><span class="n">all_cls_ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">({</span><span class="n">cid</span> <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">active_rules</span> <span class="k">for</span> <span class="n">cid</span> <span class="ow">in</span> <span class="n">rule</span><span class="o">.</span><span class="n">cls_ids</span><span class="p">})</span>
+</code></pre></div>
+This ensures <code>infer()</code> does not discard classes needed by individual rules. Per-rule <code>cls_operator</code> filtering happens after inference.</p>
+<h3 id="9-cron-rule-gating">9. Cron Rule Gating<a class="headerlink" href="#9-cron-rule-gating" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">croniter</span><span class="w"> </span><span class="kn">import</span> <span class="n">croniter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cron_active</span><span class="p">(</span><span class="n">cron_expr</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="c1"># Check if current minute matches: get the most recent scheduled time</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">croniter</span><span class="p">(</span><span class="n">cron_expr</span><span class="p">,</span> <span class="n">now</span><span class="p">)</span>
+        <span class="n">prev</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">get_prev</span><span class="p">(</span><span class="n">datetime</span><span class="p">)</span>
+        <span class="c1"># Active if the previous scheduled time is within the last minute</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">prev</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">60</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>   <span class="c1"># malformed cron → always active (fail open)</span>
+</code></pre></div>
+<p>Add <code>croniter</code> to <code>requirements.txt</code>.</p>
+<p><strong>Semantics:</strong> <code>_cron_active</code> uses <strong>window-membership</strong> — returns <code>True</code> for every frame within the matching minute. This is intentional: <code>cron_schedule</code> defines <em>when the rule is active</em>, and <code>cooldown_seconds</code> controls how often it actually fires within that window. This is not edge-trigger; a rule with <code>* 8-18 * * 1-5</code> is active on every frame processed during business hours.</p>
+<h3 id="10-labels-endpoint">10. Labels Endpoint<a class="headerlink" href="#10-labels-endpoint" title="Permanent link">&para;</a></h3>
+<p>New file <code>api/labels.py</code>:
+<div class="highlight"><pre><span></span><code><span class="c1"># GET /models/labels/?path=&lt;model_path&gt;</span>
+<span class="c1"># Reads &lt;model&gt;.names file or data.yaml sibling, returns [{id, name}, ...]</span>
+</code></pre></div></p>
+<p>Register in router alongside existing <code>/models/</code> route.</p>
+<hr />
+<h2 id="files-changed">Files Changed<a class="headerlink" href="#files-changed" title="Permanent link">&para;</a></h2>
+<h3 id="soca-dashboard">soca-dashboard<a class="headerlink" href="#soca-dashboard" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app/models.py</code></td>
+<td>Add <code>Rule</code> model, add <code>iou_threshold</code> to <code>Schedule</code>, add <code>redis_stream</code> to <code>EdgeConfig</code></td>
+</tr>
+<tr>
+<td><code>app/views.py</code></td>
+<td>Add <code>rule_save</code>, <code>rule_delete</code> views; update <code>schedule_form</code>, <code>edge_settings</code>; rewrite <code>to_job_config()</code> logic</td>
+</tr>
+<tr>
+<td><code>app/urls.py</code></td>
+<td>Add <code>schedules/&lt;id&gt;/rules/save/</code> and <code>schedules/&lt;id&gt;/rules/&lt;rid&gt;/delete/</code></td>
+</tr>
+<tr>
+<td><code>app/engine_client.py</code></td>
+<td>Add <code>get_model_labels(model_path)</code></td>
+</tr>
+<tr>
+<td><code>templates/schedules/form.html</code></td>
+<td>Full rewrite with new sections + JS</td>
+</tr>
+<tr>
+<td><code>templates/settings/index.html</code></td>
+<td>Add Telegram + Redis sections to edge settings form</td>
+</tr>
+</tbody>
+</table>
+<h3 id="soca-engine">soca-engine<a class="headerlink" href="#soca-engine" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requirements.txt</code></td>
+<td>Add <code>croniter</code></td>
+</tr>
+<tr>
+<td><code>models/schemas.py</code></td>
+<td>Add <code>iou_threshold</code> to <code>JobConfig</code>; add <code>dwell_seconds</code> to <code>Detection</code>; add <code>stream</code> to <code>RuleAction</code></td>
+</tr>
+<tr>
+<td><code>core/yolo_inference.py</code></td>
+<td>Add <code>iou_threshold</code> param to <code>infer()</code>; pass to <code>model.track()</code></td>
+</tr>
+<tr>
+<td><code>api/labels.py</code></td>
+<td>New — labels endpoint</td>
+</tr>
+<tr>
+<td><code>api/router.py</code> (or equivalent)</td>
+<td>Register labels route</td>
+</tr>
+<tr>
+<td><code>core/detection_worker.py</code></td>
+<td>New-rules evaluation loop + helpers: <code>_update_dwell</code>, <code>_cron_active</code>, <code>_in_cooldown</code>, <code>_filter_processing</code>, <code>_filter_cls</code>, <code>_passes_duration</code>, <code>_dispatch_rule_actions</code></td>
+</tr>
+<tr>
+<td><code>core/action_dispatcher.py</code></td>
+<td>Read <code>action.stream</code> for <code>publish_queue</code>; fallback to <code>cfg.output.stream_name</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="verification">Verification<a class="headerlink" href="#verification" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>python manage.py makemigrations &amp;&amp; python manage.py migrate</code> — Rule table + EdgeConfig.redis_stream created</li>
+<li>Open schedule form → pick model → cls_id checkboxes populate with label names from engine</li>
+<li>Add 2 rules → save → inspect <code>to_job_config()</code> output — both rules present with correct fields</li>
+<li>Start schedule → verify engine receives <code>iou_threshold</code>, <code>cron_schedule</code>, <code>duration_op</code>, <code>processing</code></li>
+<li>Set cron to past hours → verify rule does not fire</li>
+<li>Set <code>duration_op=gte, duration_seconds=5</code> → verify alert only fires after 5s continuous detection</li>
+<li><code>processing=detected</code> → verify alert fires even when object is outside ROI</li>
+<li><code>cls_operator=not_in</code> → verify alert fires for any class NOT in the list</li>
+<li>Telegram/Redis action flags → verify notifications sent using EdgeConfig credentials</li>
+<li>Schedule with no rules → verify fallback to legacy single-rule behavior</li>
+<li>Per-rule cooldown → fire rule, verify second alert suppressed within cooldown window</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

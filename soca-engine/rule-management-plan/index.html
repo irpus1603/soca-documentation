@@ -1,0 +1,2108 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/soca-engine/rule-management-plan/">
+      
+      
+        <link rel="prev" href="../object-detection-processor/">
+      
+      
+        <link rel="next" href="../../soca-service/overview/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Rule Management - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#advanced-rule-management-soca-engine-implementation-plan" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Rule Management
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Engine & Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Engine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../object-detection-processor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Detection Processor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rule Management
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rule Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#file-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-1-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 1: Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-2-schema-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 2: Schema updates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-3-yolo_inference-iou_threshold-parameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 3: yolo_inference — iou_threshold parameter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-4-detection_worker-helper-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 4: detection_worker — helper functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-5-detection_worker-new-rules-evaluation-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 5: detection_worker — new-rules evaluation loop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-6-action_dispatcher-per-rule-stream-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 6: action_dispatcher — per-rule stream support
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-7-labels-endpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 7: Labels endpoint
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../soca-service/overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="advanced-rule-management-soca-engine-implementation-plan">Advanced Rule Management — soca-engine Implementation Plan<a class="headerlink" href="#advanced-rule-management-soca-engine-implementation-plan" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (<code>- [ ]</code>) syntax for tracking.</p>
+</blockquote>
+<p><strong>Goal:</strong> Extend soca-engine to support advanced per-rule evaluation: IOU threshold, dwell/duration tracking, cron-based rule gating, cls_operator filtering, processing mode (in_roi vs all), per-rule cooldown, per-rule stream override, and a model labels endpoint.</p>
+<p><strong>Architecture:</strong> <code>detection_worker._run()</code> gains a new-rules evaluation path that branches on <code>cfg.rules</code> contents — when rules have advanced fields (<code>cls_operator</code>, <code>processing</code>, <code>cron_schedule</code>, etc.) it runs the new path; otherwise falls back to legacy <code>rule_engine.evaluate()</code>. Helper functions live as module-level functions in <code>detection_worker.py</code>. Schemas gain three new fields. A new <code>api/labels.py</code> module handles label file reading.</p>
+<p><strong>Tech Stack:</strong> FastAPI, Python 3.11+, <code>croniter</code>, <code>pyyaml</code></p>
+<p><strong>Spec:</strong> <code>docs/superpowers/specs/2026-03-22-advanced-rule-management-design.md</code> (in soca-dashboard repo)</p>
+<hr />
+<h2 id="file-map">File Map<a class="headerlink" href="#file-map" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requirements.txt</code></td>
+<td>Add <code>croniter</code>, <code>pyyaml</code></td>
+</tr>
+<tr>
+<td><code>models/schemas.py</code></td>
+<td>Add <code>iou_threshold</code> to <code>JobConfig</code>; <code>dwell_seconds</code> to <code>Detection</code>; <code>stream</code> to <code>RuleAction</code>; <code>category</code> to <code>RuleResult</code></td>
+</tr>
+<tr>
+<td><code>core/yolo_inference.py</code></td>
+<td>Add <code>iou_threshold</code> param to <code>infer()</code></td>
+</tr>
+<tr>
+<td><code>workers/detection_worker.py</code></td>
+<td>Add helpers + new-rules evaluation loop</td>
+</tr>
+<tr>
+<td><code>core/action_dispatcher.py</code></td>
+<td>Read <code>action.stream</code> for <code>publish_queue</code>; fallback to <code>stream_name</code> param</td>
+</tr>
+<tr>
+<td><code>api/labels.py</code></td>
+<td>New — model labels endpoint</td>
+</tr>
+<tr>
+<td><code>main.py</code></td>
+<td>Register labels router</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="task-1-dependencies">Task 1: Dependencies<a class="headerlink" href="#task-1-dependencies" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>requirements.txt</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Add dependencies</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>croniter==3.0.3
+pyyaml==6.0.2
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Install</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;/Users/mac-mini-home/Supriyadi/Projects/soca client-server/soca-engine&quot;</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="nv">croniter</span><span class="o">==</span><span class="m">3</span>.0.3<span class="w"> </span><span class="nv">pyyaml</span><span class="o">==</span><span class="m">6</span>.0.2
+</code></pre></div>
+<p>Expected: installed successfully, no conflicts.</p>
+<ul>
+<li>[ ] <strong>Step 3: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>requirements.txt
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;chore: add croniter and pyyaml dependencies&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-2-schema-updates">Task 2: Schema updates<a class="headerlink" href="#task-2-schema-updates" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>models/schemas.py</code>
+- Create: <code>tests/test_schemas.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Create <code>tests/</code> directory and write failing tests</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>tests
+touch<span class="w"> </span>tests/__init__.py
+</code></pre></div>
+<p>Create <code>tests/test_schemas.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">models.schemas</span><span class="w"> </span><span class="kn">import</span> <span class="n">JobConfig</span><span class="p">,</span> <span class="n">Detection</span><span class="p">,</span> <span class="n">RuleAction</span><span class="p">,</span> <span class="n">RuleResult</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_jobconfig_iou_threshold_default</span><span class="p">():</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">JobConfig</span><span class="p">(</span><span class="n">camera_id</span><span class="o">=</span><span class="s1">&#39;cam1&#39;</span><span class="p">,</span> <span class="n">rtsp_url</span><span class="o">=</span><span class="s1">&#39;rtsp://localhost/test&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">cfg</span><span class="o">.</span><span class="n">iou_threshold</span> <span class="o">==</span> <span class="mf">0.45</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_jobconfig_iou_threshold_custom</span><span class="p">():</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">JobConfig</span><span class="p">(</span><span class="n">camera_id</span><span class="o">=</span><span class="s1">&#39;cam1&#39;</span><span class="p">,</span> <span class="n">rtsp_url</span><span class="o">=</span><span class="s1">&#39;rtsp://x&#39;</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">cfg</span><span class="o">.</span><span class="n">iou_threshold</span> <span class="o">==</span> <span class="mf">0.7</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_detection_dwell_seconds_default</span><span class="p">():</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">Detection</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cls_name</span><span class="o">=</span><span class="s1">&#39;person&#39;</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">dwell_seconds</span> <span class="o">==</span> <span class="mf">0.0</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_ruleaction_stream_default_none</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">RuleAction</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;publish_queue&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">a</span><span class="o">.</span><span class="n">stream</span> <span class="ow">is</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_ruleaction_stream_set</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">RuleAction</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;publish_queue&#39;</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="s1">&#39;custom:stream&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">a</span><span class="o">.</span><span class="n">stream</span> <span class="o">==</span> <span class="s1">&#39;custom:stream&#39;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_ruleresult_category_default</span><span class="p">():</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">RuleResult</span><span class="p">(</span><span class="n">rule_name</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">triggered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">r</span><span class="o">.</span><span class="n">category</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Run tests to verify they fail</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;/Users/mac-mini-home/Supriyadi/Projects/soca client-server/soca-engine&quot;</span>
+python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_schemas.py<span class="w"> </span>-v
+</code></pre></div>
+<p>Expected: FAIL — <code>iou_threshold</code> not on <code>JobConfig</code>, <code>dwell_seconds</code> not on <code>Detection</code>, <code>stream</code> not on <code>RuleAction</code>, <code>category</code> not on <code>RuleResult</code>.</p>
+<ul>
+<li>[ ] <strong>Step 3: Update <code>models/schemas.py</code></strong></li>
+</ul>
+<p>Add <code>iou_threshold</code> to <code>JobConfig</code> (after <code>conf_threshold</code>):
+<div class="highlight"><pre><span></span><code><span class="n">iou_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.45</span>
+</code></pre></div></p>
+<p>Add <code>dwell_seconds</code> to <code>Detection</code> dataclass (after <code>in_roi</code>):
+<div class="highlight"><pre><span></span><code><span class="n">dwell_seconds</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+</code></pre></div></p>
+<p>Add <code>stream</code> to <code>RuleAction</code> (after <code>message_template</code>):
+<div class="highlight"><pre><span></span><code><span class="n">stream</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div></p>
+<p>Add <code>category</code> to <code>RuleResult</code> dataclass (after <code>rule_name</code>):
+<div class="highlight"><pre><span></span><code><span class="n">category</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 4: Run tests</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_schemas.py<span class="w"> </span>-v
+</code></pre></div>
+<p>Expected: all PASS.</p>
+<ul>
+<li>[ ] <strong>Step 5: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>models/schemas.py<span class="w"> </span>tests/test_schemas.py<span class="w"> </span>tests/__init__.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add iou_threshold, dwell_seconds, stream, category fields to schemas&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-3-yolo_inference-iou_threshold-parameter">Task 3: yolo_inference — iou_threshold parameter<a class="headerlink" href="#task-3-yolo_inference-iou_threshold-parameter" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>core/yolo_inference.py</code>
+- Create: <code>tests/test_yolo_inference.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Write failing test</strong></li>
+</ul>
+<p>Create <code>tests/test_yolo_inference.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core</span><span class="w"> </span><span class="kn">import</span> <span class="n">yolo_inference</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_infer_accepts_iou_threshold</span><span class="p">():</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">yolo_inference</span><span class="o">.</span><span class="n">infer</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s1">&#39;iou_threshold&#39;</span> <span class="ow">in</span> <span class="n">sig</span><span class="o">.</span><span class="n">parameters</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_infer_iou_default</span><span class="p">():</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">yolo_inference</span><span class="o">.</span><span class="n">infer</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">sig</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;iou_threshold&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span> <span class="o">==</span> <span class="mf">0.45</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Run test to verify it fails</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_yolo_inference.py<span class="w"> </span>-v
+</code></pre></div>
+<p>Expected: FAIL — <code>iou_threshold</code> not in signature.</p>
+<ul>
+<li>[ ] <strong>Step 3: Update <code>core/yolo_inference.py</code></strong></li>
+</ul>
+<p>Change the <code>infer</code> function signature from:
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">infer</span><span class="p">(</span><span class="n">frame</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">model_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cls_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">conf</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Detection</span><span class="p">]:</span>
+</code></pre></div>
+to:
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">infer</span><span class="p">(</span><span class="n">frame</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">model_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cls_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">conf</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.45</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Detection</span><span class="p">]:</span>
+</code></pre></div></p>
+<p>Change the <code>model.track()</code> call from:
+<div class="highlight"><pre><span></span><code><span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">track</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">frame</span><span class="p">,</span> <span class="n">persist</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">conf</span><span class="o">=</span><span class="n">conf</span><span class="p">,</span> <span class="n">iou</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+                      <span class="n">classes</span><span class="o">=</span><span class="n">cls_ids</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+to:
+<div class="highlight"><pre><span></span><code><span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">track</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">frame</span><span class="p">,</span> <span class="n">persist</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">conf</span><span class="o">=</span><span class="n">conf</span><span class="p">,</span> <span class="n">iou</span><span class="o">=</span><span class="n">iou_threshold</span><span class="p">,</span>
+                      <span class="n">classes</span><span class="o">=</span><span class="n">cls_ids</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 4: Update call site in <code>workers/detection_worker.py</code></strong></li>
+</ul>
+<p>Change:
+<div class="highlight"><pre><span></span><code><span class="n">detections</span> <span class="o">=</span> <span class="n">yolo_inference</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">model_path</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">cls_ids</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">conf_threshold</span><span class="p">)</span>
+</code></pre></div>
+to:
+<div class="highlight"><pre><span></span><code><span class="n">detections</span> <span class="o">=</span> <span class="n">yolo_inference</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">model_path</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">cls_ids</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">conf_threshold</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">iou_threshold</span><span class="p">)</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 5: Run tests</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_yolo_inference.py<span class="w"> </span>-v
+</code></pre></div>
+<p>Expected: PASS.</p>
+<ul>
+<li>[ ] <strong>Step 6: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>core/yolo_inference.py<span class="w"> </span>workers/detection_worker.py<span class="w"> </span>tests/test_yolo_inference.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add iou_threshold parameter to infer()&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-4-detection_worker-helper-functions">Task 4: detection_worker — helper functions<a class="headerlink" href="#task-4-detection_worker-helper-functions" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>workers/detection_worker.py</code>
+- Create: <code>tests/test_worker_helpers.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Write failing tests</strong></li>
+</ul>
+<p>Create <code>tests/test_worker_helpers.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">models.schemas</span><span class="w"> </span><span class="kn">import</span> <span class="n">Detection</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_det</span><span class="p">(</span><span class="n">track_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cls_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">in_roi</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">Detection</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="n">cls_id</span><span class="p">,</span> <span class="n">cls_name</span><span class="o">=</span><span class="s1">&#39;person&#39;</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">track_id</span><span class="o">=</span><span class="n">track_id</span><span class="p">,</span> <span class="n">in_roi</span><span class="o">=</span><span class="n">in_roi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+
+<span class="c1"># Import helpers — will fail until added to detection_worker</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">workers.detection_worker</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_update_dwell</span><span class="p">,</span> <span class="n">_cron_active</span><span class="p">,</span> <span class="n">_in_cooldown</span><span class="p">,</span>
+    <span class="n">_filter_processing</span><span class="p">,</span> <span class="n">_filter_cls</span><span class="p">,</span> <span class="n">_passes_duration</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TestUpdateDwell</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_sets_dwell_seconds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tracker</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">_det</span><span class="p">(</span><span class="n">track_id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">_update_dwell</span><span class="p">([</span><span class="n">d</span><span class="p">],</span> <span class="n">tracker</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">dwell_seconds</span> <span class="o">&gt;=</span> <span class="mf">0.0</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_dwell_increases_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tracker</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">_det</span><span class="p">(</span><span class="n">track_id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">_update_dwell</span><span class="p">([</span><span class="n">d</span><span class="p">],</span> <span class="n">tracker</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+        <span class="n">_update_dwell</span><span class="p">([</span><span class="n">d</span><span class="p">],</span> <span class="n">tracker</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">dwell_seconds</span> <span class="o">&gt;=</span> <span class="mf">0.04</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_evicts_missing_track_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tracker</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;99&#39;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="mi">10</span><span class="p">}</span>
+        <span class="n">_update_dwell</span><span class="p">([],</span> <span class="n">tracker</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="s1">&#39;99&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tracker</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_no_track_id_gets_zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tracker</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">_det</span><span class="p">(</span><span class="n">track_id</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">_update_dwell</span><span class="p">([</span><span class="n">d</span><span class="p">],</span> <span class="n">tracker</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">dwell_seconds</span> <span class="o">==</span> <span class="mf">0.0</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TestCronActive</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_always_active</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">_cron_active</span><span class="p">(</span><span class="s1">&#39;* * * * *&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_invalid_cron_defaults_true</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">_cron_active</span><span class="p">(</span><span class="s1">&#39;not a cron&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TestInCooldown</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_not_in_cooldown_when_never_fired</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">_in_cooldown</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;r1&#39;</span><span class="p">,</span> <span class="s1">&#39;cooldown_seconds&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">},</span> <span class="p">{})</span> <span class="ow">is</span> <span class="kc">False</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_in_cooldown_when_recently_fired</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">fired</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;r1&#39;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()}</span>
+        <span class="k">assert</span> <span class="n">_in_cooldown</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;r1&#39;</span><span class="p">,</span> <span class="s1">&#39;cooldown_seconds&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">},</span> <span class="n">fired</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_not_in_cooldown_after_expiry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">fired</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;r1&#39;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="mi">120</span><span class="p">}</span>
+        <span class="k">assert</span> <span class="n">_in_cooldown</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;r1&#39;</span><span class="p">,</span> <span class="s1">&#39;cooldown_seconds&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">},</span> <span class="n">fired</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TestFilterProcessing</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_in_roi_filters_to_roi_only</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dets</span> <span class="o">=</span> <span class="p">[</span><span class="n">_det</span><span class="p">(</span><span class="n">in_roi</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">_det</span><span class="p">(</span><span class="n">in_roi</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_filter_processing</span><span class="p">({</span><span class="s1">&#39;processing&#39;</span><span class="p">:</span> <span class="s1">&#39;in_roi&#39;</span><span class="p">},</span> <span class="n">dets</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="k">assert</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">in_roi</span> <span class="ow">is</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_detected_returns_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dets</span> <span class="o">=</span> <span class="p">[</span><span class="n">_det</span><span class="p">(</span><span class="n">in_roi</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">_det</span><span class="p">(</span><span class="n">in_roi</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_filter_processing</span><span class="p">({</span><span class="s1">&#39;processing&#39;</span><span class="p">:</span> <span class="s1">&#39;detected&#39;</span><span class="p">},</span> <span class="n">dets</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TestFilterCls</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_in_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dets</span> <span class="o">=</span> <span class="p">[</span><span class="n">_det</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">_det</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">_det</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="mi">7</span><span class="p">)]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_filter_cls</span><span class="p">({</span><span class="s1">&#39;cls_operator&#39;</span><span class="p">:</span> <span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="s1">&#39;cls_ids&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]},</span> <span class="n">dets</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_not_in_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dets</span> <span class="o">=</span> <span class="p">[</span><span class="n">_det</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">_det</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="mi">2</span><span class="p">)]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_filter_cls</span><span class="p">({</span><span class="s1">&#39;cls_operator&#39;</span><span class="p">:</span> <span class="s1">&#39;not_in&#39;</span><span class="p">,</span> <span class="s1">&#39;cls_ids&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]},</span> <span class="n">dets</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="k">assert</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cls_id</span> <span class="o">==</span> <span class="mi">2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_eq_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dets</span> <span class="o">=</span> <span class="p">[</span><span class="n">_det</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">_det</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="mi">2</span><span class="p">)]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_filter_cls</span><span class="p">({</span><span class="s1">&#39;cls_operator&#39;</span><span class="p">:</span> <span class="s1">&#39;eq&#39;</span><span class="p">,</span> <span class="s1">&#39;cls_ids&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]},</span> <span class="n">dets</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_empty_cls_ids_returns_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dets</span> <span class="o">=</span> <span class="p">[</span><span class="n">_det</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">_det</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="mi">2</span><span class="p">)]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_filter_cls</span><span class="p">({</span><span class="s1">&#39;cls_operator&#39;</span><span class="p">:</span> <span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="s1">&#39;cls_ids&#39;</span><span class="p">:</span> <span class="p">[]},</span> <span class="n">dets</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TestPassesDuration</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_immediate_always_passes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">_passes_duration</span><span class="p">({</span><span class="s1">&#39;duration_op&#39;</span><span class="p">:</span> <span class="s1">&#39;immediate&#39;</span><span class="p">,</span> <span class="s1">&#39;duration_seconds&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span> <span class="p">[])</span> <span class="ow">is</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_gte_passes_when_max_dwell_sufficient</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">_det</span><span class="p">();</span> <span class="n">d</span><span class="o">.</span><span class="n">dwell_seconds</span> <span class="o">=</span> <span class="mf">5.0</span>
+        <span class="k">assert</span> <span class="n">_passes_duration</span><span class="p">({</span><span class="s1">&#39;duration_op&#39;</span><span class="p">:</span> <span class="s1">&#39;gte&#39;</span><span class="p">,</span> <span class="s1">&#39;duration_seconds&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span> <span class="p">[</span><span class="n">d</span><span class="p">])</span> <span class="ow">is</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_gte_fails_when_dwell_too_short</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">_det</span><span class="p">();</span> <span class="n">d</span><span class="o">.</span><span class="n">dwell_seconds</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="k">assert</span> <span class="n">_passes_duration</span><span class="p">({</span><span class="s1">&#39;duration_op&#39;</span><span class="p">:</span> <span class="s1">&#39;gte&#39;</span><span class="p">,</span> <span class="s1">&#39;duration_seconds&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span> <span class="p">[</span><span class="n">d</span><span class="p">])</span> <span class="ow">is</span> <span class="kc">False</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_empty_detections_returns_false_for_gte</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">_passes_duration</span><span class="p">({</span><span class="s1">&#39;duration_op&#39;</span><span class="p">:</span> <span class="s1">&#39;gte&#39;</span><span class="p">,</span> <span class="s1">&#39;duration_seconds&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span> <span class="p">[])</span> <span class="ow">is</span> <span class="kc">False</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Run tests to verify they fail</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_worker_helpers.py<span class="w"> </span>-v
+</code></pre></div>
+<p>Expected: ImportError — helpers not in <code>detection_worker</code>.</p>
+<ul>
+<li>[ ] <strong>Step 3: Add helper functions to <code>workers/detection_worker.py</code></strong></li>
+</ul>
+<p>Add these module-level functions near the top of the file (after imports, before <code>DetectionWorker</code> class):</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">_time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span> <span class="k">as</span> <span class="n">_datetime</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_update_dwell</span><span class="p">(</span><span class="n">detections</span><span class="p">,</span> <span class="n">dwell_tracker</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update dwell_seconds on each Detection based on first-seen time per track_id.&quot;&quot;&quot;</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">_time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">detections</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">det</span><span class="o">.</span><span class="n">track_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">det</span><span class="o">.</span><span class="n">dwell_seconds</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">continue</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">det</span><span class="o">.</span><span class="n">track_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dwell_tracker</span><span class="p">:</span>
+            <span class="n">dwell_tracker</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">now</span>
+        <span class="n">det</span><span class="o">.</span><span class="n">dwell_seconds</span> <span class="o">=</span> <span class="n">now</span> <span class="o">-</span> <span class="n">dwell_tracker</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="c1"># Evict stale track_ids</span>
+    <span class="n">seen</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">track_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detections</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">track_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">tid</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">dwell_tracker</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">tid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">dwell_tracker</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cron_active</span><span class="p">(</span><span class="n">cron_expr</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if current time falls within the cron expression window.&quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">croniter</span><span class="w"> </span><span class="kn">import</span> <span class="n">croniter</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">_datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">croniter</span><span class="p">(</span><span class="n">cron_expr</span><span class="p">,</span> <span class="n">now</span><span class="p">)</span>
+        <span class="n">prev</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">get_prev</span><span class="p">(</span><span class="n">_datetime</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">prev</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">60</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>   <span class="c1"># malformed cron → fail open (always active)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_in_cooldown</span><span class="p">(</span><span class="n">rule</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">rule_last_fired</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if this rule fired too recently to fire again.&quot;&quot;&quot;</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="n">rule_last_fired</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">_time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">last</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">rule</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cooldown_seconds&#39;</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_filter_processing</span><span class="p">(</span><span class="n">rule</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">detections</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter detections by processing mode: in_roi keeps only ROI hits; detected keeps all.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">rule</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;processing&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;detected&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">detections</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detections</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">in_roi</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_filter_cls</span><span class="p">(</span><span class="n">rule</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">detections</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter detections by cls_operator + cls_ids.&quot;&quot;&quot;</span>
+    <span class="n">ids</span> <span class="o">=</span> <span class="n">rule</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cls_ids&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[]</span>
+    <span class="n">op</span> <span class="o">=</span> <span class="n">rule</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cls_operator&#39;</span><span class="p">,</span> <span class="s1">&#39;in&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ids</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">detections</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;in&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detections</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">cls_id</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;not_in&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detections</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">cls_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;eq&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detections</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">cls_id</span> <span class="o">==</span> <span class="n">ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">detections</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_passes_duration</span><span class="p">(</span><span class="n">rule</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">detections</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if dwell duration condition is satisfied.&quot;&quot;&quot;</span>
+    <span class="n">op</span> <span class="o">=</span> <span class="n">rule</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;duration_op&#39;</span><span class="p">,</span> <span class="s1">&#39;immediate&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;immediate&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">detections</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="n">rule</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;duration_seconds&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">max_dwell</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="n">d</span><span class="o">.</span><span class="n">dwell_seconds</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detections</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;gte&#39;</span><span class="p">:</span> <span class="n">max_dwell</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">,</span>
+        <span class="s1">&#39;lte&#39;</span><span class="p">:</span> <span class="n">max_dwell</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">,</span>
+        <span class="s1">&#39;eq&#39;</span><span class="p">:</span>  <span class="nb">abs</span><span class="p">(</span><span class="n">max_dwell</span> <span class="o">-</span> <span class="n">threshold</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 4: Run tests</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_worker_helpers.py<span class="w"> </span>-v
+</code></pre></div>
+<p>Expected: all PASS.</p>
+<ul>
+<li>[ ] <strong>Step 5: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>workers/detection_worker.py<span class="w"> </span>tests/test_worker_helpers.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add new-rules evaluation helper functions to detection_worker&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-5-detection_worker-new-rules-evaluation-loop">Task 5: detection_worker — new-rules evaluation loop<a class="headerlink" href="#task-5-detection_worker-new-rules-evaluation-loop" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>workers/detection_worker.py</code>
+- Create: <code>tests/test_worker_loop.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Write failing test</strong></li>
+</ul>
+<p>Create <code>tests/test_worker_loop.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">unittest.mock</span><span class="w"> </span><span class="kn">import</span> <span class="n">MagicMock</span><span class="p">,</span> <span class="n">patch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">models.schemas</span><span class="w"> </span><span class="kn">import</span> <span class="n">JobConfig</span><span class="p">,</span> <span class="n">Detection</span><span class="p">,</span> <span class="n">RuleResult</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_rule_config</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">processing</span><span class="o">=</span><span class="s1">&#39;in_roi&#39;</span><span class="p">,</span> <span class="n">cls_operator</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="n">cls_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">duration_op</span><span class="o">=</span><span class="s1">&#39;immediate&#39;</span><span class="p">,</span> <span class="n">duration_seconds</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cooldown_seconds</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                      <span class="n">cron_schedule</span><span class="o">=</span><span class="s1">&#39;* * * * *&#39;</span><span class="p">,</span> <span class="n">action_snapshot</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+        <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="s1">&#39;Intrusion&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cls_ids&#39;</span><span class="p">:</span> <span class="n">cls_ids</span> <span class="ow">or</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="s1">&#39;cls_operator&#39;</span><span class="p">:</span> <span class="n">cls_operator</span><span class="p">,</span>
+        <span class="s1">&#39;processing&#39;</span><span class="p">:</span> <span class="n">processing</span><span class="p">,</span>
+        <span class="s1">&#39;duration_op&#39;</span><span class="p">:</span> <span class="n">duration_op</span><span class="p">,</span>
+        <span class="s1">&#39;duration_seconds&#39;</span><span class="p">:</span> <span class="n">duration_seconds</span><span class="p">,</span>
+        <span class="s1">&#39;cooldown_seconds&#39;</span><span class="p">:</span> <span class="n">cooldown_seconds</span><span class="p">,</span>
+        <span class="s1">&#39;cron_schedule&#39;</span><span class="p">:</span> <span class="n">cron_schedule</span><span class="p">,</span>
+        <span class="s1">&#39;message_template&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;priority&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s1">&#39;actions&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;save_snapshot&#39;</span><span class="p">}]</span> <span class="k">if</span> <span class="n">action_snapshot</span> <span class="k">else</span> <span class="p">[],</span>
+    <span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_new_rules_path_fires_on_matching_detection</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;New-rules path fires when cls, processing, and duration all match.&quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">workers.detection_worker</span><span class="w"> </span><span class="kn">import</span> <span class="n">_evaluate_rules_new_path</span>
+    <span class="n">det</span> <span class="o">=</span> <span class="n">Detection</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cls_name</span><span class="o">=</span><span class="s1">&#39;person&#39;</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+                    <span class="n">track_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_roi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dwell_seconds</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">rule</span> <span class="o">=</span> <span class="n">_make_rule_config</span><span class="p">()</span>
+    <span class="n">results</span><span class="p">,</span> <span class="n">fired</span> <span class="o">=</span> <span class="n">_evaluate_rules_new_path</span><span class="p">([</span><span class="n">rule</span><span class="p">],</span> <span class="p">[</span><span class="n">det</span><span class="p">],</span> <span class="p">{})</span>
+    <span class="k">assert</span> <span class="n">fired</span>
+    <span class="k">assert</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">triggered</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_new_rules_path_skips_wrong_cls</span><span class="p">():</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">workers.detection_worker</span><span class="w"> </span><span class="kn">import</span> <span class="n">_evaluate_rules_new_path</span>
+    <span class="n">det</span> <span class="o">=</span> <span class="n">Detection</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cls_name</span><span class="o">=</span><span class="s1">&#39;car&#39;</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+                    <span class="n">track_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_roi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dwell_seconds</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">rule</span> <span class="o">=</span> <span class="n">_make_rule_config</span><span class="p">(</span><span class="n">cls_ids</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># only person</span>
+    <span class="n">results</span><span class="p">,</span> <span class="n">fired</span> <span class="o">=</span> <span class="n">_evaluate_rules_new_path</span><span class="p">([</span><span class="n">rule</span><span class="p">],</span> <span class="p">[</span><span class="n">det</span><span class="p">],</span> <span class="p">{})</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">fired</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">triggered</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_new_rules_path_respects_cooldown</span><span class="p">():</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">workers.detection_worker</span><span class="w"> </span><span class="kn">import</span> <span class="n">_evaluate_rules_new_path</span>
+    <span class="n">det</span> <span class="o">=</span> <span class="n">Detection</span><span class="p">(</span><span class="n">cls_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cls_name</span><span class="o">=</span><span class="s1">&#39;person&#39;</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+                    <span class="n">track_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_roi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dwell_seconds</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">rule</span> <span class="o">=</span> <span class="n">_make_rule_config</span><span class="p">(</span><span class="n">cooldown_seconds</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+    <span class="n">rule_last_fired</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()}</span>  <span class="c1"># just fired</span>
+    <span class="n">results</span><span class="p">,</span> <span class="n">fired</span> <span class="o">=</span> <span class="n">_evaluate_rules_new_path</span><span class="p">([</span><span class="n">rule</span><span class="p">],</span> <span class="p">[</span><span class="n">det</span><span class="p">],</span> <span class="n">rule_last_fired</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">fired</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Run test to verify it fails</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_worker_loop.py<span class="w"> </span>-v
+</code></pre></div>
+<p>Expected: ImportError — <code>_evaluate_rules_new_path</code> not defined.</p>
+<ul>
+<li>[ ] <strong>Step 3: Add <code>_evaluate_rules_new_path</code> to <code>workers/detection_worker.py</code></strong></li>
+</ul>
+<p>Add after the helper functions:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">_time</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_evaluate_rules_new_path</span><span class="p">(</span><span class="n">rules</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="n">detections</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">rule_last_fired</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Evaluate rules using new-path logic (cls_operator, processing, dwell, cron, per-rule cooldown).</span>
+<span class="sd">    Returns (list[RuleResult], bool fired_any).</span>
+<span class="sd">    Updates rule_last_fired in-place for rules that fire.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">models.schemas</span><span class="w"> </span><span class="kn">import</span> <span class="n">RuleResult</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">fired_any</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">rules</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_cron_active</span><span class="p">(</span><span class="n">rule</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cron_schedule&#39;</span><span class="p">,</span> <span class="s1">&#39;* * * * *&#39;</span><span class="p">)):</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RuleResult</span><span class="p">(</span><span class="n">rule_name</span><span class="o">=</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">category</span><span class="o">=</span><span class="n">rule</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="n">triggered</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="n">_in_cooldown</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">rule_last_fired</span><span class="p">):</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RuleResult</span><span class="p">(</span><span class="n">rule_name</span><span class="o">=</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">category</span><span class="o">=</span><span class="n">rule</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="n">triggered</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="k">continue</span>
+
+        <span class="n">relevant</span> <span class="o">=</span> <span class="n">_filter_processing</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">detections</span><span class="p">)</span>
+        <span class="n">relevant</span> <span class="o">=</span> <span class="n">_filter_cls</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">relevant</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">relevant</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">_passes_duration</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="n">relevant</span><span class="p">):</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RuleResult</span><span class="p">(</span><span class="n">rule_name</span><span class="o">=</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">category</span><span class="o">=</span><span class="n">rule</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="n">triggered</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Rule fires</span>
+        <span class="n">actions_fired</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">rule</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;actions&#39;</span><span class="p">,</span> <span class="p">[])]</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RuleResult</span><span class="p">(</span>
+            <span class="n">rule_name</span><span class="o">=</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="n">category</span><span class="o">=</span><span class="n">rule</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+            <span class="n">triggered</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">actions_fired</span><span class="o">=</span><span class="n">actions_fired</span><span class="p">,</span>
+        <span class="p">))</span>
+        <span class="n">rule_last_fired</span><span class="p">[</span><span class="n">rule</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">_time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">fired_any</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">results</span><span class="p">,</span> <span class="n">fired_any</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 4: Wire <code>_evaluate_rules_new_path</code> into <code>DetectionWorker._run()</code></strong></li>
+</ul>
+<p>Also add new fields to the Pydantic <code>Rule</code> schema in <code>models/schemas.py</code> so the engine can receive and pass through the advanced rule fields:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Add to Rule model in models/schemas.py (after existing fields):</span>
+<span class="n">cls_operator</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;in&#39;</span>           <span class="c1"># eq | in | not_in</span>
+<span class="n">cls_ids_filter</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>     <span class="c1"># rename to avoid clash with JobConfig.cls_ids</span>
+<span class="n">processing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;in_roi&#39;</span>         <span class="c1"># in_roi | detected</span>
+<span class="n">duration_op</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;immediate&#39;</span>     <span class="c1"># immediate | gte | lte | eq</span>
+<span class="n">duration_seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">cooldown_seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">cron_schedule</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;* * * * *&#39;</span>
+</code></pre></div>
+<p>Note: use <code>cls_ids_filter</code> on the Rule schema to avoid name clash with <code>JobConfig.cls_ids</code>. The dashboard sends <code>cls_ids</code> in each rule dict; rename to <code>cls_ids_filter</code> in the schema and update <code>_filter_cls</code> to use <code>rule.cls_ids_filter</code>.</p>
+<p>In <code>_run()</code>, initialise state <strong>before</strong> the capture loop:
+<div class="highlight"><pre><span></span><code><span class="n">dwell_tracker</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">rule_last_fired</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+</code></pre></div></p>
+<p>Replace the existing rule evaluation block with the new-path branch (spec: branch on <code>bool(cfg.rules)</code>):
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">rules</span><span class="p">:</span>
+    <span class="c1"># New-rules path — per-rule cron, cls, processing, dwell, cooldown</span>
+    <span class="n">_update_dwell</span><span class="p">(</span><span class="n">detections</span><span class="p">,</span> <span class="n">dwell_tracker</span><span class="p">)</span>
+    <span class="n">rule_results</span><span class="p">,</span> <span class="n">fired</span> <span class="o">=</span> <span class="n">_evaluate_rules_new_path</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">rules</span><span class="p">,</span> <span class="n">detections</span><span class="p">,</span> <span class="n">rule_last_fired</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">fired</span><span class="p">:</span>
+        <span class="n">events_triggered</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rule_results</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">triggered</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Legacy path — existing rule_engine + StateTracker cooldown</span>
+    <span class="n">rule_results</span> <span class="o">=</span> <span class="n">rule_engine</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">rules</span><span class="p">,</span> <span class="n">detections</span><span class="p">,</span> <span class="n">aging</span><span class="p">,</span> <span class="n">frame_meta</span><span class="p">)</span>
+    <span class="n">triggered</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rule_results</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">triggered</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">triggered</span><span class="p">:</span>
+        <span class="n">triggered_cls</span> <span class="o">=</span> <span class="nb">list</span><span class="p">({</span><span class="n">d</span><span class="o">.</span><span class="n">cls_id</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detections</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">in_roi</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">tracker</span><span class="o">.</span><span class="n">any_in_cooldown</span><span class="p">(</span><span class="n">triggered_cls</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">triggered</span><span class="p">:</span>
+                <span class="n">r</span><span class="o">.</span><span class="n">triggered</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">triggered</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tracker</span><span class="o">.</span><span class="n">mark_triggered</span><span class="p">(</span><span class="n">triggered_cls</span><span class="p">)</span>
+            <span class="n">events_triggered</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">triggered</span><span class="p">)</span>
+</code></pre></div></p>
+<p>Update <code>FrameResult</code> construction to propagate <code>alert_category</code>:
+<div class="highlight"><pre><span></span><code><span class="n">alert_cat</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">r</span><span class="o">.</span><span class="n">category</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rule_results</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">triggered</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">category</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">FrameResult</span><span class="p">(</span>
+    <span class="n">frame_id</span><span class="o">=</span><span class="n">frame_id</span><span class="p">,</span> <span class="n">job_id</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">job_id</span><span class="p">,</span> <span class="n">camera_id</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">camera_id</span><span class="p">,</span>
+    <span class="n">camera_name</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">camera_name</span><span class="p">,</span> <span class="n">edge_name</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">EDGE_NAME</span><span class="p">,</span>
+    <span class="n">timestamp</span><span class="o">=</span><span class="n">now</span><span class="p">,</span> <span class="n">detections</span><span class="o">=</span><span class="n">detections</span><span class="p">,</span> <span class="n">aging</span><span class="o">=</span><span class="n">aging</span><span class="p">,</span>
+    <span class="n">rule_results</span><span class="o">=</span><span class="n">rule_results</span><span class="p">,</span> <span class="n">alert_category</span><span class="o">=</span><span class="n">alert_cat</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div></p>
+<p>After <code>result</code> is constructed, dispatch actions (existing <code>action_dispatcher.dispatch()</code> handles both paths):
+<div class="highlight"><pre><span></span><code><span class="n">dispatched</span> <span class="o">=</span> <span class="n">action_dispatcher</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">rules</span><span class="p">,</span> <span class="n">snapshot_mgr</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">stream_name</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">roi</span><span class="p">)</span>
+</code></pre></div></p>
+<p>This reuses all existing notification infrastructure (Telegram, Redis, snapshot) for both paths.</p>
+<p>Also update <code>_evaluate_rules_new_path</code> to accept <code>list[Rule]</code> (Pydantic) and access fields via attributes instead of <code>.get()</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_evaluate_rules_new_path</span><span class="p">(</span><span class="n">rules</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">detections</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">rule_last_fired</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Evaluate advanced rules. rules is list[Rule] Pydantic models.&quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">models.schemas</span><span class="w"> </span><span class="kn">import</span> <span class="n">RuleResult</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">fired_any</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">rules</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">priority</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_cron_active</span><span class="p">(</span><span class="n">rule</span><span class="o">.</span><span class="n">cron_schedule</span><span class="p">):</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RuleResult</span><span class="p">(</span><span class="n">rule_name</span><span class="o">=</span><span class="n">rule</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">rule</span><span class="o">.</span><span class="n">category</span><span class="p">,</span> <span class="n">triggered</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="k">continue</span>
+        <span class="n">rule_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">rule</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;cooldown_seconds&#39;</span><span class="p">:</span> <span class="n">rule</span><span class="o">.</span><span class="n">cooldown_seconds</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">_in_cooldown</span><span class="p">(</span><span class="n">rule_dict</span><span class="p">,</span> <span class="n">rule_last_fired</span><span class="p">):</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RuleResult</span><span class="p">(</span><span class="n">rule_name</span><span class="o">=</span><span class="n">rule</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">rule</span><span class="o">.</span><span class="n">category</span><span class="p">,</span> <span class="n">triggered</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="k">continue</span>
+
+        <span class="n">relevant</span> <span class="o">=</span> <span class="n">_filter_processing</span><span class="p">({</span><span class="s1">&#39;processing&#39;</span><span class="p">:</span> <span class="n">rule</span><span class="o">.</span><span class="n">processing</span><span class="p">},</span> <span class="n">detections</span><span class="p">)</span>
+        <span class="n">relevant</span> <span class="o">=</span> <span class="n">_filter_cls</span><span class="p">({</span><span class="s1">&#39;cls_operator&#39;</span><span class="p">:</span> <span class="n">rule</span><span class="o">.</span><span class="n">cls_operator</span><span class="p">,</span> <span class="s1">&#39;cls_ids&#39;</span><span class="p">:</span> <span class="n">rule</span><span class="o">.</span><span class="n">cls_ids_filter</span><span class="p">},</span> <span class="n">relevant</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">relevant</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">_passes_duration</span><span class="p">(</span>
+            <span class="p">{</span><span class="s1">&#39;duration_op&#39;</span><span class="p">:</span> <span class="n">rule</span><span class="o">.</span><span class="n">duration_op</span><span class="p">,</span> <span class="s1">&#39;duration_seconds&#39;</span><span class="p">:</span> <span class="n">rule</span><span class="o">.</span><span class="n">duration_seconds</span><span class="p">},</span> <span class="n">relevant</span>
+        <span class="p">):</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RuleResult</span><span class="p">(</span><span class="n">rule_name</span><span class="o">=</span><span class="n">rule</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">rule</span><span class="o">.</span><span class="n">category</span><span class="p">,</span> <span class="n">triggered</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="k">continue</span>
+
+        <span class="n">actions_fired</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">type</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">rule</span><span class="o">.</span><span class="n">actions</span><span class="p">]</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RuleResult</span><span class="p">(</span>
+            <span class="n">rule_name</span><span class="o">=</span><span class="n">rule</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">rule</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
+            <span class="n">triggered</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">actions_fired</span><span class="o">=</span><span class="n">actions_fired</span><span class="p">,</span>
+        <span class="p">))</span>
+        <span class="n">rule_last_fired</span><span class="p">[</span><span class="n">rule</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">fired_any</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">results</span><span class="p">,</span> <span class="n">fired_any</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 5: Run tests</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_worker_loop.py<span class="w"> </span>tests/test_worker_helpers.py<span class="w"> </span>-v
+</code></pre></div>
+<p>Expected: all PASS.</p>
+<ul>
+<li>[ ] <strong>Step 6: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>workers/detection_worker.py<span class="w"> </span>tests/test_worker_loop.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add new-rules evaluation loop to detection_worker&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-6-action_dispatcher-per-rule-stream-support">Task 6: action_dispatcher — per-rule stream support<a class="headerlink" href="#task-6-action_dispatcher-per-rule-stream-support" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Modify: <code>core/action_dispatcher.py</code>
+- Create: <code>tests/test_action_dispatcher.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Write failing test</strong></li>
+</ul>
+<p>Create <code>tests/test_action_dispatcher.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">unittest.mock</span><span class="w"> </span><span class="kn">import</span> <span class="n">patch</span><span class="p">,</span> <span class="n">MagicMock</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core</span><span class="w"> </span><span class="kn">import</span> <span class="n">action_dispatcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">models.schemas</span><span class="w"> </span><span class="kn">import</span> <span class="n">FrameResult</span><span class="p">,</span> <span class="n">RuleResult</span><span class="p">,</span> <span class="n">Detection</span><span class="p">,</span> <span class="n">RuleAction</span><span class="p">,</span> <span class="n">Rule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_result</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">FrameResult</span><span class="p">(</span>
+        <span class="n">frame_id</span><span class="o">=</span><span class="s1">&#39;f1&#39;</span><span class="p">,</span> <span class="n">job_id</span><span class="o">=</span><span class="s1">&#39;j1&#39;</span><span class="p">,</span> <span class="n">camera_id</span><span class="o">=</span><span class="s1">&#39;c1&#39;</span><span class="p">,</span> <span class="n">camera_name</span><span class="o">=</span><span class="s1">&#39;cam&#39;</span><span class="p">,</span>
+        <span class="n">edge_name</span><span class="o">=</span><span class="s1">&#39;edge&#39;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">),</span>
+        <span class="n">detections</span><span class="o">=</span><span class="p">[],</span> <span class="n">aging</span><span class="o">=</span><span class="p">{},</span> <span class="n">rule_results</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">RuleResult</span><span class="p">(</span><span class="n">rule_name</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">triggered</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s1">&#39;Intrusion&#39;</span><span class="p">)</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_publish_queue_uses_action_stream</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;action.stream overrides the stream_name parameter.&quot;&quot;&quot;</span>
+    <span class="n">published</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">mock_publish</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">stream_name</span><span class="p">):</span>
+        <span class="n">published</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stream_name</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s1">&#39;core.action_dispatcher.output_publisher.publish_to_queue&#39;</span><span class="p">,</span> <span class="n">mock_publish</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s1">&#39;threading.Thread&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mock_thread</span><span class="p">:</span>
+            <span class="n">mock_thread</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="kc">None</span>
+            <span class="n">rule</span> <span class="o">=</span> <span class="n">Rule</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">actions</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">RuleAction</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;publish_queue&#39;</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="s1">&#39;custom:stream&#39;</span><span class="p">,</span> <span class="n">message_template</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{count}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="p">])</span>
+            <span class="n">action_dispatcher</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span>
+                <span class="n">_make_result</span><span class="p">(),</span> <span class="n">MagicMock</span><span class="p">(),</span> <span class="p">[</span><span class="n">rule</span><span class="p">],</span>
+                <span class="n">MagicMock</span><span class="p">(</span><span class="n">should_save</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">a</span><span class="p">:</span> <span class="s1">&#39;/tmp/snap.jpg&#39;</span><span class="p">),</span>
+                <span class="s1">&#39;default:stream&#39;</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="p">)</span>
+    <span class="c1"># Thread is started, verify by checking mock_thread was called</span>
+    <span class="k">assert</span> <span class="n">mock_thread</span><span class="o">.</span><span class="n">called</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_publish_queue_falls_back_to_stream_name_param</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;When action.stream is None, falls back to stream_name param.&quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">core.action_dispatcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">_get_stream_name</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">RuleAction</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;publish_queue&#39;</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">_get_stream_name</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="s1">&#39;fallback:stream&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;fallback:stream&#39;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_get_stream_name_uses_action_stream</span><span class="p">():</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">core.action_dispatcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">_get_stream_name</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">RuleAction</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;publish_queue&#39;</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="s1">&#39;override:stream&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">_get_stream_name</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="s1">&#39;fallback:stream&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;override:stream&#39;</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Run test to verify it fails</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_action_dispatcher.py<span class="w"> </span>-v
+</code></pre></div>
+<p>Expected: FAIL — <code>_get_stream_name</code> not defined.</p>
+<ul>
+<li>[ ] <strong>Step 3: Update <code>core/action_dispatcher.py</code></strong></li>
+</ul>
+<p>Add helper function:
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_get_stream_name</span><span class="p">(</span><span class="n">action</span><span class="p">:</span> <span class="n">RuleAction</span><span class="p">,</span> <span class="n">fallback</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return action.stream if set, otherwise fallback stream_name.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">action</span><span class="o">.</span><span class="n">stream</span> <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">stream</span> <span class="k">else</span> <span class="n">fallback</span>
+</code></pre></div></p>
+<p>In the <code>dispatch()</code> function, update the <code>publish_queue</code> action handler from:
+<div class="highlight"><pre><span></span><code><span class="k">elif</span> <span class="n">action</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;publish_queue&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="o">.</span><span class="n">snapshot_message</span> <span class="ow">and</span> <span class="n">action</span><span class="o">.</span><span class="n">message_template</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">snapshot_message</span> <span class="o">=</span> <span class="n">_format_message</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">message_template</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+    <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span>
+        <span class="n">target</span><span class="o">=</span><span class="n">output_publisher</span><span class="o">.</span><span class="n">publish_to_queue</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">stream_name</span><span class="p">),</span>
+        <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</code></pre></div>
+to:
+<div class="highlight"><pre><span></span><code><span class="k">elif</span> <span class="n">action</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;publish_queue&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="o">.</span><span class="n">snapshot_message</span> <span class="ow">and</span> <span class="n">action</span><span class="o">.</span><span class="n">message_template</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">snapshot_message</span> <span class="o">=</span> <span class="n">_format_message</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">message_template</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+    <span class="n">effective_stream</span> <span class="o">=</span> <span class="n">_get_stream_name</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">stream_name</span><span class="p">)</span>
+    <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span>
+        <span class="n">target</span><span class="o">=</span><span class="n">output_publisher</span><span class="o">.</span><span class="n">publish_to_queue</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">effective_stream</span><span class="p">),</span>
+        <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 4: Run tests</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_action_dispatcher.py<span class="w"> </span>-v
+</code></pre></div>
+<p>Expected: PASS.</p>
+<ul>
+<li>[ ] <strong>Step 5: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>core/action_dispatcher.py<span class="w"> </span>tests/test_action_dispatcher.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: action_dispatcher reads action.stream for publish_queue&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="task-7-labels-endpoint">Task 7: Labels endpoint<a class="headerlink" href="#task-7-labels-endpoint" title="Permanent link">&para;</a></h2>
+<p><strong>Files:</strong>
+- Create: <code>api/labels.py</code>
+- Modify: <code>main.py</code>
+- Create: <code>tests/test_labels.py</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Write failing test</strong></li>
+</ul>
+<p>Create <code>tests/test_labels.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi.testclient</span><span class="w"> </span><span class="kn">import</span> <span class="n">TestClient</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_labels_from_names_file</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">,</span> <span class="n">monkeypatch</span><span class="p">):</span>
+    <span class="n">model_pt</span> <span class="o">=</span> <span class="n">tmp_path</span> <span class="o">/</span> <span class="s2">&quot;yolov8n.pt&quot;</span>
+    <span class="n">model_pt</span><span class="o">.</span><span class="n">touch</span><span class="p">()</span>
+    <span class="n">names_file</span> <span class="o">=</span> <span class="n">tmp_path</span> <span class="o">/</span> <span class="s2">&quot;yolov8n.names&quot;</span>
+    <span class="n">names_file</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;person</span><span class="se">\n</span><span class="s2">car</span><span class="se">\n</span><span class="s2">truck</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">main</span><span class="w"> </span><span class="kn">import</span> <span class="n">app</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">TestClient</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/models/labels/?path=</span><span class="si">{</span><span class="n">model_pt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;person&quot;</span><span class="p">}</span>
+    <span class="k">assert</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;truck&quot;</span><span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_labels_from_yaml</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">):</span>
+    <span class="n">model_pt</span> <span class="o">=</span> <span class="n">tmp_path</span> <span class="o">/</span> <span class="s2">&quot;best.pt&quot;</span>
+    <span class="n">model_pt</span><span class="o">.</span><span class="n">touch</span><span class="p">()</span>
+    <span class="n">yaml_file</span> <span class="o">=</span> <span class="n">tmp_path</span> <span class="o">/</span> <span class="s2">&quot;data.yaml&quot;</span>
+    <span class="n">yaml_file</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;names:</span><span class="se">\n</span><span class="s2">  0: person</span><span class="se">\n</span><span class="s2">  2: car</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">main</span><span class="w"> </span><span class="kn">import</span> <span class="n">app</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">TestClient</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/models/labels/?path=</span><span class="si">{</span><span class="n">model_pt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">any</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;person&#39;</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_labels_not_found_returns_empty</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">):</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">main</span><span class="w"> </span><span class="kn">import</span> <span class="n">app</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">TestClient</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/models/labels/?path=</span><span class="si">{</span><span class="n">tmp_path</span><span class="si">}</span><span class="s2">/nonexistent.pt&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+    <span class="k">assert</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span> <span class="o">==</span> <span class="p">[]</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Run test to verify it fails</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_labels.py<span class="w"> </span>-v
+</code></pre></div>
+<p>Expected: FAIL — 404 or route not found.</p>
+<ul>
+<li>[ ] <strong>Step 3: Create <code>api/labels.py</code></strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">APIRouter</span>
+
+<span class="n">router</span> <span class="o">=</span> <span class="n">APIRouter</span><span class="p">(</span><span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">])</span>
+
+
+<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/models/labels/&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_model_labels</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return [{id, name}] for a model by reading its .names file or data.yaml sibling.</span>
+<span class="sd">    Returns [] if no label file is found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Try &lt;model_name&gt;.names</span>
+    <span class="n">names_path</span> <span class="o">=</span> <span class="n">base</span> <span class="o">+</span> <span class="s2">&quot;.names&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">names_path</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">names_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">names</span><span class="p">)]</span>
+
+    <span class="c1"># Try data.yaml in same directory</span>
+    <span class="n">yaml_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;data.yaml&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">yaml_path</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">yaml_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;names&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">}</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">names</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">v</span><span class="p">}</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">names</span><span class="o">.</span><span class="n">items</span><span class="p">())]</span>
+
+    <span class="k">return</span> <span class="p">[]</span>
+</code></pre></div>
+<ul>
+<li>[ ] <strong>Step 4: Register router in <code>main.py</code></strong></li>
+</ul>
+<p>Add after existing router imports:
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">api.labels</span><span class="w"> </span><span class="kn">import</span> <span class="n">router</span> <span class="k">as</span> <span class="n">labels_router</span>
+</code></pre></div></p>
+<p>Add after existing <code>include_router</code> calls:
+<div class="highlight"><pre><span></span><code><span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">labels_router</span><span class="p">)</span>
+</code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 5: Run tests</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_labels.py<span class="w"> </span>-v
+</code></pre></div>
+<p>Expected: all PASS.</p>
+<ul>
+<li>[ ] <strong>Step 6: Commit</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>api/labels.py<span class="w"> </span>main.py<span class="w"> </span>tests/test_labels.py
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: add /models/labels/ endpoint&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="verification-checklist">Verification Checklist<a class="headerlink" href="#verification-checklist" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>python -m pytest tests/ -v</code> — all tests pass</li>
+<li><code>python -m uvicorn main:app --reload</code> — no startup errors</li>
+<li><code>GET /models/labels/?path=yolo/yolov8n.pt</code> — returns label list (requires <code>.names</code> file next to model)</li>
+<li>Start a job with <code>iou_threshold=0.7</code> — engine uses 0.7 in <code>model.track()</code></li>
+<li>Send a job config with <code>cron_schedule='* 23-23 * * *'</code> during off-hours — rule does not fire</li>
+<li>Send a rule with <code>processing=detected</code> — alert fires even when object is outside ROI</li>
+<li>Send a rule with <code>cls_operator=not_in, cls_ids=[0]</code> — alert fires for non-person detections</li>
+<li>Send a rule with <code>duration_op=gte, duration_seconds=5</code> — alert only fires after 5s continuous detection</li>
+<li>Send a rule with <code>publish_queue action.stream=custom:stream</code> — Redis message goes to <code>custom:stream</code></li>
+<li>Legacy job config (no advanced rule fields) — existing <code>rule_engine.evaluate()</code> path still works</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

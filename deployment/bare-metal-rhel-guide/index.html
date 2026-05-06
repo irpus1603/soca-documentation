@@ -1,0 +1,1907 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/deployment/bare-metal-rhel-guide/">
+      
+      
+        <link rel="prev" href="../docker-deployment/">
+      
+      
+        <link rel="next" href="../gcp-cloud-run-guide/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Bare Metal RHEL - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#soca-platform-bare-metal-deployment-guide-rhel-rocky-linux" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Bare Metal RHEL
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../architecture/system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infrastructure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Infrastructure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bare Metal RHEL
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bare Metal RHEL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-on-a-single-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture on a Single Server
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#directory-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Directory Layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-soca-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. soca-control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. soca-control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-env" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create .env
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migrate-and-collect-static" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migrate and collect static
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#systemd-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        systemd service
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-nginx-reverse-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. nginx Reverse Proxy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-soca-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. soca-service
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. soca-service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-env" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure .env
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#systemd-service_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        systemd service
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-soca-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. soca-engine
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. soca-engine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-env_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure .env
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#systemd-service_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        systemd service
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-soca-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. soca-dashboard
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. soca-dashboard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#systemd-service_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        systemd service
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#firewall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Firewall
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#port-80-access-denied" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Port 80 access denied
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#systemd-modulenotfounderror" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        systemd ModuleNotFoundError
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disallowedhost-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DisallowedHost error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soca-service-connection-refused-to-soca-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        soca-service connection refused to soca-control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pubsub-messages-not-received-http-proxy-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pub/Sub messages not received (HTTP proxy environment)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcs-credentials-pointing-to-wrong-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCS credentials pointing to wrong path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verifying services
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gcp-cloud-run-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GCP Cloud Run
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../pubsub-setup-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integrations
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../metabase-reporting-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporting
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../cython-protection-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="soca-platform-bare-metal-deployment-guide-rhel-rocky-linux">SOCA Platform — Bare-Metal Deployment Guide (RHEL / Rocky Linux)<a class="headerlink" href="#soca-platform-bare-metal-deployment-guide-rhel-rocky-linux" title="Permanent link">&para;</a></h1>
+<p>This guide covers deploying soca-engine, soca-dashboard, soca-control, and
+soca-service directly on a RHEL (or Rocky Linux) server without Docker, using
+Python virtualenvs and systemd services.</p>
+<hr />
+<h2 id="architecture-on-a-single-server">Architecture on a Single Server<a class="headerlink" href="#architecture-on-a-single-server" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Internet / Browser
+        │  port 80 (nginx)
+        ▼
+     nginx  ──► soca-control   (gunicorn, port 8000)
+                soca-dashboard (gunicorn, port 8000 on separate vhost or path)
+                soca-engine    (uvicorn,  port 8001)
+                soca-service   (uvicorn,  port 8080)
+</code></pre></div>
+<hr />
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>python3<span class="w"> </span>python3-pip<span class="w"> </span>nginx<span class="w"> </span>git<span class="w"> </span>-y
+sudo<span class="w"> </span>pip3<span class="w"> </span>install<span class="w"> </span>virtualenv
+</code></pre></div>
+<p>Create a shared virtualenv (all services share one to save disk space):</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>/home/ca-admin/Apps/venv
+<span class="nb">source</span><span class="w"> </span>/home/ca-admin/Apps/venv/bin/activate
+</code></pre></div>
+<hr />
+<h2 id="directory-layout">Directory Layout<a class="headerlink" href="#directory-layout" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>/home/ca-admin/Apps/
+├── venv/               ← shared Python virtualenv
+├── soca-control/       ← git clone of soca-control repo
+├── soca-service/       ← git clone of soca-service repo
+├── soca-engine/        ← git clone / copy of soca-engine
+└── soca-dashboard/     ← git clone / copy of soca-dashboard
+</code></pre></div>
+<hr />
+<h2 id="1-soca-control">1. soca-control<a class="headerlink" href="#1-soca-control" title="Permanent link">&para;</a></h2>
+<h3 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/home/ca-admin/Apps/soca-control
+<span class="nb">source</span><span class="w"> </span>/home/ca-admin/Apps/venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</code></pre></div>
+<h3 id="configure">Configure<a class="headerlink" href="#configure" title="Permanent link">&para;</a></h3>
+<p>Edit <code>db.conf</code> (soca-control uses this instead of <code>.env</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;pg_host&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;pg_port&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5432&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;pg_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;myappdb&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;pg_user&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;pg_password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;yourpassword&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;gac_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/home/ca-admin/Apps/soca-control/credentials/gcs.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;ingest_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;generate with: openssl rand -hex 32&gt;&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;soca_service_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://127.0.0.1:8080&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;gcs_key_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/home/ca-admin/Apps/soca-control/credentials/gcs.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;pubsub_key_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/home/ca-admin/Apps/soca-control/credentials/pubsub.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;pubsub_project_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;GCP_PROJECT&gt;&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;pubsub_subscription&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;SUBSCRIPTION_NAME&gt;&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>Leave <code>"url": ""</code> to use SQLite. Set a PostgreSQL URL for production.</p>
+</blockquote>
+<h3 id="create-env">Create <code>.env</code><a class="headerlink" href="#create-env" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>&gt;<span class="w"> </span>/home/ca-admin/Apps/soca-control/.env<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+<span class="s">DJANGO_SECRET_KEY=&lt;generate with: python3 -c &quot;import secrets; print(secrets.token_urlsafe(50))&quot;&gt;</span>
+<span class="s">DEBUG=false</span>
+<span class="s">ALLOWED_HOSTS=localhost,127.0.0.1,&lt;SERVER_IP&gt;</span>
+<span class="s">CSRF_TRUSTED_ORIGINS=http://&lt;SERVER_IP&gt;</span>
+<span class="s">DATABASE_URL=</span>
+<span class="s">GCS_BUCKET=&lt;your-bucket&gt;</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<h3 id="migrate-and-collect-static">Migrate and collect static<a class="headerlink" href="#migrate-and-collect-static" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/home/ca-admin/Apps/soca-control
+<span class="nb">source</span><span class="w"> </span>/home/ca-admin/Apps/venv/bin/activate
+python<span class="w"> </span>manage.py<span class="w"> </span>migrate
+python<span class="w"> </span>manage.py<span class="w"> </span>collectstatic<span class="w"> </span>--noinput
+python<span class="w"> </span>manage.py<span class="w"> </span>createsuperuser
+</code></pre></div>
+<h3 id="systemd-service">systemd service<a class="headerlink" href="#systemd-service" title="Permanent link">&para;</a></h3>
+<p><code>/etc/systemd/system/soca-control.service</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">SOCA Control</span>
+<span class="na">After</span><span class="o">=</span><span class="s">network.target</span>
+
+<span class="k">[Service]</span>
+<span class="na">User</span><span class="o">=</span><span class="s">ca-admin</span>
+<span class="na">WorkingDirectory</span><span class="o">=</span><span class="s">/home/ca-admin/Apps/soca-control</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">PATH=/home/ca-admin/Apps/venv/bin:/usr/bin:/bin</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">HTTPS_PROXY=http://your-proxy:8080</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">HTTP_PROXY=http://your-proxy:8080</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">NO_PROXY=localhost,127.0.0.1,&lt;SERVER_IP&gt;</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/home/ca-admin/Apps/venv/bin/gunicorn soca_control.wsgi:application </span>\
+<span class="w">    </span><span class="s">--bind 127.0.0.1:8000 --workers 3</span>
+<span class="na">Restart</span><span class="o">=</span><span class="s">always</span>
+
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>soca-control
+</code></pre></div>
+<hr />
+<h2 id="2-nginx-reverse-proxy">2. nginx Reverse Proxy<a class="headerlink" href="#2-nginx-reverse-proxy" title="Permanent link">&para;</a></h2>
+<p>Install and configure nginx to expose soca-control on port 80:</p>
+<p><code>/etc/nginx/conf.d/soca-control.conf</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">_</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/static/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">alias</span><span class="w"> </span><span class="s">/home/ca-admin/Apps/soca-control/staticfiles/</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://127.0.0.1:8000</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$server_addr</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-For</span><span class="w"> </span><span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Important:</strong> Use <code>proxy_set_header Host $server_addr</code> (not <code>$host</code>) to prevent
+Django <code>DisallowedHost</code> errors when browsers send requests with a hostname prefix.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nginx<span class="w"> </span>-t
+sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>nginx
+</code></pre></div>
+<hr />
+<h2 id="3-soca-service">3. soca-service<a class="headerlink" href="#3-soca-service" title="Permanent link">&para;</a></h2>
+<h3 id="install_1">Install<a class="headerlink" href="#install_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/home/ca-admin/Apps/soca-service
+<span class="nb">source</span><span class="w"> </span>/home/ca-admin/Apps/venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</code></pre></div>
+<h3 id="configure-env">Configure <code>.env</code><a class="headerlink" href="#configure-env" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>SOCA_CONTROL_URL=http://127.0.0.1:8000
+SOCA_CONTROL_INGEST_KEY=&lt;same value as ingest_key in soca-control db.conf&gt;
+PORT=8080
+GOOGLE_APPLICATION_CREDENTIALS=/home/ca-admin/Apps/soca-service/credentials/pubsub.json
+LOG_LEVEL=INFO
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> Use <code>http://127.0.0.1:8000</code> (not the server's external IP) for
+<code>SOCA_CONTROL_URL</code>. gunicorn binds to <code>127.0.0.1</code> only — external IP won't work.</p>
+</blockquote>
+<h3 id="credentials">Credentials<a class="headerlink" href="#credentials" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>/home/ca-admin/Apps/soca-service/credentials
+<span class="c1"># Copy GCP service account JSON files from your local machine:</span>
+<span class="c1"># scp pubsub.json ca-admin@&lt;SERVER_IP&gt;:/home/ca-admin/Apps/soca-service/credentials/</span>
+</code></pre></div>
+<h3 id="systemd-service_1">systemd service<a class="headerlink" href="#systemd-service_1" title="Permanent link">&para;</a></h3>
+<p><code>/etc/systemd/system/soca-service.service</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">SOCA Service</span>
+<span class="na">After</span><span class="o">=</span><span class="s">network.target</span>
+
+<span class="k">[Service]</span>
+<span class="na">User</span><span class="o">=</span><span class="s">ca-admin</span>
+<span class="na">WorkingDirectory</span><span class="o">=</span><span class="s">/home/ca-admin/Apps/soca-service</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">PATH=/home/ca-admin/Apps/venv/bin:/usr/bin:/bin</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">HTTPS_PROXY=http://your-proxy:8080</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">HTTP_PROXY=http://your-proxy:8080</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">NO_PROXY=localhost,127.0.0.1,&lt;SERVER_IP&gt;</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/home/ca-admin/Apps/venv/bin/python -m uvicorn main:app </span>\
+<span class="w">    </span><span class="s">--host 0.0.0.0 --port 8080</span>
+<span class="na">Restart</span><span class="o">=</span><span class="s">always</span>
+
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>soca-service
+</code></pre></div>
+<hr />
+<h2 id="4-soca-engine">4. soca-engine<a class="headerlink" href="#4-soca-engine" title="Permanent link">&para;</a></h2>
+<h3 id="install_2">Install<a class="headerlink" href="#install_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/home/ca-admin/Apps/soca-engine
+<span class="nb">source</span><span class="w"> </span>/home/ca-admin/Apps/venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</code></pre></div>
+<h3 id="configure-env_1">Configure <code>.env</code><a class="headerlink" href="#configure-env_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>EDGE_NAME=edge-1
+ENGINE_API_KEY=&lt;generate with: python3 -c &quot;import secrets; print(secrets.token_hex(16))&quot;&gt;
+PUBLISHER_TYPE=pubsub
+PUBSUB_PROJECT_ID=&lt;GCP_PROJECT&gt;
+PUBSUB_TOPIC=&lt;TOPIC_NAME&gt;
+GOOGLE_APPLICATION_CREDENTIALS=/home/ca-admin/Apps/soca-engine/credentials/pubsub.json
+GCS_BUCKET=&lt;your-bucket&gt;
+GCS_KEY_PATH=/home/ca-admin/Apps/soca-engine/credentials/gcs.json
+GCS_PATH_PREFIX=edge-1
+INFER_DEVICE=cpu
+</code></pre></div>
+<h3 id="systemd-service_2">systemd service<a class="headerlink" href="#systemd-service_2" title="Permanent link">&para;</a></h3>
+<p><code>/etc/systemd/system/soca-engine.service</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">SOCA Engine</span>
+<span class="na">After</span><span class="o">=</span><span class="s">network.target</span>
+
+<span class="k">[Service]</span>
+<span class="na">User</span><span class="o">=</span><span class="s">ca-admin</span>
+<span class="na">WorkingDirectory</span><span class="o">=</span><span class="s">/home/ca-admin/Apps/soca-engine</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">PATH=/home/ca-admin/Apps/venv/bin:/usr/bin:/bin</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">HTTPS_PROXY=http://your-proxy:8080</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">HTTP_PROXY=http://your-proxy:8080</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">NO_PROXY=localhost,127.0.0.1,&lt;SERVER_IP&gt;</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/home/ca-admin/Apps/venv/bin/python -m uvicorn main:app </span>\
+<span class="w">    </span><span class="s">--host 0.0.0.0 --port 8001</span>
+<span class="na">Restart</span><span class="o">=</span><span class="s">always</span>
+
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> If soca-engine requires MediaMTX (RTSP relay), start it separately before
+uvicorn. Use a wrapper script:
+<div class="highlight"><pre><span></span><code><span class="c1"># /home/ca-admin/Apps/soca-engine/start.sh</span>
+<span class="c1">#!/bin/bash</span>
+<span class="nb">cd</span><span class="w"> </span>/home/ca-admin/Apps/soca-engine
+./mediamtx<span class="w"> </span><span class="p">&amp;</span>
+<span class="nb">exec</span><span class="w"> </span>/home/ca-admin/Apps/venv/bin/python<span class="w"> </span>-m<span class="w"> </span>uvicorn<span class="w"> </span>main:app<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8001</span>
+</code></pre></div>
+Then in systemd: <code>ExecStart=/bin/bash /home/ca-admin/Apps/soca-engine/start.sh</code></p>
+</blockquote>
+<hr />
+<h2 id="5-soca-dashboard">5. soca-dashboard<a class="headerlink" href="#5-soca-dashboard" title="Permanent link">&para;</a></h2>
+<h3 id="install_3">Install<a class="headerlink" href="#install_3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/home/ca-admin/Apps/soca-dashboard
+<span class="nb">source</span><span class="w"> </span>/home/ca-admin/Apps/venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt<span class="w"> </span>gunicorn
+python<span class="w"> </span>manage.py<span class="w"> </span>migrate
+python<span class="w"> </span>manage.py<span class="w"> </span>collectstatic<span class="w"> </span>--noinput
+</code></pre></div>
+<h3 id="systemd-service_3">systemd service<a class="headerlink" href="#systemd-service_3" title="Permanent link">&para;</a></h3>
+<p><code>/etc/systemd/system/soca-dashboard.service</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">SOCA Dashboard</span>
+<span class="na">After</span><span class="o">=</span><span class="s">network.target</span>
+
+<span class="k">[Service]</span>
+<span class="na">User</span><span class="o">=</span><span class="s">ca-admin</span>
+<span class="na">WorkingDirectory</span><span class="o">=</span><span class="s">/home/ca-admin/Apps/soca-dashboard</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">PATH=/home/ca-admin/Apps/venv/bin:/usr/bin:/bin</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">HTTPS_PROXY=http://your-proxy:8080</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">HTTP_PROXY=http://your-proxy:8080</span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">NO_PROXY=localhost,127.0.0.1,&lt;SERVER_IP&gt;</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/home/ca-admin/Apps/venv/bin/gunicorn soca_dashboard.wsgi:application </span>\
+<span class="w">    </span><span class="s">--bind 0.0.0.0:8000 --workers 3</span>
+<span class="na">Restart</span><span class="o">=</span><span class="s">always</span>
+
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</code></pre></div>
+<hr />
+<h2 id="firewall">Firewall<a class="headerlink" href="#firewall" title="Permanent link">&para;</a></h2>
+<p>Open required ports:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>firewall-cmd<span class="w"> </span>--permanent<span class="w"> </span>--add-port<span class="o">=</span><span class="m">80</span>/tcp<span class="w">      </span><span class="c1"># nginx (soca-control)</span>
+sudo<span class="w"> </span>firewall-cmd<span class="w"> </span>--permanent<span class="w"> </span>--add-port<span class="o">=</span><span class="m">8080</span>/tcp<span class="w">    </span><span class="c1"># soca-dashboard (if on separate port)</span>
+sudo<span class="w"> </span>firewall-cmd<span class="w"> </span>--permanent<span class="w"> </span>--add-port<span class="o">=</span><span class="m">8001</span>/tcp<span class="w">    </span><span class="c1"># soca-engine API (if externally accessible)</span>
+sudo<span class="w"> </span>firewall-cmd<span class="w"> </span>--reload
+</code></pre></div>
+<hr />
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="port-80-access-denied">Port 80 access denied<a class="headerlink" href="#port-80-access-denied" title="Permanent link">&para;</a></h3>
+<p>Linux restricts ports &lt; 1024 to root. Use nginx as a reverse proxy (port 80 → 8000)
+instead of binding gunicorn directly to port 80.</p>
+<h3 id="systemd-modulenotfounderror">systemd ModuleNotFoundError<a class="headerlink" href="#systemd-modulenotfounderror" title="Permanent link">&para;</a></h3>
+<p>The venv is not activated in systemd. Set <code>Environment=PATH</code> explicitly:
+<div class="highlight"><pre><span></span><code><span class="na">Environment</span><span class="o">=</span><span class="s">PATH=/home/ca-admin/Apps/venv/bin:/usr/bin:/bin</span>
+</code></pre></div>
+And use the full venv path in <code>ExecStart</code>:
+<div class="highlight"><pre><span></span><code><span class="na">ExecStart</span><span class="o">=</span><span class="s">/home/ca-admin/Apps/venv/bin/gunicorn ...</span>
+</code></pre></div></p>
+<h3 id="disallowedhost-error">DisallowedHost error<a class="headerlink" href="#disallowedhost-error" title="Permanent link">&para;</a></h3>
+<p>nginx is forwarding the Host header with a backslash prefix. Fix with:
+<div class="highlight"><pre><span></span><code><span class="k">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$server_addr</span><span class="p">;</span>
+</code></pre></div></p>
+<h3 id="soca-service-connection-refused-to-soca-control">soca-service connection refused to soca-control<a class="headerlink" href="#soca-service-connection-refused-to-soca-control" title="Permanent link">&para;</a></h3>
+<p>gunicorn binds to <code>127.0.0.1:8000</code> (loopback only) when behind nginx.
+Use <code>SOCA_CONTROL_URL=http://127.0.0.1:8000</code> — not the server's external IP.</p>
+<h3 id="pubsub-messages-not-received-http-proxy-environment">Pub/Sub messages not received (HTTP proxy environment)<a class="headerlink" href="#pubsub-messages-not-received-http-proxy-environment" title="Permanent link">&para;</a></h3>
+<p>gRPC streaming pull does not respect <code>HTTPS_PROXY</code>. soca-service uses REST polling
+by default which does work through HTTP proxies. Ensure <code>HTTPS_PROXY</code> is set in the
+systemd service and <code>NO_PROXY</code> includes <code>localhost,127.0.0.1</code>.</p>
+<h3 id="gcs-credentials-pointing-to-wrong-path">GCS credentials pointing to wrong path<a class="headerlink" href="#gcs-credentials-pointing-to-wrong-path" title="Permanent link">&para;</a></h3>
+<p>soca-control reads credential paths from <code>db.conf</code>. After copying credentials to the
+server, update <code>gcs_key_path</code> and <code>pubsub_key_path</code> in <code>db.conf</code> to the server paths.
+Do not copy <code>db.conf</code> from a development machine without updating these paths.</p>
+<h3 id="verifying-services">Verifying services<a class="headerlink" href="#verifying-services" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check all soca services</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>soca-control<span class="w"> </span>soca-service<span class="w"> </span>soca-engine<span class="w"> </span>soca-dashboard
+
+<span class="c1"># View live logs</span>
+sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>soca-control<span class="w"> </span>-f
+sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>soca-service<span class="w"> </span>-f
+sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>soca-engine<span class="w"> </span>-f
+
+<span class="c1"># Test endpoints</span>
+curl<span class="w"> </span>http://127.0.0.1:8000<span class="w">          </span><span class="c1"># soca-control (redirect to /login/)</span>
+curl<span class="w"> </span>http://127.0.0.1:8080/health<span class="w">   </span><span class="c1"># soca-service</span>
+curl<span class="w"> </span>http://127.0.0.1:8001/health<span class="w">   </span><span class="c1"># soca-engine</span>
+
+<span class="c1"># Check soca-service pipeline status</span>
+curl<span class="w"> </span>http://127.0.0.1:8080/health<span class="w"> </span><span class="p">|</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>json.tool
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

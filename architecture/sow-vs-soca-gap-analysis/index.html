@@ -1,0 +1,1735 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/soca-documentation/architecture/sow-vs-soca-gap-analysis/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Gap Analysis: SoW Vision AI-IT 2026 vs. Current SOCA Platform - SOCA Platform Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gap-analysis-sow-vision-ai-it-2026-vs-current-soca-platform" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SOCA Platform Documentation" class="md-header__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SOCA Platform Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Gap Analysis: SoW Vision AI-IT 2026 vs. Current SOCA Platform
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../repository-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/product-offering-usecases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../system-overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/docker-deployment/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/user-guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../soca-engine/api-testing/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Engine & Services
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SOCA Platform Documentation" class="md-nav__button md-logo" aria-label="SOCA Platform Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SOCA Platform Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../repository-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../overview/product-offering-usecases/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../system-overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../deployment/docker-deployment/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../guides/user-guides/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../soca-engine/api-testing/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Services
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="gap-analysis-sow-vision-ai-it-2026-vs-current-soca-platform">Gap Analysis: SoW Vision AI-IT 2026 vs. Current SOCA Platform<a class="headerlink" href="#gap-analysis-sow-vision-ai-it-2026-vs-current-soca-platform" title="Permanent link">&para;</a></h1>
+<p><strong>Document date:</strong> 2026-05-04<br />
+<strong>Source 1:</strong> <code>SoW Vision AI- IT 2026.docx</code> — Statement of Work for VMX–NX VMS Exploration, Safety Compliance Analytics &amp; Dashboard<br />
+<strong>Source 2:</strong> Current SOCA platform as documented in <code>system-overview.md</code>, <code>object-detection-processor.md</code>, <code>soca-service/overview.md</code>, <code>soca-control/design-spec.md</code>, <code>2026-04-16-nxvms-integration.md</code>, <code>licensing-model.md</code><br />
+<strong>Scope:</strong> Phase-1 (Safety Compliance)</p>
+<hr />
+<h2 id="summary-scorecard">Summary Scorecard<a class="headerlink" href="#summary-scorecard" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>SoW Section</th>
+<th>Requirement Area</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. NX VMS</strong></td>
+<td>NX VMS server running (NX Meta 6.1.1)</td>
+<td>✅ Available</td>
+</tr>
+<tr>
+<td><strong>1. NX VMS</strong></td>
+<td>RTSP ingestion from NX VMS into soca-engine</td>
+<td>✅ Available (<code>soca-edge-nx</code>)</td>
+</tr>
+<tr>
+<td><strong>1. NX VMS</strong></td>
+<td>Camera GUID discovery from NX REST API</td>
+<td>✅ Available (<code>soca-edge-nx</code>)</td>
+</tr>
+<tr>
+<td><strong>1. NX VMS</strong></td>
+<td>NX bookmark push on AI alert trigger</td>
+<td>✅ Available (confirmed working)</td>
+</tr>
+<tr>
+<td><strong>1. NX VMS</strong></td>
+<td>NX analytics bounding-box overlay in NX Desktop</td>
+<td>⚠️ Blocked (ec2 endpoints removed in NX 6.x)</td>
+</tr>
+<tr>
+<td><strong>1. NX VMS</strong></td>
+<td>Historical event extraction from NX to dashboard</td>
+<td>❌ Not Done</td>
+</tr>
+<tr>
+<td><strong>1. NX VMS</strong></td>
+<td>Formal architecture diagram &amp; installation guide</td>
+<td>⚠️ Partial</td>
+</tr>
+<tr>
+<td><strong>2. Dashboard</strong></td>
+<td>Real-time safety event display</td>
+<td>✅ Available</td>
+</tr>
+<tr>
+<td><strong>2. Dashboard</strong></td>
+<td>Historical safety event display</td>
+<td>✅ Available</td>
+</tr>
+<tr>
+<td><strong>2. Dashboard</strong></td>
+<td>PPE compliance event reporting</td>
+<td>✅ Available</td>
+</tr>
+<tr>
+<td><strong>2. Dashboard</strong></td>
+<td>PPE compliance <strong>rate</strong> (percentage KPI)</td>
+<td>❌ Not Done</td>
+</tr>
+<tr>
+<td><strong>2. Dashboard</strong></td>
+<td>Unsafe behavior detection count</td>
+<td>✅ Available</td>
+</tr>
+<tr>
+<td><strong>2. Dashboard</strong></td>
+<td>Incident frequency &amp; trend visualization</td>
+<td>⚠️ Partial</td>
+</tr>
+<tr>
+<td><strong>2. Dashboard</strong></td>
+<td>Location-based risk heatmap</td>
+<td>❌ Not Done</td>
+</tr>
+<tr>
+<td><strong>2. Dashboard</strong></td>
+<td>Compliance score metric</td>
+<td>❌ Not Done</td>
+</tr>
+<tr>
+<td><strong>2. Dashboard</strong></td>
+<td>KPI definition document</td>
+<td>❌ Not Done</td>
+</tr>
+<tr>
+<td><strong>2. Dashboard</strong></td>
+<td>Dashboard wireframe &amp; technical documentation</td>
+<td>❌ Not Done</td>
+</tr>
+<tr>
+<td><strong>3. AI Model</strong></td>
+<td>PPE detection (helmet, vest, mask)</td>
+<td>✅ Available</td>
+</tr>
+<tr>
+<td><strong>3. AI Model</strong></td>
+<td>Restricted area violation detection</td>
+<td>✅ Available</td>
+</tr>
+<tr>
+<td><strong>3. AI Model</strong></td>
+<td>Unsafe behavior detection</td>
+<td>⚠️ Partial</td>
+</tr>
+<tr>
+<td><strong>3. AI Model</strong></td>
+<td>Event with type, confidence, timestamp, camera/location</td>
+<td>✅ Available</td>
+</tr>
+<tr>
+<td><strong>3. AI Model</strong></td>
+<td>NX bookmark push (AI → NX timeline)</td>
+<td>✅ Available (<code>soca-edge-nx</code>)</td>
+</tr>
+<tr>
+<td><strong>3. AI Model</strong></td>
+<td>NX analytics metadata pipeline (AI → NX overlay)</td>
+<td>⚠️ Blocked (NX 6.x removed ec2 endpoints)</td>
+</tr>
+<tr>
+<td><strong>3. AI Model</strong></td>
+<td>End-to-end flow: Camera → NX → AI → Dashboard</td>
+<td>✅ Available (<code>soca-edge-nx</code>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Legend:</strong> ✅ Available · ⚠️ Planned/Partial · ❌ Not Done</p>
+<hr />
+<h2 id="current-soca-platform-architecture-four-services-control-plane">Current SOCA Platform Architecture (Four Services + Control Plane)<a class="headerlink" href="#current-soca-platform-architecture-four-services-control-plane" title="Permanent link">&para;</a></h2>
+<p>Before the gap analysis, here is what the platform actually consists of:</p>
+<div class="highlight"><pre><span></span><code>┌──────────────── EDGE DEVICE (per site) ─────────────────┐
+│                                                           │
+│  soca-dashboard (port 8080)  ←→  soca-engine (port 8001) │
+│  Django per-edge UI               FastAPI YOLO processor  │
+│  Camera/schedule/rule mgmt        RTSP ingestion + jobs   │
+│  NX VMS integration (planned)     Alert publishing        │
+│                         │                                 │
+└─────────────────────────┼─────────────────────────────────┘
+                          │ Redis Stream or Google Pub/Sub
+                          ▼
+              soca-service (port 8010)         ← optional bridge
+              FastAPI alert consumer
+              Bridges edge transports to control plane
+                          │ HTTP POST /api/v1/ingest/
+                          ▼
+┌──────────────── CONTROL PLANE (central) ────────────────┐
+│                                                          │
+│  soca-control (port 8000) — Django fleet dashboard       │
+│  ┌──────────────────────────────────────────────────┐    │
+│  │  Fleet overview: all edges, health, active jobs  │    │
+│  │  Live monitor: MJPEG streams per edge            │    │
+│  │  Reports: Intrusion / PPE / Detection / Crowd /  │    │
+│  │           People Counting / LPR                  │    │
+│  │  (Stats tab + Detail tab + Chart.js bar charts)  │    │
+│  │  CSV + PDF export                                │    │
+│  │  User management                                 │    │
+│  │  Edge CRUD (register, configure, disable)        │    │
+│  │  GCS / snapshot storage config                   │    │
+│  └──────────────────────────────────────────────────┘    │
+└──────────────────────────────────────────────────────────┘
+                          │
+              soca-entitlement (port 8080)
+              License activation &amp; enforcement
+</code></pre></div>
+<p><strong>soca-control is the central control plane.</strong> It aggregates alerts from all edge devices into a single fleet dashboard, provides per-category report pages with statistics and chart views, and is the operator-facing command center for the entire deployment.</p>
+<hr />
+<h2 id="section-1-vmx-nx-vms-exploration-integration">Section 1 — VMX / NX VMS Exploration &amp; Integration<a class="headerlink" href="#section-1-vmx-nx-vms-exploration-integration" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>Correction:</strong> NX VMS integration is <strong>fully implemented</strong> in <code>soca-edge-nx/</code> — a purpose-built variant of the edge stack. The original <code>soca-edge/</code> uses MediaMTX; <code>soca-edge-nx/</code> replaces it with NX VMS as the stream source and adds NX bookmark/analytics push. The implementation plan in <code>2026-04-16-nxvms-integration.md</code> was the design document; <code>soca-edge-nx/</code> is the delivered code.</p>
+</blockquote>
+<h3 id="what-sow-requires">What SoW Requires<a class="headerlink" href="#what-sow-requires" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Requirement</th>
+<th>Deliverable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.1</td>
+<td>Study NX VMS architecture (NX Witness, NX AI Manager, NX for Developers)</td>
+<td>Understanding documented</td>
+</tr>
+<tr>
+<td>1.2</td>
+<td>Install and configure NX VMS in client–server topology</td>
+<td>Running NX VMS environment</td>
+</tr>
+<tr>
+<td>1.3</td>
+<td>Configure media server, client access, user roles/permissions</td>
+<td>Operational topology</td>
+</tr>
+<tr>
+<td>1.4</td>
+<td>Validate recording, playback, and live streaming</td>
+<td>PoC verified</td>
+</tr>
+<tr>
+<td>1.5</td>
+<td>Enable AI event notifications via REST API (event trigger, payload, latency)</td>
+<td>Working REST integration</td>
+</tr>
+<tr>
+<td>1.6</td>
+<td>Extract NX historical events → normalize schema → push to dashboard</td>
+<td>Historical data pipeline</td>
+</tr>
+<tr>
+<td>1.7</td>
+<td>Deliverable: NX VMS installed + running</td>
+<td>Infrastructure ready</td>
+</tr>
+<tr>
+<td>1.8</td>
+<td>Deliverable: Architecture diagram + installation guide + API integration flow</td>
+<td>Documentation</td>
+</tr>
+<tr>
+<td>1.9</td>
+<td>Deliverable: Working PoC (AI event via REST API + historical event in dashboard)</td>
+<td>Verified PoC</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-soca-currently-has-soca-edge-nx">What SOCA Currently Has (<code>soca-edge-nx/</code>)<a class="headerlink" href="#what-soca-currently-has-soca-edge-nx" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NX VMS architecture understanding</td>
+<td>✅ Done</td>
+<td>Tested against NX Meta 6.1.1 at <code>192.168.18.42:7001</code>; auth, device, and bookmark APIs fully explored</td>
+</tr>
+<tr>
+<td>NX VMS as RTSP stream source</td>
+<td>✅ Implemented</td>
+<td><code>stream_source = nx_vms</code> in EdgeConfig; soca-engine connects to <code>rtsp://&lt;nx-host&gt;:7001/&lt;camera-guid&gt;?stream=secondary</code> or HTTPS MPJPEG endpoint</td>
+</tr>
+<tr>
+<td>Camera GUID discovery from NX</td>
+<td>✅ Implemented</td>
+<td><code>GET /cameras/nx-cameras/</code> fetches device list from NX REST v2 (Bearer token) with fallback to EC2 + Digest/Basic auth (NX v4 compat)</td>
+</tr>
+<tr>
+<td>Per-camera NX GUID assignment</td>
+<td>✅ Implemented</td>
+<td>Camera form in <code>soca-edge-nx</code> has NX camera GUID field + "Fetch from NX VMS" live picker modal</td>
+</tr>
+<tr>
+<td>NX bookmark push on alert trigger</td>
+<td>✅ Working</td>
+<td><code>nx_publisher.push_bookmark()</code> creates timeline bookmarks in NX Desktop (<code>POST /rest/v2/devices/{guid}/bookmarks</code>); tested and confirmed working on NX 6.1.1</td>
+</tr>
+<tr>
+<td>NX analytics metadata push (bboxes)</td>
+<td>⚠️ No-op</td>
+<td><code>push_detection()</code> and <code>push_best_shot()</code> target <code>ec2/analyticsMetadataPackets</code> and <code>ec2/analyticsObjectBestShot</code> — both removed in NX 6.x; kept as graceful no-ops</td>
+</tr>
+<tr>
+<td>NX analytics engine registration</td>
+<td>⚠️ No-op</td>
+<td><code>register_engine()</code> targets <code>ec2/saveAnalyticsEngine</code> — removed in NX 6.x; graceful no-op</td>
+</tr>
+<tr>
+<td>NX VMS settings UI tab</td>
+<td>✅ Implemented</td>
+<td>Dedicated "NX VMS" tab in Settings with <code>stream_source</code> toggle, NX server URL, credentials, camera ID, bookmark push toggle</td>
+</tr>
+<tr>
+<td>NX fields in DB (migration)</td>
+<td>✅ Done</td>
+<td>Migrations <code>0026_nx_vms</code>, <code>0027_camera_nx_rtsp_url</code>, <code>0028_alter_camera_nx_rtsp_url</code> applied; <code>stream_source</code>, <code>nx_url</code>, <code>nx_username</code>, <code>nx_password</code>, <code>nx_camera_id</code>, <code>nx_rtsp_url</code> all in schema</td>
+</tr>
+<tr>
+<td>Action dispatcher wired to NX</td>
+<td>✅ Done</td>
+<td><code>action_dispatcher.py</code> calls <code>push_bookmark</code>, <code>push_detection</code>, <code>push_best_shot</code> on rule triggers; <code>NXPushConfig</code> injected from job config</td>
+</tr>
+<tr>
+<td>NX VMS installed and running (server infra)</td>
+<td>✅ Done</td>
+<td>NX Meta 6.1.1 confirmed running at <code>192.168.18.42:7001</code> (tested in code comments)</td>
+</tr>
+<tr>
+<td>Historical event extraction from NX</td>
+<td>❌ Not Done</td>
+<td>No pipeline to pull NX's own stored historical events into soca-control</td>
+</tr>
+<tr>
+<td>Architecture diagram / installation guide</td>
+<td>⚠️ Partial</td>
+<td>Integration plan doc exists; no formal deployment diagram or step-by-step installation guide for NX client–server topology</td>
+</tr>
+<tr>
+<td>Working PoC formal documentation</td>
+<td>⚠️ Partial</td>
+<td>Code tested (bookmark push confirmed working), but no formal PoC report or verification checklist completed</td>
+</tr>
+</tbody>
+</table>
+<h3 id="nx-vms-integration-architecture-actual-in-soca-edge-nx">NX VMS Integration Architecture (actual, in <code>soca-edge-nx/</code>)<a class="headerlink" href="#nx-vms-integration-architecture-actual-in-soca-edge-nx" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>CCTV camera ──► NX VMS Server (192.168.18.42:7001)
+                    │
+                    ├──► soca-engine  rtsp://&lt;nx-host&gt;:7001/&lt;camera-guid&gt;?stream=secondary
+                    │    (stream_source = nx_vms)
+                    │         │
+                    │         ▼
+                    │    YOLO inference → rule triggers
+                    │         │
+                    │         ├──► Redis/Pub/Sub alert → soca-control (dashboard)
+                    │         │
+                    │         └──► NX bookmark push (POST /rest/v2/devices/{guid}/bookmarks)
+                    │              Visible in NX Desktop Timeline
+                    │
+                    └──► NX Desktop Client (recording, playback, live view — managed by NX)
+</code></pre></div>
+<h3 id="gap-summary-section-1">Gap Summary — Section 1<a class="headerlink" href="#gap-summary-section-1" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>NX VMS code integration is delivered in <code>soca-edge-nx/</code>.</strong> RTSP ingestion from NX, camera GUID discovery, and bookmark push on AI triggers all work. The main remaining gaps are: (1) <strong>Analytics metadata visualization in NX</strong> is not possible because NX 6.x removed the <code>ec2</code> analytics endpoints — a NX SDK v4 upgrade or alternative approach is needed; (2) <strong>Historical event extraction</strong> from NX's own event store into soca-control is not implemented; (3) formal documentation deliverables (architecture diagram, installation guide) are not completed.</p>
+</blockquote>
+<p><strong>Remaining work:</strong>
+1. Investigate NX REST v4 analytics SDK (replacement for removed <code>ec2</code> endpoints) to restore bounding-box overlay in NX Desktop
+2. Implement NX historical event extraction pipeline (pull NX bookmarks/events → normalize → push to soca-control)
+3. Produce formal architecture diagram and NX installation/configuration guide
+4. Complete formal PoC verification checklist</p>
+<hr />
+<h2 id="section-2-dashboard-development-safety-compliance">Section 2 — Dashboard Development (Safety Compliance)<a class="headerlink" href="#section-2-dashboard-development-safety-compliance" title="Permanent link">&para;</a></h2>
+<h3 id="what-sow-requires_1">What SoW Requires<a class="headerlink" href="#what-sow-requires_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>KPI / Component</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.1</td>
+<td>PPE compliance rate</td>
+<td>KPI metric (%)</td>
+</tr>
+<tr>
+<td>2.2</td>
+<td>Unsafe behavior detection count</td>
+<td>KPI metric (count)</td>
+</tr>
+<tr>
+<td>2.3</td>
+<td>Incident frequency and trend</td>
+<td>Time-series chart</td>
+</tr>
+<tr>
+<td>2.4</td>
+<td>Location-based risk heatmap</td>
+<td>Spatial visualization</td>
+</tr>
+<tr>
+<td>2.5</td>
+<td>Summary statistics (dashboard panel)</td>
+<td>Component</td>
+</tr>
+<tr>
+<td>2.6</td>
+<td>Time-series analytics</td>
+<td>Component</td>
+</tr>
+<tr>
+<td>2.7</td>
+<td>Event logs</td>
+<td>Component</td>
+</tr>
+<tr>
+<td>2.8</td>
+<td>Compliance score</td>
+<td>Composite KPI</td>
+</tr>
+<tr>
+<td>2.9</td>
+<td>Integration with NX event data</td>
+<td>Data source</td>
+</tr>
+<tr>
+<td>2.10</td>
+<td>Integration with AI inference outputs</td>
+<td>Data source</td>
+</tr>
+<tr>
+<td>2.11</td>
+<td>Real-time and historical data visualization</td>
+<td>Data mode</td>
+</tr>
+<tr>
+<td>2.12</td>
+<td>KPI definition document</td>
+<td>Deliverable</td>
+</tr>
+<tr>
+<td>2.13</td>
+<td>Dashboard wireframe &amp; technical documentation</td>
+<td>Deliverable</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-soca-currently-has">What SOCA Currently Has<a class="headerlink" href="#what-soca-currently-has" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Real-time alert/event display</td>
+<td>✅ Available</td>
+<td>soca-control receives and displays alerts in real time via Redis Streams or Pub/Sub</td>
+</tr>
+<tr>
+<td>Historical alert storage and display</td>
+<td>✅ Available</td>
+<td>Alerts stored in DB, viewable with timestamps and snapshots</td>
+</tr>
+<tr>
+<td>PPE alert events</td>
+<td>✅ Available</td>
+<td>Rules tagged <code>category: PPE</code> route to soca-control → Reports → PPE Violations</td>
+</tr>
+<tr>
+<td>Unsafe behavior / intrusion count</td>
+<td>✅ Available</td>
+<td>Rules tagged <code>category: Intrusion</code> route to Reports → Intrusion Detection</td>
+</tr>
+<tr>
+<td>Event log (alert list)</td>
+<td>✅ Available</td>
+<td>All triggered alerts stored with frame_id, timestamp, snapshot, detection counts</td>
+</tr>
+<tr>
+<td>Per-category report pages</td>
+<td>✅ Available</td>
+<td>soca-control has dedicated pages: Intrusion, PPE, Object Detection, Crowd, People Counting, LPR — each with Stats tab + Detail tab</td>
+</tr>
+<tr>
+<td>Chart.js bar charts in report detail view</td>
+<td>✅ Available</td>
+<td><code>_detail_chart.html</code> partial renders Chart.js time-series bar charts per category</td>
+</tr>
+<tr>
+<td>CSV + PDF export from reports</td>
+<td>✅ Available</td>
+<td><code>reports.py</code> module exports alerts per category</td>
+</tr>
+<tr>
+<td>Fleet summary cards + top cameras chart</td>
+<td>✅ Available</td>
+<td>soca-control dashboard (<code>/</code>) shows fleet-wide summary with top cameras chart</td>
+</tr>
+<tr>
+<td>Confidence score, timestamp, camera/location in payload</td>
+<td>✅ Available</td>
+<td>Schema v2.3 includes all these fields in Redis/Pub/Sub messages</td>
+</tr>
+<tr>
+<td>Snapshot evidence per alert</td>
+<td>✅ Available</td>
+<td>Annotated JPEG saved and linked to each alert</td>
+</tr>
+<tr>
+<td>Multi-edge fleet view</td>
+<td>✅ Available</td>
+<td>soca-control shows all edges, their status, and aggregated alerts</td>
+</tr>
+<tr>
+<td>User authentication &amp; role management</td>
+<td>✅ Available</td>
+<td>Login, user roles enforced in soca-dashboard and soca-control</td>
+</tr>
+<tr>
+<td>AI inference → alert → dashboard pipeline</td>
+<td>✅ Available</td>
+<td>soca-engine → Redis/Pub/Sub → soca-service → soca-control (proven end-to-end)</td>
+</tr>
+<tr>
+<td><strong>PPE compliance rate (% metric)</strong></td>
+<td>❌ Not Done</td>
+<td>SOCA stores raw PPE alert counts; a "compliance rate" (detections without PPE ÷ total persons) requires a denominator count — not implemented</td>
+</tr>
+<tr>
+<td><strong>Location-based risk heatmap</strong></td>
+<td>❌ Not Done</td>
+<td>No spatial/heatmap visualization exists anywhere in the platform</td>
+</tr>
+<tr>
+<td><strong>Compliance score</strong></td>
+<td>❌ Not Done</td>
+<td>No composite safety score computed or displayed</td>
+</tr>
+<tr>
+<td><strong>Incident frequency trend chart</strong></td>
+<td>⚠️ Partial</td>
+<td>Chart.js bar chart is implemented in the report Detail tab (<code>_detail_chart.html</code>); however it is per-category and per-edge — a cross-category safety trend dashboard and daily/weekly rollup view for compliance is not confirmed</td>
+</tr>
+<tr>
+<td><strong>Integration with NX event data</strong></td>
+<td>❌ Not Done</td>
+<td>NX VMS not deployed; NX events not flowing into dashboard</td>
+</tr>
+<tr>
+<td><strong>KPI definition document</strong></td>
+<td>❌ Not Done</td>
+<td>No standalone KPI definition document found</td>
+</tr>
+<tr>
+<td><strong>Dashboard wireframe &amp; technical documentation</strong></td>
+<td>❌ Not Done</td>
+<td>No wireframe or formal dashboard design spec found</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gap-summary-section-2">Gap Summary — Section 2<a class="headerlink" href="#gap-summary-section-2" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Core data infrastructure is solid.</strong> Events flow from cameras through AI inference to the dashboard in real time. Per-category report pages exist for Safety Compliance use cases (PPE, Intrusion). However, the <strong>analytical KPI layer</strong> specified in the SoW is missing: there is no compliance rate calculation, no location heatmap, no compliance score, and no confirmed trend charting. The dashboard shows raw alert events, not processed safety KPIs.</p>
+</blockquote>
+<p><strong>What needs to happen:</strong>
+1. Implement PPE compliance rate = <code>(frames with PPE violations) / (frames with personnel present)</code> — requires counting "clean" frames as denominator
+2. Build location-based risk heatmap — needs camera location metadata and alert density aggregation per location
+3. Implement compliance score — define formula (e.g. weighted average of compliance rates across KPI categories)
+4. Confirm/build incident frequency trend charts (daily/weekly time-series views)
+5. Produce KPI definition document
+6. Produce dashboard wireframe and technical documentation</p>
+<hr />
+<h2 id="section-3-ai-model-analytics-development-safety-compliance">Section 3 — AI Model &amp; Analytics Development (Safety Compliance)<a class="headerlink" href="#section-3-ai-model-analytics-development-safety-compliance" title="Permanent link">&para;</a></h2>
+<h3 id="what-sow-requires_2">What SoW Requires<a class="headerlink" href="#what-sow-requires_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Requirement</th>
+<th>Deliverable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.1</td>
+<td>PPE detection (helmet, vest, mask)</td>
+<td>AI model + integration</td>
+</tr>
+<tr>
+<td>3.2</td>
+<td>Unsafe behavior detection</td>
+<td>AI model + integration</td>
+</tr>
+<tr>
+<td>3.3</td>
+<td>Restricted area violation detection</td>
+<td>AI model + integration</td>
+</tr>
+<tr>
+<td>3.4</td>
+<td>Model output: event type, confidence score, timestamp, camera/location metadata</td>
+<td>Event schema</td>
+</tr>
+<tr>
+<td>3.5</td>
+<td>NX-compatible event format</td>
+<td>NX generic event push</td>
+</tr>
+<tr>
+<td>3.6</td>
+<td>Dashboard analytics metrics from AI inference</td>
+<td>Metric pipeline</td>
+</tr>
+<tr>
+<td>3.7</td>
+<td>Validated end-to-end flow: Camera → NX → AI → Dashboard</td>
+<td>PoC</td>
+</tr>
+<tr>
+<td>3.8</td>
+<td>AI model documentation (architecture, inputs, outputs)</td>
+<td>Documentation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-soca-currently-has_1">What SOCA Currently Has<a class="headerlink" href="#what-soca-currently-has_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PPE detection</td>
+<td>✅ Available</td>
+<td>YOLO models can detect PPE classes (helmet, vest, mask) via <code>cls_ids</code> config; category tag <code>PPE</code> supported</td>
+</tr>
+<tr>
+<td>Restricted area violation</td>
+<td>✅ Available</td>
+<td>ROI polygon-based intrusion detection; <code>category: Intrusion</code> routes to intrusion report</td>
+</tr>
+<tr>
+<td>Crowd detection</td>
+<td>✅ Available</td>
+<td><code>people_count</code> and <code>crowd</code> modes with threshold rules</td>
+</tr>
+<tr>
+<td>Confidence score in event</td>
+<td>✅ Available</td>
+<td><code>confidence</code> field in Detection schema, included in Redis/Pub/Sub payload</td>
+</tr>
+<tr>
+<td>Timestamp in event</td>
+<td>✅ Available</td>
+<td>ISO timestamp in every event payload (<code>timestamp</code> field)</td>
+</tr>
+<tr>
+<td>Camera/location metadata</td>
+<td>✅ Available</td>
+<td><code>camera_id</code>, <code>edge_name</code> in every payload</td>
+</tr>
+<tr>
+<td>Event type (alert category)</td>
+<td>✅ Available</td>
+<td><code>alert_category</code> field in schema v2.2 (Intrusion / PPE / Detection / Counting / Crowd / LPR)</td>
+</tr>
+<tr>
+<td>Dashboard analytics from AI inference</td>
+<td>✅ Available</td>
+<td>Per-category report pages in soca-control consume AI-generated alerts</td>
+</tr>
+<tr>
+<td>Model documentation</td>
+<td>⚠️ Partial</td>
+<td><code>object-detection-processor.md</code> documents the engine architecture; no model-specific training documentation (model is YOLO, not custom-trained)</td>
+</tr>
+<tr>
+<td><strong>Unsafe behavior detection (specialized model)</strong></td>
+<td>⚠️ Partial</td>
+<td>Generic YOLO detection is used; "unsafe behavior" (e.g. no hardhat + at height) requires a trained custom model — not confirmed available or integrated</td>
+</tr>
+<tr>
+<td><strong>NX bookmark push on trigger</strong></td>
+<td>✅ Available</td>
+<td><code>nx_publisher.push_bookmark()</code> fires on every rule trigger in <code>soca-edge-nx</code>; creates coloured timeline marker in NX Desktop Client</td>
+</tr>
+<tr>
+<td><strong>NX analytics overlay (bboxes)</strong></td>
+<td>⚠️ Blocked</td>
+<td><code>push_detection()</code> targets <code>ec2/analyticsMetadataPackets</code> — endpoint removed in NX 6.x; needs NX REST v4 analytics SDK</td>
+</tr>
+<tr>
+<td><strong>Camera → NX → AI → Dashboard</strong> end-to-end</td>
+<td>✅ Available</td>
+<td><code>soca-edge-nx</code> flow: Camera → NX VMS (recording) → soca-engine (RTSP from NX) → YOLO inference → Redis/Pub/Sub → soca-control</td>
+</tr>
+<tr>
+<td><strong>Working PoC with NX</strong></td>
+<td>✅ Available</td>
+<td>Bookmark push confirmed working on NX Meta 6.1.1 at <code>192.168.18.42:7001</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="gap-summary-section-3">Gap Summary — Section 3<a class="headerlink" href="#gap-summary-section-3" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>AI detection capabilities and the NX integration path are both operational in <code>soca-edge-nx/</code>.</strong> The end-to-end flow Camera → NX VMS → soca-engine (RTSP pull) → YOLO inference → NX bookmark + soca-control alert is implemented and tested. The remaining gap is <strong>bounding-box overlay visualization inside NX Desktop</strong> — this requires the NX analytics SDK which was removed in NX 6.x. "Unsafe behavior" as a concept is covered by configurable ROI rules; a purpose-trained specialized model has not been developed.</p>
+</blockquote>
+<p><strong>Remaining work:</strong>
+1. Investigate NX REST v4 analytics SDK to restore detection metadata push (bboxes visible in NX Desktop)
+2. Evaluate whether a custom-trained "unsafe behavior" model is needed or if YOLO rules with ROI zones are sufficient
+3. Produce formal model documentation (inputs/outputs/architecture) as a standalone deliverable</p>
+<hr />
+<h2 id="what-is-built-and-working-not-in-sow-bonus-capabilities">What Is Built and Working (Not in SoW — Bonus Capabilities)<a class="headerlink" href="#what-is-built-and-working-not-in-sow-bonus-capabilities" title="Permanent link">&para;</a></h2>
+<p>The current SOCA platform delivers several capabilities <strong>beyond</strong> Phase-1 SoW scope:</p>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>soca-control central control plane</strong></td>
+<td>Full fleet dashboard: manages N edges simultaneously, aggregates all alerts, per-category reports with Stats + Detail + Chart.js views, CSV/PDF export, user management</td>
+</tr>
+<tr>
+<td>License management system</td>
+<td>soca-entitlement enforces per-edge camera and model limits</td>
+</tr>
+<tr>
+<td>Google Cloud Storage snapshot sync</td>
+<td>Cloud-hosted snapshot evidence</td>
+</tr>
+<tr>
+<td>Google Pub/Sub transport</td>
+<td>Geographically distributed multi-site support</td>
+</tr>
+<tr>
+<td>Live MJPEG monitor stream</td>
+<td>Real-time annotated video per active job</td>
+</tr>
+<tr>
+<td>Telegram notification</td>
+<td>Alert push to operator Telegram with annotated snapshot</td>
+</tr>
+<tr>
+<td>Webhook action</td>
+<td>Integrates with external systems on alert trigger</td>
+</tr>
+<tr>
+<td>LPR (License Plate Recognition)</td>
+<td>EasyOCR-based plate reading (not required by SoW Phase-1)</td>
+</tr>
+<tr>
+<td>People counting / line crossing</td>
+<td>Directional crossing counts (not required by SoW Phase-1)</td>
+</tr>
+<tr>
+<td>Dead-letter queue (DLQ)</td>
+<td>Redis message durability fallback</td>
+</tr>
+<tr>
+<td>Per-job confidence threshold</td>
+<td>Fine-tunable per schedule</td>
+</tr>
+<tr>
+<td>MediaMTX RTSP relay</td>
+<td>Protects camera credentials, manages connection slots</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="priority-action-plan-to-close-gaps">Priority Action Plan to Close Gaps<a class="headerlink" href="#priority-action-plan-to-close-gaps" title="Permanent link">&para;</a></h2>
+<h3 id="priority-1-close-nx-vms-remaining-gaps">Priority 1 — Close NX VMS Remaining Gaps<a class="headerlink" href="#priority-1-close-nx-vms-remaining-gaps" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Effort</th>
+<th>Dependency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Investigate NX REST v4 analytics SDK — restore bounding-box overlay in NX Desktop</td>
+<td>Research — Medium</td>
+<td>NX server upgrade or SDK access</td>
+</tr>
+<tr>
+<td>Implement NX historical event extraction (pull NX bookmarks/events → normalize → soca-control)</td>
+<td>Dev — Medium</td>
+<td>NX VMS API access</td>
+</tr>
+<tr>
+<td>Produce NX architecture diagram (deployment topology, port map)</td>
+<td>Docs — Small</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Produce NX installation &amp; configuration guide</td>
+<td>Docs — Medium</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Complete formal PoC verification checklist (recording, playback, bookmark, RTSP pull)</td>
+<td>QA — Small</td>
+<td>NX running</td>
+</tr>
+</tbody>
+</table>
+<h3 id="priority-2-safety-kpi-analytics-layer-closes-section-2-gaps">Priority 2 — Safety KPI Analytics Layer (closes Section 2 gaps)<a class="headerlink" href="#priority-2-safety-kpi-analytics-layer-closes-section-2-gaps" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Effort</th>
+<th>Dependency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Define PPE compliance rate formula + data model (requires denominator: person-present frames)</td>
+<td>Design</td>
+<td>Agreement on formula</td>
+</tr>
+<tr>
+<td>Implement compliance rate calculation in soca-control</td>
+<td>Dev — Medium</td>
+<td>Formula defined</td>
+</tr>
+<tr>
+<td>Build location-based risk heatmap (requires camera location metadata)</td>
+<td>Dev — Large</td>
+<td>Camera location data</td>
+</tr>
+<tr>
+<td>Implement compliance score composite metric</td>
+<td>Dev — Medium</td>
+<td>KPI formulas defined</td>
+</tr>
+<tr>
+<td>Build/confirm incident frequency trend charts (time-series bars)</td>
+<td>Dev — Small-Medium</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Produce KPI definition document</td>
+<td>Docs</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Produce dashboard wireframe &amp; technical documentation</td>
+<td>Docs</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="priority-3-model-documentation-deliverables-closes-section-3-gaps">Priority 3 — Model &amp; Documentation Deliverables (closes Section 3 gaps)<a class="headerlink" href="#priority-3-model-documentation-deliverables-closes-section-3-gaps" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Effort</th>
+<th>Dependency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Evaluate unsafe behavior detection: generic YOLO rules vs. custom model</td>
+<td>Research</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Produce AI model documentation (inputs, outputs, architecture)</td>
+<td>Docs</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Validate end-to-end Camera → NX → AI → Dashboard flow</td>
+<td>QA</td>
+<td>Priority 1 complete</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>The SOCA platform significantly covers the SoW Phase-1 scope. Two separate edge variants exist:</p>
+<ul>
+<li><strong><code>soca-edge/</code></strong> — MediaMTX-based, production-ready, fully operational</li>
+<li><strong><code>soca-edge-nx/</code></strong> — NX VMS-integrated variant; RTSP ingestion from NX, camera GUID discovery, bookmark push on AI trigger, and the full Camera → NX → AI → Dashboard pipeline are all implemented and tested against NX Meta 6.1.1</li>
+</ul>
+<p><strong>Remaining gaps fall into three areas:</strong></p>
+<ol>
+<li>
+<p><strong>NX analytics overlay in NX Desktop</strong> is blocked because NX 6.x removed the <code>ec2</code> analytics metadata endpoints that SOCA relies on for bounding-box visualization. Needs investigation of the NX REST v4 analytics SDK.</p>
+</li>
+<li>
+<p><strong>Safety KPI analytics layer is raw counts, not processed metrics.</strong> The SoW requires PPE compliance rate (%), location heatmap, and compliance score — none are computed. Alert events are stored and categorized correctly, but the aggregation layer is missing.</p>
+</li>
+<li>
+<p><strong>Documentation deliverables</strong> (NX architecture diagram, installation guide, KPI definition doc, dashboard wireframe) have not been produced as formal standalone artifacts.</p>
+</li>
+</ol>
+<p>The detection pipeline, NX integration code, real-time event flow, fleet dashboard, and per-category reporting collectively cover the majority of Phase-1 requirements.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.collapse", "navigation.top", "navigation.prune", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
