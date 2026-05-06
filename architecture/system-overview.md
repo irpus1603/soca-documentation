@@ -8,36 +8,55 @@
 
 ## Four Services
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         EDGE DEVICE                             │
-│                                                                 │
-│  soca-dashboard  (port 8080) ──────── soca-engine (port 8001)  │
-│  Django web UI                        FastAPI YOLO processor    │
-│  Camera & schedule management         RTSP ingestion            │
-│  Settings & edge config               Job management            │
-│                  │ write .env                   │               │
-│                  └──────────────────────────────┘               │
-│                                       │ publishes alerts        │
-│                                       │ uploads snapshots ──────┼──► Google Cloud Storage
-└───────────────────────────────────────┼─────────────────────────┘          │
-                                        │                                     │
-                              Redis Stream  or  Google Pub/Sub                │
-                                        │                                     │
-┌───────────────────────────────────────┼─────────────────────────┐          │
-│                         CLOUD / SERVER                          │          │
-│                                       ▼                         │          │
-│  soca-service  (port 8010)            │                         │          │
-│  FastAPI microservice                 │                         │          │
-│  Consumes Redis/Pub/Sub ──────────────┘                         │          │
-│  POSTs alerts via HTTP ──────────────────────────────────────►  │          │
-│                                                                 │          │
-│  soca-control  (port 8000)            ◄─── snapshot URLs ───────┼──────────┘
-│  Django fleet dashboard                                         │
-│  Receives ingest API                                            │
-│  Stores alerts in DB                                            │
-│  Reporting & analytics                                          │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#ffffff', 'edgeLabelBackground': '#f8fafc'}}}%%
+graph TB
+    subgraph EDGE["🖥️  EDGE DEVICE"]
+        direction TB
+        CAM["📷 CCTV Cameras"]
+        MTX["MediaMTX Relay\nRTSP :8554 · HLS :8888"]
+        DASH["soca-dashboard\nDjango · :8080\nCameras · Schedules\nRules · Settings"]
+        ENG["soca-engine\nFastAPI · :8001\nYOLO Inference\nJob Management"]
+
+        CAM -->|RTSP stream| MTX
+        MTX -->|rtsp://localhost:8554| ENG
+        DASH -->|push config / API key| ENG
+    end
+
+    subgraph TRANSPORT["🔀  TRANSPORT LAYER"]
+        direction LR
+        REDIS["Redis Stream\n(LAN / on-prem)"]
+        PUBSUB["Google Pub/Sub\n(cloud / multi-site)"]
+        GCS["Google Cloud Storage\nSnapshot images"]
+    end
+
+    subgraph CLOUD["🏢  CLOUD / SERVER"]
+        direction TB
+        SVC["soca-service\nFastAPI · :8010\nAlert consumer\nRedis → HTTP bridge"]
+        CTRL["soca-control\nDjango · :8000\nFleet Dashboard\nReports · Analytics"]
+    end
+
+    ENG -->|"publish alerts"| REDIS
+    ENG -->|"publish alerts"| PUBSUB
+    ENG -->|"sync snapshots (10s)"| GCS
+
+    REDIS -->|XREADGROUP| SVC
+    SVC -->|"POST /api/v1/ingest"| CTRL
+    PUBSUB -->|"direct subscribe"| CTRL
+    GCS -->|"public snapshot URLs"| CTRL
+
+    style EDGE fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e3a5f
+    style TRANSPORT fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
+    style CLOUD fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
+    style CAM fill:#0369a1,stroke:#075985,color:#ffffff
+    style MTX fill:#0284c7,stroke:#0369a1,color:#ffffff
+    style DASH fill:#1d4ed8,stroke:#1e40af,color:#ffffff
+    style ENG fill:#2563eb,stroke:#1d4ed8,color:#ffffff
+    style REDIS fill:#b45309,stroke:#92400e,color:#ffffff
+    style PUBSUB fill:#d97706,stroke:#b45309,color:#ffffff
+    style GCS fill:#ea580c,stroke:#c2410c,color:#ffffff
+    style SVC fill:#15803d,stroke:#166534,color:#ffffff
+    style CTRL fill:#16a34a,stroke:#15803d,color:#ffffff
 ```
 
 ---
@@ -57,8 +76,16 @@
 
 ### Option A — Redis Stream (default, LAN/local)
 
-```
-soca-engine ──XADD──► Redis stream ──XREADGROUP──► soca-service ──POST──► soca-control
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#ffffff', 'edgeLabelBackground': '#f8fafc'}}}%%
+flowchart LR
+    ENG["soca-engine"]:::edge -->|XADD| R["Redis Stream"]:::transport
+    R -->|XREADGROUP| SVC["soca-service"]:::cloud
+    SVC -->|"POST /api/v1/ingest"| CTRL["soca-control"]:::cloud
+
+    classDef edge fill:#2563eb,color:#ffffff,stroke:#1d4ed8,font-color:#ffffff
+    classDef transport fill:#b45309,color:#ffffff,stroke:#92400e,font-color:#ffffff
+    classDef cloud fill:#15803d,color:#ffffff,stroke:#166534,font-color:#ffffff
 ```
 
 - Best for: on-premises deployments, LAN environments
@@ -68,8 +95,15 @@ soca-engine ──XADD──► Redis stream ──XREADGROUP──► soca-serv
 
 ### Option B — Google Pub/Sub (cloud, multi-site)
 
-```
-soca-engine ──publish──► Pub/Sub topic ──subscribe──► soca-control (consume_pubsub)
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#ffffff', 'edgeLabelBackground': '#f8fafc'}}}%%
+flowchart LR
+    ENG["soca-engine"]:::edge -->|publish| PS["Google Pub/Sub\ntopic"]:::transport
+    PS -->|"direct subscribe\n(consume_pubsub)"| CTRL["soca-control"]:::cloud
+
+    classDef edge fill:#2563eb,color:#ffffff,stroke:#1d4ed8,font-color:#ffffff
+    classDef transport fill:#d97706,color:#ffffff,stroke:#b45309,font-color:#ffffff
+    classDef cloud fill:#15803d,color:#ffffff,stroke:#166534,font-color:#ffffff
 ```
 
 - Best for: cloud deployments, geographically distributed edges
@@ -84,9 +118,16 @@ soca-engine ──publish──► Pub/Sub topic ──subscribe──► soca-c
 
 ### Option A — Local (edge-proxied)
 
-```
-soca-engine → saves JPG to local snapshots/ → snapshot_path in alert
-soca-control → builds URL via soca-dashboard: {edge.url}/alerts/snapshot/{rel_path}
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#ffffff', 'edgeLabelBackground': '#f8fafc'}}}%%
+flowchart LR
+    ENG["soca-engine"]:::edge -->|"save JPG"| FS["local snapshots/"]:::storage
+    FS -->|snapshot_path in alert| CTRL["soca-control"]:::cloud
+    CTRL -->|"proxy URL via\nsoca-dashboard"| DASH["soca-dashboard\n{edge.url}/alerts/snapshot/"]:::edge
+
+    classDef edge fill:#2563eb,color:#ffffff,stroke:#1d4ed8,font-color:#ffffff
+    classDef storage fill:#475569,color:#ffffff,stroke:#334155,font-color:#ffffff
+    classDef cloud fill:#15803d,color:#ffffff,stroke:#166534,font-color:#ffffff
 ```
 
 - Best for: LAN/on-premises where soca-dashboard is directly reachable
@@ -94,10 +135,17 @@ soca-control → builds URL via soca-dashboard: {edge.url}/alerts/snapshot/{rel_
 
 ### Option B — Google Cloud Storage (recommended for cloud/multi-edge)
 
-```
-soca-engine → saves JPG to local snapshots/
-            → async GCS sync (every 10s) → gs://{bucket}/{edge_prefix}/snapshots/{job_id}/{frame}.jpg
-soca-control → builds public URL: https://storage.googleapis.com/{bucket}/{edge_prefix}/snapshots/...
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#ffffff', 'edgeLabelBackground': '#f8fafc'}}}%%
+flowchart LR
+    ENG["soca-engine"]:::edge -->|"save JPG"| FS["local snapshots/"]:::storage
+    FS -->|"async sync\nevery 10s"| GCS["Google Cloud Storage\ngs://bucket/prefix/snapshots/..."]:::gcs
+    GCS -->|"public HTTPS URL"| CTRL["soca-control"]:::cloud
+
+    classDef edge fill:#2563eb,color:#ffffff,stroke:#1d4ed8,font-color:#ffffff
+    classDef storage fill:#475569,color:#ffffff,stroke:#334155,font-color:#ffffff
+    classDef gcs fill:#ea580c,color:#ffffff,stroke:#c2410c,font-color:#ffffff
+    classDef cloud fill:#15803d,color:#ffffff,stroke:#166534,font-color:#ffffff
 ```
 
 - Best for: cloud deployments, multiple edges sharing one bucket
@@ -188,12 +236,17 @@ Rules can be tagged with a category string that routes alerts to specific report
 
 MediaMTX is an RTSP/HLS relay server running on each edge device alongside soca-dashboard and soca-engine.
 
-```
-CCTV camera ──► MediaMTX relay (sourceOnDemand: yes)
-                     │
-                     ├──► soca-engine  rtsp://localhost:8554/<camera_name>  (detection)
-                     │
-                     └──► Browser      http://edge-host:8888/<camera_name>   (HLS viewer)
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#ffffff', 'edgeLabelBackground': '#f8fafc'}}}%%
+flowchart LR
+    CAM["📷 CCTV Camera"]:::cam -->|"RTSP (on-demand)"| MTX["MediaMTX Relay\nsourceOnDemand: yes"]:::relay
+    MTX -->|"rtsp://localhost:8554/camera_name\n(detection)"| ENG["soca-engine"]:::edge
+    MTX -->|"http://edge-host:8888/camera_name\n(HLS live view)"| BRW["🌐 Browser"]:::viewer
+
+    classDef cam fill:#0369a1,color:#ffffff,stroke:#075985,font-color:#ffffff
+    classDef relay fill:#0284c7,color:#ffffff,stroke:#0369a1,font-color:#ffffff
+    classDef edge fill:#2563eb,color:#ffffff,stroke:#1d4ed8,font-color:#ffffff
+    classDef viewer fill:#7c3aed,color:#ffffff,stroke:#6d28d9,font-color:#ffffff
 ```
 
 **Why relay instead of direct camera RTSP:**
@@ -224,13 +277,32 @@ CCTV camera ──► MediaMTX relay (sourceOnDemand: yes)
 
 ## Data Flow Summary
 
-1. **soca-engine** captures RTSP video frames via MediaMTX relay (`rtsp://localhost:8554/<camera_name>`) — or direct camera RTSP as fallback when relay is not configured
-2. YOLO model runs inference (`.pt` → `track()`, `.onnx` → `predict()`); ROI filtering and rule evaluation applied
-3. When a rule fires: snapshot saved locally + alert published to Redis stream or Pub/Sub topic
-4. **GCS sync** (background task, every 10s): new snapshots uploaded to `gs://{bucket}/{edge_prefix}/snapshots/...`
-5. **soca-control** (via `consume_streams` or `consume_pubsub`): parses payload, creates `Alert` DB record
-6. `Alert.snapshot_url` builds either a GCS public URL or edge-proxy URL depending on `SiteConfig.snapshot_storage`
-7. Operators view alerts, snapshots, reports, and monitor fleet health via **soca-control** web UI
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#ffffff', 'edgeLabelBackground': '#f8fafc'}}}%%
+flowchart TD
+    A["📷 Camera RTSP feed\nvia MediaMTX relay"]:::step
+    B["🧠 YOLO Inference\n.pt → track() · .onnx → predict()\nROI filter + rule evaluation"]:::step
+    C{"Rule\nfired?"}:::decision
+    D["💾 Save snapshot\nto local snapshots/"]:::step
+    E["📤 Publish alert\nRedis stream or Pub/Sub"]:::step
+    F["☁️ GCS sync\nevery 10s → gs://bucket/..."]:::step
+    G["📥 soca-control ingests\nconsume_streams or consume_pubsub\ncreates Alert DB record"]:::step
+    H["🔗 Build snapshot_url\nGCS public URL or edge-proxy URL"]:::step
+    I["👤 Operator views\nalerts · snapshots · reports\nfleet health"]:::step
+
+    A --> B --> C
+    C -->|yes| D
+    D --> E
+    D --> F
+    E --> G
+    F --> H
+    G --> H
+    H --> I
+    C -->|no| A
+
+    classDef step fill:#2563eb,color:#ffffff,stroke:#1d4ed8,font-color:#ffffff
+    classDef decision fill:#dc2626,color:#ffffff,stroke:#b91c1c,font-color:#ffffff
+```
 
 ---
 

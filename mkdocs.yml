@@ -10,9 +10,14 @@ theme:
   name: material
   features:
     - navigation.instant
-    - navigation.sections
-    - navigation.expand
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.indexes
+    - navigation.collapse
     - navigation.top
+    - navigation.prune
+    - toc.follow
+    - toc.integrate
     - search.suggest
     - search.highlight
     - content.code.copy
@@ -26,7 +31,11 @@ markdown_extensions:
   - toc:
       permalink: true
   - pymdownx.highlight
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.inlinehilite
   - pymdownx.details
   - pymdownx.tabbed:
@@ -34,44 +43,54 @@ markdown_extensions:
 
 nav:
   - Home: index.md
+
   - Getting Started:
       - Repository Overview: repository-overview.md
       - Full Setup Guide: SETUP.md
       - Deployment Paths: guides/deployment-paths.md
+      - Deploy This Docs Site: guides/docs-deployment.md
+
   - Product:
       - Use Cases: overview/product-offering-usecases.md
-      - Presentation Script: overview/presentation-script.md
+
   - Architecture:
       - System Overview: architecture/system-overview.md
-      - Licensing Model: architecture/licensing-model.md
-      - NXVMS Integration: architecture/2026-04-16-nxvms-integration.md
-      - SOCA Gap Analysis: architecture/sow-vs-soca-gap-analysis.md
+
   - Deployment:
-      - Docker Deployment: deployment/docker-deployment.md
-      - Bare Metal RHEL: deployment/bare-metal-rhel-guide.md
-      - GCP Cloud Run: deployment/gcp-cloud-run-guide.md
-      - Pub/Sub Setup: deployment/pubsub-setup-guide.md
-      - GCS Snapshot Storage: deployment/gcs-snapshot-storage.md
-      - Metabase Reporting: deployment/metabase-reporting-guide.md
-      - Grafana Reporting: deployment/grafana-reporting-guide.md
-      - Cython Protection: deployment/cython-protection-guide.md
+      - Infrastructure:
+          - Docker: deployment/docker-deployment.md
+          - Bare Metal RHEL: deployment/bare-metal-rhel-guide.md
+          - GCP Cloud Run: deployment/gcp-cloud-run-guide.md
+      - Integrations:
+          - Pub/Sub Setup: deployment/pubsub-setup-guide.md
+          - GCS Snapshot Storage: deployment/gcs-snapshot-storage.md
+      - Reporting:
+          - Metabase: deployment/metabase-reporting-guide.md
+          - Grafana: deployment/grafana-reporting-guide.md
+      - Security:
+          - Cython Protection: deployment/cython-protection-guide.md
+
   - User Guides:
-      - Guide Overview: guides/user-guides.md
-      - Dashboard Design Spec: soca-dashboard/design-spec.md
-      - Dashboard Edge Operations Plan: soca-dashboard/edge-operations-plan.md
-      - Dashboard Edge Operations Design: soca-dashboard/edge-operations-design.md
-      - Dashboard Rule Management Plan: soca-dashboard/rule-management-plan.md
-      - Dashboard Advanced Rule Management: soca-dashboard/advanced-rule-management-design.md
-      - Control Design Spec: soca-control/design-spec.md
-      - Control Edge Operations Plan: soca-control/edge-operations-plan.md
-      - Control Implementation Plan: soca-control/implementation-plan.md
-      - Control Pub/Sub Transport: soca-control/pubsub-transport-plan.md
-  - Engine And Services:
-      - Engine API Testing: soca-engine/api-testing.md
-      - Engine Object Detection Processor: soca-engine/object-detection-processor.md
-      - Engine Rule Management: soca-engine/rule-management-plan.md
-      - Service Overview: soca-service/overview.md
-  - Testing:
-      - Testing Overview: guides/testing.md
-      - Dashboard Test Results: testing/soca-dashboard-test-results.md
-      - Dashboard Test Scenarios: testing/soca-dashboard-test-scenarios.md
+      - Overview: guides/user-guides.md
+      - SOCA Dashboard (Edge):
+          - User Guide: guides/user-guides.md
+          - Design Spec: soca-dashboard/design-spec.md
+          - Edge Operations Plan: soca-dashboard/edge-operations-plan.md
+          - Edge Operations Design: soca-dashboard/edge-operations-design.md
+          - Rule Management Plan: soca-dashboard/rule-management-plan.md
+          - Advanced Rule Management: soca-dashboard/advanced-rule-management-design.md
+      - SOCA Control (Fleet):
+          - User Guide: guides/soca-control-user-guide.md
+          - Design Spec: soca-control/design-spec.md
+          - Edge Operations Plan: soca-control/edge-operations-plan.md
+          - Implementation Plan: soca-control/implementation-plan.md
+          - Pub/Sub Transport: soca-control/pubsub-transport-plan.md
+
+  - Engine & Services:
+      - Engine:
+          - API Testing: soca-engine/api-testing.md
+          - Object Detection Processor: soca-engine/object-detection-processor.md
+          - Rule Management: soca-engine/rule-management-plan.md
+      - Service:
+          - Service Overview: soca-service/overview.md
+

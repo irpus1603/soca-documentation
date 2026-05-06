@@ -1,0 +1,14 @@
+# MkDocs build output — never commit this
+site/
+
+# Python
+__pycache__/
+*.pyc
+.env
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
