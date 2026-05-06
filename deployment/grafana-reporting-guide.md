@@ -70,7 +70,7 @@ created_at          TIMESTAMPTZ
 
 1. Grafana → **Connections → Data sources → Add data source → PostgreSQL**
 2. Fill in:
-   - **Host URL**: `localhost:5432`
+   - **Host URL**: `<soca-control-ip>:5432`
    - **Database**: your soca-control database name
    - **User / Password**: PostgreSQL credentials
    - **TLS/SSL Mode**: `disable` (for local) or `require` (for remote)

@@ -51,11 +51,11 @@ In `soca-dashboard/app/models.py`, after `last_engine_push_ok` (line 71), add:
         help_text='RTSP relay: MediaMTX (file-based) or NX VMS (REST API)'
     )
     nxvms_url = models.CharField(max_length=200, blank=True, default='',
-        help_text='NX VMS server URL, e.g. http://192.168.1.100:7001')
+        help_text='NX VMS server URL, e.g. http://<camera-ip>:7001')
     nxvms_username = models.CharField(max_length=100, blank=True, default='')
     nxvms_password = models.CharField(max_length=100, blank=True, default='')
     nxvms_rtsp_url = models.CharField(max_length=200, blank=True, default='',
-        help_text='NX VMS RTSP base URL, e.g. rtsp://192.168.1.100:7554')
+        help_text='NX VMS RTSP base URL, e.g. rtsp://<camera-ip>:7554')
 ```
 
 - [ ] **Step 2: Add `nxvms_device_id` to `Camera`**
@@ -438,7 +438,7 @@ In the Edge Config tab section (after the `<p class="text-xs font-semibold upper
             <div class="form-control md:col-span-2">
               <label class="label"><span class="label-text font-medium">NX VMS Server URL</span></label>
               <input type="text" name="nxvms_url" value="{{ edge.nxvms_url|default:'' }}"
-                     placeholder="http://192.168.1.100:7001"
+                     placeholder="http://<camera-ip>:7001"
                      class="input input-bordered font-mono text-sm" />
               <label class="label"><span class="label-text-alt opacity-60">Base URL of NX VMS server (REST API endpoint)</span></label>
             </div>
@@ -457,7 +457,7 @@ In the Edge Config tab section (after the `<p class="text-xs font-semibold upper
             <div class="form-control md:col-span-2">
               <label class="label"><span class="label-text font-medium">NX VMS RTSP Base URL</span></label>
               <input type="text" name="nxvms_rtsp_url" value="{{ edge.nxvms_rtsp_url|default:'' }}"
-                     placeholder="rtsp://192.168.1.100:7554"
+                     placeholder="rtsp://<camera-ip>:7554"
                      class="input input-bordered font-mono text-sm" />
               <label class="label"><span class="label-text-alt opacity-60">RTSP relay URL soca-engine connects to. Streams served as {base_url}/{physicalId}</span></label>
             </div>
@@ -921,4 +921,4 @@ python manage.py register_cameras_to_nxvms
 
 Confirm all cameras get `nxvms_device_id` after the second run.
 
-- [ ] **V8: MediaMTX fallback** — Switch EdgeConfig back to `relay_type=mediamtx`. Start a schedule. Confirm rtsp_url is `rtsp://localhost:8554/{camera_name}`.
+- [ ] **V8: MediaMTX fallback** — Switch EdgeConfig back to `relay_type=mediamtx`. Start a schedule. Confirm rtsp_url is `rtsp://<edge-ip>:8554/{camera_name}`.

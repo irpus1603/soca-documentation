@@ -1176,7 +1176,7 @@ Each rule card therefore has a nested form pointing to `rule_save` URL. The main
 python manage.py runserver
 ```
 
-1. Open `http://localhost:8000/schedules/new/`
+1. Open `http://<soca-control-ip>:8000/schedules/new/`
 2. Verify: Basic, Inference, ROI, Rules, Output sections render
 3. Click "+ Add Rule" → new rule card appears
 4. Enter model path → cls_id checkboxes populate (requires running engine)
@@ -1232,7 +1232,7 @@ class EdgeSettingsTest(TestCase):
         cfg = EdgeConfig.objects.first()
         self.client.post('/settings/edge/', {
             'edge_name': 'edge-1',
-            'engine_url': 'http://localhost:8001',
+            'engine_url': 'http://<edge-ip>:8001',
             'redis_stream': 'custom:stream',
         })
         cfg.refresh_from_db()

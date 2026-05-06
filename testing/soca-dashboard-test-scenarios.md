@@ -3,7 +3,7 @@
 **Application:** soca-dashboard  
 **Test type:** Functional (browser-based, user perspective)  
 **Executed by:** Claude Code with Chrome DevTools connector  
-**Base URL:** `http://localhost:8000`
+**Base URL:** `http://<soca-control-ip>:8000`
 
 ---
 
@@ -29,7 +29,7 @@
 
 ### TC-AUTH-001 — Login with valid credentials (Positive)
 **Steps:**
-1. Navigate to `http://localhost:8000/login/`
+1. Navigate to `http://<soca-control-ip>:8000/login/`
 2. Enter valid username and password
 3. Click **Login**
 
@@ -39,7 +39,7 @@
 
 ### TC-AUTH-002 — Login with wrong password (Negative)
 **Steps:**
-1. Navigate to `http://localhost:8000/login/`
+1. Navigate to `http://<soca-control-ip>:8000/login/`
 2. Enter valid username, wrong password
 3. Click **Login**
 
@@ -49,7 +49,7 @@
 
 ### TC-AUTH-003 — Login with empty fields (Negative)
 **Steps:**
-1. Navigate to `http://localhost:8000/login/`
+1. Navigate to `http://<soca-control-ip>:8000/login/`
 2. Leave username and password blank
 3. Click **Login**
 
@@ -59,7 +59,7 @@
 
 ### TC-AUTH-004 — Access protected page without login (Negative)
 **Steps:**
-1. Without logging in, navigate directly to `http://localhost:8000/cameras/`
+1. Without logging in, navigate directly to `http://<soca-control-ip>:8000/cameras/`
 
 **Expected:** Redirected to `/login/?next=/cameras/`. Dashboard not accessible.
 
@@ -123,7 +123,7 @@
 1. Navigate to `/cameras/new/`
 2. Fill in:
    - Name: `test-cam-01`
-   - RTSP URL: `rtsp://192.168.1.100:554/stream`
+   - RTSP URL: `rtsp://<camera-ip>:554/stream`
    - Site Name: `HQ`
    - Floor: `1`
    - Location: `Lobby`
@@ -174,7 +174,7 @@
 ### TC-CAM-006 — Edit camera RTSP URL (Positive)
 **Steps:**
 1. Open edit page for `test-cam-01`
-2. Change **RTSP URL** to `rtsp://192.168.1.101:554/stream`
+2. Change **RTSP URL** to `rtsp://<camera-ip>:554/stream`
 3. Click **Save**
 
 **Expected:**
@@ -592,7 +592,7 @@
 ### TC-EDGE-001 — Save valid engine URL (Positive)
 **Steps:**
 1. Navigate to `/settings/`
-2. In **Edge** section, set Engine URL to `http://localhost:8001`
+2. In **Edge** section, set Engine URL to `http://<edge-ip>:8001`
 3. Click **Save**
 
 **Expected:** Success message. Engine URL updated.
@@ -820,7 +820,7 @@
 ## Test Execution Notes
 
 ### Prerequisites
-- soca-dashboard running at `http://localhost:8000`
+- soca-dashboard running at `http://<soca-control-ip>:8000`
 - At least one admin user exists
 - soca-engine running at configured URL (for engine-dependent tests)
 - GCS bucket configured (for snapshot/thumbnail tests)

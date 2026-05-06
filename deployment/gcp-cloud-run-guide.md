@@ -141,8 +141,8 @@ Get the private IP — you'll need it later:
 gcloud redis instances describe soca-redis \
   --region=asia-southeast2 \
   --format="value(host)" 
-# get IP 10.132.156.123
-# e.g. 10.121.0.3  →  save this as MEMORYSTORE_IP
+# get IP <memorystore-ip>
+# e.g. <memorystore-ip>  →  save this as MEMORYSTORE_IP
 ```
 
 ---

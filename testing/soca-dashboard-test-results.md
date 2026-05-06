@@ -2,7 +2,7 @@
 
 **Application:** soca-dashboard  
 **Version:** Django 6.0.3 / Python 3.12.13  
-**Base URL:** `http://localhost:8080`  
+**Base URL:** `http://<edge-ip>:8080`  
 **Test Date:** 2026-04-12  
 **Executed by:** Claude (automated via Chrome extension)  
 **Tester account:** irpus (Admin role)
@@ -130,7 +130,7 @@
 
 | TC | Test Name | Steps | Expected | Actual Result | Status | Message / Notes |
 |----|-----------|-------|----------|---------------|--------|-----------------|
-| TC-EDGE-001 | Save valid engine URL | Set Engine URL to `http://localhost:8001`, save | "Edge settings saved." shown | "Edge settings saved." shown; URL persisted | ✅ PASS | Restored after BUG-002 test |
+| TC-EDGE-001 | Save valid engine URL | Set Engine URL to `http://<edge-ip>:8001`, save | "Edge settings saved." shown | "Edge settings saved." shown; URL persisted | ✅ PASS | Restored after BUG-002 test |
 | TC-EDGE-002 | Save invalid engine URL format | Set Engine URL to `not-a-url`, save | Validation error shown | **"Edge settings saved."** — invalid URL accepted without validation | ❌ FAIL | **BUG-002** — no URL format validation |
 | TC-EDGE-003 | Save empty engine URL | Clear Engine URL, save | Validation error or required field warning | Empty value accepted (no validation enforced) | ❌ FAIL | Same root cause as BUG-002 |
 | TC-EDGE-004 | Push config to engine | Click "▶ Push to soca-engine" | Config pushed; success/error message shown | Message returned from engine push attempt | ✅ PASS | — |
@@ -156,7 +156,7 @@
 |----|-----------|-------|----------|---------------|--------|-----------------|
 | TC-MODEL-001 | View available models | Navigate to Settings → AI Models tab | List of model files shown | Models listed: `rokok.pt`, `YOLO26 Model.onnx`, `YOLO26 Model.pt`, `rokok.onnx`, `LPR-v1n.pt` (all showing NaN KB size) | ✅ PASS | Note: file sizes show "NaN KB" — possible display bug |
 | TC-MODEL-002 | Upload new YOLO model | Upload `test_model.pt` file | Model appears in list; success message | `"test_model.pt" uploaded to soca-engine.` shown; model appeared in list | ✅ PASS | — |
-| TC-MODEL-003 | Upload non-model file | Upload `test_invalid.txt` | Error: Invalid file type | `"Upload failed: 422 Client Error: Unprocessable Entity for url: http://localhost:8001/models/upload"` — file rejected but error is raw HTTP message | ⚠️ PARTIAL | File correctly blocked; UX could be improved with user-friendly error |
+| TC-MODEL-003 | Upload non-model file | Upload `test_invalid.txt` | Error: Invalid file type | `"Upload failed: 422 Client Error: Unprocessable Entity for url: http://<edge-ip>:8001/models/upload"` — file rejected but error is raw HTTP message | ⚠️ PARTIAL | File correctly blocked; UX could be improved with user-friendly error |
 | TC-MODEL-004 | Delete a model | Click Delete for `test_model.pt`, confirm | Model removed; success message | `"test_model.pt" deleted.` shown; model removed from list | ✅ PASS | — |
 | TC-MODEL-005 | Delete model in use by schedule | Delete `YOLO26 Model.onnx` (referenced by active schedule) | Warning: model in use; deletion blocked | **`"YOLO26 Model.onnx" deleted.`** — deleted without any warning | ❌ FAIL | **BUG-004** — no protection against deleting models in use by schedules |
 
@@ -188,7 +188,7 @@
 
 1. **File sizes "NaN KB"** — All models in the AI Models list show "NaN KB" for size. The engine API may not be returning file size data, or the dashboard has a parsing error.
 
-2. **Raw HTTP errors surfaced** — Several error messages expose internal HTTP error details to end users (e.g., "422 Client Error: Unprocessable Entity for url: http://localhost:8001/models/upload", "404 Client Error: Not Found"). These should be replaced with user-friendly messages.
+2. **Raw HTTP errors surfaced** — Several error messages expose internal HTTP error details to end users (e.g., "422 Client Error: Unprocessable Entity for url: http://<edge-ip>:8001/models/upload", "404 Client Error: Not Found"). These should be replaced with user-friendly messages.
 
 3. **Restart behavior** — Both Restart buttons (soca-dashboard and soca-engine) cause the browser DevTools connection to timeout. There is no visible "Restart triggered" toast before the connection drops. Consider displaying the message before initiating the restart.
 
@@ -198,4 +198,4 @@
 
 ---
 
-*Report generated: 2026-04-12 | Test environment: macOS, Chrome, soca-dashboard @ localhost:8080, soca-engine @ localhost:8001*
+*Report generated: 2026-04-12 | Test environment: macOS, Chrome, soca-dashboard @ <edge-ip>:8080, soca-engine @ <edge-ip>:8001*

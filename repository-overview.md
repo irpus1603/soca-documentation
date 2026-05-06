@@ -100,7 +100,7 @@ soca-documentation/
 - **Report categories** — Intrusion, PPE, Object Detection, People Counting, Crowd, LPR
 - **PPE violations breakdown** — per-class detection summary in PPE report
 - **GCS credentials upload** — file picker UI in soca-dashboard and soca-control Settings
-- **MediaMTX relay for detection jobs** — soca-engine connects via `rtsp://localhost:8554/<camera>` instead of direct camera RTSP; reduces physical camera connection slots and keeps credentials off the wire
+- **MediaMTX relay for detection jobs** — soca-engine connects via `rtsp://<edge-ip>:8554/<camera>` instead of direct camera RTSP; reduces physical camera connection slots and keeps credentials off the wire
 - **Stream mode badge** — Assets page shows `Relay` (green) or `Direct` (yellow) badge per camera reflecting the active connection mode
 - **Live stream viewer** — Assets page play button opens MediaMTX's built-in HLS web player in a resizable popup window per camera (requires `mediamtx_url` set on the edge)
 - **Popup windows for live monitor** — monitor stream thumbnails and maximize button open in a controlled 854×480 resizable popup instead of a new browser tab

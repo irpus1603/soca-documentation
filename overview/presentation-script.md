@@ -164,7 +164,7 @@ SOCA is designed edge-first by philosophy. Processing happens where the cameras 
 ```
 
 **Steps list:**
-1. **RTSP Capture** — Camera streams to MediaMTX relay; soca-engine reads at `rtsp://localhost:8554/<camera>`
+1. **RTSP Capture** — Camera streams to MediaMTX relay; soca-engine reads at `rtsp://<edge-ip>:8554/<camera>`
 2. **YOLO Inference** — Frame analyzed: object detection + ROI filtering + tracking
 3. **Rule Evaluation** — Detection matched against configured rules (zone, threshold, schedule)
 4. **Snapshot** — Incident frame saved locally and synced to Google Cloud Storage (10-second async)

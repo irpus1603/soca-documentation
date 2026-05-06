@@ -1,15 +1,15 @@
 # API Testing Guide
 
-Base URL: `http://localhost:8001`
+Base URL: `http://<edge-ip>:8001`
 
-**Test Camera:** Bardi-Stairs-Front — `rtsp://localhost:8554/Bardi-Stairs-Front`
+**Test Camera:** Bardi-Stairs-Front — `rtsp://<edge-ip>:8554/Bardi-Stairs-Front`
 
 ---
 
 ## 1. Health Check
 
 ```bash
-curl http://localhost:8001/health
+curl http://<edge-ip>:8001/health
 ```
 
 Expected:
@@ -27,7 +27,7 @@ Expected:
 ## 2. List Available Models
 
 ```bash
-curl http://localhost:8001/models
+curl http://<edge-ip>:8001/models
 ```
 
 Expected:
@@ -44,11 +44,11 @@ Expected:
 ## 3. Start a Job — Basic (no ROI, no rules)
 
 ```bash
-curl -X POST http://localhost:8001/jobs/start \
+curl -X POST http://<edge-ip>:8001/jobs/start \
   -H "Content-Type: application/json" \
   -d '{
     "camera_id": "bardi-stairs-front",
-    "rtsp_url": "rtsp://localhost:8554/Bardi-Stairs-Front",
+    "rtsp_url": "rtsp://<edge-ip>:8554/Bardi-Stairs-Front",
     "model_path": "yolo/yolo11n.pt",
     "cls_ids": [0],
     "frame_interval_ms": 1000
@@ -69,12 +69,12 @@ Expected:
 ## 4. Start a Job — With Monitor (live stream analytics)
 
 ```bash
-curl -X POST http://localhost:8001/jobs/start \
+curl -X POST http://<edge-ip>:8001/jobs/start \
   -H "Content-Type: application/json" \
   -d '{
     "job_id": "job-stairs-monitor",
     "camera_id": "bardi-stairs-front",
-    "rtsp_url": "rtsp://localhost:8554/Bardi-Stairs-Front",
+    "rtsp_url": "rtsp://<edge-ip>:8554/Bardi-Stairs-Front",
     "model_path": "yolo/yolo11n.pt",
     "cls_ids": [0],
     "frame_interval_ms": 1000,
@@ -84,7 +84,7 @@ curl -X POST http://localhost:8001/jobs/start \
 
 Then open in browser:
 ```
-http://localhost:8001/jobs/job-stairs-monitor/monitor
+http://<edge-ip>:8001/jobs/job-stairs-monitor/monitor
 ```
 
 Stream shows:
@@ -97,12 +97,12 @@ Stream shows:
 ## 5. Start a Job — With ROI Polygon + Monitor
 
 ```bash
-curl -X POST http://localhost:8001/jobs/start \
+curl -X POST http://<edge-ip>:8001/jobs/start \
   -H "Content-Type: application/json" \
   -d '{
     "job_id": "job-stairs-roi",
     "camera_id": "bardi-stairs-front",
-    "rtsp_url": "rtsp://localhost:8554/Bardi-Stairs-Front",
+    "rtsp_url": "rtsp://<edge-ip>:8554/Bardi-Stairs-Front",
     "model_path": "yolo/yolo11n.pt",
     "cls_ids": [0, 1, 2],
     "frame_interval_ms": 2000,
@@ -116,7 +116,7 @@ curl -X POST http://localhost:8001/jobs/start \
 
 Monitor URL:
 ```
-http://localhost:8001/jobs/job-stairs-roi/monitor
+http://<edge-ip>:8001/jobs/job-stairs-roi/monitor
 ```
 
 ---
@@ -124,11 +124,11 @@ http://localhost:8001/jobs/job-stairs-roi/monitor
 ## 6. Start a Job — With ROI Rectangle
 
 ```bash
-curl -X POST http://localhost:8001/jobs/start \
+curl -X POST http://<edge-ip>:8001/jobs/start \
   -H "Content-Type: application/json" \
   -d '{
     "camera_id": "bardi-stairs-front",
-    "rtsp_url": "rtsp://localhost:8554/Bardi-Stairs-Front",
+    "rtsp_url": "rtsp://<edge-ip>:8554/Bardi-Stairs-Front",
     "model_path": "yolo/yolo11n.pt",
     "cls_ids": [0],
     "frame_interval_ms": 1000,
@@ -145,12 +145,12 @@ curl -X POST http://localhost:8001/jobs/start \
 ## 7. Start a Job — With Rules (person count threshold)
 
 ```bash
-curl -X POST http://localhost:8001/jobs/start \
+curl -X POST http://<edge-ip>:8001/jobs/start \
   -H "Content-Type: application/json" \
   -d '{
     "job_id": "job-stairs-rules",
     "camera_id": "bardi-stairs-front",
-    "rtsp_url": "rtsp://localhost:8554/Bardi-Stairs-Front",
+    "rtsp_url": "rtsp://<edge-ip>:8554/Bardi-Stairs-Front",
     "model_path": "yolo/yolo11n.pt",
     "cls_ids": [0],
     "frame_interval_ms": 1000,
@@ -181,12 +181,12 @@ curl -X POST http://localhost:8001/jobs/start \
 ## 8. Start a Job — With Aging Rule (person present > 30 seconds)
 
 ```bash
-curl -X POST http://localhost:8001/jobs/start \
+curl -X POST http://<edge-ip>:8001/jobs/start \
   -H "Content-Type: application/json" \
   -d '{
     "job_id": "job-stairs-aging",
     "camera_id": "bardi-stairs-front",
-    "rtsp_url": "rtsp://localhost:8554/Bardi-Stairs-Front",
+    "rtsp_url": "rtsp://<edge-ip>:8554/Bardi-Stairs-Front",
     "model_path": "yolo/yolo11n.pt",
     "cls_ids": [0],
     "frame_interval_ms": 1000,
@@ -219,11 +219,11 @@ curl -X POST http://localhost:8001/jobs/start \
 ## 9. Start a Job — With Webhook Action
 
 ```bash
-curl -X POST http://localhost:8001/jobs/start \
+curl -X POST http://<edge-ip>:8001/jobs/start \
   -H "Content-Type: application/json" \
   -d '{
     "camera_id": "bardi-stairs-front",
-    "rtsp_url": "rtsp://localhost:8554/Bardi-Stairs-Front",
+    "rtsp_url": "rtsp://<edge-ip>:8554/Bardi-Stairs-Front",
     "model_path": "yolo/yolo11n.pt",
     "cls_ids": [0, 2, 3],
     "frame_interval_ms": 2000,
@@ -236,13 +236,13 @@ curl -X POST http://localhost:8001/jobs/start \
         ],
         "actions": [
           {"type": "save_snapshot"},
-          {"type": "webhook", "url": "http://localhost:8000/api/alerts/receive/"},
+          {"type": "webhook", "url": "http://<soca-control-ip>:8000/api/alerts/receive/"},
           {"type": "log", "level": "error"}
         ]
       }
     ],
     "output": {
-      "redis_url": "redis://localhost:6379",
+      "redis_url": "redis://<soca-control-ip>:6379",
       "stream_name": "soca:detections",
       "max_snapshot_per_minute": 10,
       "snapshot_dir": "snapshots/"
@@ -256,12 +256,12 @@ curl -X POST http://localhost:8001/jobs/start \
 ## 10. Start a Job — Full Example (all options)
 
 ```bash
-curl -X POST http://localhost:8001/jobs/start \
+curl -X POST http://<edge-ip>:8001/jobs/start \
   -H "Content-Type: application/json" \
   -d '{
     "job_id": "job-stairs-01",
     "camera_id": "bardi-stairs-front",
-    "rtsp_url": "rtsp://localhost:8554/Bardi-Stairs-Front",
+    "rtsp_url": "rtsp://<edge-ip>:8554/Bardi-Stairs-Front",
     "model_path": "yolo/yolo11n.pt",
     "cls_ids": [0, 1, 2],
     "frame_interval_ms": 1500,
@@ -294,13 +294,13 @@ curl -X POST http://localhost:8001/jobs/start \
         "actions": [
           {"type": "save_snapshot"},
           {"type": "publish_queue"},
-          {"type": "webhook", "url": "http://localhost:8000/api/alerts/receive/"},
+          {"type": "webhook", "url": "http://<soca-control-ip>:8000/api/alerts/receive/"},
           {"type": "log", "level": "error"}
         ]
       }
     ],
     "output": {
-      "redis_url": "redis://localhost:6379",
+      "redis_url": "redis://<soca-control-ip>:6379",
       "stream_name": "soca:detections",
       "max_snapshot_per_minute": 5,
       "snapshot_dir": "snapshots/"
@@ -311,7 +311,7 @@ curl -X POST http://localhost:8001/jobs/start \
 
 Monitor URL:
 ```
-http://localhost:8001/jobs/job-stairs-01/monitor
+http://<edge-ip>:8001/jobs/job-stairs-01/monitor
 ```
 
 ---
@@ -320,7 +320,7 @@ http://localhost:8001/jobs/job-stairs-01/monitor
 
 ```bash
 # Open in browser — shows annotated video with detection overlays
-http://localhost:8001/jobs/JOB_ID/monitor
+http://<edge-ip>:8001/jobs/JOB_ID/monitor
 ```
 
 Returns `400` if job was started without `monitor: true`.
@@ -331,7 +331,7 @@ Returns `404` if job is not running.
 ## 12. Get Job Status
 
 ```bash
-curl http://localhost:8001/jobs/JOB_ID
+curl http://<edge-ip>:8001/jobs/JOB_ID
 ```
 
 Expected:
@@ -352,7 +352,7 @@ Expected:
 ## 13. List All Jobs
 
 ```bash
-curl http://localhost:8001/jobs/
+curl http://<edge-ip>:8001/jobs/
 ```
 
 ---
@@ -360,7 +360,7 @@ curl http://localhost:8001/jobs/
 ## 14. Stop a Job
 
 ```bash
-curl -X POST http://localhost:8001/jobs/JOB_ID/stop
+curl -X POST http://<edge-ip>:8001/jobs/JOB_ID/stop
 ```
 
 Expected:

@@ -108,7 +108,7 @@ soca-dashboard/
 - `forms.py`: single `StartJobForm` with clean validation only
 - Templates: extend `base.html`, no inline JS, semantic HTML
 - MJPEG proxy: streaming `HttpResponse` that reads chunks from engine and yields them — no buffering
-- Engine base URL from `settings.ENGINE_BASE_URL` (env var `ENGINE_BASE_URL`, default `http://localhost:8001`)
+- Engine base URL from `settings.ENGINE_BASE_URL` (env var `ENGINE_BASE_URL`, default `http://<edge-ip>:8001`)
 - `requests.Session` reused in `client.py` (module-level singleton)
 
 ---
@@ -141,7 +141,7 @@ uvicorn main:app --port 8001
 pip install -r requirements.txt
 python manage.py runserver 8000
 
-# 3. Visit http://localhost:8000
+# 3. Visit http://<soca-control-ip>:8000
 #    - Health bar shows engine status
 #    - Start a job with monitor=true
 #    - Navigate to job detail — MJPEG stream renders
@@ -194,7 +194,7 @@ ENGINE_SNAPSHOTS_DIR    # path to soca-engine/snapshots/
 ```bash
 python manage.py migrate
 python manage.py createsuperuser
-ENGINE_BASE_URL=http://localhost:8001 python manage.py runserver 8000
+ENGINE_BASE_URL=http://<edge-ip>:8001 python manage.py runserver 8000
 ```
 
 ---
@@ -246,7 +246,7 @@ soca-dashboard/
 - `LOGIN_URL = "/login/"`, `LOGIN_REDIRECT_URL = "/"`, `LOGOUT_REDIRECT_URL = "/login/"`
 - New settings:
   ```python
-  ENGINE_BASE_URL      # default "http://localhost:8001"
+  ENGINE_BASE_URL      # default "http://<edge-ip>:8001"
   ENGINE_DB_PATH       # path to soca-engine/soca_engine.db
   ENGINE_SNAPSHOTS_DIR # path to soca-engine/snapshots/
   MEDIAMTX_YML_PATH    # kept for legacy; overridden by EdgeConfig.mediamtx_yml_path
@@ -266,8 +266,8 @@ Stores edge-device connection config. One row is expected.
 | Field | Default | Notes |
 |-------|---------|-------|
 | `edge_name` | `"edge-1"` | Written to `EDGE_NAME` in soca-engine `.env` on save |
-| `engine_url` | `"http://localhost:8001"` | soca-engine FastAPI base URL |
-| `mediamtx_url` | `"http://localhost:8888"` | MediaMTX HTTP API URL |
+| `engine_url` | `"http://<edge-ip>:8001"` | soca-engine FastAPI base URL |
+| `mediamtx_url` | `"http://<edge-ip>:8888"` | MediaMTX HTTP API URL |
 | `mediamtx_yml_path` | `"../soca-engine/MediaMTX/mediamtx.yml"` | Relative to `BASE_DIR` |
 | `engine_env_path` | `"../soca-engine/.env"` | Relative to `BASE_DIR`; EDGE_NAME written here |
 | `updated_at` | auto | — |
@@ -481,7 +481,7 @@ python manage.py createsuperuser
 # Start dashboard
 python manage.py runserver 8000
 
-# Verify edge config at http://localhost:8000/settings/edge/
+# Verify edge config at http://<soca-control-ip>:8000/settings/edge/
 # Set engine_url, mediamtx_yml_path, engine_env_path to correct absolute/relative paths
 ```
 
@@ -754,7 +754,7 @@ No authentication required. Intended for consumption by a central management ser
 ```json
 {
   "edge_name": "edge-bardi-home",
-  "engine_url": "http://localhost:8001",
+  "engine_url": "http://<edge-ip>:8001",
   "location": {
     "latitude": -6.2088,
     "longitude": 106.8456,

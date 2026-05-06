@@ -178,7 +178,7 @@ print('Published msg id:', future.result())
 
 **Check soca-service is consuming** — look at the `/health` endpoint:
 ```
-GET http://localhost:8010/health
+GET http://<soca-control-ip>:8010/health
 ```
 `pubsub.active_edges` should be > 0 and `messages_processed` should increment after a detection.
 

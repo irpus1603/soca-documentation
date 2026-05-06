@@ -106,7 +106,7 @@ Before the gap analysis, here is what the platform actually consists of:
 
 | Capability | Status | Notes |
 |---|---|---|
-| NX VMS architecture understanding | ✅ Done | Tested against NX Meta 6.1.1 at `192.168.18.42:7001`; auth, device, and bookmark APIs fully explored |
+| NX VMS architecture understanding | ✅ Done | Tested against NX Meta 6.1.1 at `<nx-vms-ip>:7001`; auth, device, and bookmark APIs fully explored |
 | NX VMS as RTSP stream source | ✅ Implemented | `stream_source = nx_vms` in EdgeConfig; soca-engine connects to `rtsp://<nx-host>:7001/<camera-guid>?stream=secondary` or HTTPS MPJPEG endpoint |
 | Camera GUID discovery from NX | ✅ Implemented | `GET /cameras/nx-cameras/` fetches device list from NX REST v2 (Bearer token) with fallback to EC2 + Digest/Basic auth (NX v4 compat) |
 | Per-camera NX GUID assignment | ✅ Implemented | Camera form in `soca-edge-nx` has NX camera GUID field + "Fetch from NX VMS" live picker modal |
@@ -116,7 +116,7 @@ Before the gap analysis, here is what the platform actually consists of:
 | NX VMS settings UI tab | ✅ Implemented | Dedicated "NX VMS" tab in Settings with `stream_source` toggle, NX server URL, credentials, camera ID, bookmark push toggle |
 | NX fields in DB (migration) | ✅ Done | Migrations `0026_nx_vms`, `0027_camera_nx_rtsp_url`, `0028_alter_camera_nx_rtsp_url` applied; `stream_source`, `nx_url`, `nx_username`, `nx_password`, `nx_camera_id`, `nx_rtsp_url` all in schema |
 | Action dispatcher wired to NX | ✅ Done | `action_dispatcher.py` calls `push_bookmark`, `push_detection`, `push_best_shot` on rule triggers; `NXPushConfig` injected from job config |
-| NX VMS installed and running (server infra) | ✅ Done | NX Meta 6.1.1 confirmed running at `192.168.18.42:7001` (tested in code comments) |
+| NX VMS installed and running (server infra) | ✅ Done | NX Meta 6.1.1 confirmed running at `<nx-vms-ip>:7001` (tested in code comments) |
 | Historical event extraction from NX | ❌ Not Done | No pipeline to pull NX's own stored historical events into soca-control |
 | Architecture diagram / installation guide | ⚠️ Partial | Integration plan doc exists; no formal deployment diagram or step-by-step installation guide for NX client–server topology |
 | Working PoC formal documentation | ⚠️ Partial | Code tested (bookmark push confirmed working), but no formal PoC report or verification checklist completed |
@@ -124,7 +124,7 @@ Before the gap analysis, here is what the platform actually consists of:
 ### NX VMS Integration Architecture (actual, in `soca-edge-nx/`)
 
 ```
-CCTV camera ──► NX VMS Server (192.168.18.42:7001)
+CCTV camera ──► NX VMS Server (<nx-vms-ip>:7001)
                     │
                     ├──► soca-engine  rtsp://<nx-host>:7001/<camera-guid>?stream=secondary
                     │    (stream_source = nx_vms)
@@ -244,7 +244,7 @@ CCTV camera ──► NX VMS Server (192.168.18.42:7001)
 | **NX bookmark push on trigger** | ✅ Available | `nx_publisher.push_bookmark()` fires on every rule trigger in `soca-edge-nx`; creates coloured timeline marker in NX Desktop Client |
 | **NX analytics overlay (bboxes)** | ⚠️ Blocked | `push_detection()` targets `ec2/analyticsMetadataPackets` — endpoint removed in NX 6.x; needs NX REST v4 analytics SDK |
 | **Camera → NX → AI → Dashboard** end-to-end | ✅ Available | `soca-edge-nx` flow: Camera → NX VMS (recording) → soca-engine (RTSP from NX) → YOLO inference → Redis/Pub/Sub → soca-control |
-| **Working PoC with NX** | ✅ Available | Bookmark push confirmed working on NX Meta 6.1.1 at `192.168.18.42:7001` |
+| **Working PoC with NX** | ✅ Available | Bookmark push confirmed working on NX Meta 6.1.1 at `<nx-vms-ip>:7001` |
 
 ### Gap Summary — Section 3
 

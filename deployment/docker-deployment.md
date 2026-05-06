@@ -236,10 +236,10 @@ docker exec -it soca-control python manage.py createsuperuser
 ### 5. Verify health
 
 ```bash
-curl http://localhost:8001/health    # soca-engine
-curl http://localhost:8010/health    # soca-service
-curl -I http://localhost:8080/       # soca-dashboard
-curl -I http://localhost:8000/       # soca-control
+curl http://<edge-ip>:8001/health    # soca-engine
+curl http://<soca-control-ip>:8010/health    # soca-service
+curl -I http://<edge-ip>:8080/       # soca-dashboard
+curl -I http://<soca-control-ip>:8000/       # soca-control
 ```
 
 ---
@@ -307,7 +307,7 @@ Starts: soca-service (8010) + redis (6379)
 
 | Field | Value |
 |-------|-------|
-| Engine URL | `http://localhost:8001` |
+| Engine URL | `http://<edge-ip>:8001` |
 | Engine API Key | your `ENGINE_API_KEY` |
 | Engine DB path | `/app/data/soca_engine.db` |
 | Snapshots dir | `/app/soca-engine/snapshots` |
@@ -370,7 +370,7 @@ docker cp your-model.pt soca-edge:/app/soca-engine/yolo/
 | `DJANGO_SECRET_KEY` | *(required)* | Django secret key |
 | `DEBUG` | `false` | Django debug mode |
 | `DATABASE_URL` | SQLite | PostgreSQL URL (production) |
-| `CSRF_TRUSTED_ORIGINS` | `http://localhost:8000` | CSRF trusted origins |
+| `CSRF_TRUSTED_ORIGINS` | `http://<soca-control-ip>:8000` | CSRF trusted origins |
 
 ### soca-service
 
@@ -407,7 +407,7 @@ All containers share `soca-net`. Internal Docker hostnames:
 | Redis | `redis` | 6379 |
 
 Cross-container calls:
-- soca-dashboard → soca-engine: `http://localhost:8001` (same container)
+- soca-dashboard → soca-engine: `http://<edge-ip>:8001` (same container)
 - soca-control → soca-engine: `http://soca-edge:8001`
 - soca-service → soca-control: `http://soca-control:8000`
 
@@ -523,14 +523,14 @@ Common causes:
 
 Add your domain to `.env`:
 ```env
-CSRF_TRUSTED_ORIGINS=https://yourdomain.com,http://localhost:8000
+CSRF_TRUSTED_ORIGINS=https://yourdomain.com,http://<soca-control-ip>:8000
 ```
 Then `docker compose up -d` to apply.
 
 ### Models not showing in AI Models tab
 
 1. Verify `ENGINE_API_KEY` matches between soca-dashboard settings and `.env`
-2. Test directly: `curl -H "Authorization: Bearer <key>" http://localhost:8001/models`
+2. Test directly: `curl -H "Authorization: Bearer <key>" http://<edge-ip>:8001/models`
 3. Restart soca-edge after any engine code change: `docker compose restart soca-edge`
 
 ### soca-service not consuming alerts

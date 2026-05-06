@@ -229,7 +229,7 @@ Export: **↓ CSV**
 ### 7.2 Register a New Edge
 
 1. In **Settings**, scroll to **Edge Nodes**.
-2. Click **Add Edge** and fill in the edge name and dashboard URL (e.g. `http://10.49.225.166:8080`).
+2. Click **Add Edge** and fill in the edge name and dashboard URL (e.g. `http://<edge-ip>:8080`).
 3. Configure the GCS snapshot prefix for that edge.
 4. Click **Save**.
 

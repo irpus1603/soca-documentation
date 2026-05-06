@@ -48,7 +48,7 @@ EDGE_NAME=edge-jakarta-01
 # Alert transport — choose one:
 # Option A: Redis Stream (default)
 PUBLISHER_TYPE=redis
-REDIS_URL=redis://localhost:6379
+REDIS_URL=redis://<soca-control-ip>:6379
 REDIS_STREAM_NAME=soca:detections
 
 # Option B: Google Pub/Sub
@@ -82,10 +82,10 @@ uvicorn main:app --host 0.0.0.0 --port 8001
 ### 1.4 Verify
 
 ```bash
-curl http://localhost:8001/health
+curl http://<edge-ip>:8001/health
 # Expected: {"status": "ok", "redis": "connected", "active_jobs": 0, "uptime_seconds": ...}
 
-curl http://localhost:8001/models
+curl http://<edge-ip>:8001/models
 # Expected: {"models": [...]}
 ```
 
@@ -115,11 +115,11 @@ SECRET_KEY=your-secret-key-here
 DEBUG=true
 
 # Engine integration
-ENGINE_URL=http://localhost:8001
+ENGINE_URL=http://<edge-ip>:8001
 ENGINE_ENV_PATH=../soca-engine/.env
 
 # MediaMTX (optional, for live preview)
-MEDIAMTX_URL=http://localhost:8888
+MEDIAMTX_URL=http://<edge-ip>:8888
 MEDIAMTX_YML_PATH=../soca-engine/MediaMTX/mediamtx.yml
 
 # Port
@@ -143,7 +143,7 @@ python manage.py runserver 0.0.0.0:8080
 
 ### 2.5 Verify
 
-Open `http://localhost:8080` in a browser. Log in with the superuser credentials.
+Open `http://<edge-ip>:8080` in a browser. Log in with the superuser credentials.
 
 ### 2.6 Configure edge settings
 
@@ -180,7 +180,7 @@ From **Operations** (or via soca-control → edge operations):
 ```bash
 # Via soca-dashboard UI: Operations → Start
 # Or via soca-engine API:
-curl -X POST http://localhost:8001/jobs/start \
+curl -X POST http://<edge-ip>:8001/jobs/start \
   -H "Content-Type: application/json" \
   -d '{"camera_id": "1", "rtsp_url": "rtsp://...", "model_path": "yolo/yolo11n.pt", "cls_ids": [0]}'
 ```
@@ -212,7 +212,7 @@ DEBUG=true
 ALLOWED_HOSTS=localhost,127.0.0.1
 
 # Database (optional — defaults to SQLite)
-# DATABASE_URL=postgresql://user:pass@localhost/soca_control
+# DATABASE_URL=postgresql://user:pass@<soca-control-ip>/soca_control
 
 # Ingest key (set via Settings UI → generate, or manually)
 # SOCA_CONTROL_INGEST_KEY=<hex-string>
@@ -241,7 +241,7 @@ python manage.py createsuperuser
 
 ### 3.5 Verify
 
-Open `http://localhost:8000` in a browser. Log in with the superuser credentials.
+Open `http://<soca-control-ip>:8000` in a browser. Log in with the superuser credentials.
 
 ### 3.6 Generate ingest key
 
@@ -292,7 +292,7 @@ Edit `.env`:
 
 ```env
 # Required
-SOCA_CONTROL_URL=http://localhost:8000
+SOCA_CONTROL_URL=http://<soca-control-ip>:8000
 SOCA_CONTROL_INGEST_KEY=<key from soca-control Settings → Service Ingest Key>
 
 # Optional
@@ -314,7 +314,7 @@ uvicorn main:app --host 0.0.0.0 --port 8010
 ### 4.4 Verify health
 
 ```bash
-curl http://localhost:8010/health
+curl http://<soca-control-ip>:8010/health
 ```
 
 Expected response:
@@ -343,7 +343,7 @@ Expected response:
 ### 4.5 Monitor from soca-control
 
 1. Go to **soca-control → Settings → soca-service**
-2. Enter the soca-service URL: `http://localhost:8010`
+2. Enter the soca-service URL: `http://<soca-control-ip>:8010`
 3. Click **Save**
 4. The health panel loads and auto-refreshes every 15 seconds
 
@@ -370,7 +370,7 @@ After all four services are running:
 ### 1. Test the ingest API directly
 
 ```bash
-curl -X POST http://localhost:8000/api/v1/ingest/ \
+curl -X POST http://<soca-control-ip>:8000/api/v1/ingest/ \
   -H "Authorization: Bearer <SOCA_CONTROL_INGEST_KEY>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -386,7 +386,7 @@ curl -X POST http://localhost:8000/api/v1/ingest/ \
 ### 2. Test the edges API
 
 ```bash
-curl http://localhost:8000/api/v1/edges/ \
+curl http://<soca-control-ip>:8000/api/v1/edges/ \
   -H "Authorization: Bearer <SOCA_CONTROL_INGEST_KEY>"
 # Expected: 200 {"edges": [...]}
 ```
@@ -425,7 +425,7 @@ For production deployment on Google Cloud Run, see [deployment/gcp-cloud-run-gui
 ### soca-service cannot reach soca-control
 
 - Check `SOCA_CONTROL_URL` in `soca-service/.env`
-- Ensure soca-control is running: `curl http://localhost:8000/health`
+- Ensure soca-control is running: `curl http://<soca-control-ip>:8000/health`
 - Check firewall rules if on different hosts
 
 ### Ingest returns 401 Unauthorized
@@ -435,7 +435,7 @@ For production deployment on Google Cloud Run, see [deployment/gcp-cloud-run-gui
 
 ### No alerts appearing in soca-control
 
-1. Check soca-service health: `curl http://localhost:8010/health` — both consumers should show `"status": "running"`
+1. Check soca-service health: `curl http://<soca-control-ip>:8010/health` — both consumers should show `"status": "running"`
 2. Check `active_edges` — should be > 0 after edge is registered in soca-control
 3. Check `last_error` — will show the most recent error if POSTs are failing
 4. Check soca-engine is publishing: look for messages in the Redis stream
@@ -446,7 +446,7 @@ For production deployment on Google Cloud Run, see [deployment/gcp-cloud-run-gui
 ### soca-engine RTSP connection fails
 
 - Verify the camera RTSP URL: `ffprobe rtsp://user:pass@camera-ip/stream`
-- Check MediaMTX is running for RTSP relay: `curl http://localhost:8888/v3/config/global/get`
+- Check MediaMTX is running for RTSP relay: `curl http://<edge-ip>:8888/v3/config/global/get`
 
 ### Redis Consumer Group already exists (BUSYGROUP)
 

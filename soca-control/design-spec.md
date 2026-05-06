@@ -107,7 +107,7 @@ Edge:
     notes               TextField    # optional
     active              BooleanField # enabled/disabled for polling
     api_key             CharField    # API key from soca-dashboard Settings > Operations
-    mediamtx_url        URLField     # public HLS URL reachable from browser, e.g. "http://192.168.1.100:8888"; blank = hide stream viewer buttons
+    mediamtx_url        URLField     # public HLS URL reachable from browser, e.g. "http://<camera-ip>:8888"; blank = hide stream viewer buttons
     last_seen           DateTimeField
     created_at          DateTimeField
 ```
@@ -207,7 +207,7 @@ All calls use `requests.get(url, timeout=...)`. Failures return `None` (logged, 
 ```json
 {
   "edge_name": "edge-bardi-home",
-  "engine_url": "http://localhost:8001",
+  "engine_url": "http://<edge-ip>:8001",
   "location": {
     "address": "Jl. Sudirman No. 1",
     "building": "Gedung A",
@@ -394,7 +394,7 @@ These changes to soca-dashboard are needed for soca-control to work fully:
 3. **`snapshot_image` view** — must NOT require login (browser `<img>` tags from soca-control can't authenticate)
 4. **`alert_category` in schedule form** — dropdown with fixed values: Intrusion / Detection / PPE (not free text)
 5. **`to_job_config()`** — includes `camera_name` and `message_template` in `publish_queue` action so soca-engine can populate `snapshot_message` and `camera_name` in Redis payloads
-6. **`EdgeConfig.mediamtx_rtsp_url`** — when set, `Schedule.to_job_config()` produces `rtsp://localhost:8554/<camera_name>` instead of the direct camera URL; `mediamtx_relay_enabled: true` returned in `api_v1_cameras` response
+6. **`EdgeConfig.mediamtx_rtsp_url`** — when set, `Schedule.to_job_config()` produces `rtsp://<edge-ip>:8554/<camera_name>` instead of the direct camera URL; `mediamtx_relay_enabled: true` returned in `api_v1_cameras` response
 
 ---
 

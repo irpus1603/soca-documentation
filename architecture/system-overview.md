@@ -19,7 +19,7 @@ graph TB
         ENG["soca-engine\nFastAPI · :8001\nYOLO Inference\nJob Management"]
 
         CAM -->|RTSP stream| MTX
-        MTX -->|rtsp://localhost:8554| ENG
+        MTX -->|rtsp://<edge-ip>:8554| ENG
         DASH -->|push config / API key| ENG
     end
 
@@ -240,7 +240,7 @@ MediaMTX is an RTSP/HLS relay server running on each edge device alongside soca-
 %%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#ffffff', 'edgeLabelBackground': '#f8fafc'}}}%%
 flowchart LR
     CAM["📷 CCTV Camera"]:::cam -->|"RTSP (on-demand)"| MTX["MediaMTX Relay\nsourceOnDemand: yes"]:::relay
-    MTX -->|"rtsp://localhost:8554/camera_name\n(detection)"| ENG["soca-engine"]:::edge
+    MTX -->|"rtsp://<edge-ip>:8554/camera_name\n(detection)"| ENG["soca-engine"]:::edge
     MTX -->|"http://edge-host:8888/camera_name\n(HLS live view)"| BRW["🌐 Browser"]:::viewer
 
     classDef cam fill:#0369a1,color:#ffffff,stroke:#075985,font-color:#ffffff
@@ -251,7 +251,7 @@ flowchart LR
 
 **Why relay instead of direct camera RTSP:**
 - Physical cameras have limited connection slots — relay means only one outbound connection per camera
-- Camera credentials stay on the edge; job configs carry `rtsp://localhost:8554/<name>` instead of `rtsp://user:pass@camera-ip/...`
+- Camera credentials stay on the edge; job configs carry `rtsp://<edge-ip>:8554/<name>` instead of `rtsp://user:pass@camera-ip/...`
 - `sourceOnDemand: yes` on every path means MediaMTX connects to the camera only when a consumer (soca-engine or a browser) is actively reading — no idle connections
 
 **MediaMTX ports:**
@@ -266,8 +266,8 @@ flowchart LR
 
 | Field | Location | Purpose |
 |-------|----------|---------|
-| `EdgeConfig.mediamtx_rtsp_url` | soca-dashboard Settings → Connection | Base RTSP URL used by soca-engine, default `rtsp://localhost:8554` |
-| `Edge.mediamtx_url` | soca-control Settings → Edit Edge | Public HLS URL reachable from operator's browser, e.g. `http://192.168.1.100:8888` |
+| `EdgeConfig.mediamtx_rtsp_url` | soca-dashboard Settings → Connection | Base RTSP URL used by soca-engine, default `rtsp://<edge-ip>:8554` |
+| `Edge.mediamtx_url` | soca-control Settings → Edit Edge | Public HLS URL reachable from operator's browser, e.g. `http://<edge-ip>:8888` |
 
 **Stream mode badge** (Assets page in soca-control): each camera row shows `Relay` (green) when `mediamtx_rtsp_url` is set on the edge, or `Direct` (yellow) when jobs fall back to the raw camera URL.
 

@@ -69,7 +69,7 @@ MediaMTX is treated as an **external dependency** — assumed to be running and 
 
 - soca-engine **does not start or manage** MediaMTX
 - soca-engine consumes RTSP URLs that MediaMTX proxies/re-streams
-- The `rtsp_url` in `JobConfig` must point to a MediaMTX path (e.g. `rtsp://localhost:8554/Bardi-Stairs-Front`)
+- The `rtsp_url` in `JobConfig` must point to a MediaMTX path (e.g. `rtsp://<edge-ip>:8554/Bardi-Stairs-Front`)
 - TCP transport is **forced globally** via `os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;tcp"`
 - MediaMTX config (path rules, auth, source cameras) is managed separately via `mediamtx.yml`
 - Camera source URLs live inside `mediamtx.yml` — soca-engine only talks to MediaMTX output paths
@@ -80,14 +80,14 @@ If RTSP connection fails, the worker retries with exponential backoff (max 5 ret
 ```yaml
 paths:
   Bardi-Stairs-Front:
-    source: rtsp://admin:abim@192.168.18.71:8554/Streaming/Channels/101
+    source: rtsp://admin:abim@<camera-ip>:8554/Streaming/Channels/101
     rtspTransport: tcp
     sourceOnDemand: no
 ```
 
 **soca-engine consumes:**
 ```
-rtsp://localhost:8554/Bardi-Stairs-Front
+rtsp://<edge-ip>:8554/Bardi-Stairs-Front
 ```
 
 ---
@@ -101,7 +101,7 @@ rtsp://localhost:8554/Bardi-Stairs-Front
 {
   "job_id": "optional-custom-id",
   "camera_id": "bardi-stairs-front",
-  "rtsp_url": "rtsp://localhost:8554/Bardi-Stairs-Front",
+  "rtsp_url": "rtsp://<edge-ip>:8554/Bardi-Stairs-Front",
   "model_path": "yolo/yolo11n.pt",
   "cls_ids": [0, 1, 5],
   "roi": {
@@ -135,7 +135,7 @@ rtsp://localhost:8554/Bardi-Stairs-Front
         },
         {
           "type": "webhook",
-          "url": "http://localhost:8000/api/alerts/receive/",
+          "url": "http://<soca-control-ip>:8000/api/alerts/receive/",
           "message_template": "{in_roi_count} person(s) in zone at {time}"
         },
         {"type": "log", "level": "warning"}
@@ -143,7 +143,7 @@ rtsp://localhost:8554/Bardi-Stairs-Front
     }
   ],
   "output": {
-    "redis_url": "redis://localhost:6379",
+    "redis_url": "redis://<soca-control-ip>:6379",
     "stream_name": "soca:detections",
     "max_snapshot_per_minute": 5,
     "snapshot_dir": "snapshots/"
@@ -708,7 +708,7 @@ psutil==6.1.1
 
 ```
 EDGE_NAME               (required — no default; unique name for this edge device)
-REDIS_URL               redis://localhost:6379
+REDIS_URL               redis://<soca-control-ip>:6379
 REDIS_STREAM_NAME       soca:detections
 REDIS_STREAM_MAXLEN     10000
 DB_PATH                 soca_engine.db

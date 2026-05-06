@@ -57,7 +57,7 @@ After login you land on the **Dashboard** overview.
 | Camera Name | Yes | Unique slug, e.g. `lobby-01` |
 | Site Name | No | Building or site label |
 | Floor / Location | No | Physical location metadata |
-| RTSP URL | Yes | Full stream URL, e.g. `rtsp://192.168.1.100:554/stream1` |
+| RTSP URL | Yes | Full stream URL, e.g. `rtsp://<camera-ip>:554/stream1` |
 | Username / Password | No | Injected into the RTSP stream automatically |
 | Active | — | Uncheck to exclude from scheduling |
 | NX Camera ID (GUID) | No | If using NX VMS, click **Fetch from NX** to auto-fill |

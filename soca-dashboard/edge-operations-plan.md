@@ -799,7 +799,7 @@ Start the dev server and open `/settings/` — verify the 4th "Operations" tab a
 cd "/Users/mac-mini-home/Supriyadi/Projects/soca client-server/soca-dashboard"
 python manage.py runserver 8000 &
 sleep 2
-curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/settings/ -H "Cookie: sessionid=..." || echo "manual check needed"
+curl -s -o /dev/null -w "%{http_code}" http://<soca-control-ip>:8000/settings/ -H "Cookie: sessionid=..." || echo "manual check needed"
 ```
 
 - [ ] **Step 7: Commit**
@@ -813,7 +813,7 @@ git commit -m "feat: add Settings > Operations tab (API key, purge, schedule con
 
 ## Task 7: Manual End-to-End Verification
 
-- [ ] Log in to soca-dashboard at `http://localhost:8000`
+- [ ] Log in to soca-dashboard at `http://<soca-control-ip>:8000`
 - [ ] Go to **Settings > Edge Config**: fill in `Engine DB Path` and `Snapshots Root`, save
 - [ ] Go to **Settings > Operations**: click **Generate Key** → key appears masked
 - [ ] Click **Reveal** → key shows in plain text; **Copy** copies to clipboard
@@ -821,8 +821,8 @@ git commit -m "feat: add Settings > Operations tab (API key, purge, schedule con
 - [ ] Verify **Purge Now** button enables after preview
 - [ ] Click **Purge Now** → confirmation modal appears → cancel → nothing deleted
 - [ ] Schedule Control table loads and refreshes every 10s
-- [ ] Test API: `curl -H "Authorization: Api-Key <key>" http://localhost:8000/api/v1/schedules/` → JSON list
-- [ ] Test bad key: `curl -H "Authorization: Api-Key wrong" http://localhost:8000/api/v1/schedules/` → `{"error": "Invalid or missing API key"}`
+- [ ] Test API: `curl -H "Authorization: Api-Key <key>" http://<soca-control-ip>:8000/api/v1/schedules/` → JSON list
+- [ ] Test bad key: `curl -H "Authorization: Api-Key wrong" http://<soca-control-ip>:8000/api/v1/schedules/` → `{"error": "Invalid or missing API key"}`
 
 ```bash
 kill %1 2>/dev/null  # stop dev server

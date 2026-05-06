@@ -1,6 +1,6 @@
 site_name: SOCA Platform Documentation
 site_description: Online guidance for the SOCA platform, including architecture, deployment, operations, and reference material.
-site_url: https://example.com/soca-documentation
+site_url: https://irpus1603.github.io/soca-documentation
 repo_name: soca-documentation
 docs_dir: docs
 site_dir: site

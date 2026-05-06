@@ -71,7 +71,7 @@ Switching an edge's transport type in soca-control takes effect within 30 second
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `SOCA_CONTROL_URL` | Yes | Base URL of soca-control, e.g. `http://localhost:8000` |
+| `SOCA_CONTROL_URL` | Yes | Base URL of soca-control, e.g. `http://<soca-control-ip>:8000` |
 | `SOCA_CONTROL_INGEST_KEY` | Yes | Shared bearer token for ingest API — pushed automatically by soca-control |
 | `PORT` | No | HTTP port (default: 8010) |
 
